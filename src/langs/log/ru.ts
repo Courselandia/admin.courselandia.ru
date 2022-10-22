@@ -1,0 +1,18 @@
+export default {
+  name: 'Логи',
+  info: 'Info',
+  alert: 'Alert',
+  critical: 'Critical',
+  debug: 'Debug',
+  error: 'Error',
+  notice: 'Notice',
+  warning: 'Warning',
+  level_name: 'Уровень',
+  created_at: 'Дата создания',
+  message: 'Сообщение',
+  showLog: 'Просмотр лога',
+  channel: 'Канал',
+  level: 'Код',
+  context: 'Контекст',
+  trace: 'Трассировка',
+};

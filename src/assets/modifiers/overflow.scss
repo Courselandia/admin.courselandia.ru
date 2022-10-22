@@ -1,0 +1,65 @@
+.overflow {
+  &--hidden {
+    overflow: hidden;
+  }
+
+  &--auto {
+    overflow: auto;
+  }
+
+  &--unset {
+    overflow: unset;
+  }
+
+  &--inherit {
+    overflow: inherit;
+  }
+
+  &--scroll {
+    overflow: scroll;
+  }
+
+  &-x {
+    &--hidden {
+      overflow-x: hidden;
+    }
+
+    &--auto {
+      overflow-x: auto;
+    }
+
+    &--unset {
+      overflow-x: unset;
+    }
+
+    &--inherit {
+      overflow-x: inherit;
+    }
+
+    &--scroll {
+      overflow-x: scroll;
+    }
+  }
+
+  &-y {
+    &--hidden {
+      overflow-y: hidden;
+    }
+
+    &--auto {
+      overflow-y: auto;
+    }
+
+    &--unset {
+      overflow-y: unset;
+    }
+
+    &--inherit {
+      overflow-y: inherit;
+    }
+
+    &--scroll {
+      overflow-y: scroll;
+    }
+  }
+}

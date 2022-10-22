@@ -1,0 +1,18 @@
+export default {
+  name: 'Logs',
+  info: 'Info',
+  alert: 'Alert',
+  critical: 'Critical',
+  debug: 'Debug',
+  error: 'Error',
+  notice: 'Notice',
+  warning: 'Warning',
+  level_name: 'Level',
+  created_at: 'Created At',
+  message: 'Message',
+  showLog: 'Show log',
+  channel: 'Channel',
+  level: 'Level',
+  context: 'Context',
+  trace: 'Trace',
+};

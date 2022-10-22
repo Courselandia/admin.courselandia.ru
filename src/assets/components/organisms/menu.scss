@@ -1,0 +1,28 @@
+.menu {
+  display: flex;
+
+  @media all and (max-width: 750px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  @media all and (max-width: 359px) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  &__item {
+    &--center {
+      flex-grow: 2;
+
+      @media all and (max-width: 750px) {
+        display: none;
+      }
+    }
+
+    &--right {
+      flex-grow: 1;
+      width: 250px;
+    }
+  }
+}

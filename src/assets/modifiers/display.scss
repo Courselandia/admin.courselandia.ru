@@ -1,0 +1,35 @@
+@import "@/assets/vars/modifiers/main";
+
+.display {
+  &--inline {
+    display: inline !important;
+  }
+
+  &--inline-block {
+    display: inline-block !important;
+  }
+
+  &--block {
+    display: block !important;
+  }
+
+  &--table {
+    display: table !important;
+  }
+
+  &--table-cell {
+    display: table-cell !important;
+  }
+
+  &--table-row {
+    display: table-row !important;
+  }
+
+  &--flex {
+    display: flex !important;
+  }
+
+  &--inline-flex {
+    display: inline-flex !important;
+  }
+}

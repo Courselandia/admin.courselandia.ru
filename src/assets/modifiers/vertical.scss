@@ -1,0 +1,15 @@
+@import "@/assets/vars/modifiers/main";
+
+.vertical {
+  &--middle {
+    vertical-align: middle;
+  }
+
+  &--bottom {
+    vertical-align: bottom;
+  }
+
+  &--top {
+    vertical-align: top;
+  }
+}

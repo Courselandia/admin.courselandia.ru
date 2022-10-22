@@ -1,0 +1,47 @@
+@import "@/assets/vars/modifiers/main";
+
+.m {
+  @each $range in $ranges-minus {
+    &a-m-#{$range * 1} {
+      margin: -$range;
+    }
+
+    &t-m-#{$range * 1} {
+      margin-top: -$range;
+    }
+
+    &l-m-#{$range * 1} {
+      margin-left: -$range;
+    }
+
+    &r-m-#{$range * 1} {
+      margin-right: -$range;
+    }
+
+    &b-m-#{$range * 1} {
+      margin-bottom: -$range;
+    }
+  }
+
+  @each $range in $ranges {
+    &a-#{$range} {
+      margin: #{$range}px !important;
+    }
+
+    &t-#{$range} {
+      margin-top: #{$range}px !important;
+    }
+
+    &r-#{$range} {
+      margin-right: #{$range}px !important;
+    }
+
+    &b-#{$range} {
+      margin-bottom: #{$range}px !important;
+    }
+
+    &l-#{$range} {
+      margin-left: #{$range}px !important;
+    }
+  }
+}

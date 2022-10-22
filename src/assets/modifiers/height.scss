@@ -1,0 +1,15 @@
+@import "@/assets/vars/modifiers/main";
+
+.height {
+  &--wide {
+    height: 100%;
+  }
+
+  &--screen {
+    height: 100vh;
+  }
+
+  &--auto {
+    height: auto;
+  }
+}

@@ -1,0 +1,35 @@
+import '@/plugins/dayjs';
+
+// @ts-ignore
+import CKEditor from '@mayasabha/ckeditor4-vue3';
+import { maska } from 'maska';
+import {
+  createPinia,
+} from 'pinia';
+import {
+  createApp,
+} from 'vue';
+import {
+  createMetaManager,
+} from 'vue-meta';
+
+import App from '@/App.vue';
+import CenterLayout from '@/layouts/Center.vue';
+import DefaultLayout from '@/layouts/Default.vue';
+import router from '@/plugins/router';
+
+const app = createApp(App);
+const pinia = createPinia();
+const metaManager = createMetaManager();
+
+app.use(pinia)
+  .use(router)
+  .use(metaManager)
+  .use(CKEditor);
+
+app.directive('maska', maska);
+
+app.component('CenterLayout', CenterLayout);
+app.component('DefaultLayout', DefaultLayout);
+
+app.mount('#app');

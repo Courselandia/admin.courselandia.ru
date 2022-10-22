@@ -1,0 +1,25 @@
+@import "@/assets/vars/modifiers/main";
+
+.p {
+  @each $range in $ranges {
+    &a-#{$range} {
+      padding: #{$range}px !important;
+    }
+
+    &t-#{$range} {
+      padding-top: #{$range}px !important;
+    }
+
+    &r-#{$range} {
+      padding-right: #{$range}px !important;
+    }
+
+    &b-#{$range} {
+      padding-bottom: #{$range}px !important;
+    }
+
+    &l-#{$range} {
+      padding-left: #{$range}px !important;
+    }
+  }
+}

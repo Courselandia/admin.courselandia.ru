@@ -1,0 +1,36 @@
+.scroll
+{
+    &--x
+    {
+        overflow-x: auto;
+    }
+
+    &--y
+    {
+        overflow-y: auto;
+    }
+
+    &--no-scroll,
+    &--no-scroll-x,
+    &--no-scroll-y
+    {
+        width: 100%;
+        position: fixed;
+        top: 0;
+    }
+
+    &--no-scroll
+    {
+        overflow: hidden;
+    }
+
+    &--no-scroll-x
+    {
+        overflow-x: hidden;
+    }
+
+    &--no-scroll-y
+    {
+        overflow-y: hidden;
+    }
+}

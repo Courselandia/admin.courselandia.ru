@@ -1,0 +1,20 @@
+@import "@/assets/vars/modifiers/main";
+
+.clear {
+  &--none {
+    clear: none;
+  }
+
+  &--both {
+    clear: both;
+    float: none;
+  }
+
+  &--left {
+    clear: left;
+  }
+
+  &--right {
+    clear: right;
+  }
+}

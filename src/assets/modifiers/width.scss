@@ -1,0 +1,11 @@
+@import "@/assets/vars/modifiers/main";
+
+.width {
+  &--wide {
+    width: 100% !important;
+  }
+
+  &--auto {
+    width: auto !important;
+  }
+}

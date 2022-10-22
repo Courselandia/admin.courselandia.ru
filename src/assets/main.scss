@@ -1,0 +1,43 @@
+@import 'ant-design-vue/dist/antd.css';
+@import '@/assets/modifiers/align.scss';
+@import '@/assets/modifiers/clear.scss';
+@import '@/assets/modifiers/cursor.scss';
+@import '@/assets/modifiers/display.scss';
+@import '@/assets/modifiers/flex.scss';
+@import '@/assets/modifiers/float.scss';
+@import '@/assets/modifiers/height.scss';
+@import '@/assets/modifiers/hide.scss';
+@import '@/assets/modifiers/margin.scss';
+@import '@/assets/modifiers/max.scss';
+@import '@/assets/modifiers/overflow.scss';
+@import '@/assets/modifiers/padding.scss';
+@import '@/assets/modifiers/scroll.scss';
+@import '@/assets/modifiers/show.scss';
+@import '@/assets/modifiers/vertical.scss';
+@import '@/assets/modifiers/width.scss';
+
+@import '@/assets/animations/fade.scss';
+
+#app {
+  height: 100%;
+}
+
+.content {
+  &__breadcrumbs {
+    margin: 16px 0 !important;
+  }
+
+  &__panel {
+    background-color: #ffffff;
+    margin: 0;
+    height: calc(100% - 22px);
+  }
+}
+
+.buttons-flex {
+  @media all and (max-width: 576px) {
+    .ant-form-item-control {
+      margin-left: 0 !important;
+    }
+  }
+}

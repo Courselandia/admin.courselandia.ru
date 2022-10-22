@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: admin-courselandia-ru
+        container_name: admin-courselandia-ru
+        restart: unless-stopped
+        working_dir: /var/www
+        ports:
+            - ${DOCKER_APP_PORT}:16000
+        volumes:
+            - ./public:/var/www/public
+        networks:
+            - network
+
+networks:
+    network:
+        driver: bridge

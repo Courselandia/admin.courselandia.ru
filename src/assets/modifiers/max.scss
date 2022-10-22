@@ -1,0 +1,26 @@
+@import "@/assets/vars/modifiers/main";
+
+$ranges: (
+  100,
+  200,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900
+);
+
+.max {
+  box-sizing: border-box;
+
+  &--width {
+    @each $range in $ranges {
+      &-#{$range} {
+        width: 100%;
+        max-width: #{$range}px !important;
+      }
+    }
+  }
+}
