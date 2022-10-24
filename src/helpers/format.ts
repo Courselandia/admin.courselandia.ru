@@ -86,7 +86,7 @@ export const latin = (string: string, separator: string = '-'): string => {
     }
   }
 
-  return translate;
+  return translate.toLowerCase();
 };
 
 export const capitalize = (value: string): string => value.charAt(0).toUpperCase() + value.slice(1);

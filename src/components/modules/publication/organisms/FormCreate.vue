@@ -72,12 +72,15 @@
                   name="header"
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
-                  <Input v-model:value="form.header" />
+                  <Input
+                    v-model:value="form.header"
+                    @keyup="onChangeName"
+                  />
                 </Item>
                 <Item
                   :label="lang('publication.link')"
                   name="link"
-                  :rules="[{ required: true, type: 'string', max: 191 }]"
+                  :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
                 </Item>
@@ -235,7 +238,7 @@ import Row from 'ant-design-vue/lib/row';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import { createVNode, ref, watch } from 'vue';
+import { createVNode, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
@@ -262,6 +265,7 @@ const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 const image = ref<string | ArrayBuffer | null>();
+const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
   message: null,
@@ -279,12 +283,6 @@ const form = ref<IPublicationForm>({
   description: null,
   keywords: null,
   status: true,
-});
-
-watch(form, () => {
-  form.value.link = latin(form.value.header);
-}, {
-  deep: true,
 });
 
 const onClickReset = (): void => {
@@ -338,6 +336,10 @@ const onClickImageDestroy = async (): Promise<void> => {
       image.value = null;
     },
   });
+};
+
+const onChangeName = () => {
+  form.value.link = latin(form.value.header);
 };
 </script>
 

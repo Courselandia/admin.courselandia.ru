@@ -21,24 +21,25 @@ export default function toQuery(
         queryFilters += '&';
       }
 
-      if (filters[field]) {
-        const value = filters[field];
+      const value = filters[field];
 
-        if (value) {
-          if (typeof value === 'object') {
-            let i = 0;
+      if (value !== null && value !== undefined) {
+        if (typeof value === 'object') {
+          let i = 0;
 
-            Object.values(value).forEach((item) => {
-              if (queryFilters !== '') {
-                queryFilters += '&';
-              }
+          Object.values(value).forEach((item) => {
+            if (queryFilters !== '') {
+              queryFilters += '&';
+            }
 
-              queryFilters += `filters[${field}][${i}]=${encodeURIComponent(item as string)}`;
-              i++;
-            });
-          } else {
-            queryFilters += `filters[${field}]=${encodeURIComponent(String(filters[field]))}`;
-          }
+            queryFilters += `filters[${field}][${i}]=${encodeURIComponent(item as string)}`;
+            i++;
+          });
+        } else if (typeof value === 'boolean' || value === 'true' || value === 'false') {
+          const val = (filters[field] === true || filters[field] === 'true') ? 1 : 0;
+          queryFilters += `filters[${field}]=${val}`;
+        } else {
+          queryFilters += `filters[${field}]=${encodeURIComponent(String(filters[field]))}`;
         }
       }
     });

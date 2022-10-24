@@ -1,5 +1,8 @@
 <template>
-  <div :class="{'table-column-filter': true, 'table-column-filter--big': type === 'dateRange'}">
+  <div
+    v-outside-click="onClickOutside"
+    :class="{'table-column-filter': true, 'table-column-filter--big': type === 'dateRange'}"
+  >
     <div class="pa-8 display--block">
       <template v-if="type === 'text'">
         <Input
@@ -28,7 +31,7 @@
             :value="selectedKeys"
             format="DD.MM.YYYY"
             @change="value => setSelectedKeys(value ? value : [])"
-            @press-enter="onFilterSearch(selectedKeys, column.key, type === 'dateRange')"
+            @press-enter="onFilterSearch(selectedKeys, column.key, true)"
           />
         </Space>
       </template>
@@ -38,6 +41,7 @@
       <Button
         size="small"
         type="text"
+        :disabled="!selectedKeys[0]"
         @click="onFilterReset"
       >
         <Lang value="dashboard.reset" />
@@ -133,7 +137,56 @@ const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false
 const onFilterReset = (): void => {
   clearFilters.value();
   filter.value = '';
+};
+
+const isDataPickerDropdown = (element: HTMLElement) => {
+  const check = element.className.split(' ').indexOf('ant-picker-dropdown') !== -1;
+
+  if (check) {
+    return true;
+  }
+
+  if (element.parentElement) {
+    const checkInside = isDataPickerDropdown(element.parentElement);
+
+    if (checkInside) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+const onClickOutside = (event: PointerEvent): void => {
+  const target = event?.target as HTMLDivElement;
+  const { parentElement } = target;
+
+  if (parentElement) {
+    const check = isDataPickerDropdown(parentElement);
+
+    if (check) {
+      return;
+    }
+  }
+
   confirm.value();
+  const { type, selectedKeys, column } = props;
+  const multiple = type === 'dateRange';
+
+  if (multiple) {
+    filter.value = [];
+
+    for (let i = 0; i < selectedKeys.length; i++) {
+      filter.value[i] = selectedKeys[i];
+    }
+  } else {
+    const [value] = selectedKeys;
+    filter.value = value;
+  }
+
+  if (column.key) {
+    filter.column = column.key;
+  }
 };
 </script>
 

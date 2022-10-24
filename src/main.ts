@@ -14,6 +14,7 @@ import {
 } from 'vue-meta';
 
 import App from '@/App.vue';
+import outsideClickDirective from '@/directives/outsideClick';
 import CenterLayout from '@/layouts/Center.vue';
 import DefaultLayout from '@/layouts/Default.vue';
 import router from '@/plugins/router';
@@ -25,7 +26,8 @@ const metaManager = createMetaManager();
 app.use(pinia)
   .use(router)
   .use(metaManager)
-  .use(CKEditor);
+  .use(CKEditor)
+  .directive('outside-click', outsideClickDirective);
 
 app.directive('maska', maska);
 

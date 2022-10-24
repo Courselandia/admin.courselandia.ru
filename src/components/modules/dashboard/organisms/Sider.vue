@@ -22,6 +22,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="directions"
+        @click="onClickMenuItem('Directions')"
+      >
+        <template #icon>
+          <NodeIndexOutlined />
+        </template>
+        <Lang value="direction.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -69,6 +79,7 @@ import {
   BarsOutlined,
   FileTextOutlined,
   MessageOutlined,
+  NodeIndexOutlined,
   NotificationOutlined,
   TeamOutlined,
 } from '@ant-design/icons-vue';
@@ -114,6 +125,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'users';
     } else if (path.indexOf('/dashboard/publications') !== -1) {
       menu.value[0] = 'publications';
+    } else if (path.indexOf('/dashboard/directions') !== -1) {
+      menu.value[0] = 'directions';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {
