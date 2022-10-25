@@ -1,4 +1,4 @@
-FROM node:17.9.1 as build-stage
+FROM node:19.0.0 as build-stage
 WORKDIR /var/www
 COPY package*.json ./
 RUN npm install

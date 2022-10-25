@@ -32,6 +32,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="professions"
+        @click="onClickMenuItem('Professions')"
+      >
+        <template #icon>
+          <ContactsOutlined />
+        </template>
+        <Lang value="profession.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -77,6 +87,7 @@
 <script lang="ts" setup>
 import {
   BarsOutlined,
+  ContactsOutlined,
   FileTextOutlined,
   MessageOutlined,
   NodeIndexOutlined,
@@ -127,6 +138,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'publications';
     } else if (path.indexOf('/dashboard/directions') !== -1) {
       menu.value[0] = 'directions';
+    } else if (path.indexOf('/dashboard/professions') !== -1) {
+      menu.value[0] = 'professions';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {
