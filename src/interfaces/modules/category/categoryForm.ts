@@ -1,6 +1,6 @@
 import TId from '@/types/id';
 
-export default interface IProfessionForm {
+export default interface ICategoryForm {
   id?: TId;
   name: string;
   header: string | null;
@@ -9,5 +9,7 @@ export default interface IProfessionForm {
   title: string | null;
   description: string | null;
   keywords: string | null;
+  directions: Array<number>;
+  professions: Array<number>;
   status: boolean;
 }

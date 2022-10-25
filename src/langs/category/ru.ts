@@ -1,0 +1,16 @@
+export default {
+  name: 'Категории',
+  addCategory: 'Добавить категорию',
+  updateCategory: 'Редактировать профессию',
+  createCategory: 'Создать профессию',
+  nameField: 'Название',
+  header: 'Заголовок',
+  link: 'Ссылка',
+  text: 'Текст',
+  title: 'Тайтл',
+  description: 'Описание',
+  keywords: 'Ключевые слова',
+  weight: 'Вес',
+  directions: 'Направления',
+  professions: 'Профессии',
+};

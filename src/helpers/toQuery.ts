@@ -2,15 +2,20 @@ import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 
 export default function toQuery(
-  offset: number = 0,
-  limit: number = 20,
+  offset: number | null = null,
+  limit: number | null = null,
   sorts: ISorts | null = null,
   filters: IFilters | null = null,
 ): string {
-  const params: Record<string, string> = {
-    offset: String(offset),
-    limit: String(limit),
-  };
+  const params: Record<string, string> = {};
+
+  if (offset !== null) {
+    params.offset = String(offset);
+  }
+
+  if (limit !== null) {
+    params.limit = String(limit);
+  }
 
   let query: string = new URLSearchParams(params).toString();
   let queryFilters: string = '';

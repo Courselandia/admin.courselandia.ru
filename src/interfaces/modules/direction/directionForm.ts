@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import TId from '@/types/id';
 
 export default interface IDirectionForm {

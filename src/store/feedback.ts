@@ -34,8 +34,8 @@ export default defineStore('feedback', {
       }
     },
     async read(
-      offset: number = 0,
-      limit: number = 20,
+      offset: number | null = null,
+      limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
     ): Promise<IResponseItems<IFeedback>> {

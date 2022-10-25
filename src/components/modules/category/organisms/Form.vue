@@ -38,7 +38,7 @@
             </RadioGroup>
           </Item>
           <Item
-            :label="lang('profession.nameField')"
+            :label="lang('category.nameField')"
             name="name"
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
@@ -48,18 +48,46 @@
             />
           </Item>
           <Item
-            :label="lang('profession.header')"
+            :label="lang('category.header')"
             name="header"
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="form.header" />
           </Item>
           <Item
-            :label="lang('profession.link')"
+            :label="lang('category.link')"
             name="link"
             :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
           >
             <Input v-model:value="form.link" />
+          </Item>
+          <Item
+            :label="lang('category.directions')"
+            name="directions"
+          >
+            <Select
+              v-model:value="form.directions"
+              mode="multiple"
+              class="width--wide"
+              show-search
+              :filter-option="filterOption"
+              :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+              :loading="loadingSelects"
+            />
+          </Item>
+          <Item
+            :label="lang('category.professions')"
+            name="professions"
+          >
+            <Select
+              v-model:value="form.professions"
+              mode="multiple"
+              class="width--wide"
+              show-search
+              :filter-option="filterOption"
+              :options="professionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+              :loading="loadingSelects"
+            />
           </Item>
         </div>
       </TabPane>
@@ -69,21 +97,21 @@
       >
         <div class="width--wide max--width-600">
           <Item
-            :label="lang('profession.title')"
+            :label="lang('category.title')"
             name="title"
             :rules="[{ type: 'string', max: 500 }]"
           >
             <Input v-model:value="form.title" />
           </Item>
           <Item
-            :label="lang('profession.description')"
+            :label="lang('category.description')"
             name="description"
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.description" />
           </Item>
           <Item
-            :label="lang('profession.keywords')"
+            :label="lang('category.keywords')"
             name="keywords"
             :rules="[{ type: 'string', max: 1000 }]"
           >
@@ -93,7 +121,7 @@
       </TabPane>
       <TabPane
         key="article"
-        :tab="lang('profession.text')"
+        :tab="lang('category.text')"
       >
         <Ckeditor
           v-model:value="form.text"
@@ -127,16 +155,20 @@
 </template>
 
 <script lang="ts" setup>
+import { MehOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
+import { storeToRefs } from 'pinia';
 import {
-  defineProps,
+  defineProps, h, onMounted,
   PropType,
   ref,
   toRefs,
@@ -147,13 +179,16 @@ import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
-import IProfessionForm from '@/interfaces/modules/profession/professionForm';
+import ICategoryForm from '@/interfaces/modules/category/categoryForm';
+import ISorts from '@/interfaces/molecules/table/sorts';
+import direction from '@/store/direction';
+import profession from '@/store/profession';
 
 const formRef = ref<FormInstance>();
 
 const props = defineProps({
   value: {
-    type: Object as PropType<IProfessionForm>,
+    type: Object as PropType<ICategoryForm>,
     required: true,
   },
   alertMessage: {
@@ -183,9 +218,38 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 
+const loadingSelects = ref(true);
+const readDirections = direction().read;
+const directionData = storeToRefs(direction());
+const directionItems = directionData.items;
+
+const readProfessions = profession().read;
+const professionData = storeToRefs(profession());
+const professionItems = professionData.items;
+
+onMounted(async (): Promise<void> => {
+  loadingSelects.value = true;
+
+  try {
+    await readDirections(null, null, { weight: 'ASC' } as ISorts);
+    await readProfessions(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  loadingSelects.value = false;
+});
+
 const emit = defineEmits({
-  'update:value': (_: IProfessionForm) => true,
-  submit: (_: IProfessionForm, __?: FormInstance) => true,
+  'update:value': (_: ICategoryForm) => true,
+  submit: (_: ICategoryForm, __?: FormInstance) => true,
   reset: (_?: FormInstance) => true,
 });
 
@@ -215,4 +279,9 @@ const onReset = () => {
 const onChangeName = () => {
   form.value.link = latin(form.value.name);
 };
+
+const filterOption = (input: string, option: any) => option
+  ?.label
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
 </script>

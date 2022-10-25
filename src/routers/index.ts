@@ -4,6 +4,7 @@ import {
 
 import router404 from '@/routers/404';
 import routerAlerts from '@/routers/alerts';
+import routerCategories from '@/routers/categories';
 import routerDashboard from '@/routers/dashboard';
 import routerDirections from '@/routers/directions';
 import routerEntrance from '@/routers/entrance';
@@ -22,6 +23,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerAlerts,
   ...routerPublications,
   ...routerDirections,
+  ...routerCategories,
   ...routerProfessions,
   ...routerFeedbacks,
   ...routerLogs,

@@ -16,8 +16,8 @@ export default defineStore('alert', {
   }),
   actions: {
     async read(
-      offset: number = 0,
-      limit: number = 20,
+      offset: number | null = null,
+      limit: number | null = null,
       status: boolean | null = null,
     ): Promise<IResponseItems<IAlert>> {
       try {

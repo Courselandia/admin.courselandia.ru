@@ -6,7 +6,7 @@ export default {
   publishedAt: 'Дата публикации',
   link: 'Ссылка',
   anons: 'Анонс',
-  title: 'Титл',
+  title: 'Тайтл',
   description: 'Описание',
   keywords: 'Ключевые слова',
   article: 'Статья',

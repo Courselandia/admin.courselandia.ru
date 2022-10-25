@@ -1,0 +1,16 @@
+export default {
+  name: 'Categories',
+  addCategory: 'Add category',
+  updateCategory: 'Edit category',
+  createCategory: 'Create category',
+  nameField: 'Name',
+  header: 'Header',
+  link: 'Link',
+  text: 'Text',
+  title: 'Title',
+  description: 'Description',
+  keywords: 'Keywords',
+  weight: 'Weight',
+  directions: 'Directions',
+  professions: 'Professions',
+};

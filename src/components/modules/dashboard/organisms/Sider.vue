@@ -42,6 +42,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="categories"
+        @click="onClickMenuItem('Categories')"
+      >
+        <template #icon>
+          <AppstoreOutlined />
+        </template>
+        <Lang value="category.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -86,6 +96,7 @@
 
 <script lang="ts" setup>
 import {
+  AppstoreOutlined,
   BarsOutlined,
   ContactsOutlined,
   FileTextOutlined,
@@ -140,6 +151,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'directions';
     } else if (path.indexOf('/dashboard/professions') !== -1) {
       menu.value[0] = 'professions';
+    } else if (path.indexOf('/dashboard/categories') !== -1) {
+      menu.value[0] = 'categories';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {
