@@ -1,8 +1,8 @@
 export default {
-  name: 'Профессии',
-  addProfession: 'Добавить профессию',
-  updateProfession: 'Редактировать профессию',
-  createProfession: 'Создать профессию',
+  name: 'Навыки',
+  addSkill: 'Добавить навык',
+  updateSkill: 'Редактировать навык',
+  createSkill: 'Создать навык',
   nameField: 'Название',
   header: 'Заголовок',
   link: 'Ссылка',

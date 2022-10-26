@@ -10,7 +10,6 @@ export default {
   title: 'Title',
   description: 'Description',
   keywords: 'Keywords',
-  weight: 'Weight',
   directions: 'Directions',
   professions: 'Professions',
 };

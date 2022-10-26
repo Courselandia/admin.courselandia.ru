@@ -52,6 +52,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="skills"
+        @click="onClickMenuItem('Skills')"
+      >
+        <template #icon>
+          <FormatPainterOutlined />
+        </template>
+        <Lang value="skill.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -100,6 +110,7 @@ import {
   BarsOutlined,
   ContactsOutlined,
   FileTextOutlined,
+  FormatPainterOutlined,
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
@@ -153,6 +164,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'professions';
     } else if (path.indexOf('/dashboard/categories') !== -1) {
       menu.value[0] = 'categories';
+    } else if (path.indexOf('/dashboard/skills') !== -1) {
+      menu.value[0] = 'skills';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {

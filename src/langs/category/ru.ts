@@ -10,7 +10,6 @@ export default {
   title: 'Тайтл',
   description: 'Описание',
   keywords: 'Ключевые слова',
-  weight: 'Вес',
   directions: 'Направления',
   professions: 'Профессии',
 };
