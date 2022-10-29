@@ -1,0 +1,17 @@
+export default {
+  name: 'Schools',
+  addSchool: 'Add school',
+  updateSchool: 'Edit school',
+  nameField: 'Name',
+  header: 'Header',
+  link: 'Link',
+  text: 'Text',
+  site: 'Site',
+  rating: 'Rating',
+  title: 'Title',
+  description: 'Description',
+  keywords: 'Keywords',
+  imageLogo: 'Logo Image',
+  imageSite: 'Site Image',
+  createSchool: 'Create School',
+};

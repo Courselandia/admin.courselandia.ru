@@ -13,7 +13,7 @@
       <Card>
         <template #title>
           <div ref="titleRef">
-            <Lang value="publication.updatePublication" />
+            <Lang value="school.addSchool" />
           </div>
         </template>
 
@@ -56,43 +56,47 @@
                   </RadioGroup>
                 </Item>
                 <Item
-                  :label="lang('publication.publishedAt')"
-                  name="published_at"
-                  :rules="[{ required: true }]"
+                  :label="lang('school.nameField')"
+                  name="name"
+                  :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
-                  <DatePicker
-                    v-model:value="form.published_at"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    show-time
-                    style="width: 100%"
+                  <Input
+                    v-model:value="form.name"
+                    @keyup="onChangeName"
                   />
                 </Item>
                 <Item
-                  :label="lang('publication.header')"
+                  :label="lang('school.header')"
                   name="header"
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
                     v-model:value="form.header"
-                    @keyup="onChangeName"
                   />
                 </Item>
                 <Item
-                  :label="lang('publication.link')"
+                  :label="lang('school.link')"
                   name="link"
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
                 </Item>
                 <Item
-                  :label="lang('publication.anons')"
-                  name="anons"
-                  :rules="[{ type: 'string', max: 191 }]"
+                  :label="lang('school.rating')"
+                  name="rating"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 5 }]"
                 >
-                  <TextArea
-                    v-model:value="form.anons"
-                    style="height: 200px"
+                  <InputNumber
+                    v-model:value="form.rating"
+                    class="width--wide"
                   />
+                </Item>
+                <Item
+                  :label="lang('school.site')"
+                  name="site"
+                  :rules="[{ required: false, type: 'url' }]"
+                >
+                  <Input v-model:value="form.site" />
                 </Item>
               </div>
             </TabPane>
@@ -102,21 +106,21 @@
             >
               <div class="width--wide max--width-600">
                 <Item
-                  :label="lang('publication.title')"
+                  :label="lang('school.title')"
                   name="title"
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
                 </Item>
                 <Item
-                  :label="lang('publication.description')"
+                  :label="lang('school.description')"
                   name="description"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.description" />
                 </Item>
                 <Item
-                  :label="lang('publication.keywords')"
+                  :label="lang('school.keywords')"
                   name="keywords"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
@@ -125,12 +129,12 @@
               </div>
             </TabPane>
             <TabPane
-              key="article"
-              :tab="lang('publication.article')"
+              key="text"
+              :tab="lang('school.text')"
             >
               <Ckeditor
-                v-model:value="form.article"
-                name="article"
+                v-model:value="form.text"
+                name="text"
                 class="mb-30"
               />
             </TabPane>
@@ -169,17 +173,17 @@
       :xs="24"
       class="mb-20"
     >
-      <Card>
+      <Card class="mb-20">
         <template #title>
-          <Lang value="dashboard.image" />
+          <Lang value="school.imageLogo" />
         </template>
         <template
-          v-if="image"
+          v-if="image.logo"
           #extra
         >
           <Button
             danger
-            @click="onClickImageDestroy"
+            @click="onClickImageDestroy('logo')"
           >
             <template #icon>
               <DeleteOutlined />
@@ -191,28 +195,84 @@
         </template>
 
         <Alert
-          v-if="imageAlert.message"
-          :message="imageAlert.type === 'success'
+          v-if="imageAlert.logo.message"
+          :message="imageAlert.logo.type === 'success'
             ? lang('dashboard.success')
             : lang('dashboard.error')"
-          :description="imageAlert.message"
-          :type="imageAlert.type"
+          :description="imageAlert.logo.message"
+          :type="imageAlert.logo.type"
           class="mb-25"
         />
 
         <Upload
           :max-count="1"
           :multiple="false"
-          :before-upload="onBeforeUploadFile"
+          :before-upload="onBeforeUploadFileLogo"
           :show-upload-list="false"
           name="file"
           accept="image/*"
           list-type="picture-card"
         >
-          <LoadingOutlined v-if="imageUpdateLoading" />
+          <LoadingOutlined v-if="imageUpdateLoading.logo" />
           <img
-            v-else-if="image"
-            :src="image"
+            v-else-if="image.logo"
+            :src="image.logo"
+            alt="avatar"
+            width="208"
+          >
+          <div v-else>
+            <PlusOutlined />
+            <div class="ant-upload-text">
+              <Lang value="dashboard.upload" />
+            </div>
+          </div>
+        </Upload>
+      </Card>
+
+      <Card class="mb-20">
+        <template #title>
+          <Lang value="school.imageSite" />
+        </template>
+        <template
+          v-if="image.site"
+          #extra
+        >
+          <Button
+            danger
+            @click="onClickImageDestroy('site')"
+          >
+            <template #icon>
+              <DeleteOutlined />
+            </template>
+            <span>
+              <Lang value="dashboard.destroy" />
+            </span>
+          </Button>
+        </template>
+
+        <Alert
+          v-if="imageAlert.site.message"
+          :message="imageAlert.site.type === 'success'
+            ? lang('dashboard.success')
+            : lang('dashboard.error')"
+          :description="imageAlert.site.message"
+          :type="imageAlert.site.type"
+          class="mb-25"
+        />
+
+        <Upload
+          :max-count="1"
+          :multiple="false"
+          :before-upload="onBeforeUploadFileSite"
+          :show-upload-list="false"
+          name="file"
+          accept="image/*"
+          list-type="picture-card"
+        >
+          <LoadingOutlined v-if="imageUpdateLoading.site" />
+          <img
+            v-else-if="image.site"
+            :src="image.site"
             alt="avatar"
             width="208"
           >
@@ -240,16 +300,15 @@ import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Col from 'ant-design-vue/lib/col';
-import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import { createVNode, ref } from 'vue';
 import { useMeta } from 'vue-meta';
@@ -260,21 +319,26 @@ import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
-import IPublicationForm from '@/interfaces/modules/publication/publicationForm';
+import ISchoolForm from '@/interfaces/modules/school/schoolForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import publication from '@/store/publication';
+import school from '@/store/school';
 import TId from '@/types/id';
 
 useMeta({
-  title: lang('publication.updatePublication'),
+  title: lang('school.updateSchool'),
 });
 
 const route = useRoute();
-const imageUpdateLoading = ref(false);
-const imageDestroyLoading = ref(false);
+const imageUpdateLoading = ref<Record<string, boolean>>({
+  logo: false,
+  site: false,
+});
+const imageDestroyLoading = ref<Record<string, boolean>>({
+  logo: false,
+  site: false,
+});
 const { id } = route.params;
 const { Item } = Form;
-const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
@@ -282,13 +346,17 @@ const {
   update,
   imageUpdate,
   imageDestroy,
-} = publication();
-const { item } = storeToRefs(publication());
+} = school();
+const { item } = storeToRefs(school());
 
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+const image = ref<Record<string, string | ArrayBuffer | null>>({
+  logo: item.value?.image_logo_id?.path || null,
+  site: item.value?.image_site_id?.path || null,
+});
+
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -296,27 +364,36 @@ const alert = ref<IAlert>({
   type: null,
 });
 
-const imageAlert = ref<IAlert>({
-  message: null,
-  type: null,
-});
+const imageAlert = ref<Record<string, IAlert>>(
+  {
+    logo: {
+      message: null,
+      type: null,
+    },
+    site: {
+      message: null,
+      type: null,
+    },
+  },
+);
 
-const getDefaultFormValue = (): IPublicationForm => ({
+const getDefaultFormValue = (): ISchoolForm => ({
   id: id as TId,
-  published_at: dayjs.utc(item.value?.published_at)
-    .tz(dayjs.tz.guess()) || null,
+  name: item.value?.name || '',
   header: item.value?.header || '',
   link: item.value?.link || '',
-  anons: item.value?.anons || null,
-  article: item.value?.article || null,
-  image: null,
+  text: item.value?.text || null,
+  rating: item.value?.rating || null,
+  site: item.value?.site || null,
+  imageLogo: null,
+  imageSite: null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
-const form = ref<IPublicationForm>(getDefaultFormValue());
+const form = ref<ISchoolForm>(getDefaultFormValue());
 
 const onClickReset = (): void => {
   form.value = getDefaultFormValue();
@@ -345,53 +422,73 @@ const onSubmit = async (): Promise<void> => {
   loading.value = false;
 };
 
-const onBeforeUploadFile = async (file: File): Promise<boolean> => {
-  imageAlert.value.message = '';
-  imageUpdateLoading.value = true;
+const onBeforeUploadFileLogo = async (file: File): Promise<boolean> => {
+  imageAlert.value.logo.message = '';
+  imageUpdateLoading.value.logo = true;
 
   try {
-    await imageUpdate(id as TId, file);
+    await imageUpdate(id as TId, 'logo', file);
 
-    image.value = await base64(file);
+    image.value.logo = await base64(file);
   } catch (error: Error | any) {
-    imageAlert.value.message = error.response.data.message
+    imageAlert.value.logo.message = error.response.data.message
       ? error.response.data.message
       : error.message;
-    imageAlert.value.type = 'error';
+    imageAlert.value.logo.type = 'error';
   }
 
-  imageUpdateLoading.value = false;
+  imageUpdateLoading.value.logo = false;
 
   return false;
 };
 
-const onClickImageDestroy = async (): Promise<void> => {
+const onBeforeUploadFileSite = async (file: File): Promise<boolean> => {
+  imageAlert.value.site.message = '';
+  imageUpdateLoading.value.site = true;
+
+  try {
+    await imageUpdate(id as TId, 'site', file);
+
+    image.value.site = await base64(file);
+  } catch (error: Error | any) {
+    imageAlert.value.site.message = error.response.data.message
+      ? error.response.data.message
+      : error.message;
+    imageAlert.value.site.type = 'error';
+  }
+
+  imageUpdateLoading.value.site = false;
+
+  return false;
+};
+
+const onClickImageDestroy = async (type: string): Promise<void> => {
   Modal.confirm({
     title: lang('dashboard.alert'),
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      imageAlert.value.message = '';
-      imageDestroyLoading.value = true;
+      imageAlert.value[type].message = '';
+      imageDestroyLoading.value[type] = true;
 
       try {
-        await imageDestroy(id as TId);
+        await imageDestroy(id as TId, type);
 
-        image.value = null;
+        image.value[type] = null;
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message
           : error.message;
-        imageAlert.value.type = 'error';
+        imageAlert.value[type].type = 'error';
       }
 
-      imageDestroyLoading.value = false;
+      imageDestroyLoading.value[type] = false;
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header);
+  form.value.link = latin(form.value.name);
 };
 </script>
 

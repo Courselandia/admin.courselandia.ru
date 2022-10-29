@@ -62,6 +62,26 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="tools"
+        @click="onClickMenuItem('Tools')"
+      >
+        <template #icon>
+          <ToolOutlined />
+        </template>
+        <Lang value="tool.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="schools"
+        @click="onClickMenuItem('Schools')"
+      >
+        <template #icon>
+          <ShopOutlined />
+        </template>
+        <Lang value="school.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -114,7 +134,9 @@ import {
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
+  ShopOutlined,
   TeamOutlined,
+  ToolOutlined,
 } from '@ant-design/icons-vue';
 import Layout from 'ant-design-vue/lib/layout';
 import Menu from 'ant-design-vue/lib/menu';
@@ -166,6 +188,10 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'categories';
     } else if (path.indexOf('/dashboard/skills') !== -1) {
       menu.value[0] = 'skills';
+    } else if (path.indexOf('/dashboard/tools') !== -1) {
+      menu.value[0] = 'tools';
+    } else if (path.indexOf('/dashboard/schools') !== -1) {
+      menu.value[0] = 'schools';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {

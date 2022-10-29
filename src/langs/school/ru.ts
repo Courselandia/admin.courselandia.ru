@@ -1,0 +1,17 @@
+export default {
+  name: 'Школы',
+  addSchool: 'Добавить школу',
+  updateSchool: 'Редактировать школу',
+  nameField: 'Название',
+  header: 'Заголовок',
+  link: 'Ссылка',
+  text: 'Текст',
+  rating: 'Рейтинг',
+  site: 'Сайт',
+  title: 'Тайтл',
+  description: 'Описание',
+  keywords: 'Ключевые слова',
+  imageLogo: 'Изображение логотипа',
+  imageSite: 'Изображение сайта',
+  createSchool: 'Создать школу',
+};
