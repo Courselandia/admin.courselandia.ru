@@ -13,7 +13,7 @@
       <Card>
         <template #title>
           <div ref="titleRef">
-            <Lang value="publication.addPublication" />
+            <Lang value="teacher.addTeacher" />
           </div>
         </template>
 
@@ -56,42 +56,58 @@
                   </RadioGroup>
                 </Item>
                 <Item
-                  :label="lang('publication.publishedAt')"
-                  name="published_at"
-                  :rules="[{ required: true }]"
-                >
-                  <DatePicker
-                    v-model:value="form.published_at"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    show-time
-                    style="width: 100%"
-                  />
-                </Item>
-                <Item
-                  :label="lang('publication.header')"
-                  name="header"
+                  :label="lang('teacher.nameField')"
+                  name="name"
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
-                    v-model:value="form.header"
+                    v-model:value="form.name"
                     @keyup="onChangeName"
                   />
                 </Item>
                 <Item
-                  :label="lang('publication.link')"
+                  :label="lang('teacher.link')"
                   name="link"
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
                 </Item>
                 <Item
-                  :label="lang('publication.anons')"
-                  name="anons"
-                  :rules="[{ type: 'string', max: 1000 }]"
+                  :label="lang('teacher.rating')"
+                  name="rating"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 5 }]"
                 >
-                  <TextArea
-                    v-model:value="form.anons"
-                    style="height: 200px"
+                  <InputNumber
+                    v-model:value="form.rating"
+                    class="width--wide"
+                  />
+                </Item>
+                <Item
+                  :label="lang('teacher.directions')"
+                  name="directions"
+                >
+                  <Select
+                    v-model:value="form.directions"
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('teacher.schools')"
+                  name="schools"
+                >
+                  <Select
+                    v-model:value="form.schools"
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
                   />
                 </Item>
               </div>
@@ -102,21 +118,21 @@
             >
               <div class="width--wide max--width-600">
                 <Item
-                  :label="lang('publication.title')"
+                  :label="lang('teacher.title')"
                   name="title"
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
                 </Item>
                 <Item
-                  :label="lang('publication.description')"
+                  :label="lang('teacher.description')"
                   name="description"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.description" />
                 </Item>
                 <Item
-                  :label="lang('publication.keywords')"
+                  :label="lang('teacher.keywords')"
                   name="keywords"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
@@ -125,12 +141,12 @@
               </div>
             </TabPane>
             <TabPane
-              key="article"
-              :tab="lang('publication.article')"
+              key="text"
+              :tab="lang('teacher.text')"
             >
               <Ckeditor
-                v-model:value="form.article"
-                name="article"
+                v-model:value="form.text"
+                name="text"
                 class="mb-30"
               />
             </TabPane>
@@ -170,9 +186,9 @@
       :xs="24"
       class="mb-20"
     >
-      <Card>
+      <Card class="mb-20">
         <template #title>
-          <Lang value="dashboard.image" />
+          <Lang value="teacher.image" />
         </template>
         <template
           v-if="image"
@@ -221,7 +237,7 @@
 <script lang="ts" setup>
 import {
   DeleteOutlined,
-  ExclamationCircleOutlined,
+  ExclamationCircleOutlined, MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
@@ -229,16 +245,24 @@ import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Col from 'ant-design-vue/lib/col';
-import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import { createVNode, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import {
+  createVNode,
+  h,
+  onMounted,
+  ref,
+} from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
@@ -246,20 +270,31 @@ import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
-import IPublicationForm from '@/interfaces/modules/publication/publicationForm';
+import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import publication from '@/store/publication';
+import ISorts from '@/interfaces/molecules/table/sorts';
+import direction from '@/store/direction';
+import school from '@/store/school';
+import teacher from '@/store/teacher';
 
 useMeta({
-  title: lang('publication.createPublication'),
+  title: lang('teacher.createTeacher'),
 });
 
+const loadingSelects = ref(true);
+const readDirections = direction().read;
+const readSchools = school().read;
 const { Item } = Form;
-const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
-const { create } = publication();
+const { create } = teacher();
+
+const directionData = storeToRefs(direction());
+const directionItems = directionData.items;
+
+const schoolData = storeToRefs(school());
+const schoolItems = schoolData.items;
 
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
@@ -272,13 +307,14 @@ const alert = ref<IAlert>({
   type: null,
 });
 
-const form = ref<IPublicationForm>({
-  published_at: null,
-  header: '',
+const form = ref<ITeacherForm>({
+  name: '',
   link: '',
-  anons: null,
-  article: null,
+  text: null,
+  rating: null,
   image: null,
+  directions: [],
+  schools: [],
   title: null,
   description: null,
   keywords: null,
@@ -287,10 +323,30 @@ const form = ref<IPublicationForm>({
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
+  form.value.text = '';
   form.value.image = null;
-  form.value.article = '';
   image.value = null;
 };
+
+onMounted(async (): Promise<void> => {
+  loadingSelects.value = true;
+
+  try {
+    await readDirections(null, null, { weight: 'ASC' } as ISorts);
+    await readSchools(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  loadingSelects.value = false;
+});
 
 const onSubmit = async (): Promise<void> => {
   alert.value.message = '';
@@ -302,7 +358,7 @@ const onSubmit = async (): Promise<void> => {
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
     form.value.image = null;
-    form.value.article = '';
+    form.value.text = '';
     image.value = null;
     onClickReset();
   } catch (error: Error | any) {
@@ -339,8 +395,13 @@ const onClickImageDestroy = async (): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header);
+  form.value.link = latin(form.value.name);
 };
+
+const filterOption = (input: string, option: any) => option
+  ?.label
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
 </script>
 
 <style>

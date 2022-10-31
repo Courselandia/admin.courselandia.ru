@@ -13,7 +13,7 @@
       <Card>
         <template #title>
           <div ref="titleRef">
-            <Lang value="publication.addPublication" />
+            <Lang value="teacher.addTeacher" />
           </div>
         </template>
 
@@ -56,42 +56,58 @@
                   </RadioGroup>
                 </Item>
                 <Item
-                  :label="lang('publication.publishedAt')"
-                  name="published_at"
-                  :rules="[{ required: true }]"
-                >
-                  <DatePicker
-                    v-model:value="form.published_at"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    show-time
-                    style="width: 100%"
-                  />
-                </Item>
-                <Item
-                  :label="lang('publication.header')"
-                  name="header"
+                  :label="lang('teacher.nameField')"
+                  name="name"
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
-                    v-model:value="form.header"
+                    v-model:value="form.name"
                     @keyup="onChangeName"
                   />
                 </Item>
                 <Item
-                  :label="lang('publication.link')"
+                  :label="lang('teacher.link')"
                   name="link"
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
                 </Item>
                 <Item
-                  :label="lang('publication.anons')"
-                  name="anons"
-                  :rules="[{ type: 'string', max: 1000 }]"
+                  :label="lang('teacher.rating')"
+                  name="rating"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 5 }]"
                 >
-                  <TextArea
-                    v-model:value="form.anons"
-                    style="height: 200px"
+                  <InputNumber
+                    v-model:value="form.rating"
+                    class="width--wide"
+                  />
+                </Item>
+                <Item
+                  :label="lang('teacher.directions')"
+                  name="directions"
+                >
+                  <Select
+                    v-model:value="form.directions"
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('teacher.schools')"
+                  name="schools"
+                >
+                  <Select
+                    v-model:value="form.schools"
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
                   />
                 </Item>
               </div>
@@ -102,21 +118,21 @@
             >
               <div class="width--wide max--width-600">
                 <Item
-                  :label="lang('publication.title')"
+                  :label="lang('teacher.title')"
                   name="title"
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
                 </Item>
                 <Item
-                  :label="lang('publication.description')"
+                  :label="lang('teacher.description')"
                   name="description"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.description" />
                 </Item>
                 <Item
-                  :label="lang('publication.keywords')"
+                  :label="lang('teacher.keywords')"
                   name="keywords"
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
@@ -125,12 +141,12 @@
               </div>
             </TabPane>
             <TabPane
-              key="article"
-              :tab="lang('publication.article')"
+              key="text"
+              :tab="lang('teacher.text')"
             >
               <Ckeditor
-                v-model:value="form.article"
-                name="article"
+                v-model:value="form.text"
+                name="text"
                 class="mb-30"
               />
             </TabPane>
@@ -146,11 +162,10 @@
                 html-type="submit"
               >
                 <span>
-                  <Lang value="dashboard.create" />
+                  <Lang value="dashboard.update" />
                 </span>
               </Button>
               <Button
-                html-type="reset"
                 @click="onClickReset"
               >
                 <Lang value="dashboard.reset" />
@@ -170,9 +185,9 @@
       :xs="24"
       class="mb-20"
     >
-      <Card>
+      <Card class="mb-20">
         <template #title>
-          <Lang value="dashboard.image" />
+          <Lang value="teacher.image" />
         </template>
         <template
           v-if="image"
@@ -191,6 +206,16 @@
           </Button>
         </template>
 
+        <Alert
+          v-if="imageAlert.message"
+          :message="imageAlert.type === 'success'
+            ? lang('dashboard.success')
+            : lang('dashboard.error')"
+          :description="imageAlert.message"
+          :type="imageAlert.type"
+          class="mb-25"
+        />
+
         <Upload
           :max-count="1"
           :multiple="false"
@@ -200,8 +225,9 @@
           accept="image/*"
           list-type="picture-card"
         >
+          <LoadingOutlined v-if="imageUpdateLoading" />
           <img
-            v-if="image"
+            v-else-if="image"
             :src="image"
             alt="avatar"
             width="208"
@@ -222,6 +248,7 @@
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
+  LoadingOutlined, MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
@@ -229,42 +256,73 @@ import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Col from 'ant-design-vue/lib/col';
-import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import { createVNode, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import {
+  createVNode,
+  h,
+  onMounted,
+  ref,
+} from 'vue';
 import { useMeta } from 'vue-meta';
+import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
-import IPublicationForm from '@/interfaces/modules/publication/publicationForm';
+import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import publication from '@/store/publication';
+import ISorts from '@/interfaces/molecules/table/sorts';
+import direction from '@/store/direction';
+import school from '@/store/school';
+import teacher from '@/store/teacher';
+import TId from '@/types/id';
 
 useMeta({
-  title: lang('publication.createPublication'),
+  title: lang('teacher.updateTeacher'),
 });
 
+const loadingSelects = ref(true);
+const readDirections = direction().read;
+const readSchools = school().read;
+const route = useRoute();
+const imageUpdateLoading = ref(false);
+const imageDestroyLoading = ref(false);
+const { id } = route.params;
 const { Item } = Form;
-const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
-const { create } = publication();
+const {
+  update,
+  imageUpdate,
+  imageDestroy,
+} = teacher();
+const { item } = storeToRefs(teacher());
+
+const directionData = storeToRefs(direction());
+const directionItems = directionData.items;
+
+const schoolData = storeToRefs(school());
+const schoolItems = schoolData.items;
 
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -272,24 +330,52 @@ const alert = ref<IAlert>({
   type: null,
 });
 
-const form = ref<IPublicationForm>({
-  published_at: null,
-  header: '',
-  link: '',
-  anons: null,
-  article: null,
-  image: null,
-  title: null,
-  description: null,
-  keywords: null,
-  status: true,
+const imageAlert = ref<IAlert>(
+  {
+    message: null,
+    type: null,
+  },
+);
+
+onMounted(async (): Promise<void> => {
+  loadingSelects.value = true;
+
+  try {
+    await readDirections(null, null, { weight: 'ASC' } as ISorts);
+    await readSchools(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  loadingSelects.value = false;
 });
 
+const getDefaultFormValue = (): ITeacherForm => ({
+  id: id as TId,
+  name: item.value?.name || '',
+  link: item.value?.link || '',
+  text: item.value?.text || null,
+  rating: item.value?.rating || null,
+  image: null,
+  title: item.value?.metatag?.title || null,
+  description: item.value?.metatag?.description || null,
+  keywords: item.value?.metatag?.keywords || null,
+  status: item.value?.status !== undefined ? item.value?.status : true,
+  directions: item.value?.directions?.map((itm: any) => itm.id) || [],
+  schools: item.value?.schools?.map((itm: any) => itm.id) || [],
+});
+
+const form = ref<ITeacherForm>(getDefaultFormValue());
+
 const onClickReset = (): void => {
-  formRef.value?.resetFields();
-  form.value.image = null;
-  form.value.article = '';
-  image.value = null;
+  form.value = getDefaultFormValue();
 };
 
 const onSubmit = async (): Promise<void> => {
@@ -297,14 +383,10 @@ const onSubmit = async (): Promise<void> => {
   loading.value = true;
 
   try {
-    await create(form.value);
+    await update(form.value);
 
-    alert.value.message = lang('dashboard.successCreateText');
+    alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
-    form.value.image = null;
-    form.value.article = '';
-    image.value = null;
-    onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
@@ -320,8 +402,21 @@ const onSubmit = async (): Promise<void> => {
 };
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
-  form.value.image = file;
-  image.value = await base64(file);
+  imageAlert.value.message = '';
+  imageUpdateLoading.value = true;
+
+  try {
+    await imageUpdate(id as TId, file);
+
+    image.value = await base64(file);
+  } catch (error: Error | any) {
+    imageAlert.value.message = error.response.data.message
+      ? error.response.data.message
+      : error.message;
+    imageAlert.value.type = 'error';
+  }
+
+  imageUpdateLoading.value = false;
 
   return false;
 };
@@ -332,15 +427,33 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
-      image.value = null;
+      imageAlert.value.message = '';
+      imageDestroyLoading.value = true;
+
+      try {
+        await imageDestroy(id as TId);
+
+        image.value = null;
+      } catch (error: Error | any) {
+        imageAlert.value.message = error.response.data.message
+          ? error.response.data.message
+          : error.message;
+        imageAlert.value.type = 'error';
+      }
+
+      imageDestroyLoading.value = false;
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header);
+  form.value.link = latin(form.value.name);
 };
+
+const filterOption = (input: string, option: any) => option
+  ?.label
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
 </script>
 
 <style>

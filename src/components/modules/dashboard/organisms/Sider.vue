@@ -82,6 +82,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="teachers"
+        @click="onClickMenuItem('Teachers')"
+      >
+        <template #icon>
+          <RobotOutlined />
+        </template>
+        <Lang value="teacher.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -134,6 +144,7 @@ import {
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
+  RobotOutlined,
   ShopOutlined,
   TeamOutlined,
   ToolOutlined,
@@ -192,6 +203,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'tools';
     } else if (path.indexOf('/dashboard/schools') !== -1) {
       menu.value[0] = 'schools';
+    } else if (path.indexOf('/dashboard/teachers') !== -1) {
+      menu.value[0] = 'teachers';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {

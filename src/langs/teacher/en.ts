@@ -1,0 +1,16 @@
+export default {
+  name: 'Teachers',
+  addTeacher: 'Add teacher',
+  updateTeacher: 'Edit teacher',
+  nameField: 'Name',
+  link: 'Link',
+  text: 'Text',
+  rating: 'Rating',
+  title: 'Title',
+  description: 'Description',
+  keywords: 'Keywords',
+  image: 'Image',
+  createTeacher: 'Create Teacher',
+  directions: 'Directions',
+  schools: 'Schools',
+};

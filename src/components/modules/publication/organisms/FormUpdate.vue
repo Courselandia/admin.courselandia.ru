@@ -87,7 +87,7 @@
                 <Item
                   :label="lang('publication.anons')"
                   name="anons"
-                  :rules="[{ type: 'string', max: 191 }]"
+                  :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <TextArea
                     v-model:value="form.anons"
