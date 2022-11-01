@@ -108,7 +108,7 @@ export default defineStore('school', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<ISchoolForm>> {
       const response = await axios.delete<IResponseItem<ISchoolForm>>('/api/private/admin/school/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

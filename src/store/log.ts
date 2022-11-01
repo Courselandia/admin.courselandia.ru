@@ -61,7 +61,7 @@ export default defineStore('log', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<ILog>> {
       const response = await axios.delete<IResponseItem<ILog>>('/api/private/admin/log/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

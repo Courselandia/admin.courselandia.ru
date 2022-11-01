@@ -106,7 +106,7 @@ export default defineStore('publication', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IPublicationForm>> {
       const response = await axios.delete<IResponseItem<IPublicationForm>>('/api/private/admin/publication/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

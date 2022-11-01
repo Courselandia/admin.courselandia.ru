@@ -91,7 +91,7 @@ export default defineStore('direction', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IDirectionForm>> {
       const response = await axios.delete<IResponseItem<IDirectionForm>>('/api/private/admin/direction/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

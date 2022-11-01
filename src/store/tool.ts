@@ -91,7 +91,7 @@ export default defineStore('tool', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IToolForm>> {
       const response = await axios.delete<IResponseItem<IToolForm>>('/api/private/admin/tool/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

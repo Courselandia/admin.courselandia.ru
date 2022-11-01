@@ -91,7 +91,7 @@ export default defineStore('skill', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<ISkillForm>> {
       const response = await axios.delete<IResponseItem<ISkillForm>>('/api/private/admin/skill/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

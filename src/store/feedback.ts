@@ -61,7 +61,7 @@ export default defineStore('feedback', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IFeedback>> {
       const response = await axios.delete<IResponseItem<IFeedback>>('/api/private/admin/feedback/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

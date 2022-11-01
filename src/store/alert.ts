@@ -87,7 +87,7 @@ export default defineStore('alert', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IAlertForm>> {
       const response = await axios.delete<IResponseItem<IAlertForm>>('/api/private/admin/alert/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

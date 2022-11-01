@@ -91,7 +91,7 @@ export default defineStore('profession', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IProfessionForm>> {
       const response = await axios.delete<IResponseItem<IProfessionForm>>('/api/private/admin/profession/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

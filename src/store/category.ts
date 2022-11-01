@@ -91,7 +91,7 @@ export default defineStore('category', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<ICategoryForm>> {
       const response = await axios.delete<IResponseItem<ICategoryForm>>('/api/private/admin/category/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

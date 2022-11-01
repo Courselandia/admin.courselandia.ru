@@ -104,7 +104,7 @@ export default defineStore('user', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<IUserForm>> {
       const response = await axios.delete<IResponseItem<IUserForm>>('/api/private/admin/user/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',

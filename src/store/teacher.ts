@@ -113,7 +113,7 @@ export default defineStore('teacher', {
     async destroy(ids: Array<TId>): Promise<IResponseItem<ITeacherForm>> {
       const response = await axios.delete<IResponseItem<ITeacherForm>>('/api/private/admin/teacher/destroy', {
         params: {
-          ids: JSON.stringify(ids),
+          ids,
         },
         headers: {
           Authorization: access().accessToken || '',
