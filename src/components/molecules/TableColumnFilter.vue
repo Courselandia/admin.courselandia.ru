@@ -1,7 +1,10 @@
 <template>
   <div
     v-outside-click="onClickOutside"
-    :class="{'table-column-filter': true, 'table-column-filter--big': type === 'dateRange'}"
+    :class="{
+      'table-column-filter': true,
+      'table-column-filter--big': type === 'dateRange' || type === 'select',
+    }"
   >
     <div class="pa-8 display--block">
       <template v-if="type === 'text'">
@@ -22,7 +25,7 @@
           @press-enter="onFilterSearch(selectedKeys, column.key)"
         />
       </template>
-      <template v-if="type === 'dateRange'">
+      <template v-else-if="type === 'dateRange'">
         <Space
           direction="vertical"
           :size="12"
@@ -34,6 +37,17 @@
             @press-enter="onFilterSearch(selectedKeys, column.key, true)"
           />
         </Space>
+      </template>
+      <template v-else-if="type === 'select'">
+        <Select
+          :value="selectedKeys"
+          mode="multiple"
+          class="width--wide"
+          show-search
+          :filter-option="filterOption"
+          :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text }))"
+          @change="value => setSelectedKeys(value ? value : [])"
+        />
       </template>
     </div>
     <Divider class="mt-0 mb-0" />
@@ -66,6 +80,7 @@ import DatePicker from 'ant-design-vue/lib/date-picker';
 import Divider from 'ant-design-vue/lib/divider';
 import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import {
   defineProps,
@@ -139,15 +154,15 @@ const onFilterReset = (): void => {
   filter.value = '';
 };
 
-const isDataPickerDropdown = (element: HTMLElement) => {
-  const check = element.className.split(' ').indexOf('ant-picker-dropdown') !== -1;
+const isElement = (element: HTMLElement, nameClass: string): boolean => {
+  const check = element.className.split(' ').indexOf(nameClass) !== -1;
 
   if (check) {
     return true;
   }
 
   if (element.parentElement) {
-    const checkInside = isDataPickerDropdown(element.parentElement);
+    const checkInside = isElement(element.parentElement, nameClass);
 
     if (checkInside) {
       return true;
@@ -162,16 +177,17 @@ const onClickOutside = (event: PointerEvent): void => {
   const { parentElement } = target;
 
   if (parentElement) {
-    const check = isDataPickerDropdown(parentElement);
+    const checkDataPicker = isElement(parentElement, 'ant-picker-dropdown');
+    const checkSelect = isElement(parentElement, 'ant-select-dropdown');
 
-    if (check) {
+    if (checkDataPicker || checkSelect) {
       return;
     }
   }
 
   confirm.value();
   const { type, selectedKeys, column } = props;
-  const multiple = type === 'dateRange';
+  const multiple = type === 'dateRange' || type === 'select';
 
   if (multiple) {
     filter.value = [];
@@ -188,6 +204,11 @@ const onClickOutside = (event: PointerEvent): void => {
     filter.column = column.key;
   }
 };
+
+const filterOption = (input: string, option: any) => option
+  ?.text
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
 </script>
 
 <style lang="scss">

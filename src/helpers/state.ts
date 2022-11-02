@@ -258,6 +258,8 @@ const stateFilters = <T>(
                 } else {
                   valid = false;
                 }
+              } else if (filterTypeFound === 'number' || filterTypeFound === 'select') {
+                values[i] = Number(values[i]);
               }
             }
           }

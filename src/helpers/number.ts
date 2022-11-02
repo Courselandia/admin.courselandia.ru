@@ -36,7 +36,7 @@ export const money = (value: number, digits: number = 0, label: string = 'руб
   let result = format(value, digits, separate);
 
   if (label) {
-    result = `${money} ${label}`;
+    result = `${result} ${label}`;
   }
 
   return result;

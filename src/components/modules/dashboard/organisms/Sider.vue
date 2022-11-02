@@ -92,6 +92,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="salaries"
+        @click="onClickMenuItem('Salaries')"
+      >
+        <template #icon>
+          <DollarCircleOutlined />
+        </template>
+        <Lang value="salary.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -139,6 +149,7 @@ import {
   AppstoreOutlined,
   BarsOutlined,
   ContactsOutlined,
+  DollarCircleOutlined,
   FileTextOutlined,
   FormatPainterOutlined,
   MessageOutlined,
@@ -205,6 +216,8 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
       menu.value[0] = 'schools';
     } else if (path.indexOf('/dashboard/teachers') !== -1) {
       menu.value[0] = 'teachers';
+    } else if (path.indexOf('/dashboard/salaries') !== -1) {
+      menu.value[0] = 'salaries';
     } else if (path.indexOf('/dashboard/alerts') !== -1) {
       menu.value[0] = 'alerts';
     } else if (path.indexOf('/dashboard/feedbacks') !== -1) {
