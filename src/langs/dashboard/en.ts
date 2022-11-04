@@ -91,4 +91,5 @@ export default {
   manager: 'Manager',
   meta: 'Metadata',
   go: 'Go',
+  review: 'Review',
 };

@@ -74,6 +74,7 @@
           confirm,
           clearFilters,
           column,
+          visible,
         }"
       >
         <TableColumnFilter
@@ -83,6 +84,7 @@
           :clear-filters="clearFilters"
           :column="column"
           :type="column.filterType"
+          :visible="visible"
         />
       </template>
       <template #customFilterIcon="{ filtered }">

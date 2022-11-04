@@ -3,6 +3,17 @@
     <template #title>
       <Space>
         <Button
+          type="primary"
+          @click="onClickCreate"
+        >
+          <template #icon>
+            <PlusOutlined />
+          </template>
+          <span>
+            <Lang value="dashboard.add" />
+          </span>
+        </Button>
+        <Button
           :disabled="destroySelectedDisabled"
           :loading="destroySelectedLoading"
           danger
@@ -19,6 +30,13 @@
       </Space>
     </template>
 
+    <TableTagsFilter
+      v-model:filters="filteredInfo"
+      :columns="columns"
+      class="mb-10"
+      @change="onTagsChange"
+    />
+
     <Table
       :columns="columns"
       :data-source="items"
@@ -33,13 +51,13 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              v-if="record.url"
+              :title="lang('dashboard.edit')"
+              type="primary"
               shape="circle"
-              :title="lang('dashboard.go')"
-              @click="onClickGo(record.url)"
+              @click="onClickUpdate(record.id)"
             >
               <template #icon>
-                <ArrowRightOutlined />
+                <EditOutlined />
               </template>
             </Button>
             <Button
@@ -56,38 +74,43 @@
             </Button>
           </Space>
         </template>
-        <template v-if="column.key === 'tag'">
-          <Tag :color="record.color">
-            {{ record.tag }}
-          </Tag>
+        <template v-if="column.key === 'school-name'">
+          {{ record?.school?.name }}
         </template>
-        <template v-if="column.key === 'title'">
-          {{ record.title }}
-          <div v-if="record.description">
-            {{ record.description }}
-          </div>
-        </template>
-        <template v-if="column.key === 'status'">
-          <Tag
-            :color="record.status === true ? 'red' : 'green'"
-            class="cursor--pointer"
-            @click="onClickStatus(record.id, !record.status)"
-          >
-            <template #icon>
-              <template v-if="record.status === true">
-                <CloseOutlined />
-              </template>
-              <template v-else>
-                <CheckOutlined />
-              </template>
-            </template>
-            {{ record.status === true
-              ? lang('alert.active')
-              : lang('alert.deactivated') }}
-          </Tag>
+        <template v-if="column.key === 'rating'">
+          <Rate
+            v-model:value="record.rating"
+            disabled
+          />
         </template>
         <template v-if="column.key === 'created_at'">
           {{ dayjs.utc(record.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
+        </template>
+        <template v-if="column.key === 'status'">
+          <template v-if="record.status === EStatus.ACTIVE">
+            <Tag
+              color="green"
+              class="cursor--pointer"
+            >
+              {{ lang('dashboard.active') }}
+            </Tag>
+          </template>
+          <template v-else-if="record.status === EStatus.DISABLED">
+            <Tag
+              color="red"
+              class="cursor--pointer"
+            >
+              {{ lang('dashboard.disabled') }}
+            </Tag>
+          </template>
+          <template v-else-if="record.status === EStatus.REVIEW">
+            <Tag
+              color="yellow"
+              class="cursor--pointer"
+            >
+              {{ lang('dashboard.review') }}
+            </Tag>
+          </template>
         </template>
       </template>
       <template
@@ -126,23 +149,24 @@
 
 <script lang="ts" setup>
 import {
-  ArrowRightOutlined,
-  CheckOutlined,
-  CloseOutlined,
   DeleteOutlined,
+  EditOutlined,
   ExclamationCircleOutlined,
   MehOutlined,
+  PlusOutlined,
   SearchOutlined,
-} from '@ant-design/icons-vue/';
+} from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/lib/_util/type';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Modal from 'ant-design-vue/lib/modal';
 import notification from 'ant-design-vue/lib/notification';
+import Rate from 'ant-design-vue/lib/rate';
 import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import {
+  ColumnFilterItem,
   FilterValue,
   SorterResult,
 } from 'ant-design-vue/lib/table/interface';
@@ -161,75 +185,151 @@ import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
+import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
+import EStatus from '@/enums/modules/review/status';
+import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
+import sorts from '@/helpers/sorts';
 import {
+  stateColumnFilter,
+  stateColumnSort,
   stateFilters,
   stateLimit,
   statePage,
   stateSet,
   stateSorts,
 } from '@/helpers/state';
-import IAlert from '@/interfaces/modules/alert/alert';
+import IReview from '@/interfaces/modules/review/review';
+import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import alert from '@/store/alert';
+import review from '@/store/review';
+import school from '@/store/school';
 import TId from '@/types/id';
 
 const {
   read,
-  countUnread,
-  status,
   destroy,
-} = alert();
+} = review();
 const {
   items,
   total,
-} = storeToRefs(alert());
+} = storeToRefs(review());
 const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null> | null>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
+const readSchools = school().read;
+const schoolData = storeToRefs(school());
+const schoolItems = schoolData.items;
 
-const columns = computed<ITableColumnType<IAlert>[]>(() => [
+const getSchoolsFilter = (): Array<ColumnFilterItem> => {
+  const result: Array<ColumnFilterItem> = [];
+
+  schoolItems.value?.forEach((item) => {
+    result[result.length] = {
+      text: item.name,
+      value: item.id,
+    };
+  });
+
+  return result;
+};
+
+const columns = computed<ITableColumnType<IReview>[]>(() => [
   {
     title: lang('dashboard.id'),
     dataIndex: 'id',
     key: 'id',
-    sorter: false,
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('id', sortedInfo.value),
+    filteredValue: stateColumnFilter('id', filteredInfo.value, 'number'),
+    filterType: 'number',
     width: 100,
   },
   {
-    title: lang('alert.tag'),
-    dataIndex: 'tag',
-    key: 'tag',
-    sorter: false,
-    width: 140,
+    title: lang('review.school'),
+    dataIndex: 'school-name',
+    key: 'school-name',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('school-name', sortedInfo.value),
+    filteredValue: stateColumnFilter('school-name', filteredInfo.value, 'number'),
+    filterType: 'select',
+    filters: getSchoolsFilter(),
   },
   {
-    title: lang('alert.message'),
-    dataIndex: 'title',
-    key: 'title',
-    sorter: false,
+    title: lang('review.nameAuthor'),
+    dataIndex: 'name',
+    key: 'name',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('name', sortedInfo.value),
+    filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
   },
   {
-    title: lang('alert.createdAt'),
+    title: lang('review.rating'),
+    dataIndex: 'rating',
+    key: 'rating',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('rating', sortedInfo.value),
+    filteredValue: stateColumnFilter('rating', filteredInfo.value, 'number'),
+    filterType: 'number',
+  },
+  {
+    title: lang('review.createdAt'),
     dataIndex: 'created_at',
     key: 'created_at',
-    sorter: false,
-    width: 280,
+    sorter: {
+      multiple: 1,
+    },
+    sortOrder: stateColumnSort('created_at', sortedInfo.value),
+    customFilterDropdown: true,
+    filterType: 'dateRange',
+    filteredValue: stateColumnFilter('created_at', filteredInfo.value, 'dateRange'),
+    width: 300,
   },
   {
     title: lang('dashboard.status'),
     dataIndex: 'status',
     key: 'status',
-    sorter: false,
+    sorter: {
+      multiple: 1,
+    },
+    sortOrder: stateColumnSort('status', sortedInfo.value),
+    filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
+    filterMultiple: false,
+    filters: [
+      {
+        text: lang('dashboard.active'),
+        value: EStatus.ACTIVE,
+      },
+      {
+        text: lang('dashboard.review'),
+        value: EStatus.REVIEW,
+      },
+      {
+        text: lang('dashboard.disabled'),
+        value: EStatus.DISABLED,
+      },
+    ],
     width: 200,
   },
   {
     key: 'actions',
-    width: 150,
+    width: 170,
   },
 ]);
-filteredInfo.value = stateFilters<IAlert>(columns.value);
+filteredInfo.value = stateFilters<IReview>(columns.value);
 const loading = ref(false);
 const pageSizeDefault = stateLimit() || 20;
 const pageCurrentDefault = statePage() || 1;
@@ -242,12 +342,12 @@ const pagination = ref({
   showSizeChanger: true,
 });
 const destroysLoading = ref<Record<TId, boolean>>({});
-const selected = ref<Array<IAlert>>();
+const selected = ref<Array<IReview>>();
 const destroySelectedDisabled = ref(true);
 const destroySelectedLoading = ref(false);
 
 const rowSelection: TableProps['rowSelection'] = {
-  onChange: (selectedRowKeys: Key[], selectedRows: IAlert[]): void => {
+  onChange: (selectedRowKeys: Key[], selectedRows: IReview[]): void => {
     selected.value = selectedRows;
   },
 };
@@ -258,16 +358,18 @@ const defaultSorts: Array<SorterResult> = [
     order: 'descend',
   },
 ];
-sortedInfo.value = stateSorts<IAlert>(columns.value, defaultSorts);
+sortedInfo.value = stateSorts<IReview>(columns.value, defaultSorts);
 
 const load = async (
   offset: number,
   limit: number,
+  sorter?: SorterResult | SorterResult[] | null,
+  filter?: Record<string, FilterValue | null> | null,
 ): Promise<void> => {
   loading.value = true;
 
   try {
-    await read(offset, limit);
+    await read(offset, limit, sorts(sorter), filters(filter));
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
@@ -282,15 +384,34 @@ const load = async (
   loading.value = false;
 };
 
+const loadProfessions = async () => {
+  try {
+    await readSchools(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+};
+
 onMounted(async (): Promise<void> => {
   await load(
     (pageCurrentDefault - 1) * pageSizeDefault,
     pageSizeDefault,
+    sortedInfo.value,
+    filteredInfo.value,
   );
+
+  await loadProfessions();
 });
 
 watch(route, (): void => {
-  const currentRoute = router.getRoutes().find((item) => item.name === 'Alerts');
+  const currentRoute = router.getRoutes().find((item) => item.name === 'Reviews');
 
   if (route.path === currentRoute?.path) {
     const pageSize = stateLimit() || pageSizeDefault;
@@ -299,10 +420,10 @@ watch(route, (): void => {
 
     pagination.value.current = current;
     pagination.value.pageSize = pageSize;
-    sortedInfo.value = stateSorts<IAlert>(columns.value);
-    filteredInfo.value = stateFilters<IAlert>(columns.value);
+    sortedInfo.value = stateSorts<IReview>(columns.value);
+    filteredInfo.value = stateFilters<IReview>(columns.value);
 
-    load(offset, pageSize);
+    load(offset, pageSize, sortedInfo.value, filteredInfo.value);
   }
 });
 
@@ -310,7 +431,7 @@ watch(selected, () => {
   destroySelectedDisabled.value = selected.value?.length === 0;
 });
 
-const onChange: TableProps<IAlert>['onChange'] = async (pag, filter, sorter): Promise<void> => {
+const onChange: TableProps<IReview>['onChange'] = async (pag, filter, sorter): Promise<void> => {
   filteredInfo.value = {
     ...filteredInfo.value,
     ...filter,
@@ -323,7 +444,16 @@ const onChange: TableProps<IAlert>['onChange'] = async (pag, filter, sorter): Pr
   const offset = (current - 1) * pageSize;
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
-  await load(offset, pageSize);
+  await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+};
+
+const reloadToFirstPagination = async (): Promise<void> => {
+  const pageSize = pagination.value.pageSize || pageSizeDefault;
+  const offset = 0;
+  pagination.value.current = 1;
+
+  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
+  await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
 };
 
 const reload = async (): Promise<void> => {
@@ -332,7 +462,22 @@ const reload = async (): Promise<void> => {
   const offset = (current - 1) * pageSize;
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
-  await load(offset, pageSize);
+  await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+};
+
+const onClickCreate = (): void => {
+  router.push({
+    name: 'ReviewCreate',
+  });
+};
+
+const onClickUpdate = (id: TId): void => {
+  router.push({
+    name: 'ReviewUpdate',
+    params: {
+      id,
+    },
+  });
 };
 
 const destroyIds = async (ids: Array<TId>): Promise<void> => {
@@ -359,7 +504,6 @@ const onClickDestroy = async (id: TId): Promise<void> => {
     async onOk() {
       destroysLoading.value[id] = true;
       await destroyIds([id]);
-      await countUnread();
       destroysLoading.value[id] = false;
     },
   });
@@ -376,7 +520,6 @@ const onClickDestroySelected = (): void => {
       if (ids) {
         destroySelectedLoading.value = true;
         await destroyIds(ids);
-        await countUnread();
         destroySelectedLoading.value = false;
         destroySelectedDisabled.value = true;
       }
@@ -384,36 +527,8 @@ const onClickDestroySelected = (): void => {
   });
 };
 
-const onClickStatus = async (id: TId, active: boolean): Promise<void> => {
-  Modal.confirm({
-    title: lang('dashboard.alert'),
-    icon: createVNode(ExclamationCircleOutlined),
-    content: lang('dashboard.confirmChangeStatus'),
-    async onOk() {
-      loading.value = true;
-
-      try {
-        await status(id, active);
-        await reload();
-        await countUnread();
-      } catch (error: Error | any) {
-        notification.open({
-          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
-          message: lang('dashboard.error'),
-          description: error.response.data.message ? error.response.data.message : error.message,
-          style: {
-            color: '#ff0000',
-          },
-        });
-      }
-
-      loading.value = false;
-    },
-  });
-};
-
-const onClickGo = (url: string) => {
-  router.push(url);
+const onTagsChange = (): void => {
+  reloadToFirstPagination();
 };
 </script>
 

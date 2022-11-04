@@ -1,4 +1,4 @@
-import ELevel from '@/enums/level';
+import ELevel from '@/enums/modules/salary/level';
 import TId from '@/types/id';
 
 export default interface ISalaryForm {

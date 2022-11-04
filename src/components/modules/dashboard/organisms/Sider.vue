@@ -102,11 +102,21 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="reviews"
+        @click="onClickMenuItem('Reviews')"
+      >
+        <template #icon>
+          <MessageOutlined />
+        </template>
+        <Lang value="review.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
         <template #icon>
-          <MessageOutlined />
+          <MailOutlined />
         </template>
         <Lang value="feedback.name" />
       </Item>
@@ -152,6 +162,7 @@ import {
   DollarCircleOutlined,
   FileTextOutlined,
   FormatPainterOutlined,
+  MailOutlined,
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
@@ -171,7 +182,7 @@ import {
 } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import access from '@/store/access';
 
 const router = useRouter();
@@ -197,36 +208,31 @@ const onClickMenuItem = (name: string): void => {
 };
 
 const select = (rt: RouteLocationNormalizedLoaded) => {
+  const paths: Record<string, string> = {
+    users: '/dashboard/users',
+    publications: '/dashboard/publications',
+    directions: '/dashboard/directions',
+    professions: '/dashboard/professions',
+    categories: '/dashboard/categories',
+    skills: '/dashboard/skills',
+    tools: '/dashboard/tools',
+    schools: '/dashboard/schools',
+    teachers: '/dashboard/teachers',
+    salaries: '/dashboard/salaries',
+    reviews: '/dashboard/reviews',
+    alerts: '/dashboard/alerts',
+    feedbacks: '/dashboard/feedbacks',
+    logs: '/dashboard/logs',
+  };
+
   rt.matched.forEach(({ path }) => {
-    if (path.indexOf('/dashboard/users') !== -1) {
-      menu.value[0] = 'users';
-    } else if (path.indexOf('/dashboard/publications') !== -1) {
-      menu.value[0] = 'publications';
-    } else if (path.indexOf('/dashboard/directions') !== -1) {
-      menu.value[0] = 'directions';
-    } else if (path.indexOf('/dashboard/professions') !== -1) {
-      menu.value[0] = 'professions';
-    } else if (path.indexOf('/dashboard/categories') !== -1) {
-      menu.value[0] = 'categories';
-    } else if (path.indexOf('/dashboard/skills') !== -1) {
-      menu.value[0] = 'skills';
-    } else if (path.indexOf('/dashboard/tools') !== -1) {
-      menu.value[0] = 'tools';
-    } else if (path.indexOf('/dashboard/schools') !== -1) {
-      menu.value[0] = 'schools';
-    } else if (path.indexOf('/dashboard/teachers') !== -1) {
-      menu.value[0] = 'teachers';
-    } else if (path.indexOf('/dashboard/salaries') !== -1) {
-      menu.value[0] = 'salaries';
-    } else if (path.indexOf('/dashboard/alerts') !== -1) {
-      menu.value[0] = 'alerts';
-    } else if (path.indexOf('/dashboard/feedbacks') !== -1) {
-      menu.value[0] = 'feedbacks';
-    } else if (path.indexOf('/dashboard/logs') !== -1) {
-      menu.value[0] = 'logs';
-    } else {
-      menu.value = [];
-    }
+    Object.keys(paths).some((pathItem) => {
+      if (path.indexOf(paths[pathItem]) !== -1) {
+        menu.value[0] = pathItem;
+      }
+
+      return false;
+    });
   });
 };
 

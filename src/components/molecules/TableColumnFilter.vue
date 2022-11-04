@@ -120,6 +120,11 @@ const props = defineProps({
     type: Object as PropType<TableColumnType>,
     required: true,
   },
+  visible: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
 const filter = reactive({
@@ -130,6 +135,7 @@ const filter = reactive({
 const {
   confirm,
   clearFilters,
+  visible,
 } = toRefs(props);
 
 const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false): void => {
@@ -173,35 +179,37 @@ const isElement = (element: HTMLElement, nameClass: string): boolean => {
 };
 
 const onClickOutside = (event: PointerEvent): void => {
-  const target = event?.target as HTMLDivElement;
-  const { parentElement } = target;
+  if (visible.value) {
+    const target = event?.target as HTMLDivElement;
+    const { parentElement } = target;
 
-  if (parentElement) {
-    const checkDataPicker = isElement(parentElement, 'ant-picker-dropdown');
-    const checkSelect = isElement(parentElement, 'ant-select-dropdown');
+    if (parentElement) {
+      const checkDataPicker = isElement(parentElement, 'ant-picker-dropdown');
+      const checkSelect = isElement(parentElement, 'ant-select-dropdown');
 
-    if (checkDataPicker || checkSelect) {
-      return;
+      if (checkDataPicker || checkSelect) {
+        return;
+      }
     }
-  }
 
-  confirm.value();
-  const { type, selectedKeys, column } = props;
-  const multiple = type === 'dateRange' || type === 'select';
+    confirm.value();
+    const { type, selectedKeys, column } = props;
+    const multiple = type === 'dateRange' || type === 'select';
 
-  if (multiple) {
-    filter.value = [];
+    if (multiple) {
+      filter.value = [];
 
-    for (let i = 0; i < selectedKeys.length; i++) {
-      filter.value[i] = selectedKeys[i];
+      for (let i = 0; i < selectedKeys.length; i++) {
+        filter.value[i] = selectedKeys[i];
+      }
+    } else {
+      const [value] = selectedKeys;
+      filter.value = value;
     }
-  } else {
-    const [value] = selectedKeys;
-    filter.value = value;
-  }
 
-  if (column.key) {
-    filter.column = column.key;
+    if (column.key) {
+      filter.column = column.key;
+    }
   }
 };
 

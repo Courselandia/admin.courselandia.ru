@@ -1,7 +1,7 @@
 import cookies from 'js-cookie';
 import { RouteLocationNormalized } from 'vue-router';
 
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import access from '@/store/access';
 
 export default async (to: RouteLocationNormalized): Promise<boolean | string> => {

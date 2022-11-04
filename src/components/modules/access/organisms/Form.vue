@@ -85,7 +85,7 @@ import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import lang from '@/helpers/lang';
 import { IForm } from '@/interfaces/modules/access/organisms/form';
 import IAlert from '@/interfaces/molecules/alert/alert';

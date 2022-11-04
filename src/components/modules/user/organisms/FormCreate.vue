@@ -244,7 +244,7 @@ import { createVNode, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import base64 from '@/helpers/base64';
 import lang from '@/helpers/lang';
 import IUserForm from '@/interfaces/modules/user/userForm';

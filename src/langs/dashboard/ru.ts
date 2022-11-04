@@ -91,4 +91,5 @@ export default {
   manager: 'Менеджер',
   meta: 'Мета данные',
   go: 'Перейти',
+  review: 'В рассмотрении',
 };

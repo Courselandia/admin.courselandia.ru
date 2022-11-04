@@ -313,7 +313,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import base64 from '@/helpers/base64';
 import lang from '@/helpers/lang';
 import IPasswordForm from '@/interfaces/modules/user/passwordForm';

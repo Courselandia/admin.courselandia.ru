@@ -1,4 +1,4 @@
-import ELevel from '@/enums/level';
+import ELevel from '@/enums/modules/salary/level';
 import IProfession from '@/interfaces/modules/profession/profession';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';

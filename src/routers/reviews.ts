@@ -3,14 +3,14 @@ import { RouteRecordRaw } from 'vue-router';
 import ERole from '@/enums/modules/user/role';
 import auth from '@/middleware/auth';
 import tokenRefresh from '@/middleware/tokenRefresh';
-import skill from '@/store/skill';
+import review from '@/store/review';
 import TId from '@/types/id';
 
 export default [
   {
-    path: '/dashboard/skills',
-    name: 'Skills',
-    component: () => import('@/pages/dashboard/skills/Index.vue'),
+    path: '/dashboard/reviews',
+    name: 'Reviews',
+    component: () => import('@/pages/dashboard/reviews/Index.vue'),
     meta: {
       layout: 'default-layout',
       middleware: [
@@ -22,9 +22,9 @@ export default [
     },
   },
   {
-    path: '/dashboard/skills/create',
-    name: 'SkillCreate',
-    component: () => import('@/pages/dashboard/skills/Create.vue'),
+    path: '/dashboard/reviews/create',
+    name: 'ReviewCreate',
+    component: () => import('@/pages/dashboard/reviews/Create.vue'),
     meta: {
       layout: 'default-layout',
       middleware: [
@@ -36,9 +36,9 @@ export default [
     },
   },
   {
-    path: '/dashboard/skills/:id',
-    name: 'SkillUpdate',
-    component: () => import('@/pages/dashboard/skills/Update.vue'),
+    path: '/dashboard/reviews/:id',
+    name: 'ReviewUpdate',
+    component: () => import('@/pages/dashboard/reviews/Update.vue'),
     meta: {
       layout: 'default-layout',
       middleware: [
@@ -49,7 +49,7 @@ export default [
       redirect: '/',
     },
     beforeEnter: async (to, from, next) => {
-      const { get } = skill();
+      const { get } = review();
 
       try {
         await get(to.params.id as TId);

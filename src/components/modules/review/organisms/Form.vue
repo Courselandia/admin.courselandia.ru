@@ -33,7 +33,7 @@
         </RadioGroup>
       </Item>
       <Item
-        :label="lang('salary.profession')"
+        :label="lang('review.profession')"
         name="profession"
       >
         <Select
@@ -46,7 +46,7 @@
         />
       </Item>
       <Item
-        :label="lang('salary.level')"
+        :label="lang('review.level')"
         name="level"
         :rules="[{ required: true }]"
       >
@@ -54,23 +54,23 @@
           v-model:value="form.level"
         >
           <Option :value="ELevel.JUNIOR">
-            <Lang value="salary.junior" />
+            <Lang value="review.junior" />
           </Option>
           <Option :value="ELevel.MIDDLE">
-            <Lang value="salary.middle" />
+            <Lang value="review.middle" />
           </Option>
           <Option :value="ELevel.SENIOR">
-            <Lang value="salary.senior" />
+            <Lang value="review.senior" />
           </Option>
         </Select>
       </Item>
       <Item
-        :label="lang('salary.salary')"
-        name="salary"
+        :label="lang('review.review')"
+        name="review"
         :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
       >
         <InputNumber
-          v-model:value="form.salary"
+          v-model:value="form.review"
           class="width--wide"
         />
       </Item>
@@ -124,7 +124,7 @@ import {
 import Lang from '@/components/atoms/Lang.vue';
 import ELevel from '@/enums/modules/salary/level';
 import lang from '@/helpers/lang';
-import ISalaryForm from '@/interfaces/modules/salary/salaryForm';
+import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import profession from '@/store/profession';
 
@@ -132,7 +132,7 @@ const formRef = ref<FormInstance>();
 
 const props = defineProps({
   value: {
-    type: Object as PropType<ISalaryForm>,
+    type: Object as PropType<IReviewForm>,
     required: true,
   },
   alertMessage: {
@@ -169,8 +169,8 @@ const professionData = storeToRefs(profession());
 const professionItems = professionData.items;
 
 const emit = defineEmits({
-  'update:value': (_: ISalaryForm) => true,
-  submit: (_: ISalaryForm, __?: FormInstance) => true,
+  'update:value': (_: IReviewForm) => true,
+  submit: (_: IReviewForm, __?: FormInstance) => true,
   reset: (_?: FormInstance) => true,
 });
 

@@ -1,4 +1,4 @@
-import ERole from '@/enums/role';
+import ERole from '@/enums/modules/user/role';
 import TId from '@/types/id';
 
 export default interface IUserForm {

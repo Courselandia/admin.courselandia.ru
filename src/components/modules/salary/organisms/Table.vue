@@ -120,6 +120,7 @@
           confirm,
           clearFilters,
           column,
+          visible,
         }"
       >
         <TableColumnFilter
@@ -129,6 +130,7 @@
           :clear-filters="clearFilters"
           :column="column"
           :type="column.filterType"
+          :visible="visible"
         />
       </template>
       <template #customFilterIcon="{ filtered }">
@@ -184,7 +186,7 @@ import { useRoute, useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
-import ELevel from '@/enums/level';
+import ELevel from '@/enums/modules/salary/level';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
 import { money } from '@/helpers/number';
