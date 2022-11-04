@@ -27,6 +27,7 @@ import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Form from '@/components/modules/review/organisms/Form.vue';
+import EStatus from '@/enums/modules/review/status';
 import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
@@ -52,10 +53,12 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IReviewForm => ({
   id: id as TId,
-  level: item.value?.level || null,
-  review: item.value?.review || null,
-  profession_id: item.value?.profession_id || null,
-  status: item.value?.status || true,
+  school_id: item.value?.school_id || null,
+  name: item.value?.name || '',
+  title: item.value?.title || null,
+  text: item.value?.text || '',
+  rating: item.value?.rating || 1,
+  status: item.value?.status || EStatus.ACTIVE,
 });
 
 const form = ref<IReviewForm>(getDefaultFormValue());

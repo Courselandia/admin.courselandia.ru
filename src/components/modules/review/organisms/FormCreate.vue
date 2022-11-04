@@ -25,6 +25,7 @@ import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Form from '@/components/modules/review/organisms/Form.vue';
+import EStatus from '@/enums/modules/review/status';
 import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
@@ -45,15 +46,17 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IReviewForm>({
-  level: null,
-  review: null,
-  profession_id: null,
-  status: true,
+  school_id: null,
+  name: '',
+  title: null,
+  text: '',
+  rating: 1,
+  status: EStatus.ACTIVE,
 });
 
 const onReset = (formRef?: FormInstance) => {
   formRef?.resetFields();
-  form.value.profession_id = null;
+  form.value.school_id = null;
 };
 
 const onSubmit = async (data: IReviewForm, formRef?: FormInstance): Promise<void> => {
