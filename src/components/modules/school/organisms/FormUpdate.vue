@@ -58,6 +58,7 @@
                 <Item
                   :label="lang('school.nameField')"
                   name="name"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
@@ -68,6 +69,7 @@
                 <Item
                   :label="lang('school.header')"
                   name="header"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
@@ -77,6 +79,7 @@
                 <Item
                   :label="lang('school.link')"
                   name="link"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
@@ -84,6 +87,7 @@
                 <Item
                   :label="lang('school.rating')"
                   name="rating"
+                  has-feedback
                   :rules="[{ required: false, type: 'number', min: 0, max: 5 }]"
                 >
                   <InputNumber
@@ -94,6 +98,7 @@
                 <Item
                   :label="lang('school.site')"
                   name="site"
+                  has-feedback
                   :rules="[{ required: false, type: 'url' }]"
                 >
                   <Input v-model:value="form.site" />
@@ -108,6 +113,7 @@
                 <Item
                   :label="lang('school.title')"
                   name="title"
+                  has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
@@ -115,6 +121,7 @@
                 <Item
                   :label="lang('school.description')"
                   name="description"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.description" />
@@ -122,6 +129,7 @@
                 <Item
                   :label="lang('school.keywords')"
                   name="keywords"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.keywords" />

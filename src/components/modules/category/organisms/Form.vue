@@ -40,6 +40,7 @@
           <Item
             :label="lang('category.nameField')"
             name="name"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input
@@ -50,6 +51,7 @@
           <Item
             :label="lang('category.header')"
             name="header"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="form.header" />
@@ -64,6 +66,7 @@
           <Item
             :label="lang('category.directions')"
             name="directions"
+            has-feedback
           >
             <Select
               v-model:value="form.directions"
@@ -78,6 +81,7 @@
           <Item
             :label="lang('category.professions')"
             name="professions"
+            has-feedback
           >
             <Select
               v-model:value="form.professions"
@@ -99,6 +103,7 @@
           <Item
             :label="lang('category.title')"
             name="title"
+            has-feedback
             :rules="[{ type: 'string', max: 500 }]"
           >
             <Input v-model:value="form.title" />
@@ -106,6 +111,7 @@
           <Item
             :label="lang('category.description')"
             name="description"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.description" />
@@ -113,6 +119,7 @@
           <Item
             :label="lang('category.keywords')"
             name="keywords"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.keywords" />

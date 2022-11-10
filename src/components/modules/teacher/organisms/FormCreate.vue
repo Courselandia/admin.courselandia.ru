@@ -58,6 +58,7 @@
                 <Item
                   :label="lang('teacher.nameField')"
                   name="name"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
@@ -68,6 +69,7 @@
                 <Item
                   :label="lang('teacher.link')"
                   name="link"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
@@ -75,6 +77,7 @@
                 <Item
                   :label="lang('teacher.rating')"
                   name="rating"
+                  has-feedback
                   :rules="[{ required: false, type: 'number', min: 0, max: 5 }]"
                 >
                   <InputNumber
@@ -85,6 +88,7 @@
                 <Item
                   :label="lang('teacher.directions')"
                   name="directions"
+                  has-feedback
                 >
                   <Select
                     v-model:value="form.directions"
@@ -99,6 +103,7 @@
                 <Item
                   :label="lang('teacher.schools')"
                   name="schools"
+                  has-feedback
                 >
                   <Select
                     v-model:value="form.schools"
@@ -120,6 +125,7 @@
                 <Item
                   :label="lang('teacher.title')"
                   name="title"
+                  has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
@@ -134,6 +140,7 @@
                 <Item
                   :label="lang('teacher.keywords')"
                   name="keywords"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.keywords" />

@@ -40,6 +40,7 @@
           <Item
             :label="lang('direction.nameField')"
             name="name"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input
@@ -50,6 +51,7 @@
           <Item
             :label="lang('direction.header')"
             name="header"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="form.header" />
@@ -57,6 +59,7 @@
           <Item
             :label="lang('direction.link')"
             name="link"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
           >
             <Input v-model:value="form.link" />
@@ -64,6 +67,7 @@
           <Item
             :label="lang('direction.weight')"
             name="weight"
+            has-feedback
             :rules="[{ required: true, type: 'number', min: 0, max: 99999 }]"
           >
             <InputNumber
@@ -81,6 +85,7 @@
           <Item
             :label="lang('direction.title')"
             name="title"
+            has-feedback
             :rules="[{ type: 'string', max: 500 }]"
           >
             <Input v-model:value="form.title" />
@@ -88,6 +93,7 @@
           <Item
             :label="lang('direction.description')"
             name="description"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.description" />
@@ -95,6 +101,7 @@
           <Item
             :label="lang('direction.keywords')"
             name="keywords"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.keywords" />

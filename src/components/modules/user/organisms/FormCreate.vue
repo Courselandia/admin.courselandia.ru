@@ -53,6 +53,7 @@
           <Item
             :label="lang('dashboard.login')"
             name="login"
+            has-feedback
             :rules="[{ required: true, type: 'email', max: 191 }]"
           >
             <Input v-model:value="form.login" />
@@ -60,6 +61,7 @@
           <Item
             :label="lang('dashboard.password')"
             name="password"
+            has-feedback
             :rules="[{ required: true }]"
           >
             <Password
@@ -69,6 +71,7 @@
           <Item
             :label="lang('user.role')"
             name="role"
+            has-feedback
             :rules="[{ required: true }]"
           >
             <Select
@@ -88,6 +91,7 @@
           <Item
             :label="lang('profile.firstName')"
             name="first_name"
+            has-feedback
             :rules="[{ type: 'string', max: 191 }]"
           >
             <Input v-model:value="form.first_name" />
@@ -102,6 +106,7 @@
           <Item
             :label="lang('profile.phone')"
             name="phone"
+            has-feedback
             :rules="[{ type: 'string', max: 30 }]"
           >
             <Input

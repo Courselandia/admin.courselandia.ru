@@ -35,6 +35,7 @@
           <Item
             :label="lang('profile.firstName')"
             name="firstName"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="profileForm.firstName" />
@@ -42,6 +43,7 @@
           <Item
             :label="lang('profile.secondName')"
             name="secondName"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="profileForm.secondName" />
@@ -49,6 +51,7 @@
           <Item
             :label="lang('profile.phone')"
             name="phone"
+            has-feedback
             :rules="[{ type: 'string', max: 30 }]"
           >
             <Input
@@ -184,6 +187,7 @@
           <Item
             :label="lang('dashboard.password')"
             name="password"
+            has-feedback
             :rules="[{ required: true }]"
           >
             <Password

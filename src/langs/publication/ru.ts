@@ -10,4 +10,5 @@ export default {
   description: 'Описание',
   keywords: 'Ключевые слова',
   article: 'Статья',
+  createPublication: 'Создать публикацию',
 };

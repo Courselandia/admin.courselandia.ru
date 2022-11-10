@@ -35,6 +35,7 @@
       <Item
         :label="lang('salary.profession')"
         name="profession"
+        has-feedback
       >
         <Select
           v-model:value="form.profession_id"
@@ -48,6 +49,7 @@
       <Item
         :label="lang('salary.level')"
         name="level"
+        has-feedback
         :rules="[{ required: true }]"
       >
         <Select
@@ -67,6 +69,7 @@
       <Item
         :label="lang('salary.salary')"
         name="salary"
+        has-feedback
         :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
       >
         <InputNumber

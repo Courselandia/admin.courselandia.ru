@@ -58,6 +58,7 @@
                 <Item
                   :label="lang('publication.publishedAt')"
                   name="published_at"
+                  has-feedback
                   :rules="[{ required: true }]"
                 >
                   <DatePicker
@@ -70,6 +71,7 @@
                 <Item
                   :label="lang('publication.header')"
                   name="header"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
@@ -80,6 +82,7 @@
                 <Item
                   :label="lang('publication.link')"
                   name="link"
+                  has-feedback
                   :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
@@ -87,6 +90,7 @@
                 <Item
                   :label="lang('publication.anons')"
                   name="anons"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <TextArea
@@ -104,6 +108,7 @@
                 <Item
                   :label="lang('publication.title')"
                   name="title"
+                  has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
                   <Input v-model:value="form.title" />
@@ -111,6 +116,7 @@
                 <Item
                   :label="lang('publication.description')"
                   name="description"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.description" />
@@ -118,6 +124,7 @@
                 <Item
                   :label="lang('publication.keywords')"
                   name="keywords"
+                  has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
                   <Input v-model:value="form.keywords" />

@@ -19,6 +19,7 @@
       <Item
         :label="lang('dashboard.login')"
         name="login"
+        has-feedback
         :rules="[{ required: true, type: 'email' }]"
       >
         <Input v-model:value="form.login" />
@@ -27,6 +28,7 @@
       <Item
         :label="lang('dashboard.password')"
         name="password"
+        has-feedback
         :rules="[{ required: true }]"
       >
         <Password

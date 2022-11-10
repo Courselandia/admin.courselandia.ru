@@ -10,4 +10,5 @@ export default {
   description: 'Description',
   keywords: 'Keywords',
   article: 'Article',
+  createPublication: 'Create publication',
 };

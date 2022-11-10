@@ -40,6 +40,7 @@
           <Item
             :label="lang('profession.nameField')"
             name="name"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input
@@ -50,6 +51,7 @@
           <Item
             :label="lang('profession.header')"
             name="header"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
           >
             <Input v-model:value="form.header" />
@@ -57,6 +59,7 @@
           <Item
             :label="lang('profession.link')"
             name="link"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
           >
             <Input v-model:value="form.link" />
@@ -71,6 +74,7 @@
           <Item
             :label="lang('profession.title')"
             name="title"
+            has-feedback
             :rules="[{ type: 'string', max: 500 }]"
           >
             <Input v-model:value="form.title" />
@@ -78,6 +82,7 @@
           <Item
             :label="lang('profession.description')"
             name="description"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.description" />
@@ -85,6 +90,7 @@
           <Item
             :label="lang('profession.keywords')"
             name="keywords"
+            has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
           >
             <Input v-model:value="form.keywords" />

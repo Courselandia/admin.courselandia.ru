@@ -38,6 +38,7 @@
       <Item
         :label="lang('review.school')"
         name="school_id"
+        has-feedback
         :rules="[{ required: true }]"
       >
         <Select
@@ -52,6 +53,7 @@
       <Item
         :label="lang('review.nameAuthor')"
         name="name"
+        has-feedback
         :rules="[{ required: true, type: 'string', max: 191 }]"
       >
         <Input
@@ -61,6 +63,7 @@
       <Item
         :label="lang('review.title')"
         name="title"
+        has-feedback
         :rules="[{ type: 'string', max: 191 }]"
       >
         <Input
@@ -70,6 +73,7 @@
       <Item
         :label="lang('review.text')"
         name="text"
+        has-feedback
         :rules="[{ required: true, type: 'string', max: 65000 }]"
       >
         <TextArea
@@ -80,6 +84,7 @@
       <Item
         :label="lang('review.rating')"
         name="rating"
+        has-feedback
         :rules="[{ required: true, type: 'number', min: 1, max: 5 }]"
       >
         <InputNumber

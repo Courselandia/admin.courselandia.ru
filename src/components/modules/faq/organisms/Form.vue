@@ -35,6 +35,7 @@
       <Item
         :label="lang('faq.school')"
         name="school_id"
+        has-feedback
         :rules="[{ required: true }]"
       >
         <Select
@@ -49,6 +50,7 @@
       <Item
         :label="lang('faq.question')"
         name="question"
+        has-feedback
         :rules="[{ required: true, type: 'string', max: 191 }]"
       >
         <Input
@@ -58,6 +60,7 @@
       <Item
         :label="lang('faq.answer')"
         name="answer"
+        has-feedback
         :rules="[{ type: 'string', max: 5000 }]"
       >
         <TextArea
