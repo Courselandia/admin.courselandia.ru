@@ -1,6 +1,5 @@
 <template>
   <div
-    v-outside-click="onClickOutside"
     :class="{
       'table-column-filter': true,
       'table-column-filter--big': type === 'dateRange' || type === 'select',
@@ -42,7 +41,7 @@
         <Select
           :value="selectedKeys"
           mode="multiple"
-          class="width--wide"
+          class="width--80"
           show-search
           :filter-option="filterOption"
           :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text }))"
@@ -51,7 +50,7 @@
       </template>
     </div>
     <Divider class="mt-0 mb-0" />
-    <div class="pa-8">
+    <div class="pa-8 align--right">
       <Button
         size="small"
         type="text"
@@ -158,59 +157,6 @@ const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false
 const onFilterReset = (): void => {
   clearFilters.value();
   filter.value = '';
-};
-
-const isElement = (element: HTMLElement, nameClass: string): boolean => {
-  const check = element.className.split(' ').indexOf(nameClass) !== -1;
-
-  if (check) {
-    return true;
-  }
-
-  if (element.parentElement) {
-    const checkInside = isElement(element.parentElement, nameClass);
-
-    if (checkInside) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-const onClickOutside = (event: PointerEvent): void => {
-  if (visible.value) {
-    const target = event?.target as HTMLDivElement;
-    const { parentElement } = target;
-
-    if (parentElement) {
-      const checkDataPicker = isElement(parentElement, 'ant-picker-dropdown');
-      const checkSelect = isElement(parentElement, 'ant-select-dropdown');
-
-      if (checkDataPicker || checkSelect) {
-        return;
-      }
-    }
-
-    confirm.value();
-    const { type, selectedKeys, column } = props;
-    const multiple = type === 'dateRange' || type === 'select';
-
-    if (multiple) {
-      filter.value = [];
-
-      for (let i = 0; i < selectedKeys.length; i++) {
-        filter.value[i] = selectedKeys[i];
-      }
-    } else {
-      const [value] = selectedKeys;
-      filter.value = value;
-    }
-
-    if (column.key) {
-      filter.column = column.key;
-    }
-  }
 };
 
 const filterOption = (input: string, option: any) => option

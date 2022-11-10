@@ -5,6 +5,7 @@ import {
 import router404 from '@/routers/404';
 import routerAlerts from '@/routers/alerts';
 import routerCategories from '@/routers/categories';
+import routerCourses from '@/routers/courses';
 import routerDashboard from '@/routers/dashboard';
 import routerDirections from '@/routers/directions';
 import routerEntrance from '@/routers/entrance';
@@ -25,6 +26,7 @@ import routerUsers from '@/routers/users';
 const routes: Array<RouteRecordRaw> = [
   ...routerEntrance,
   ...routerDashboard,
+  ...routerCourses,
   ...routerUsers,
   ...routerProfile,
   ...routerAlerts,

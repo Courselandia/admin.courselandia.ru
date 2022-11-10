@@ -2,7 +2,7 @@
   <Sider
     breakpoint="lg"
     width="200"
-    style="background: #fff"
+    style="background: #fff; overflow-y: auto; overflow-x: hidden"
   >
     <Menu
       v-model:selectedKeys="menu"
@@ -10,6 +10,16 @@
       mode="inline"
       :style="{ height: '100%', borderRight: 0 }"
     >
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="courses"
+        @click="onClickMenuItem('Courses')"
+      >
+        <template #icon>
+          <AuditOutlined />
+        </template>
+        <Lang value="course.name" />
+      </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="publications"
@@ -167,6 +177,7 @@
 <script lang="ts" setup>
 import {
   AppstoreOutlined,
+  AuditOutlined,
   BarsOutlined,
   ContactsOutlined,
   DollarCircleOutlined,
@@ -221,6 +232,7 @@ const onClickMenuItem = (name: string): void => {
 const select = (rt: RouteLocationNormalizedLoaded) => {
   const paths: Record<string, string> = {
     users: '/dashboard/users',
+    courses: '/dashboard/courses',
     publications: '/dashboard/publications',
     directions: '/dashboard/directions',
     professions: '/dashboard/professions',

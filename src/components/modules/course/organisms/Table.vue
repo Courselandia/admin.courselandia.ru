@@ -77,14 +77,30 @@
         <template v-if="column.key === 'school-name'">
           {{ record?.school?.name }}
         </template>
-        <template v-if="column.key === 'rating'">
-          <Rate
-            v-model:value="record.rating"
-            disabled
-          />
+        <template v-if="column.key === 'price'">
+          <template v-if="record.price">
+            {{ money(record.price, 0, getCurrencyLabel(record.currency)) }}
+          </template>
         </template>
-        <template v-if="column.key === 'created_at'">
-          {{ dayjs.utc(record.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
+        <template v-if="column.key === 'professions-name'">
+          <template v-if="record?.professions">
+            <Tag
+              v-for="(item, key) in record.professions"
+              :key="key"
+            >
+              {{ item.name }}
+            </Tag>
+          </template>
+        </template>
+        <template v-if="column.key === 'directions-name'">
+          <template v-if="record?.directions">
+            <Tag
+              v-for="(item, key) in record.directions"
+              :key="key"
+            >
+              {{ item.name }}
+            </Tag>
+          </template>
         </template>
         <template v-if="column.key === 'status'">
           <template v-if="record.status === EStatus.ACTIVE">
@@ -97,9 +113,9 @@
               {{ lang('dashboard.disabled') }}
             </Tag>
           </template>
-          <template v-else-if="record.status === EStatus.REVIEW">
+          <template v-else-if="record.status === EStatus.DRAFT">
             <Tag color="yellow">
-              {{ lang('dashboard.review') }}
+              {{ lang('dashboard.draft') }}
             </Tag>
           </template>
         </template>
@@ -153,7 +169,6 @@ import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Modal from 'ant-design-vue/lib/modal';
 import notification from 'ant-design-vue/lib/notification';
-import Rate from 'ant-design-vue/lib/rate';
 import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import {
@@ -162,7 +177,6 @@ import {
   SorterResult,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
-import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import {
   computed,
@@ -177,9 +191,11 @@ import { useRoute, useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
-import EStatus from '@/enums/modules/review/status';
+import ECurrency from '@/enums/modules/course/currency';
+import EStatus from '@/enums/modules/course/status';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
+import { money } from '@/helpers/number';
 import sorts from '@/helpers/sorts';
 import {
   stateColumnFilter,
@@ -190,25 +206,45 @@ import {
   stateSet,
   stateSorts,
 } from '@/helpers/state';
-import IReview from '@/interfaces/modules/review/review';
+import ICourse from '@/interfaces/modules/course/course';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import review from '@/store/review';
+import course from '@/store/course';
+import direction from '@/store/direction';
+import profession from '@/store/profession';
 import school from '@/store/school';
 import TId from '@/types/id';
 
 const {
   read,
   destroy,
-} = review();
+} = course();
 const {
   items,
   total,
-} = storeToRefs(review());
+} = storeToRefs(course());
 const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null> | null>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
+
+const readProfessions = profession().read;
+const professionData = storeToRefs(profession());
+const professionItems = professionData.items;
+
+const getProfessionsFilter = (): Array<ColumnFilterItem> => {
+  const result: Array<ColumnFilterItem> = [];
+
+  professionItems.value?.forEach((item) => {
+    result[result.length] = {
+      text: item.name,
+      value: item.id,
+    };
+  });
+
+  return result;
+};
+
 const readSchools = school().read;
 const schoolData = storeToRefs(school());
 const schoolItems = schoolData.items;
@@ -226,7 +262,24 @@ const getSchoolsFilter = (): Array<ColumnFilterItem> => {
   return result;
 };
 
-const columns = computed<ITableColumnType<IReview>[]>(() => [
+const readDirections = direction().read;
+const directionData = storeToRefs(direction());
+const directionItems = directionData.items;
+
+const getDirectionsFilter = (): Array<ColumnFilterItem> => {
+  const result: Array<ColumnFilterItem> = [];
+
+  directionItems.value?.forEach((item) => {
+    result[result.length] = {
+      text: item.name,
+      value: item.id,
+    };
+  });
+
+  return result;
+};
+
+const columns = computed<ITableColumnType<ICourse>[]>(() => [
   {
     title: lang('dashboard.id'),
     dataIndex: 'id',
@@ -241,7 +294,7 @@ const columns = computed<ITableColumnType<IReview>[]>(() => [
     width: 100,
   },
   {
-    title: lang('review.school'),
+    title: lang('course.school'),
     dataIndex: 'school-name',
     key: 'school-name',
     sorter: {
@@ -254,40 +307,53 @@ const columns = computed<ITableColumnType<IReview>[]>(() => [
     filters: getSchoolsFilter(),
   },
   {
-    title: lang('review.nameAuthor'),
-    dataIndex: 'name',
-    key: 'name',
+    title: lang('course.header'),
+    dataIndex: 'header',
+    key: 'header',
     sorter: {
       multiple: 1,
     },
     customFilterDropdown: true,
-    sortOrder: stateColumnSort('name', sortedInfo.value),
-    filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
+    sortOrder: stateColumnSort('header', sortedInfo.value),
+    filteredValue: stateColumnFilter('header', filteredInfo.value, 'string'),
   },
   {
-    title: lang('review.rating'),
-    dataIndex: 'rating',
-    key: 'rating',
+    title: lang('course.price'),
+    dataIndex: 'price',
+    key: 'price',
     sorter: {
       multiple: 1,
     },
     customFilterDropdown: true,
-    sortOrder: stateColumnSort('rating', sortedInfo.value),
-    filteredValue: stateColumnFilter('rating', filteredInfo.value, 'number'),
+    sortOrder: stateColumnSort('price', sortedInfo.value),
+    filteredValue: stateColumnFilter('price', filteredInfo.value, 'number'),
     filterType: 'number',
   },
   {
-    title: lang('review.createdAt'),
-    dataIndex: 'created_at',
-    key: 'created_at',
+    title: lang('course.professions'),
+    dataIndex: 'professions-name',
+    key: 'professions-name',
     sorter: {
       multiple: 1,
     },
-    sortOrder: stateColumnSort('created_at', sortedInfo.value),
     customFilterDropdown: true,
-    filterType: 'dateRange',
-    filteredValue: stateColumnFilter('created_at', filteredInfo.value, 'dateRange'),
-    width: 300,
+    sortOrder: stateColumnSort('professions-name', sortedInfo.value),
+    filteredValue: stateColumnFilter('professions-name', filteredInfo.value, 'number'),
+    filterType: 'select',
+    filters: getProfessionsFilter(),
+  },
+  {
+    title: lang('course.directions'),
+    dataIndex: 'directions-name',
+    key: 'directions-name',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('directions-name', sortedInfo.value),
+    filteredValue: stateColumnFilter('directions-name', filteredInfo.value, 'number'),
+    filterType: 'select',
+    filters: getDirectionsFilter(),
   },
   {
     title: lang('dashboard.status'),
@@ -305,11 +371,11 @@ const columns = computed<ITableColumnType<IReview>[]>(() => [
         value: EStatus.ACTIVE,
       },
       {
-        text: lang('dashboard.review'),
-        value: EStatus.REVIEW,
+        text: lang('dashboard.draft'),
+        value: EStatus.DRAFT,
       },
       {
-        text: lang('dashboard.disabled'),
+        text: lang('dashboard.deactivated'),
         value: EStatus.DISABLED,
       },
     ],
@@ -320,7 +386,7 @@ const columns = computed<ITableColumnType<IReview>[]>(() => [
     width: 170,
   },
 ]);
-filteredInfo.value = stateFilters<IReview>(columns.value);
+filteredInfo.value = stateFilters<ICourse>(columns.value);
 const loading = ref(false);
 const pageSizeDefault = stateLimit() || 20;
 const pageCurrentDefault = statePage() || 1;
@@ -333,23 +399,27 @@ const pagination = ref({
   showSizeChanger: true,
 });
 const destroysLoading = ref<Record<TId, boolean>>({});
-const selected = ref<Array<IReview>>();
+const selected = ref<Array<ICourse>>();
 const destroySelectedDisabled = ref(true);
 const destroySelectedLoading = ref(false);
 
 const rowSelection: TableProps['rowSelection'] = {
-  onChange: (selectedRowKeys: Key[], selectedRows: IReview[]): void => {
+  onChange: (selectedRowKeys: Key[], selectedRows: ICourse[]): void => {
     selected.value = selectedRows;
   },
 };
 
 const defaultSorts: Array<SorterResult> = [
   {
-    columnKey: 'created_at',
-    order: 'descend',
+    columnKey: 'school-name',
+    order: 'ascend',
+  },
+  {
+    columnKey: 'header',
+    order: 'ascend',
   },
 ];
-sortedInfo.value = stateSorts<IReview>(columns.value, defaultSorts);
+sortedInfo.value = stateSorts<ICourse>(columns.value, defaultSorts);
 
 const load = async (
   offset: number,
@@ -377,7 +447,37 @@ const load = async (
 
 const loadProfessions = async () => {
   try {
+    await readProfessions(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+};
+
+const loadSchools = async () => {
+  try {
     await readSchools(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+};
+
+const loadDirections = async () => {
+  try {
+    await readDirections(null, null, { name: 'ASC' } as ISorts);
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
@@ -399,10 +499,12 @@ onMounted(async (): Promise<void> => {
   );
 
   await loadProfessions();
+  await loadSchools();
+  await loadDirections();
 });
 
 watch(route, (): void => {
-  const currentRoute = router.getRoutes().find((item) => item.name === 'Reviews');
+  const currentRoute = router.getRoutes().find((item) => item.name === 'Salaries');
 
   if (route.path === currentRoute?.path) {
     const pageSize = stateLimit() || pageSizeDefault;
@@ -411,8 +513,8 @@ watch(route, (): void => {
 
     pagination.value.current = current;
     pagination.value.pageSize = pageSize;
-    sortedInfo.value = stateSorts<IReview>(columns.value);
-    filteredInfo.value = stateFilters<IReview>(columns.value);
+    sortedInfo.value = stateSorts<ICourse>(columns.value);
+    filteredInfo.value = stateFilters<ICourse>(columns.value);
 
     load(offset, pageSize, sortedInfo.value, filteredInfo.value);
   }
@@ -422,7 +524,7 @@ watch(selected, () => {
   destroySelectedDisabled.value = selected.value?.length === 0;
 });
 
-const onChange: TableProps<IReview>['onChange'] = async (pag, filter, sorter): Promise<void> => {
+const onChange: TableProps<ICourse>['onChange'] = async (pag, filter, sorter): Promise<void> => {
   filteredInfo.value = {
     ...filteredInfo.value,
     ...filter,
@@ -458,13 +560,13 @@ const reload = async (): Promise<void> => {
 
 const onClickCreate = (): void => {
   router.push({
-    name: 'ReviewCreate',
+    name: 'CourseCreate',
   });
 };
 
 const onClickUpdate = (id: TId): void => {
   router.push({
-    name: 'ReviewUpdate',
+    name: 'CourseUpdate',
     params: {
       id,
     },
@@ -520,6 +622,22 @@ const onClickDestroySelected = (): void => {
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
+};
+
+const getCurrencyLabel = (currency: ECurrency): string | null => {
+  if (currency === ECurrency.RUB) {
+    return 'руб.';
+  }
+
+  if (currency === ECurrency.USD) {
+    return '$';
+  }
+
+  if (currency === ECurrency.EUR) {
+    return '€';
+  }
+
+  return null;
 };
 </script>
 

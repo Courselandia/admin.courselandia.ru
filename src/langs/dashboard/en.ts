@@ -92,4 +92,5 @@ export default {
   meta: 'Metadata',
   go: 'Go',
   review: 'Review',
+  draft: 'Draft',
 };
