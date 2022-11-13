@@ -9,12 +9,12 @@
       </Item>
       <Item
         href=""
-        @click="onClickBreadcrumbItem('Publications')"
+        @click="onClickBreadcrumbItem('Courses')"
       >
-        <Lang value="publication.name" />
+        <Lang value="course.name" />
       </Item>
       <Item>
-        <Lang value="publication.addPublication" />
+        <Lang value="course.addCourse" />
       </Item>
     </Breadcrumb>
     <FormCreate />
@@ -27,7 +27,7 @@ import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import FormCreate from '@/components/modules/publication/organisms/FormCreate.vue';
+import FormCreate from '@/components/modules/course/organisms/FormCreate.vue';
 import lang from '@/helpers/lang';
 
 const {
@@ -37,7 +37,7 @@ const {
 const router = useRouter();
 
 useMeta({
-  title: lang('publication.addPublication'),
+  title: lang('course.addCourse'),
 });
 
 const onClickBreadcrumbItem = async (name: string) => {

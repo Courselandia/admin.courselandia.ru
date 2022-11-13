@@ -258,7 +258,7 @@ const stateFilters = <T>(
                 } else {
                   valid = false;
                 }
-              } else if (filterTypeFound === 'number' || filterTypeFound === 'select') {
+              } else if (filterTypeFound === 'number' || filterTypeFound === 'select' || filterTypeFound === 'slider') {
                 values[i] = Number(values[i]);
               }
             }

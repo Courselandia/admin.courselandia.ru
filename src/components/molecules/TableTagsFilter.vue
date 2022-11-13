@@ -20,17 +20,17 @@
 </template>
 
 <script lang="ts" setup>
-import { TableColumnType } from 'ant-design-vue';
 import { FilterValue } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
 import dayjs from 'dayjs';
 import { defineProps, PropType, toRefs } from 'vue';
 
 import IColumn from '@/interfaces/molecules/table/column';
+import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
 
 const props = defineProps({
   columns: {
-    type: Array as PropType<Array<TableColumnType<IColumn>>>,
+    type: Array as PropType<Array<ITableColumnType<IColumn>>>,
     required: true,
   },
   filters: {
@@ -66,6 +66,8 @@ const getValue = (
     return '';
   }
 
+  const foundColumn = columns.value.find((column) => field === column.key);
+
   if (typeof value === 'object') {
     if (value instanceof dayjs) {
       return value as dayjs.Dayjs;
@@ -74,20 +76,19 @@ const getValue = (
     const valueCurrent = value.map((item: any) => getValue(field, item));
 
     if (valueCurrent) {
-      let isDateFormat = false;
-
       for (let i = 0; i < valueCurrent.length; i++) {
         if (valueCurrent[i] instanceof dayjs) {
           valueCurrent[i] = valueCurrent[i].format('D MMMM YYYY');
-          isDateFormat = true;
         }
       }
 
-      return valueCurrent?.join(isDateFormat ? ' – ' : ', ');
+      if (foundColumn?.filterType === 'dateRange' || foundColumn?.filterType === 'slider') {
+        return valueCurrent?.join(' – ');
+      }
+
+      return valueCurrent?.join(', ');
     }
   }
-
-  const foundColumn = columns.value.find((column) => field === column.key);
 
   if (foundColumn?.filters) {
     const filter = foundColumn?.filters?.find((flt) => flt.value === value);

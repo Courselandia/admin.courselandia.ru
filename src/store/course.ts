@@ -67,18 +67,18 @@ export default defineStore('course', {
       formData.append('link', data.link);
       formData.append('url', data.url);
       formData.append('language', data.language || '');
-      formData.append('rating', String(data.rating) || '');
-      formData.append('price', String(data.price));
-      formData.append('price_discount', String(data.price_discount));
-      formData.append('price_recurrent_price', String(data.price_recurrent_price));
-      formData.append('currency', String(data.currency));
+      formData.append('rating', data.rating ? String(data.rating) : '');
+      formData.append('price', data.price ? String(data.price) : '');
+      formData.append('price_discount', data.price_discount ? String(data.price_discount) : '');
+      formData.append('price_recurrent_price', data.price_recurrent_price ? String(data.price_recurrent_price) : '');
+      formData.append('currency', data.currency ? String(data.currency) : '');
       formData.append('online', data.online ? '1' : '0');
       formData.append('employment', data.employment ? '1' : '0');
-      formData.append('duration', String(data.duration) || '');
-      formData.append('duration_unit', String(data.duration_unit) || '');
-      formData.append('lessons_amount', String(data.lessons_amount) || '');
-      formData.append('modules_amount', String(data.modules_amount) || '');
-      formData.append('status', String(data.status) || '');
+      formData.append('duration', data.duration ? String(data.duration) : '');
+      formData.append('duration_unit', data.duration_unit ? String(data.duration_unit) : '');
+      formData.append('lessons_amount', data.lessons_amount ? String(data.lessons_amount) : '');
+      formData.append('modules_amount', data.modules_amount ? String(data.modules_amount) : '');
+      formData.append('status', data.status ? String(data.status) : '');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
       formData.append('keywords', data.keywords || '');
@@ -140,8 +140,8 @@ export default defineStore('course', {
 
       if (data.features) {
         for (let i = 0; i < data.features.length; i++) {
-          formData.append(`features[${i}][icon]`, data.features[i].icon);
-          formData.append(`features[${i}][text]`, data.features[i].text);
+          formData.append(`features[${i}][icon]`, data.features[i].icon || '');
+          formData.append(`features[${i}][text]`, data.features[i].text || '');
         }
       }
 

@@ -327,7 +327,10 @@ const columns = computed<ITableColumnType<ICourse>[]>(() => [
     customFilterDropdown: true,
     sortOrder: stateColumnSort('price', sortedInfo.value),
     filteredValue: stateColumnFilter('price', filteredInfo.value, 'number'),
-    filterType: 'number',
+    filterType: 'slider',
+    min: 0,
+    max: 400000,
+    step: 10000,
   },
   {
     title: lang('course.professions'),

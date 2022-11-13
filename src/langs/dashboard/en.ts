@@ -62,6 +62,8 @@ export default {
   time: 'Time',
   dateFrom: 'Date from',
   dateTo: 'Date to',
+  from: 'From',
+  to: 'To',
   title: 'Title',
   description: 'Description',
   content: 'Content',
@@ -93,4 +95,6 @@ export default {
   go: 'Go',
   review: 'Review',
   draft: 'Draft',
+  warning: 'Warning',
+  notEmpty: 'The value cannot be empty.',
 };

@@ -62,6 +62,8 @@ export default {
   time: 'Время',
   dateFrom: 'Начальная дата',
   dateTo: 'Дата окончания',
+  from: 'От',
+  to: 'До',
   title: 'Заголовок',
   description: 'Описание',
   content: 'Контент',
@@ -93,4 +95,6 @@ export default {
   go: 'Перейти',
   review: 'В рассмотрении',
   draft: 'Набросок',
+  warning: 'Внимание',
+  notEmpty: 'Значение не может быть пустым.',
 };

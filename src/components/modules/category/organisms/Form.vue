@@ -59,6 +59,7 @@
           <Item
             :label="lang('category.link')"
             name="link"
+            has-feedback
             :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
           >
             <Input v-model:value="form.link" />

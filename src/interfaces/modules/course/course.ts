@@ -40,15 +40,15 @@ export default interface IPublication extends IColumn {
   currency: ECurrency | null;
   online: boolean | null;
   employment: boolean | null;
-  duration: number;
-  duration_rate: number;
+  duration: number | null;
+  duration_rate: number | null;
   duration_unit: EDuration | null;
-  lessons_amount: number;
-  modules_amount: number;
+  lessons_amount: number | null;
+  modules_amount: number | null;
   status: EStatus;
   created_at: string;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
 
   metatag: IMetatag;
   school: Array<ISchool> | null;

@@ -18,6 +18,10 @@
 
 @import '@/assets/animations/fade.scss';
 
+BODY {
+  overflow: hidden;
+}
+
 #app {
   height: 100%;
 }

@@ -2,12 +2,12 @@ import ECurrency from '@/enums/modules/course/currency';
 import EDuration from '@/enums/modules/course/duration';
 import ELanguage from '@/enums/modules/course/language';
 import EStatus from '@/enums/modules/course/status';
-import IFeatureForm from '@/interfaces/modules/course/featureForm';
+import IFeature from '@/interfaces/modules/course/feature';
 import TId from '@/types/id';
 
 export default interface IPublicationForm {
   id?: TId;
-  school_id: TId;
+  school_id: TId | null;
   image: File | null;
   header: string;
   text: string | null;
@@ -21,10 +21,10 @@ export default interface IPublicationForm {
   currency: ECurrency | null;
   online: boolean | null;
   employment: boolean | null;
-  duration: number;
+  duration: number | null;
   duration_unit: EDuration | null;
-  lessons_amount: number;
-  modules_amount: number;
+  lessons_amount: number | null;
+  modules_amount: number | null
   status: EStatus;
 
   title: string | null;
@@ -40,5 +40,5 @@ export default interface IPublicationForm {
   levels: Array<string> | null;
   learns: Array<string> | null;
   employments: Array<string> | null;
-  features: Array<IFeatureForm> | null;
+  features: Array<IFeature> | null;
 }

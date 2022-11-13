@@ -2,7 +2,7 @@
   <div
     :class="{
       'table-column-filter': true,
-      'table-column-filter--big': type === 'dateRange' || type === 'select',
+      'table-column-filter--big': isMultiple,
     }"
   >
     <div class="pa-8 display--block">
@@ -48,13 +48,24 @@
           @change="value => setSelectedKeys(value ? value : [])"
         />
       </template>
+      <template v-else-if="type === 'slider'">
+        <Slider
+          :value="selectedKeys.length ? selectedKeys : [column.min, column.max]"
+          :min="column.min"
+          :max="column.max"
+          :step="column.step"
+          range
+          @change="value => setSelectedKeys(value ? value : [])"
+        />
+      </template>
     </div>
     <Divider class="mt-0 mb-0" />
     <div class="pa-8 align--right">
       <Button
         size="small"
         type="text"
-        :disabled="!selectedKeys[0]"
+        :disabled="(type !== 'slider' && !selectedKeys[0]) ||
+          (type === 'slider' && selectedKeys[0] === column.min && selectedKeys[1] === column.max)"
         @click="onFilterReset"
       >
         <Lang value="dashboard.reset" />
@@ -63,7 +74,7 @@
         type="primary"
         size="small"
         class="mr-8"
-        @click="onFilterSearch(selectedKeys, column.key, type === 'dateRange')"
+        @click="onFilterSearch(selectedKeys, column.key, isMultiple)"
       >
         <Lang value="dashboard.ok" />
       </Button>
@@ -80,6 +91,7 @@ import Divider from 'ant-design-vue/lib/divider';
 import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';
 import Select from 'ant-design-vue/lib/select';
+import Slider from 'ant-design-vue/lib/slider';
 import Space from 'ant-design-vue/lib/space';
 import {
   defineProps,
@@ -135,7 +147,10 @@ const {
   confirm,
   clearFilters,
   visible,
+  type,
 } = toRefs(props);
+
+const isMultiple = type.value === 'dateRange' || type.value === 'select' || type.value === 'slider';
 
 const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false): void => {
   confirm.value();

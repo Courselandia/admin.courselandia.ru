@@ -249,15 +249,21 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     logs: '/dashboard/logs',
   };
 
+  let found = false;
   rt.matched.forEach(({ path }) => {
     Object.keys(paths).some((pathItem) => {
       if (path.indexOf(paths[pathItem]) !== -1) {
         menu.value[0] = pathItem;
+        found = true;
       }
 
       return false;
     });
   });
+
+  if (!found) {
+    menu.value = [];
+  }
 };
 
 watch(route, (): void => {
