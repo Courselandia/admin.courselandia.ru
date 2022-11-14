@@ -10,4 +10,5 @@ export default {
   rating: 'Rating',
   status: 'Status',
   createdAt: 'Created At',
+  course: 'Course',
 };

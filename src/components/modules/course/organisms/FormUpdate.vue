@@ -13,7 +13,7 @@
       <Card>
         <template #title>
           <div ref="titleRef">
-            <Lang value="course.addCourse" />
+            <Lang value="course.updateCourse" />
           </div>
         </template>
 
@@ -695,7 +695,7 @@
                 html-type="submit"
               >
                 <span>
-                  <Lang value="dashboard.create" />
+                  <Lang value="dashboard.update" />
                 </span>
               </Button>
               <Button
@@ -719,7 +719,7 @@
       :xs="24"
       class="mb-20"
     >
-      <Card>
+      <Card class="mb-20">
         <template #title>
           <Lang value="dashboard.image" />
         </template>
@@ -740,6 +740,16 @@
           </Button>
         </template>
 
+        <Alert
+          v-if="imageAlert.message"
+          :message="imageAlert.type === 'success'
+            ? lang('dashboard.success')
+            : lang('dashboard.error')"
+          :description="imageAlert.message"
+          :type="imageAlert.type"
+          class="mb-25"
+        />
+
         <Upload
           :max-count="1"
           :multiple="false"
@@ -749,8 +759,9 @@
           accept="image/*"
           list-type="picture-card"
         >
+          <LoadingOutlined v-if="imageUpdateLoading" />
           <img
-            v-if="image"
+            v-else-if="image"
             :src="image"
             alt="avatar"
             width="208"
@@ -772,7 +783,9 @@ import {
   CheckOutlined,
   DeleteOutlined,
   EditOutlined,
-  ExclamationCircleOutlined, MehOutlined,
+  ExclamationCircleOutlined,
+  LoadingOutlined,
+  MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
@@ -802,6 +815,7 @@ import {
   ref,
 } from 'vue';
 import { useMeta } from 'vue-meta';
+import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import {
@@ -838,6 +852,7 @@ import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ICourseForm from '@/interfaces/modules/course/courseForm';
+import IFeature from '@/interfaces/modules/course/feature';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import category from '@/store/category';
@@ -848,17 +863,25 @@ import school from '@/store/school';
 import skill from '@/store/skill';
 import teacher from '@/store/teacher';
 import tool from '@/store/tool';
+import TId from '@/types/id';
 
 useMeta({
-  title: lang('course.createCourse'),
+  title: lang('course.updateCourse'),
 });
 
 const { Item } = Form;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
-const { create } = course();
+const {
+  update,
+  imageUpdate,
+  imageDestroy,
+} = course();
 const { Option } = Select;
+
+const imageUpdateLoading = ref(false);
+const imageDestroyLoading = ref(false);
 
 const loadingSelects = ref(true);
 
@@ -890,10 +913,14 @@ const readTools = tool().read;
 const toolData = storeToRefs(tool());
 const toolItems = toolData.items;
 
+const route = useRoute();
+const { id } = route.params;
+const { item } = storeToRefs(course());
+
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -901,42 +928,70 @@ const alert = ref<IAlert>({
   type: null,
 });
 
-const form = ref<ICourseForm>({
-  school_id: null,
+const imageAlert = ref<IAlert>(
+  {
+    message: null,
+    type: null,
+  },
+);
+
+const getDefaultFormValue = (): ICourseForm => ({
+  id: id as TId,
+  school_id: item.value?.school_id || '',
   image: null,
-  header: '',
-  text: null,
-  link: '',
-  url: '',
-  language: null,
-  rating: null,
-  price: null,
-  price_discount: null,
-  price_recurrent_price: null,
-  currency: null,
-  online: null,
-  employment: null,
-  duration: null,
-  duration_unit: null,
-  lessons_amount: null,
-  modules_amount: null,
-  status: EStatus.ACTIVE,
+  header: item.value?.header || '',
+  text: item.value?.text || null,
+  link: item.value?.link || '',
+  url: item.value?.url || '',
+  language: item.value?.language || null,
+  rating: item.value?.rating || null,
+  price: item.value?.price || null,
+  price_discount: item.value?.price_discount || null,
+  price_recurrent_price: item.value?.price_recurrent_price || null,
+  currency: item.value?.currency || null,
+  online: item.value?.online || null,
+  employment: item.value?.employment || null,
+  duration: item.value?.duration || null,
+  duration_unit: item.value?.duration_unit || null,
+  lessons_amount: item.value?.lessons_amount || null,
+  modules_amount: item.value?.modules_amount || null,
+  status: item.value?.status || EStatus.ACTIVE,
 
-  title: null,
-  description: null,
-  keywords: null,
+  title: item.value?.metatag?.title || null,
+  description: item.value?.metatag?.description || null,
+  keywords: item.value?.metatag?.keywords || null,
 
-  directions: [],
-  professions: [],
-  categories: [],
-  skills: [],
-  teachers: [],
-  tools: [],
-  levels: [],
-  learns: [],
-  employments: [],
-  features: [],
+  directions: item.value?.directions?.map((itm) => itm.id) as Array<string> || [],
+  professions: item.value?.professions?.map((itm) => itm.id) as Array<string> || [],
+  categories: item.value?.categories?.map((itm) => itm.id) as Array<string> || [],
+  skills: item.value?.skills?.map((itm) => itm.id) as Array<string> || [],
+  teachers: item.value?.teachers?.map((itm) => itm.id) as Array<string> || [],
+  tools: item.value?.tools?.map((itm) => itm.id) as Array<string> || [],
+  levels: item.value?.levels?.map((itm) => itm.level) as Array<string> || [],
+  learns: item.value?.learns?.map((itm) => itm.text) as Array<string> || [],
+  employments: item.value?.employments?.map((itm) => itm.text) as Array<string> || [],
+  features: item.value?.features?.map(
+    (itm) => ({ icon: itm.icon, text: itm.text }),
+  ) as Array<IFeature> || [],
 });
+
+learnItems.value = item.value?.learns?.map((itm) => ({
+  id: itm.id,
+  text: itm.text,
+})) || [];
+
+employmentItems.value = item.value?.employments?.map((itm) => ({
+  id: itm.id,
+  text: itm.text,
+})) || [];
+
+featureItems.value = item.value?.features?.map((itm) => ({
+  id: itm.id,
+  icon: itm.icon,
+  text: itm.text,
+})) || [];
+
+const form = ref<ICourseForm>(getDefaultFormValue());
 
 onMounted(async (): Promise<void> => {
   loadingSelects.value = true;
@@ -964,19 +1019,7 @@ onMounted(async (): Promise<void> => {
 });
 
 const onClickReset = (): void => {
-  formRef.value?.resetFields();
-  form.value.image = null;
-  form.value.text = '';
-  image.value = null;
-
-  form.value.learns = [];
-  learnItems.value = [];
-
-  form.value.employments = [];
-  employmentItems.value = [];
-
-  form.value.features = [];
-  featureItems.value = [];
+  form.value = getDefaultFormValue();
 };
 
 const onSubmit = async (): Promise<void> => {
@@ -984,9 +1027,7 @@ const onSubmit = async (): Promise<void> => {
   loading.value = true;
 
   try {
-    if (!form.value.learns) {
-      form.value.learns = [];
-    }
+    form.value.learns = [];
 
     Object.values(learnItems.value).forEach((itm) => {
       if (form.value.learns && itm.text) {
@@ -994,9 +1035,7 @@ const onSubmit = async (): Promise<void> => {
       }
     });
 
-    if (!form.value.employments) {
-      form.value.employments = [];
-    }
+    form.value.employments = [];
 
     Object.values(employmentItems.value).forEach((itm) => {
       if (form.value.employments && itm.text) {
@@ -1004,9 +1043,7 @@ const onSubmit = async (): Promise<void> => {
       }
     });
 
-    if (!form.value.features) {
-      form.value.features = [];
-    }
+    form.value.features = [];
 
     Object.values(featureItems.value).forEach((itm) => {
       if (form.value.features && itm.icon && itm.text) {
@@ -1017,24 +1054,10 @@ const onSubmit = async (): Promise<void> => {
       }
     });
 
-    await create(form.value);
+    await update(form.value);
 
-    alert.value.message = lang('dashboard.successCreateText');
+    alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
-    form.value.image = null;
-    form.value.text = '';
-    image.value = null;
-
-    form.value.learns = [];
-    learnItems.value = [];
-
-    form.value.employments = [];
-    employmentItems.value = [];
-
-    form.value.features = [];
-    featureItems.value = [];
-
-    onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
@@ -1050,8 +1073,21 @@ const onSubmit = async (): Promise<void> => {
 };
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
-  form.value.image = file;
-  image.value = await base64(file);
+  imageAlert.value.message = '';
+  imageUpdateLoading.value = true;
+
+  try {
+    await imageUpdate(id as TId, file);
+
+    image.value = await base64(file);
+  } catch (error: Error | any) {
+    imageAlert.value.message = error.response.data.message
+      ? error.response.data.message
+      : error.message;
+    imageAlert.value.type = 'error';
+  }
+
+  imageUpdateLoading.value = false;
 
   return false;
 };
@@ -1062,8 +1098,21 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
-      image.value = null;
+      imageAlert.value.message = '';
+      imageDestroyLoading.value = true;
+
+      try {
+        await imageDestroy(id as TId);
+
+        image.value = null;
+      } catch (error: Error | any) {
+        imageAlert.value.message = error.response.data.message
+          ? error.response.data.message
+          : error.message;
+        imageAlert.value.type = 'error';
+      }
+
+      imageDestroyLoading.value = false;
     },
   });
 };

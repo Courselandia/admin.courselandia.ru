@@ -51,6 +51,21 @@
         />
       </Item>
       <Item
+        :label="lang('review.course')"
+        name="course_id"
+        has-feedback
+        :rules="[{ required: false }]"
+      >
+        <AutoComplete
+          v-model:value="form.course_id"
+          :options="courseItems?.map((itm) => ({ key: itm.id, value: itm.header }))"
+          class="width--wide"
+          allow-clear
+          label-in-value
+          @search="onSearchCourses"
+        />
+      </Item>
+      <Item
         :label="lang('review.nameAuthor')"
         name="name"
         has-feedback
@@ -121,6 +136,7 @@
 import { MehOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
+import AutoComplete from 'ant-design-vue/lib/auto-complete';
 import Button from 'ant-design-vue/lib/button';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
@@ -144,7 +160,9 @@ import Lang from '@/components/atoms/Lang.vue';
 import EStatus from '@/enums/modules/review/status';
 import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
+import IFilter from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
+import course from '@/store/course';
 import school from '@/store/school';
 
 const formRef = ref<FormInstance>();
@@ -186,6 +204,10 @@ const loadingSelects = ref(true);
 const readSchools = school().read;
 const schoolData = storeToRefs(school());
 const schoolItems = schoolData.items;
+
+const readCourses = course().read;
+const courseData = storeToRefs(course());
+const courseItems = courseData.items;
 
 const emit = defineEmits({
   'update:value': (_: IReviewForm) => true,
@@ -238,4 +260,30 @@ const filterOption = (input: string, option: any) => option
   ?.label
   ?.toLowerCase()
   ?.indexOf(input.toLowerCase()) >= 0;
+
+let searchTimer: ReturnType<typeof setTimeout> | null = null;
+
+const onSearchCourses = (searchText: string) => {
+  if (searchTimer) {
+    clearTimeout(searchTimer);
+    searchTimer = null;
+  }
+
+  if (searchText.length > 3) {
+    searchTimer = setTimeout(async () => {
+      try {
+        await readCourses(null, null, { header: 'ASC' } as ISorts, { header: searchText } as IFilter);
+      } catch (error: Error | any) {
+        notification.open({
+          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+          message: lang('dashboard.error'),
+          description: error.message,
+          style: {
+            color: '#ff0000',
+          },
+        });
+      }
+    }, 400);
+  }
+};
 </script>

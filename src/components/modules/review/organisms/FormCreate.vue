@@ -47,6 +47,7 @@ const alert = ref<IAlert>({
 
 const form = ref<IReviewForm>({
   school_id: null,
+  course_id: null,
   name: '',
   title: null,
   text: '',
@@ -57,6 +58,7 @@ const form = ref<IReviewForm>({
 const onReset = (formRef?: FormInstance) => {
   formRef?.resetFields();
   form.value.school_id = null;
+  form.value.course_id = null;
 };
 
 const onSubmit = async (data: IReviewForm, formRef?: FormInstance): Promise<void> => {

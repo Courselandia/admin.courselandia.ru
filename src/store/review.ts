@@ -60,7 +60,10 @@ export default defineStore('review', {
       }
     },
     async create(data: IReviewForm): Promise<IResponseItem<IReview>> {
-      const response = await axios.post<IResponseItem<IReview>>('/api/private/admin/review/create', data, {
+      const response = await axios.post<IResponseItem<IReview>>('/api/private/admin/review/create', {
+        ...data,
+        course_id: data.course_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -69,7 +72,10 @@ export default defineStore('review', {
       return response.data;
     },
     async update(data: IReviewForm): Promise<IResponseItem<IReview>> {
-      const response = await axios.put<IResponseItem<IReview>>(`/api/private/admin/review/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<IReview>>(`/api/private/admin/review/update/${data.id}`, {
+        ...data,
+        course_id: data.course_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },

@@ -10,12 +10,12 @@
         </Item>
         <Item
           href=""
-          @click="onClickBreadcrumbItem('Publications')"
+          @click="onClickBreadcrumbItem('Courses')"
         >
-          <Lang value="publication.name" />
+          <Lang value="course.name" />
         </Item>
         <Item>
-          <Lang value="publication.updatePublication" />
+          <Lang value="course.updateCourse" />
         </Item>
       </Breadcrumb>
       <FormUpdate />
@@ -32,7 +32,7 @@
           type="primary"
           @click="onClickBackHome"
         >
-          <Lang value="publication.name" />
+          <Lang value="course.name" />
         </Button>
       </template>
     </Result>
@@ -48,19 +48,19 @@ import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import FormUpdate from '@/components/modules/publication/organisms/FormUpdate.vue';
+import FormUpdate from '@/components/modules/course/organisms/FormUpdate.vue';
 import lang from '@/helpers/lang';
-import publication from '@/store/publication';
+import course from '@/store/course';
 
 const {
   Item,
 } = Breadcrumb;
-const { item } = storeToRefs(publication());
+const { item } = storeToRefs(course());
 
 const router = useRouter();
 
 useMeta({
-  title: lang('publication.updatePublication'),
+  title: lang('course.updateCourse'),
 });
 
 const onClickBreadcrumbItem = async (name: string) => {
@@ -71,7 +71,7 @@ const onClickBreadcrumbItem = async (name: string) => {
 
 const onClickBackHome = () => {
   router.push({
-    name: 'Publications',
+    name: 'Courses',
   });
 };
 </script>

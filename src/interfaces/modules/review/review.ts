@@ -6,6 +6,7 @@ import TId from '@/types/id';
 export default interface IReview extends IColumn {
   id: TId;
   school_id: TId;
+  course_id: TId | null;
   name: string;
   title: string | null;
   text: string;
