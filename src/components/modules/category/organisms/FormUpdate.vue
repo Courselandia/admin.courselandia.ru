@@ -59,7 +59,7 @@ const getDefaultFormValue = (): ICategoryForm => ({
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
-  status: item.value?.status || true,
+  status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => itm.id) || [],
   professions: item.value?.professions?.map((itm: any) => itm.id) || [],
 });

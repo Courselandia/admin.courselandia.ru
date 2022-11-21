@@ -55,7 +55,7 @@ const getDefaultFormValue = (): IFaqForm => ({
   school_id: item.value?.school_id || null,
   question: item.value?.question || '',
   answer: item.value?.answer || null,
-  status: item.value?.status,
+  status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
 const form = ref<IFaqForm>(getDefaultFormValue());

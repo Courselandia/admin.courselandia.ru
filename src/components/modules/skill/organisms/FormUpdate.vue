@@ -59,7 +59,7 @@ const getDefaultFormValue = (): ISkillForm => ({
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
-  status: item.value?.status || true,
+  status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
 const form = ref<ISkillForm>(getDefaultFormValue());

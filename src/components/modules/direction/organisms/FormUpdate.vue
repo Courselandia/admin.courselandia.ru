@@ -19,7 +19,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormInstance } from 'ant-design-vue';
 import Card from 'ant-design-vue/lib/card';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
@@ -61,7 +60,7 @@ const getDefaultFormValue = (): IDirectionForm => ({
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
-  status: item.value?.status || true,
+  status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
 const form = ref<IDirectionForm>(getDefaultFormValue());
