@@ -15,6 +15,7 @@ const isNotEmpty = (values: FilterValue | null): boolean => {
 
 export default function filters(
   filter?: Record<string, any> | null,
+  toFilterFields?: Record<string, string>,
 ): IFilters {
   const result: IFilters = {};
 
@@ -22,10 +23,13 @@ export default function filters(
     Object.keys(filter).forEach((column) => {
       if (isNotEmpty(filter[column])) {
         const value = filter[column];
+        const filterField = (toFilterFields && toFilterFields[column])
+          ? toFilterFields[column]
+          : column;
 
         if (value?.length === 1) {
           const [firstValue] = value;
-          result[column] = firstValue;
+          result[filterField] = firstValue;
         } else {
           const values: Array<string> = [];
 
@@ -38,7 +42,7 @@ export default function filters(
             }
           });
 
-          result[column] = values;
+          result[filterField] = values;
         }
       }
     });

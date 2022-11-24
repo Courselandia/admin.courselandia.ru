@@ -59,6 +59,7 @@ const stateSet = (
   limit: number,
   sorter?: SorterResult | SorterResult[] | null,
   filters?: Record<string, any> | null,
+  toFilterFields?: Record<string, string>,
 ): void => {
   const params: Record<string, any> = {
     page: offset / limit + 1,
@@ -90,18 +91,20 @@ const stateSet = (
     const result: Record<string, any> = {};
 
     Object.keys(filters).forEach((key) => {
+      const filterField = (toFilterFields && toFilterFields[key]) ? toFilterFields[key] : key;
+
       if (typeof filters[key] === 'object' && filters[key]) {
-        result[key] = [];
+        result[filterField] = [];
 
         for (let i = 0; i < filters[key].length; i++) {
           if (filters[key][i] instanceof dayjs) {
-            result[key][i] = filters[key][i].format('YYYY-MM-DD');
+            result[filterField][i] = filters[key][i].format('YYYY-MM-DD');
           } else {
-            result[key][i] = filters[key][i];
+            result[filterField][i] = filters[key][i];
           }
         }
       } else {
-        result[key] = filters[key];
+        result[filterField] = filters[key];
       }
     });
 
@@ -226,24 +229,41 @@ const stateLimit = (): number | null => {
   return (parameters?.length && parameters[0].value) ? Number(parameters[0].value) : null;
 };
 
+const getColumnFieldName = (
+  nameFilter: string | number | null,
+  toFilterFields?: Record<string, string>,
+): string | null => {
+  if (toFilterFields) {
+    const result = Object.keys(toFilterFields).find((key) => toFilterFields[key] === nameFilter);
+
+    return result || null;
+  }
+
+  return null;
+};
+
 const stateFilters = <T>(
   columns?: ITableColumnType<T>[] | null,
   defaultSearches?: Record<string | number, any> | null,
   filterType?: string | null,
+  toFilterFields?: Record<string, string>,
 ): Record<string, FilterValue | null> => {
   const parameters = stateParameter('filters');
   const result: Record<string, FilterValue | null> = {};
 
   if (parameters?.length) {
     Object.values(parameters).forEach((parameter) => {
+      const columnField = getColumnFieldName(parameter.column || null, toFilterFields)
+        || parameter.column;
+
       const columnFound = columns
-        ? columns.find((column) => column.key === parameter.column)
+        ? columns.find((column) => column.key === columnField)
         : true;
       const filterTypeFound = columnFound && columnFound !== true
         ? columnFound.filterType
         : filterType;
 
-      if (columnFound && parameter.column) {
+      if (columnField && columnFound && parameter.column) {
         if (typeof parameter.value === 'object') {
           const values = parameter.value;
           let valid = true;
@@ -265,10 +285,10 @@ const stateFilters = <T>(
           }
 
           if (valid) {
-            result[parameter.column] = values;
+            result[columnField] = values;
           }
         } else {
-          result[parameter.column] = [parameter.value];
+          result[columnField] = [parameter.value];
         }
       }
     });

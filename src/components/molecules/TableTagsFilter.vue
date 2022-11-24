@@ -91,7 +91,15 @@ const getValue = (
   }
 
   if (foundColumn?.filters) {
-    const filter = foundColumn?.filters?.find((flt) => flt.value === value);
+    let vl: any | Array<any> | null = value;
+
+    if (vl === 'true') {
+      vl = true;
+    } else if (vl === 'false') {
+      vl = false;
+    }
+
+    const filter = foundColumn?.filters?.find((flt) => flt.value === vl);
 
     return filter?.text as string;
   }
@@ -139,7 +147,7 @@ const hasFilters = (): boolean => {
     const insideValues = value[field];
 
     if (insideValues && typeof insideValues === 'object') {
-      return !!Object.values(insideValues).find((valueInside) => !!valueInside);
+      return Object.values(insideValues).find((valueInside) => valueInside !== null) !== undefined;
     }
 
     return !!insideValues;
