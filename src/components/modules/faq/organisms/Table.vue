@@ -242,7 +242,7 @@ const columns = computed<ITableColumnType<IFaq>[]>(() => [
     },
     customFilterDropdown: true,
     sortOrder: stateColumnSort('school-name', sortedInfo.value),
-    filteredValue: stateColumnFilter('school-name', filteredInfo.value, 'number'),
+    filteredValue: stateColumnFilter('school-id', filteredInfo.value, 'number'),
     filterType: 'select',
     filters: getSchoolsFilter(),
   },
@@ -295,7 +295,12 @@ const columns = computed<ITableColumnType<IFaq>[]>(() => [
     width: 170,
   },
 ]);
-filteredInfo.value = stateFilters<IFaq>(columns.value);
+
+const toFilterFields: Record<string, string> = {
+  'school-name': 'school-id',
+};
+
+filteredInfo.value = stateFilters<IFaq>(columns.value, null, null, toFilterFields);
 const loading = ref(false);
 const pageSizeDefault = stateLimit() || 20;
 const pageCurrentDefault = statePage() || 1;
@@ -339,7 +344,7 @@ const load = async (
   loading.value = true;
 
   try {
-    await read(offset, limit, sorts(sorter), filters(filter));
+    await read(offset, limit, sorts(sorter), filters(filter, toFilterFields));
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
@@ -413,7 +418,7 @@ const onChange: TableProps<IFaq>['onChange'] = async (pag, filter, sorter): Prom
   pagination.value.pageSize = pageSize;
   const offset = (current - 1) * pageSize;
 
-  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
+  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
 };
 
@@ -422,7 +427,7 @@ const reloadToFirstPagination = async (): Promise<void> => {
   const offset = 0;
   pagination.value.current = 1;
 
-  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
+  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
 };
 
@@ -431,7 +436,7 @@ const reload = async (): Promise<void> => {
   const current = statePage() || pageCurrentDefault;
   const offset = (current - 1) * pageSize;
 
-  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
+  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
 };
 

@@ -327,6 +327,7 @@ const columns = computed<ITableColumnType<ISalary>[]>(() => [
     width: 170,
   },
 ]);
+
 const toFilterFields: Record<string, string> = {
   'profession-name': 'profession-id',
 };
