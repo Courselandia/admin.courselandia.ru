@@ -63,7 +63,8 @@ const getDefaultFormValue = (): IReviewForm => ({
   course_id: courseId,
   name: item.value?.name || '',
   title: item.value?.title || null,
-  text: item.value?.text || '',
+  advantages: item.value?.advantages || null,
+  disadvantages: item.value?.disadvantages || null,
   rating: item.value?.rating || 1,
   status: item.value?.status || EStatus.ACTIVE,
 });

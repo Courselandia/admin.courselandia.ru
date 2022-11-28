@@ -7,6 +7,8 @@ export default {
   nameAuthor: 'Автор',
   title: 'Заголовок',
   text: 'Текст',
+  advantages: 'Достоинства',
+  disadvantages: 'Недостатки',
   rating: 'Рейтинг',
   status: 'Статус',
   createdAt: 'Создан',

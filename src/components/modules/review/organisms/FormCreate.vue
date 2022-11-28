@@ -50,7 +50,8 @@ const form = ref<IReviewForm>({
   course_id: null,
   name: '',
   title: null,
-  text: '',
+  advantages: null,
+  disadvantages: null,
   rating: 1,
   status: EStatus.ACTIVE,
 });

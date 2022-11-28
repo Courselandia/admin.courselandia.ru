@@ -8,7 +8,8 @@ export default interface IReviewForm {
   course_id: IOption | null;
   name: string;
   title: string | null;
-  text: string;
+  advantages: string | null;
+  disadvantages: string | null;
   rating: number;
   status: EStatus;
 }

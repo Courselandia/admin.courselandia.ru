@@ -86,13 +86,24 @@
         />
       </Item>
       <Item
-        :label="lang('review.text')"
-        name="text"
+        :label="lang('review.advantages')"
+        name="advantages"
         has-feedback
-        :rules="[{ required: true, type: 'string', max: 65000 }]"
+        :rules="[{ required: false, type: 'string', max: 5000 }]"
       >
         <TextArea
-          v-model:value="form.text"
+          v-model:value="form.advantages"
+          style="height: 200px"
+        />
+      </Item>
+      <Item
+        :label="lang('review.disadvantages')"
+        name="disadvantages"
+        has-feedback
+        :rules="[{ required: false, type: 'string', max: 5000 }]"
+      >
+        <TextArea
+          v-model:value="form.disadvantages"
           style="height: 200px"
         />
       </Item>
