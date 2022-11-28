@@ -1,6 +1,10 @@
 <template>
   <Card :bordered="false">
     <template #title>
+      <Lang value="log.name" />
+    </template>
+
+    <template #extra>
       <Space>
         <Button
           :disabled="destroySelectedDisabled"

@@ -1,6 +1,10 @@
 <template>
   <Card :bordered="false">
     <template #title>
+      <Lang value="publication.name" />
+    </template>
+
+    <template #extra>
       <Space>
         <Button
           type="primary"
