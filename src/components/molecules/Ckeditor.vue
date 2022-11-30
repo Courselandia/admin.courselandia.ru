@@ -44,7 +44,7 @@ const val = ref(value.value);
 const dateNow = new Date();
 const timeStamp = dateNow.getTime();
 let extraPlugins = '';
-extraPlugins += ',codemirror';
+extraPlugins += ',codemirror,selectHtml,xml,ajax,typograph';
 
 const mainConfig = {
   bodyClass: 'main title--titles list--lists link--links padding--aside-4',
@@ -80,6 +80,7 @@ const mainConfig = {
         'Superscript',
         '-',
         'RemoveFormat',
+        'typograph',
       ],
     },
     '/',
