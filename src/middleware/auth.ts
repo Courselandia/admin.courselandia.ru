@@ -50,7 +50,7 @@ export default async (to: RouteLocationNormalized): Promise<boolean | string> =>
       cookies.set('accessToken', '');
       await store.logOut();
     } catch (err) {
-      console.log('Logout');
+      console.warn('Logout');
     }
 
     if (to?.meta?.redirect) {

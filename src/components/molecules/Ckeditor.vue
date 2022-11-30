@@ -53,9 +53,9 @@ const mainConfig = {
   height: 400,
 
   extraPlugins,
-  filebrowserBrowseUrl: `${process.env.VUE_APP_API_URL}/ckfinder/browser?env=${process.env.NODE_ENV}`,
-  filebrowserFlashBrowseUrl: `${process.env.VUE_APP_API_URL}/ckfinder/browser?type=Flash&env=${process.env.NODE_ENV}`,
-  filebrowserImageBrowseUrl: `${process.env.VUE_APP_API_URL}/ckfinder/browser?type=Images&env=${process.env.NODE_ENV}`,
+  filebrowserBrowseUrl: `${process.env.VUE_APP_ADMIN_URL}/php/ckfinder.php?env=${process.env.NODE_ENV}`,
+  filebrowserFlashBrowseUrl: `${process.env.VUE_APP_ADMIN_URL}/php/ckfinder.php?type=Flash&env=${process.env.NODE_ENV}`,
+  filebrowserImageBrowseUrl: `${process.env.VUE_APP_ADMIN_URL}/php/ckfinder.php?type=Images&env=${process.env.NODE_ENV}`,
   toolbar_MyToolbarAll: [
     {
       name: 'document',

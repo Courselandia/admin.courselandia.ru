@@ -16,7 +16,7 @@ export default async (to: RouteLocationNormalized): Promise<boolean | string> =>
 
       return to.meta.redirect as string;
     } catch (error) {
-      console.log('');
+      console.warn('');
     }
   }
 
