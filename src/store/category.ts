@@ -60,7 +60,11 @@ export default defineStore('category', {
       }
     },
     async create(data: ICategoryForm): Promise<IResponseItem<ICategory>> {
-      const response = await axios.post<IResponseItem<ICategory>>('/api/private/admin/category/create', data, {
+      const response = await axios.post<IResponseItem<ICategory>>('/api/private/admin/category/create', {
+        ...data,
+        directions: data.directions?.map((item) => item.key),
+        professions: data.directions?.map((item) => item.key),
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -69,7 +73,11 @@ export default defineStore('category', {
       return response.data;
     },
     async update(data: ICategoryForm): Promise<IResponseItem<ICategory>> {
-      const response = await axios.put<IResponseItem<ICategory>>(`/api/private/admin/category/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<ICategory>>(`/api/private/admin/category/update/${data.id}`, {
+        ...data,
+        directions: data.directions?.map((item) => item.key),
+        professions: data.directions?.map((item) => item.key),
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },

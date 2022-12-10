@@ -85,6 +85,11 @@
           <template v-if="record.price">
             {{ money(record.price, 0, getCurrencyLabel(record.currency)) }}
           </template>
+          <template v-else>
+            <Tag>
+              {{ lang('dashboard.free') }}
+            </Tag>
+          </template>
         </template>
         <template v-if="column.key === 'professions-name'">
           <template v-if="record?.professions">

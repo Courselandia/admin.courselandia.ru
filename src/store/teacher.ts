@@ -72,11 +72,11 @@ export default defineStore('teacher', {
       formData.append('image', data.image || '');
 
       for (let i = 0; i < data.directions.length; i++) {
-        formData.append(`directions[${i}]`, String(data.directions[i]));
+        formData.append(`directions[${i}]`, String(data.directions[i].key));
       }
 
       for (let i = 0; i < data.schools.length; i++) {
-        formData.append(`schools[${i}]`, String(data.schools[i]));
+        formData.append(`schools[${i}]`, String(data.schools[i].key));
       }
 
       const response = await axios.post<IResponseItem<ITeacher>>('/api/private/admin/teacher/create', formData, {
@@ -91,6 +91,8 @@ export default defineStore('teacher', {
       const response = await axios.put<IResponseItem<ITeacher>>(`/api/private/admin/teacher/update/${data.id}`, {
         ...data,
         rating: data.rating ? String(data.rating) : '0',
+        directions: data.directions?.map((item) => item.key),
+        schools: data.schools?.map((item) => item.key),
       }, {
         headers: {
           Authorization: access().accessToken || '',

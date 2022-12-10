@@ -3,11 +3,12 @@ import EDuration from '@/enums/modules/course/duration';
 import ELanguage from '@/enums/modules/course/language';
 import EStatus from '@/enums/modules/course/status';
 import IFeature from '@/interfaces/modules/course/feature';
+import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
-export default interface IPublicationForm {
+export default interface ICourseForm {
   id?: TId;
-  school_id: TId | null;
+  school_id: IOption | null;
   image: File | null;
   header: string;
   text: string | null;
@@ -16,7 +17,7 @@ export default interface IPublicationForm {
   language: ELanguage | null;
   rating: number | null;
   price: number | null;
-  price_discount: number | null;
+  price_old: number | null;
   price_recurrent_price: number | null;
   currency: ECurrency | null;
   online: boolean | null;
@@ -31,12 +32,12 @@ export default interface IPublicationForm {
   description: string | null;
   keywords: string | null;
 
-  directions: Array<string> | null;
-  professions: Array<string> | null;
-  categories: Array<string> | null;
-  skills: Array<string> | null;
-  teachers: Array<string> | null;
-  tools: Array<string> | null;
+  directions: Array<IOption> | null;
+  professions: Array<IOption> | null;
+  categories: Array<IOption> | null;
+  skills: Array<IOption> | null;
+  teachers: Array<IOption> | null;
+  tools: Array<IOption> | null;
   levels: Array<string> | null;
   learns: Array<string> | null;
   employments: Array<string> | null;

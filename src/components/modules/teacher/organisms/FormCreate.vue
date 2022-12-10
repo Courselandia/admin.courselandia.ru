@@ -92,6 +92,7 @@
                 >
                   <Select
                     v-model:value="form.directions"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -107,6 +108,7 @@
                 >
                   <Select
                     v-model:value="form.schools"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search

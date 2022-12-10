@@ -60,7 +60,10 @@ export default defineStore('salary', {
       }
     },
     async create(data: ISalaryForm): Promise<IResponseItem<ISalary>> {
-      const response = await axios.post<IResponseItem<ISalary>>('/api/private/admin/salary/create', data, {
+      const response = await axios.post<IResponseItem<ISalary>>('/api/private/admin/salary/create', {
+        ...data,
+        profession_id: data.profession_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -69,7 +72,10 @@ export default defineStore('salary', {
       return response.data;
     },
     async update(data: ISalaryForm): Promise<IResponseItem<ISalary>> {
-      const response = await axios.put<IResponseItem<ISalary>>(`/api/private/admin/salary/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<ISalary>>(`/api/private/admin/salary/update/${data.id}`, {
+        ...data,
+        profession_id: data.profession_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },

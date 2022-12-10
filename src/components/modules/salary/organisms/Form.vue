@@ -34,11 +34,13 @@
       </Item>
       <Item
         :label="lang('salary.profession')"
-        name="profession"
+        name="profession_id"
         has-feedback
+        :rules="[{ required: true }]"
       >
         <Select
           v-model:value="form.profession_id"
+          label-in-value
           class="width--wide"
           show-search
           :filter-option="filterOption"
@@ -70,7 +72,7 @@
         :label="lang('salary.salary')"
         name="salary"
         has-feedback
-        :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
+        :rules="[{ required: true, type: 'number', min: 1, max: 9999999 }]"
       >
         <InputNumber
           v-model:value="form.salary"

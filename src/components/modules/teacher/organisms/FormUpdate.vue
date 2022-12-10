@@ -92,6 +92,7 @@
                 >
                   <Select
                     v-model:value="form.directions"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -107,6 +108,7 @@
                 >
                   <Select
                     v-model:value="form.schools"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -376,8 +378,8 @@ const getDefaultFormValue = (): ITeacherForm => ({
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
-  directions: item.value?.directions?.map((itm: any) => itm.id) || [],
-  schools: item.value?.schools?.map((itm: any) => itm.id) || [],
+  directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  schools: item.value?.schools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
 });
 
 const form = ref<ITeacherForm>(getDefaultFormValue());

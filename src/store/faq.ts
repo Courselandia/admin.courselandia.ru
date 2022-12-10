@@ -60,7 +60,10 @@ export default defineStore('faq', {
       }
     },
     async create(data: IFaqForm): Promise<IResponseItem<IFaq>> {
-      const response = await axios.post<IResponseItem<IFaq>>('/api/private/admin/faq/create', data, {
+      const response = await axios.post<IResponseItem<IFaq>>('/api/private/admin/faq/create', {
+        ...data,
+        school_id: data.school_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -69,7 +72,10 @@ export default defineStore('faq', {
       return response.data;
     },
     async update(data: IFaqForm): Promise<IResponseItem<IFaq>> {
-      const response = await axios.put<IResponseItem<IFaq>>(`/api/private/admin/faq/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<IFaq>>(`/api/private/admin/faq/update/${data.id}`, {
+        ...data,
+        school_id: data.school_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
