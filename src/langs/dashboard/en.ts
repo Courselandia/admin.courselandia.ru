@@ -96,5 +96,5 @@ export default {
   review: 'Review',
   draft: 'Draft',
   warning: 'Warning',
-  notEmpty: 'The value cannot be empty.',
+  notEmpty: 'The value cannot be empty.'
 };

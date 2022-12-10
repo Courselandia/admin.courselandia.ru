@@ -40,6 +40,7 @@
       >
         <Select
           v-model:value="form.school_id"
+          label-in-value
           class="width--wide"
           show-search
           :filter-option="filterOption"
@@ -61,7 +62,7 @@
         :label="lang('faq.answer')"
         name="answer"
         has-feedback
-        :rules="[{ type: 'string', max: 5000 }]"
+        :rules="[{ required: true, type: 'string', max: 5000 }]"
       >
         <TextArea
           v-model:value="form.answer"

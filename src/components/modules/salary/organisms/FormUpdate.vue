@@ -54,7 +54,9 @@ const getDefaultFormValue = (): ISalaryForm => ({
   id: id as TId,
   level: item.value?.level || null,
   salary: item.value?.salary || null,
-  profession_id: item.value?.profession_id || null,
+  profession_id: item.value?.profession
+    ? { key: item.value?.profession.id, value: item.value?.profession.name }
+    : null,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

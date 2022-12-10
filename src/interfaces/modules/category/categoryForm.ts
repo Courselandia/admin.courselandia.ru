@@ -1,3 +1,4 @@
+import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
 export default interface ICategoryForm {
@@ -9,7 +10,7 @@ export default interface ICategoryForm {
   title: string | null;
   description: string | null;
   keywords: string | null;
-  directions: Array<number>;
-  professions: Array<number>;
+  directions: Array<IOption>;
+  professions: Array<IOption>;
   status: boolean;
 }

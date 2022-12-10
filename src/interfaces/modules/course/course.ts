@@ -18,7 +18,7 @@ import ITool from '@/interfaces/modules/tool/tool';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
 
-export default interface IPublication extends IColumn {
+export default interface ICourse extends IColumn {
   id: TId;
   uuid: string;
   metatag_id: TId;
@@ -35,7 +35,7 @@ export default interface IPublication extends IColumn {
   language: ELanguage | null;
   rating: number | null;
   price: number | null;
-  price_discount: number | null;
+  price_old: number | null;
   price_recurrent_price: number | null;
   currency: ECurrency | null;
   online: boolean | null;
@@ -51,7 +51,7 @@ export default interface IPublication extends IColumn {
   deleted_at: string | null;
 
   metatag: IMetatag;
-  school: Array<ISchool> | null;
+  school: ISchool | null;
   directions: Array<IDirection> | null;
   professions: Array<IProfession> | null;
   categories: Array<ICategory> | null;

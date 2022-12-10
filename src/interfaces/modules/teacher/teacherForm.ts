@@ -1,3 +1,4 @@
+import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
 export default interface ITeacherForm {
@@ -7,8 +8,8 @@ export default interface ITeacherForm {
   text: string | null;
   rating: number | null;
   image: File | null;
-  directions: Array<number>;
-  schools: Array<number>;
+  directions: Array<IOption>;
+  schools: Array<IOption>;
   title: string | null;
   description: string | null;
   keywords: string | null;

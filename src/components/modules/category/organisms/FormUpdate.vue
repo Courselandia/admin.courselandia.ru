@@ -60,8 +60,8 @@ const getDefaultFormValue = (): ICategoryForm => ({
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
-  directions: item.value?.directions?.map((itm: any) => itm.id) || [],
-  professions: item.value?.professions?.map((itm: any) => itm.id) || [],
+  directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  professions: item.value?.professions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
 });
 
 const form = ref<ICategoryForm>(getDefaultFormValue());

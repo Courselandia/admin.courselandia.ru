@@ -15,7 +15,7 @@ export default {
   levels: 'Уровни',
   url: 'URL',
   rating: 'Рейтинг',
-  priceDiscount: 'Цена со скидкой',
+  priceOld: 'Старая цена',
   priceRecurrentPrice: 'Цена по кредиту',
   currency: 'Валюта',
   online: 'Онлайн',

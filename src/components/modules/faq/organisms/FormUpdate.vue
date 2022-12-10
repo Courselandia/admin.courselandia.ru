@@ -52,7 +52,9 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IFaqForm => ({
   id: id as TId,
-  school_id: item.value?.school_id || null,
+  school_id: item.value?.school_id
+    ? { key: item.value?.school.id, value: item.value?.school.name }
+    : null,
   question: item.value?.question || '',
   answer: item.value?.answer || null,
   status: item.value?.status !== undefined ? item.value?.status : true,

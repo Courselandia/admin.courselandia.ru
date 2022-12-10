@@ -62,14 +62,14 @@ export default defineStore('course', {
     async create(data: ICourseForm): Promise<IResponseItem<ICourse>> {
       const formData = new FormData();
       formData.append('header', data.header);
-      formData.append('school_id', data.school_id as string);
+      formData.append('school_id', data.school_id?.key as string);
       formData.append('text', data.text || '');
       formData.append('link', data.link);
       formData.append('url', data.url);
       formData.append('language', data.language || '');
       formData.append('rating', data.rating ? String(data.rating) : '');
       formData.append('price', data.price ? String(data.price) : '');
-      formData.append('price_discount', data.price_discount ? String(data.price_discount) : '');
+      formData.append('price_old', data.price_old ? String(data.price_old) : '');
       formData.append('price_recurrent_price', data.price_recurrent_price ? String(data.price_recurrent_price) : '');
       formData.append('currency', data.currency ? String(data.currency) : '');
       formData.append('online', data.online ? '1' : '0');
@@ -86,37 +86,37 @@ export default defineStore('course', {
 
       if (data.directions) {
         for (let i = 0; i < data.directions.length; i++) {
-          formData.append(`directions[${i}]`, data.directions[i]);
+          formData.append(`directions[${i}]`, data.directions[i].key as string);
         }
       }
 
       if (data.professions) {
         for (let i = 0; i < data.professions.length; i++) {
-          formData.append(`professions[${i}]`, data.professions[i]);
+          formData.append(`professions[${i}]`, data.professions[i].key as string);
         }
       }
 
       if (data.categories) {
         for (let i = 0; i < data.categories.length; i++) {
-          formData.append(`categories[${i}]`, data.categories[i]);
+          formData.append(`categories[${i}]`, data.categories[i].key as string);
         }
       }
 
       if (data.skills) {
         for (let i = 0; i < data.skills.length; i++) {
-          formData.append(`skills[${i}]`, data.skills[i]);
+          formData.append(`skills[${i}]`, data.skills[i].key as string);
         }
       }
 
       if (data.teachers) {
         for (let i = 0; i < data.teachers.length; i++) {
-          formData.append(`teachers[${i}]`, data.teachers[i]);
+          formData.append(`teachers[${i}]`, data.teachers[i].key as string);
         }
       }
 
       if (data.tools) {
         for (let i = 0; i < data.tools.length; i++) {
-          formData.append(`tools[${i}]`, data.tools[i]);
+          formData.append(`tools[${i}]`, data.tools[i].key as string);
         }
       }
 
@@ -154,7 +154,16 @@ export default defineStore('course', {
       return response.data;
     },
     async update(data: ICourseForm): Promise<IResponseItem<ICourse>> {
-      const response = await axios.put<IResponseItem<ICourse>>(`/api/private/admin/course/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<ICourse>>(`/api/private/admin/course/update/${data.id}`, {
+        ...data,
+        directions: data.directions?.map((item) => item.key),
+        professions: data.professions?.map((item) => item.key),
+        categories: data.categories?.map((item) => item.key),
+        skills: data.skills?.map((item) => item.key),
+        teachers: data.teachers?.map((item) => item.key),
+        tools: data.tools?.map((item) => item.key),
+        school_id: data.school_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },

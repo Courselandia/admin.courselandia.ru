@@ -31,7 +31,7 @@ import EStatus from '@/enums/modules/review/status';
 import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import IOption from '@/interfaces/molecules/autoComplete/option';
+import IOption from '@/interfaces/molecules/select/option';
 import review from '@/store/review';
 import TId from '@/types/id';
 
@@ -59,7 +59,9 @@ const courseId: IOption | null = item.value?.course ? {
 
 const getDefaultFormValue = (): IReviewForm => ({
   id: id as TId,
-  school_id: item.value?.school_id || null,
+  school_id: item.value?.school_id
+    ? { key: item.value?.school.id, value: item.value?.school.name }
+    : null,
   course_id: courseId,
   name: item.value?.name || '',
   title: item.value?.title || null,

@@ -15,7 +15,7 @@ export default {
   levels: 'Levels',
   url: 'URL',
   rating: 'Rating',
-  priceDiscount: 'Price Discount',
+  priceOld: 'Old price',
   priceRecurrentPrice: 'Price Recurrent Price',
   currency: 'Currency',
   online: 'Online',

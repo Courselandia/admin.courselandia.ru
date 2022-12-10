@@ -43,6 +43,7 @@
       >
         <Select
           v-model:value="form.school_id"
+          label-in-value
           class="width--wide"
           show-search
           :filter-option="filterOption"

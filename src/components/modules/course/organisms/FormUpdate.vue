@@ -66,7 +66,7 @@
                 >
                   <Input
                     v-model:value="form.header"
-                    @keyup="onChangeName"
+                    @keyup="onChangeHeader"
                   />
                 </Item>
                 <Item
@@ -95,6 +95,7 @@
                 >
                   <Select
                     v-model:value="form.school_id"
+                    label-in-value
                     class="width--wide"
                     show-search
                     :filter-option="filterOption"
@@ -117,6 +118,7 @@
                 >
                   <Select
                     v-model:value="form.directions"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -133,6 +135,7 @@
                 >
                   <Select
                     v-model:value="form.professions"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -149,6 +152,7 @@
                 >
                   <Select
                     v-model:value="form.categories"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -165,6 +169,7 @@
                 >
                   <Select
                     v-model:value="form.skills"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -181,6 +186,7 @@
                 >
                   <Select
                     v-model:value="form.teachers"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -197,6 +203,7 @@
                 >
                   <Select
                     v-model:value="form.tools"
+                    label-in-value
                     mode="multiple"
                     class="width--wide"
                     show-search
@@ -266,13 +273,13 @@
                   />
                 </Item>
                 <Item
-                  :label="lang('course.priceDiscount')"
-                  name="price_discount"
+                  :label="lang('course.priceOld')"
+                  name="price_old"
                   has-feedback
                   :rules="[{ required: false, type: 'number', min: 0, max: 999999 }]"
                 >
                   <InputNumber
-                    v-model:value="form.price_discount"
+                    v-model:value="form.price_old"
                     class="width--wide"
                   />
                 </Item>
@@ -937,7 +944,9 @@ const imageAlert = ref<IAlert>(
 
 const getDefaultFormValue = (): ICourseForm => ({
   id: id as TId,
-  school_id: item.value?.school_id || '',
+  school_id: item.value?.school
+    ? { key: item.value?.school?.id, value: item.value?.school?.name }
+    : null,
   image: null,
   header: item.value?.header || '',
   text: item.value?.text || null,
@@ -946,7 +955,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   language: item.value?.language || null,
   rating: item.value?.rating || null,
   price: item.value?.price || null,
-  price_discount: item.value?.price_discount || null,
+  price_old: item.value?.price_old || null,
   price_recurrent_price: item.value?.price_recurrent_price || null,
   currency: item.value?.currency || null,
   online: item.value?.online || null,
@@ -961,12 +970,13 @@ const getDefaultFormValue = (): ICourseForm => ({
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
 
-  directions: item.value?.directions?.map((itm) => itm.id) as Array<string> || [],
-  professions: item.value?.professions?.map((itm) => itm.id) as Array<string> || [],
-  categories: item.value?.categories?.map((itm) => itm.id) as Array<string> || [],
-  skills: item.value?.skills?.map((itm) => itm.id) as Array<string> || [],
-  teachers: item.value?.teachers?.map((itm) => itm.id) as Array<string> || [],
-  tools: item.value?.tools?.map((itm) => itm.id) as Array<string> || [],
+  directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  professions: item.value?.professions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  categories: item.value?.categories?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  skills: item.value?.skills?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  teachers: item.value?.teachers?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  tools: item.value?.tools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+
   levels: item.value?.levels?.map((itm) => itm.level) as Array<string> || [],
   learns: item.value?.learns?.map((itm) => itm.text) as Array<string> || [],
   employments: item.value?.employments?.map((itm) => itm.text) as Array<string> || [],
@@ -1117,7 +1127,7 @@ const onClickImageDestroy = async (): Promise<void> => {
   });
 };
 
-const onChangeName = () => {
+const onChangeHeader = () => {
   form.value.link = latin(form.value.header);
 };
 
