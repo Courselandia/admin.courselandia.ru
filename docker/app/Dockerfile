@@ -1,8 +1,8 @@
 FROM node:19.0.0 as build-stage
 WORKDIR /var/www
 COPY package*.json ./
-RUN npm install
 COPY . .
+RUN npm install
 RUN npm run build && rm -rf node_modules
 
 FROM nginx:alpine as production-stage
