@@ -1,11 +1,11 @@
-FROM node:19.0.0 as build-stage
+FROM node:lts-alpine as build-stage
 WORKDIR /var/www
 COPY package*.json ./
-COPY . .
 RUN npm install
+COPY . .
 RUN npm run build && rm -rf node_modules
 
-FROM nginx:alpine as production-stage
+FROM nginx:stable-alpine as production-stage
 
 COPY docker/app/nginx.conf /etc/nginx/nginx.conf
 COPY docker/app/default.conf /etc/nginx/conf.d/default.conf
