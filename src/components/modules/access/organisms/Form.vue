@@ -1,5 +1,5 @@
 <template>
-  <Card :title="lang('dashboard.loginForm')">
+  <Card title="HERE">
     <Alert
       v-if="alert.message"
       :message="alert.type === 'success' ? lang('dashboard.success') : lang('dashboard.error')"
