@@ -3,7 +3,7 @@ WORKDIR /var/www
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build && rm -rf node_modules
+RUN npm run build --prod && rm -rf node_modules
 
 FROM nginx:stable-alpine as production-stage
 
