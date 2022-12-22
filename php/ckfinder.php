@@ -1,7 +1,7 @@
 <?php
 
 $url = 'https://api.courselandia.ru';
-$dir = '/ckfinder/browser?key=gfe89rtlFQ54QoiHsAQpG';
+$dir = '/ckfinder/browser/gfe89rtlFQ54QoiHsAQpG';
 $path = $url . $dir;
 
 $curl = curl_init($path);
