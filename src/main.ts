@@ -1,4 +1,4 @@
-// Test 2
+// Test 3
 import '@/plugins/dayjs';
 
 // @ts-ignore
