@@ -10,13 +10,18 @@ export default async (to: RouteLocationNormalized): Promise<boolean | string> =>
 
   if (to?.meta?.redirect) {
     const store = access();
+    store.accessToken = cookies.get('accessToken') || null;
+    store.refreshToken = cookies.get('accessToken') || null;
 
     try {
       await store.getGate();
 
       return to.meta.redirect as string;
     } catch (error) {
-      console.warn('');
+      cookies.set('accessToken', '');
+      cookies.set('refreshToken', '');
+
+      return true;
     }
   }
 

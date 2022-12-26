@@ -9,7 +9,7 @@ export default [
     component: () => import('@/pages/Entrance.vue'),
     meta: {
       layout: 'center-layout',
-      // middleware: [guest],
+      middleware: [guest],
       redirect: '/dashboard',
     },
   },
