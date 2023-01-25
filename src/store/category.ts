@@ -63,7 +63,7 @@ export default defineStore('category', {
       const response = await axios.post<IResponseItem<ICategory>>('/api/private/admin/category/create', {
         ...data,
         directions: data.directions?.map((item) => item.key),
-        professions: data.directions?.map((item) => item.key),
+        professions: data.professions?.map((item) => item.key),
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -76,7 +76,7 @@ export default defineStore('category', {
       const response = await axios.put<IResponseItem<ICategory>>(`/api/private/admin/category/update/${data.id}`, {
         ...data,
         directions: data.directions?.map((item) => item.key),
-        professions: data.directions?.map((item) => item.key),
+        professions: data.professions?.map((item) => item.key),
       }, {
         headers: {
           Authorization: access().accessToken || '',
