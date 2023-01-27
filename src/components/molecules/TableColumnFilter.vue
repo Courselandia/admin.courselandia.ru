@@ -94,7 +94,6 @@ import Select from 'ant-design-vue/lib/select';
 import Slider from 'ant-design-vue/lib/slider';
 import Space from 'ant-design-vue/lib/space';
 import {
-  defineProps,
   PropType,
   reactive,
   toRefs,

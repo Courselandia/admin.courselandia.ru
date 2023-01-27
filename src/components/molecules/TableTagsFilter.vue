@@ -23,7 +23,7 @@
 import { FilterValue } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
 import dayjs from 'dayjs';
-import { defineProps, PropType, toRefs } from 'vue';
+import { PropType, toRefs } from 'vue';
 
 import IColumn from '@/interfaces/molecules/table/column';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';

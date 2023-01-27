@@ -154,7 +154,6 @@ import Radio from 'ant-design-vue/lib/radio';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import {
-  defineProps,
   PropType,
   ref,
   toRefs,

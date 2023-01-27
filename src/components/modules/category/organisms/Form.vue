@@ -178,7 +178,6 @@ import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import { storeToRefs } from 'pinia';
 import {
-  defineProps,
   h,
   onMounted,
   PropType,

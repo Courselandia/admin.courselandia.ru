@@ -117,7 +117,6 @@ import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import { storeToRefs } from 'pinia';
 import {
-  defineProps,
   h,
   onMounted,
   PropType,
