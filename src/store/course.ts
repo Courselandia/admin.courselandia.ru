@@ -162,6 +162,7 @@ export default defineStore('course', {
         skills: data.skills?.map((item) => item.key),
         teachers: data.teachers?.map((item) => item.key),
         tools: data.tools?.map((item) => item.key),
+        employments: data.employments?.map((item) => item.key),
         school_id: data.school_id?.key,
       }, {
         headers: {

@@ -30,7 +30,7 @@
         <Form
           ref="formRef"
           :model="form"
-          :label-col="{ span: 6 }"
+          :label-col="{ span: 8 }"
           @finish="onSubmit"
         >
           <Tabs>
