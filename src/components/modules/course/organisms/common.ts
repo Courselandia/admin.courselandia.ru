@@ -9,7 +9,6 @@ import {
 
 import EIcon from '@/enums/modules/course/icon';
 import lang from '@/helpers/lang';
-import IEmployment from '@/interfaces/modules/course/employment';
 import IFeature from '@/interfaces/modules/course/feature';
 import ILearn from '@/interfaces/modules/course/learn';
 import TId from '@/types/id';
@@ -27,20 +26,6 @@ export const learnColumns = [
 
 export const learnItems: Ref<ILearn[]> = ref([]);
 export const learnEditableData: UnwrapRef<Record<TId, ILearn>> = reactive({});
-
-export const employmentColumns = [
-  {
-    title: lang('dashboard.description'),
-    dataIndex: 'text',
-  },
-  {
-    dataIndex: 'actions',
-    width: 150,
-  },
-];
-
-export const employmentItems: Ref<IEmployment[]> = ref([]);
-export const employmentEditableData: UnwrapRef<Record<TId, IEmployment>> = reactive({});
 
 export const featureColumns = [
   {
@@ -89,41 +74,6 @@ export const learnEdit = (id: TId): void => {
 
 export const onClickDeleteLearn = (id: TId): void => {
   learnItems.value = learnItems.value.filter((item) => item.id !== id);
-};
-
-//
-
-export const onClickAddEmployment = (): void => {
-  const newData: IEmployment = {
-    id: Date.now(),
-    text: lang('dashboard.description') || '',
-  };
-
-  employmentItems.value.push(newData);
-};
-
-export const employmentSave = (id: TId): void => {
-  if (employmentEditableData[id].text) {
-    Object.assign(
-      employmentItems.value.filter((item) => id === item.id)[0],
-      employmentEditableData[id],
-    );
-
-    delete employmentEditableData[id];
-  } else {
-    Modal.warning({
-      title: lang('dashboard.warning'),
-      content: lang('dashboard.notEmpty'),
-    });
-  }
-};
-
-export const employmentEdit = (id: TId): void => {
-  employmentEditableData[id] = cloneDeep(employmentItems.value.filter((item) => id === item.id)[0]);
-};
-
-export const onClickDeleteEmployment = (id: TId): void => {
-  employmentItems.value = employmentItems.value.filter((item) => item.id !== id);
 };
 
 //

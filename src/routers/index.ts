@@ -8,6 +8,7 @@ import routerCategories from '@/routers/categories';
 import routerCourses from '@/routers/courses';
 import routerDashboard from '@/routers/dashboard';
 import routerDirections from '@/routers/directions';
+import routerEmployments from '@/routers/employments';
 import routerEntrance from '@/routers/entrance';
 import routerFaqs from '@/routers/faqs';
 import routerFeedbacks from '@/routers/feedbacks';
@@ -36,6 +37,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerProfessions,
   ...routerSkills,
   ...routerTools,
+  ...routerEmployments,
   ...routerFeedbacks,
   ...routerSchools,
   ...routerTeachers,

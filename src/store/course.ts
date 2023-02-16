@@ -120,6 +120,12 @@ export default defineStore('course', {
         }
       }
 
+      if (data.employments) {
+        for (let i = 0; i < data.employments.length; i++) {
+          formData.append(`employments[${i}]`, data.employments[i].key as string);
+        }
+      }
+
       if (data.levels) {
         for (let i = 0; i < data.levels.length; i++) {
           formData.append(`levels[${i}]`, data.levels[i]);
@@ -129,12 +135,6 @@ export default defineStore('course', {
       if (data.learns) {
         for (let i = 0; i < data.learns.length; i++) {
           formData.append(`learns[${i}]`, data.learns[i]);
-        }
-      }
-
-      if (data.employments) {
-        for (let i = 0; i < data.employments.length; i++) {
-          formData.append(`employments[${i}]`, data.employments[i]);
         }
       }
 

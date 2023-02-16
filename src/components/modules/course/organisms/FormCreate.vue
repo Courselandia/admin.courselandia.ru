@@ -213,6 +213,23 @@
                   />
                 </Item>
                 <Item
+                  :label="lang('course.employments')"
+                  name="employments"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.employments"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="employmentItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
                   :label="lang('course.levels')"
                   name="levels"
                   has-feedback
@@ -441,75 +458,6 @@
                       v-if="learnItems.length"
                       :title="lang('dashboard.askDestroyRecord')"
                       @confirm="onClickDeleteLearn(record.id)"
-                    >
-                      <Button danger>
-                        <template #icon>
-                          <DeleteOutlined />
-                        </template>
-                        <span>
-                          <Lang value="dashboard.destroy" />
-                        </span>
-                      </Button>
-                    </Popconfirm>
-                  </template>
-                </template>
-              </Table>
-            </TabPane>
-            <TabPane
-              key="employments"
-              :tab="lang('course.employments')"
-            >
-              <Button
-                class="mb-10"
-                @click="onClickAddEmployment"
-              >
-                <template #icon>
-                  <PlusOutlined />
-                </template>
-                <span>
-                  <Lang value="dashboard.add" />
-                </span>
-              </Button>
-              <Table
-                bordered
-                class="mb-25"
-                row-key="id"
-                :pagination="false"
-                :data-source="employmentItems"
-                :columns="employmentColumns"
-              >
-                <template #bodyCell="{ column, text, record }">
-                  <template v-if="column.dataIndex === 'text'">
-                    <div class="editable-cell">
-                      <div
-                        v-if="employmentEditableData[record.id]"
-                        class="editable-cell-input-wrapper"
-                      >
-                        <Input
-                          v-model:value="employmentEditableData[record.id].text"
-                          @press-enter="employmentSave(record.id)"
-                        />
-                        <CheckOutlined
-                          class="editable-cell-icon-check"
-                          @click="employmentSave(record.id)"
-                        />
-                      </div>
-                      <div
-                        v-else
-                        class="editable-cell-text-wrapper"
-                        @click="employmentEdit(record.id)"
-                        @keydown.enter="employmentEdit(record.id)"
-                      >
-                        {{ text }}
-                        <EditOutlined class="editable-cell-icon" />
-                      </div>
-                    </div>
-                  </template>
-                  <template v-else-if="column.dataIndex === 'actions'">
-                    <Popconfirm
-                      v-if="employmentItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
-                      @confirm="onClickDeleteEmployment(record.id)"
                     >
                       <Button danger>
                         <template #icon>
@@ -812,11 +760,6 @@ import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
 import {
-  employmentColumns,
-  employmentEdit,
-  employmentEditableData,
-  employmentItems,
-  employmentSave,
   featureColumns,
   featureEdit,
   featureEditableData,
@@ -827,10 +770,8 @@ import {
   learnEditableData,
   learnItems,
   learnSave,
-  onClickAddEmployment,
   onClickAddFeature,
   onClickAddLearn,
-  onClickDeleteEmployment,
   onClickDeleteFeature,
   onClickDeleteLearn,
 } from '@/components/modules/course/organisms/common';
@@ -850,6 +791,7 @@ import ISorts from '@/interfaces/molecules/table/sorts';
 import category from '@/store/category';
 import course from '@/store/course';
 import direction from '@/store/direction';
+import employment from '@/store/employment';
 import profession from '@/store/profession';
 import school from '@/store/school';
 import skill from '@/store/skill';
@@ -896,6 +838,10 @@ const teacherItems = teacherData.items;
 const readTools = tool().read;
 const toolData = storeToRefs(tool());
 const toolItems = toolData.items;
+
+const readEmployments = employment().read;
+const employmentData = storeToRefs(employment());
+const employmentItems = employmentData.items;
 
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
@@ -956,6 +902,7 @@ onMounted(async (): Promise<void> => {
     await readSkills(null, null, { name: 'ASC' } as ISorts);
     await readTeachers(null, null, { name: 'ASC' } as ISorts);
     await readTools(null, null, { name: 'ASC' } as ISorts);
+    await readEmployments(null, null, { name: 'ASC' } as ISorts);
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
@@ -979,9 +926,6 @@ const onClickReset = (): void => {
   form.value.learns = [];
   learnItems.value = [];
 
-  form.value.employments = [];
-  employmentItems.value = [];
-
   form.value.features = [];
   featureItems.value = [];
 };
@@ -998,16 +942,6 @@ const onSubmit = async (): Promise<void> => {
     Object.values(learnItems.value).forEach((itm) => {
       if (form.value.learns && itm.text) {
         form.value.learns[form.value.learns.length] = itm.text;
-      }
-    });
-
-    if (!form.value.employments) {
-      form.value.employments = [];
-    }
-
-    Object.values(employmentItems.value).forEach((itm) => {
-      if (form.value.employments && itm.text) {
-        form.value.employments[form.value.employments.length] = itm.text;
       }
     });
 
@@ -1034,9 +968,6 @@ const onSubmit = async (): Promise<void> => {
 
     form.value.learns = [];
     learnItems.value = [];
-
-    form.value.employments = [];
-    employmentItems.value = [];
 
     form.value.features = [];
     featureItems.value = [];

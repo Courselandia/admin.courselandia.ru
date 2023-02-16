@@ -102,6 +102,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="employments"
+        @click="onClickMenuItem('Employments')"
+      >
+        <template #icon>
+          <IdcardOutlined />
+        </template>
+        <Lang value="employment.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="salaries"
         @click="onClickMenuItem('Salaries')"
       >
@@ -183,6 +193,7 @@ import {
   DollarCircleOutlined,
   FileTextOutlined,
   FormatPainterOutlined,
+  IdcardOutlined,
   MailOutlined,
   MessageOutlined,
   NodeIndexOutlined,
@@ -241,6 +252,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     tools: '/dashboard/tools',
     schools: '/dashboard/schools',
     teachers: '/dashboard/teachers',
+    employments: '/dashboard/employments',
     salaries: '/dashboard/salaries',
     reviews: '/dashboard/reviews',
     faqs: '/dashboard/faqs',
