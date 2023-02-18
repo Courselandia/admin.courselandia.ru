@@ -112,6 +112,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="processes"
+        @click="onClickMenuItem('Processes')"
+      >
+        <template #icon>
+          <RocketOutlined />
+        </template>
+        <Lang value="process.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="salaries"
         @click="onClickMenuItem('Salaries')"
       >
@@ -200,6 +210,7 @@ import {
   NotificationOutlined,
   QuestionOutlined,
   RobotOutlined,
+  RocketOutlined,
   ShopOutlined,
   TeamOutlined,
   ToolOutlined,
@@ -253,6 +264,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     schools: '/dashboard/schools',
     teachers: '/dashboard/teachers',
     employments: '/dashboard/employments',
+    processes: '/dashboard/processes',
     salaries: '/dashboard/salaries',
     reviews: '/dashboard/reviews',
     faqs: '/dashboard/faqs',

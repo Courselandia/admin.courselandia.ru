@@ -230,6 +230,23 @@
                   />
                 </Item>
                 <Item
+                  :label="lang('course.processes')"
+                  name="processes"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.processes"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="processItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
                   :label="lang('course.levels')"
                   name="levels"
                   has-feedback
@@ -807,6 +824,7 @@ import category from '@/store/category';
 import course from '@/store/course';
 import direction from '@/store/direction';
 import employment from '@/store/employment';
+import process from '@/store/process';
 import profession from '@/store/profession';
 import school from '@/store/school';
 import skill from '@/store/skill';
@@ -866,6 +884,10 @@ const readEmployments = employment().read;
 const employmentData = storeToRefs(employment());
 const employmentItems = employmentData.items;
 
+const readProcesses = process().read;
+const processData = storeToRefs(process());
+const processItems = processData.items;
+
 const route = useRoute();
 const { id } = route.params;
 const { item } = storeToRefs(course());
@@ -923,6 +945,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   teachers: item.value?.teachers?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   tools: item.value?.tools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   employments: item.value?.employments?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  processes: item.value?.processes?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
 
   levels: item.value?.levels?.map((itm) => itm.level) as Array<string> || [],
   learns: item.value?.learns?.map((itm) => itm.text) as Array<string> || [],
@@ -956,6 +979,7 @@ onMounted(async (): Promise<void> => {
     await readTeachers(null, null, { name: 'ASC' } as ISorts);
     await readTools(null, null, { name: 'ASC' } as ISorts);
     await readEmployments(null, null, { name: 'ASC' } as ISorts);
+    await readProcesses(null, null, { name: 'ASC' } as ISorts);
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),

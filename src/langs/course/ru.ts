@@ -42,6 +42,7 @@ export default {
   teachers: 'Учителя',
   learns: 'Чему научитесь',
   employments: 'Трудоустройства',
+  processes: 'Процесс обучения',
   features: 'Особенности',
   video: 'Видео',
   certificate: 'Сертификат',

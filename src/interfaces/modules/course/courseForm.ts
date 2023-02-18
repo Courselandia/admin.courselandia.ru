@@ -41,5 +41,6 @@ export default interface ICourseForm {
   levels: Array<string> | null;
   learns: Array<string> | null;
   employments: Array<IOption> | null;
+  processes: Array<IOption> | null;
   features: Array<IFeature> | null;
 }

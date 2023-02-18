@@ -126,6 +126,12 @@ export default defineStore('course', {
         }
       }
 
+      if (data.processes) {
+        for (let i = 0; i < data.processes.length; i++) {
+          formData.append(`processes[${i}]`, data.processes[i].key as string);
+        }
+      }
+
       if (data.levels) {
         for (let i = 0; i < data.levels.length; i++) {
           formData.append(`levels[${i}]`, data.levels[i]);
@@ -163,6 +169,7 @@ export default defineStore('course', {
         teachers: data.teachers?.map((item) => item.key),
         tools: data.tools?.map((item) => item.key),
         employments: data.employments?.map((item) => item.key),
+        processes: data.processes?.map((item) => item.key),
         school_id: data.school_id?.key,
       }, {
         headers: {

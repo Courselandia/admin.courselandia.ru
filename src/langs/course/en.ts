@@ -42,6 +42,7 @@ export default {
   teachers: 'Teachers',
   learns: 'Learns',
   employments: 'Employments',
+  processes: 'Processes',
   features: 'Features',
   video: 'Video',
   certificate: 'Certificate',
