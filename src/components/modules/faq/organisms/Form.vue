@@ -120,7 +120,7 @@ import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
 import IFaqForm from '@/interfaces/modules/faq/faqForm';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import school from '@/store/school';
+import school from '@/stores/school';
 
 const formRef = ref<FormInstance>();
 

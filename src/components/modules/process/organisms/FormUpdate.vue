@@ -30,7 +30,7 @@ import Form from '@/components/modules/process/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IProcessForm from '@/interfaces/modules/process/processForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import process from '@/store/process';
+import process from '@/stores/process';
 import TId from '@/types/id';
 
 useMeta({

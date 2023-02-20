@@ -50,7 +50,7 @@ import { useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import FormUpdate from '@/components/modules/faq/organisms/FormUpdate.vue';
 import lang from '@/helpers/lang';
-import faq from '@/store/faq';
+import faq from '@/stores/faq';
 
 const {
   Item,

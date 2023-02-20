@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import IFaq from '@/interfaces/modules/faq/faq';
-import IFaqForm from '@/interfaces/modules/faq/faqForm';
+import IReview from '@/interfaces/modules/review/review';
+import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('faq', {
+export default defineStore('review', {
   state: () => ({
-    items: null as IFaq[] | null,
-    item: null as IFaq | null,
+    items: null as IReview[] | null,
+    item: null as IReview | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<IFaq>> {
+    async get(id: TId): Promise<IResponseItem<IReview>> {
       try {
-        const response = await axios.get<IResponseItem<IFaq>>(`/api/private/admin/faq/get/${id}`, {
+        const response = await axios.get<IResponseItem<IReview>>(`/api/private/admin/review/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('faq', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<IFaq>> {
+    ): Promise<IResponseItems<IReview>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<IFaq>>(`/api/private/admin/faq/read?${query}`, {
+        const response = await axios.get<IResponseItems<IReview>>(`/api/private/admin/review/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,9 +59,10 @@ export default defineStore('faq', {
         throw error;
       }
     },
-    async create(data: IFaqForm): Promise<IResponseItem<IFaq>> {
-      const response = await axios.post<IResponseItem<IFaq>>('/api/private/admin/faq/create', {
+    async create(data: IReviewForm): Promise<IResponseItem<IReview>> {
+      const response = await axios.post<IResponseItem<IReview>>('/api/private/admin/review/create', {
         ...data,
+        course_id: data.course_id?.key,
         school_id: data.school_id?.key,
       }, {
         headers: {
@@ -71,9 +72,10 @@ export default defineStore('faq', {
 
       return response.data;
     },
-    async update(data: IFaqForm): Promise<IResponseItem<IFaq>> {
-      const response = await axios.put<IResponseItem<IFaq>>(`/api/private/admin/faq/update/${data.id}`, {
+    async update(data: IReviewForm): Promise<IResponseItem<IReview>> {
+      const response = await axios.put<IResponseItem<IReview>>(`/api/private/admin/review/update/${data.id}`, {
         ...data,
+        course_id: data.course_id?.key,
         school_id: data.school_id?.key,
       }, {
         headers: {
@@ -83,19 +85,8 @@ export default defineStore('faq', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<IFaqForm>> {
-      const response = await axios.put<IResponseItem<IFaqForm>>(`/api/private/admin/faq/update/status/${id}`, {
-        status,
-      }, {
-        headers: {
-          Authorization: access().accessToken || '',
-        },
-      });
-
-      return response.data;
-    },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<IFaqForm>> {
-      const response = await axios.delete<IResponseItem<IFaqForm>>('/api/private/admin/faq/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<IReviewForm>> {
+      const response = await axios.delete<IResponseItem<IReviewForm>>('/api/private/admin/review/destroy', {
         params: {
           ids,
         },

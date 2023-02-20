@@ -254,7 +254,7 @@ import base64 from '@/helpers/base64';
 import lang from '@/helpers/lang';
 import IUserForm from '@/interfaces/modules/user/userForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import user from '@/store/user';
+import user from '@/stores/user';
 
 useMeta({
   title: lang('user.name'),

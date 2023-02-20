@@ -189,8 +189,8 @@ import {
 import IFaq from '@/interfaces/modules/faq/faq';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import faq from '@/store/faq';
-import school from '@/store/school';
+import faq from '@/stores/faq';
+import school from '@/stores/school';
 import TId from '@/types/id';
 
 const {

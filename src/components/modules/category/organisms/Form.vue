@@ -192,8 +192,8 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ICategoryForm from '@/interfaces/modules/category/categoryForm';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import direction from '@/store/direction';
-import profession from '@/store/profession';
+import direction from '@/stores/direction';
+import profession from '@/stores/profession';
 
 const formRef = ref<FormInstance>();
 

@@ -4,7 +4,7 @@ import axios from '@/helpers/axios';
 import IAlert from '@/interfaces/modules/alert/alert';
 import IAlertForm from '@/interfaces/modules/alert/alertForm';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
 export default defineStore('alert', {

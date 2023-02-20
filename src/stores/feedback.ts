@@ -6,7 +6,7 @@ import IFeedback from '@/interfaces/modules/feedback/feedback';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
 export default defineStore('feedback', {

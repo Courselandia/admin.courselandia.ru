@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import IDirection from '@/interfaces/modules/direction/direction';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import direction from '@/store/direction';
+import direction from '@/stores/direction';
 import TId from '@/types/id';
 
 const {

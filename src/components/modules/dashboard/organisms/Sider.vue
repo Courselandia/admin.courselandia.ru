@@ -227,7 +227,7 @@ import {
 
 import Lang from '@/components/atoms/Lang.vue';
 import ERole from '@/enums/modules/user/role';
-import access from '@/store/access';
+import access from '@/stores/access';
 
 const router = useRouter();
 const route = useRoute();

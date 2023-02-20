@@ -154,7 +154,7 @@ import {
 } from '@/helpers/state';
 import IFeedback from '@/interfaces/modules/feedback/feedback';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import feedback from '@/store/feedback';
+import feedback from '@/stores/feedback';
 import TId from '@/types/id';
 
 const {

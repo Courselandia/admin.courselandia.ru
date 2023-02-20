@@ -28,7 +28,7 @@ import Form from '@/components/modules/profession/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IProfessionForm from '@/interfaces/modules/profession/professionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import profession from '@/store/profession';
+import profession from '@/stores/profession';
 
 useMeta({
   title: lang('profession.createProfession'),

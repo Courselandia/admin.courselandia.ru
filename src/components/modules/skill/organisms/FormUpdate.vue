@@ -30,7 +30,7 @@ import Form from '@/components/modules/skill/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import ISkillForm from '@/interfaces/modules/skill/skillForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import skill from '@/store/skill';
+import skill from '@/stores/skill';
 import TId from '@/types/id';
 
 useMeta({

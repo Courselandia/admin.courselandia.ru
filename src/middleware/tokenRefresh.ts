@@ -1,4 +1,4 @@
-import access from '@/store/access';
+import access from '@/stores/access';
 
 export default async (): Promise<boolean | string> => {
   const { getRefreshToken, refreshToken, remember } = access();

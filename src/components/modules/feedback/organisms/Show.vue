@@ -72,7 +72,7 @@ import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
-import feedback from '@/store/feedback';
+import feedback from '@/stores/feedback';
 
 useMeta({
   title: lang('feedback.showFeedback'),

@@ -28,7 +28,7 @@ import Form from '@/components/modules/tool/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IToolForm from '@/interfaces/modules/tool/toolForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import tool from '@/store/tool';
+import tool from '@/stores/tool';
 
 useMeta({
   title: lang('tool.createTool'),

@@ -28,7 +28,7 @@ import Form from '@/components/modules/salary/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import ISalaryForm from '@/interfaces/modules/salary/salaryForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import salary from '@/store/salary';
+import salary from '@/stores/salary';
 
 useMeta({
   title: lang('salary.createSalary'),

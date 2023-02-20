@@ -30,7 +30,7 @@ import Form from '@/components/modules/direction/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IDirectionForm from '@/interfaces/modules/direction/directionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import direction from '@/store/direction';
+import direction from '@/stores/direction';
 import TId from '@/types/id';
 
 useMeta({

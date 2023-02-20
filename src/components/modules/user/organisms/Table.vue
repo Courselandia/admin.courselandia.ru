@@ -247,7 +247,7 @@ import {
 } from '@/helpers/state';
 import IUser from '@/interfaces/modules/user/user';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import user from '@/store/user';
+import user from '@/stores/user';
 import TId from '@/types/id';
 
 const {

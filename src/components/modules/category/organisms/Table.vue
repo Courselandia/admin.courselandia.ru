@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import ICategory from '@/interfaces/modules/category/category';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import category from '@/store/category';
+import category from '@/stores/category';
 import TId from '@/types/id';
 
 const {

@@ -50,7 +50,7 @@ import { useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import FormUpdate from '@/components/modules/process/organisms/FormUpdate.vue';
 import lang from '@/helpers/lang';
-import process from '@/store/process';
+import process from '@/stores/process';
 
 const {
   Item,

@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import ITeacher from '@/interfaces/modules/teacher/teacher';
-import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
+import ISchool from '@/interfaces/modules/school/school';
+import ISchoolForm from '@/interfaces/modules/school/schoolForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('teacher', {
+export default defineStore('school', {
   state: () => ({
-    items: null as ITeacher[] | null,
-    item: null as ITeacher | null,
+    items: null as ISchool[] | null,
+    item: null as ISchool | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<ITeacher>> {
+    async get(id: TId): Promise<IResponseItem<ISchool>> {
       try {
-        const response = await axios.get<IResponseItem<ITeacher>>(`/api/private/admin/teacher/get/${id}`, {
+        const response = await axios.get<IResponseItem<ISchool>>(`/api/private/admin/school/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('teacher', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<ITeacher>> {
+    ): Promise<IResponseItems<ISchool>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<ITeacher>>(`/api/private/admin/teacher/read?${query}`, {
+        const response = await axios.get<IResponseItems<ISchool>>(`/api/private/admin/school/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,27 +59,22 @@ export default defineStore('teacher', {
         throw error;
       }
     },
-    async create(data: ITeacherForm): Promise<IResponseItem<ITeacher>> {
+    async create(data: ISchoolForm): Promise<IResponseItem<ISchool>> {
       const formData = new FormData();
       formData.append('name', data.name);
+      formData.append('header', data.header);
       formData.append('link', data.link);
       formData.append('text', data.text || '');
+      formData.append('site', data.site || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
-      formData.append('image', data.image || '');
+      formData.append('imageLogo', data.imageLogo || '');
+      formData.append('imageSite', data.imageSite || '');
 
-      for (let i = 0; i < data.directions.length; i++) {
-        formData.append(`directions[${i}]`, String(data.directions[i].key));
-      }
-
-      for (let i = 0; i < data.schools.length; i++) {
-        formData.append(`schools[${i}]`, String(data.schools[i].key));
-      }
-
-      const response = await axios.post<IResponseItem<ITeacher>>('/api/private/admin/teacher/create', formData, {
+      const response = await axios.post<IResponseItem<ISchool>>('/api/private/admin/school/create', formData, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -87,12 +82,10 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async update(data: ITeacherForm): Promise<IResponseItem<ITeacher>> {
-      const response = await axios.put<IResponseItem<ITeacher>>(`/api/private/admin/teacher/update/${data.id}`, {
+    async update(data: ISchoolForm): Promise<IResponseItem<ISchool>> {
+      const response = await axios.put<IResponseItem<ISchool>>(`/api/private/admin/school/update/${data.id}`, {
         ...data,
         rating: data.rating ? String(data.rating) : '0',
-        directions: data.directions?.map((item) => item.key),
-        schools: data.schools?.map((item) => item.key),
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -101,8 +94,8 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<ITeacherForm>> {
-      const response = await axios.put<IResponseItem<ITeacherForm>>(`/api/private/admin/teacher/update/status/${id}`, {
+    async status(id: TId, status: boolean): Promise<IResponseItem<ISchoolForm>> {
+      const response = await axios.put<IResponseItem<ISchoolForm>>(`/api/private/admin/school/update/status/${id}`, {
         status,
       }, {
         headers: {
@@ -112,8 +105,8 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<ITeacherForm>> {
-      const response = await axios.delete<IResponseItem<ITeacherForm>>('/api/private/admin/teacher/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<ISchoolForm>> {
+      const response = await axios.delete<IResponseItem<ISchoolForm>>('/api/private/admin/school/destroy', {
         params: {
           ids,
         },
@@ -124,12 +117,13 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async imageUpdate(id: TId, file: File): Promise<IResponseItem<ITeacher>> {
+    async imageUpdate(id: TId, type: string, file: File): Promise<IResponseItem<ISchool>> {
       const formData = new FormData();
+      formData.append('type', type);
       formData.append('image', file);
       formData.append('_method', 'put');
 
-      const response = await axios.post<IResponseItem<ITeacher>>(`/api/private/admin/teacher/update/image/${id}`, formData, {
+      const response = await axios.post<IResponseItem<ISchool>>(`/api/private/admin/school/update/image/${id}`, formData, {
         headers: {
           Authorization: access().accessToken || '',
           'Content-Type': 'multipart/form-data',
@@ -138,8 +132,11 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async imageDestroy(id: TId): Promise<IResponseItem<ITeacher>> {
-      const response = await axios.delete<IResponseItem<ITeacher>>(`/api/private/admin/teacher/destroy/image/${id}`, {
+    async imageDestroy(id: TId, type: string): Promise<IResponseItem<ISchool>> {
+      const response = await axios.delete<IResponseItem<ISchool>>(`/api/private/admin/school/destroy/image/${id}`, {
+        params: {
+          type,
+        },
         headers: {
           Authorization: access().accessToken || '',
         },

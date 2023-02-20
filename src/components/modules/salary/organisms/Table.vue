@@ -207,8 +207,8 @@ import {
 import ISalary from '@/interfaces/modules/salary/salary';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import profession from '@/store/profession';
-import salary from '@/store/salary';
+import profession from '@/stores/profession';
+import salary from '@/stores/salary';
 import TId from '@/types/id';
 
 const {

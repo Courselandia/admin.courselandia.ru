@@ -1,8 +1,8 @@
 export default {
   name: 'Категории',
   addCategory: 'Добавить категорию',
-  updateCategory: 'Редактировать профессию',
-  createCategory: 'Создать профессию',
+  updateCategory: 'Редактировать категорию',
+  createCategory: 'Создать категорию',
   nameField: 'Название',
   header: 'Заголовок',
   link: 'Ссылка',

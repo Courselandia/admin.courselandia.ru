@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import ERole from '@/enums/modules/user/role';
 import auth from '@/middleware/auth';
 import tokenRefresh from '@/middleware/tokenRefresh';
-import log from '@/store/log';
+import log from '@/stores/log';
 import TId from '@/types/id';
 
 export default [

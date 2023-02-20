@@ -173,8 +173,8 @@ import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IFilter from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import course from '@/store/course';
-import school from '@/store/school';
+import course from '@/stores/course';
+import school from '@/stores/school';
 
 const formRef = ref<FormInstance>();
 

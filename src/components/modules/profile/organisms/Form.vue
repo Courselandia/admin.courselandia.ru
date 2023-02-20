@@ -253,8 +253,8 @@ import lang from '@/helpers/lang';
 import IProfileForm from '@/interfaces/modules/profile/organisms/profileForm';
 import IPasswordForm from '@/interfaces/modules/user/passwordForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import access from '@/store/access';
-import profile from '@/store/profile';
+import access from '@/stores/access';
+import profile from '@/stores/profile';
 
 useMeta({
   title: lang('dashboard.profile'),

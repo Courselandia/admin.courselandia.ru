@@ -91,7 +91,7 @@ import ERole from '@/enums/modules/user/role';
 import lang from '@/helpers/lang';
 import { IForm } from '@/interfaces/modules/access/organisms/form';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import access from '@/store/access';
+import access from '@/stores/access';
 
 const { Item } = Form;
 const { Password } = Input;

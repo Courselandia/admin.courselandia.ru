@@ -175,7 +175,7 @@ import {
 } from '@/helpers/state';
 import IAlert from '@/interfaces/modules/alert/alert';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import alert from '@/store/alert';
+import alert from '@/stores/alert';
 import TId from '@/types/id';
 
 const {

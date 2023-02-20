@@ -28,7 +28,7 @@ import Form from '@/components/modules/faq/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IFaqForm from '@/interfaces/modules/faq/faqForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import faq from '@/store/faq';
+import faq from '@/stores/faq';
 
 useMeta({
   title: lang('faq.createFaq'),

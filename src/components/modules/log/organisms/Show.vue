@@ -158,7 +158,7 @@ import { useMeta } from 'vue-meta';
 import Lang from '@/components/atoms/Lang.vue';
 import { rnToBr } from '@/helpers/format';
 import lang from '@/helpers/lang';
-import log from '@/store/log';
+import log from '@/stores/log';
 
 useMeta({
   title: lang('log.showLog'),

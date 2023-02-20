@@ -325,7 +325,7 @@ import lang from '@/helpers/lang';
 import IPasswordForm from '@/interfaces/modules/user/passwordForm';
 import IUserForm from '@/interfaces/modules/user/userForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import user from '@/store/user';
+import user from '@/stores/user';
 import TId from '@/types/id';
 
 useMeta({

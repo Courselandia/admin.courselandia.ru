@@ -30,7 +30,7 @@ import Form from '@/components/modules/employment/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import IEmploymentForm from '@/interfaces/modules/employment/employmentForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import employment from '@/store/employment';
+import employment from '@/stores/employment';
 import TId from '@/types/id';
 
 useMeta({

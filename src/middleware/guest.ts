@@ -1,7 +1,7 @@
 import cookies from 'js-cookie';
 import { RouteLocationNormalized } from 'vue-router';
 
-import access from '@/store/access';
+import access from '@/stores/access';
 
 export default async (to: RouteLocationNormalized): Promise<boolean | string> => {
   if (!cookies.get('accessToken')) {

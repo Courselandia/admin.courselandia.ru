@@ -227,7 +227,7 @@ import {
 } from '@/helpers/state';
 import ILog from '@/interfaces/modules/log/log';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import log from '@/store/log';
+import log from '@/stores/log';
 import TId from '@/types/id';
 
 const {

@@ -196,7 +196,7 @@ import {
 } from '@/helpers/state';
 import ISchool from '@/interfaces/modules/school/school';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import school from '@/store/school';
+import school from '@/stores/school';
 import TId from '@/types/id';
 
 const {

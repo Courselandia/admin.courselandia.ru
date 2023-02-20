@@ -282,9 +282,9 @@ import lang from '@/helpers/lang';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import direction from '@/store/direction';
-import school from '@/store/school';
-import teacher from '@/store/teacher';
+import direction from '@/stores/direction';
+import school from '@/stores/school';
+import teacher from '@/stores/teacher';
 
 useMeta({
   title: lang('teacher.createTeacher'),

@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import IProcess from '@/interfaces/modules/process/process';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import process from '@/store/process';
+import process from '@/stores/process';
 import TId from '@/types/id';
 
 const {

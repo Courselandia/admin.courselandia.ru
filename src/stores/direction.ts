@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import ITool from '@/interfaces/modules/tool/tool';
-import IToolForm from '@/interfaces/modules/tool/toolForm';
+import IDirection from '@/interfaces/modules/direction/direction';
+import IDirectionForm from '@/interfaces/modules/direction/directionForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('tool', {
+export default defineStore('direction', {
   state: () => ({
-    items: null as ITool[] | null,
-    item: null as ITool | null,
+    items: null as IDirection[] | null,
+    item: null as IDirection | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<ITool>> {
+    async get(id: TId): Promise<IResponseItem<IDirection>> {
       try {
-        const response = await axios.get<IResponseItem<ITool>>(`/api/private/admin/tool/get/${id}`, {
+        const response = await axios.get<IResponseItem<IDirection>>(`/api/private/admin/direction/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('tool', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<ITool>> {
+    ): Promise<IResponseItems<IDirection>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<ITool>>(`/api/private/admin/tool/read?${query}`, {
+        const response = await axios.get<IResponseItems<IDirection>>(`/api/private/admin/direction/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,8 +59,8 @@ export default defineStore('tool', {
         throw error;
       }
     },
-    async create(data: IToolForm): Promise<IResponseItem<ITool>> {
-      const response = await axios.post<IResponseItem<ITool>>('/api/private/admin/tool/create', data, {
+    async create(data: IDirectionForm): Promise<IResponseItem<IDirection>> {
+      const response = await axios.post<IResponseItem<IDirection>>('/api/private/admin/direction/create', data, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -68,8 +68,8 @@ export default defineStore('tool', {
 
       return response.data;
     },
-    async update(data: IToolForm): Promise<IResponseItem<ITool>> {
-      const response = await axios.put<IResponseItem<ITool>>(`/api/private/admin/tool/update/${data.id}`, data, {
+    async update(data: IDirectionForm): Promise<IResponseItem<IDirection>> {
+      const response = await axios.put<IResponseItem<IDirection>>(`/api/private/admin/direction/update/${data.id}`, data, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -77,8 +77,8 @@ export default defineStore('tool', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<IToolForm>> {
-      const response = await axios.put<IResponseItem<IToolForm>>(`/api/private/admin/tool/update/status/${id}`, {
+    async status(id: TId, status: boolean): Promise<IResponseItem<IDirectionForm>> {
+      const response = await axios.put<IResponseItem<IDirectionForm>>(`/api/private/admin/direction/update/status/${id}`, {
         status,
       }, {
         headers: {
@@ -88,8 +88,8 @@ export default defineStore('tool', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<IToolForm>> {
-      const response = await axios.delete<IResponseItem<IToolForm>>('/api/private/admin/tool/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<IDirectionForm>> {
+      const response = await axios.delete<IResponseItem<IDirectionForm>>('/api/private/admin/direction/destroy', {
         params: {
           ids,
         },

@@ -50,7 +50,7 @@ import { useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import Show from '@/components/modules/log/organisms/Show.vue';
 import lang from '@/helpers/lang';
-import log from '@/store/log';
+import log from '@/stores/log';
 
 const {
   Item,

@@ -207,7 +207,7 @@ import {
 } from '@/helpers/state';
 import ITeacher from '@/interfaces/modules/teacher/teacher';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import teacher from '@/store/teacher';
+import teacher from '@/stores/teacher';
 import TId from '@/types/id';
 
 const {

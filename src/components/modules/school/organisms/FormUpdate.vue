@@ -329,7 +329,7 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ISchoolForm from '@/interfaces/modules/school/schoolForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import school from '@/store/school';
+import school from '@/stores/school';
 import TId from '@/types/id';
 
 useMeta({

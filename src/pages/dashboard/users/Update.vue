@@ -52,7 +52,7 @@ import { useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import FormUpdate from '@/components/modules/user/organisms/FormUpdate.vue';
 import lang from '@/helpers/lang';
-import user from '@/store/user';
+import user from '@/stores/user';
 
 const {
   Item,

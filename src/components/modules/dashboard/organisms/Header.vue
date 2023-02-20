@@ -117,9 +117,9 @@ import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
-import access from '@/store/access';
-import alert from '@/store/alert';
-import cache from '@/store/cache';
+import access from '@/stores/access';
+import alert from '@/stores/alert';
+import cache from '@/stores/cache';
 
 const {
   countUnread,

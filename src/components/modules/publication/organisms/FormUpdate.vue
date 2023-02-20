@@ -269,7 +269,7 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IPublicationForm from '@/interfaces/modules/publication/publicationForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import publication from '@/store/publication';
+import publication from '@/stores/publication';
 import TId from '@/types/id';
 
 useMeta({

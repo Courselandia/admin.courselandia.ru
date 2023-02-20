@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import IProcess from '@/interfaces/modules/process/process';
-import IProcessForm from '@/interfaces/modules/process/processForm';
+import IFaq from '@/interfaces/modules/faq/faq';
+import IFaqForm from '@/interfaces/modules/faq/faqForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('process', {
+export default defineStore('faq', {
   state: () => ({
-    items: null as IProcess[] | null,
-    item: null as IProcess | null,
+    items: null as IFaq[] | null,
+    item: null as IFaq | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<IProcess>> {
+    async get(id: TId): Promise<IResponseItem<IFaq>> {
       try {
-        const response = await axios.get<IResponseItem<IProcess>>(`/api/private/admin/process/get/${id}`, {
+        const response = await axios.get<IResponseItem<IFaq>>(`/api/private/admin/faq/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('process', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<IProcess>> {
+    ): Promise<IResponseItems<IFaq>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<IProcess>>(`/api/private/admin/process/read?${query}`, {
+        const response = await axios.get<IResponseItems<IFaq>>(`/api/private/admin/faq/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,8 +59,11 @@ export default defineStore('process', {
         throw error;
       }
     },
-    async create(data: IProcessForm): Promise<IResponseItem<IProcess>> {
-      const response = await axios.post<IResponseItem<IProcess>>('/api/private/admin/process/create', data, {
+    async create(data: IFaqForm): Promise<IResponseItem<IFaq>> {
+      const response = await axios.post<IResponseItem<IFaq>>('/api/private/admin/faq/create', {
+        ...data,
+        school_id: data.school_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -68,8 +71,11 @@ export default defineStore('process', {
 
       return response.data;
     },
-    async update(data: IProcessForm): Promise<IResponseItem<IProcess>> {
-      const response = await axios.put<IResponseItem<IProcess>>(`/api/private/admin/process/update/${data.id}`, data, {
+    async update(data: IFaqForm): Promise<IResponseItem<IFaq>> {
+      const response = await axios.put<IResponseItem<IFaq>>(`/api/private/admin/faq/update/${data.id}`, {
+        ...data,
+        school_id: data.school_id?.key,
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -77,8 +83,8 @@ export default defineStore('process', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<IProcessForm>> {
-      const response = await axios.put<IResponseItem<IProcessForm>>(`/api/private/admin/process/update/status/${id}`, {
+    async status(id: TId, status: boolean): Promise<IResponseItem<IFaqForm>> {
+      const response = await axios.put<IResponseItem<IFaqForm>>(`/api/private/admin/faq/update/status/${id}`, {
         status,
       }, {
         headers: {
@@ -88,8 +94,8 @@ export default defineStore('process', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<IProcessForm>> {
-      const response = await axios.delete<IResponseItem<IProcessForm>>('/api/private/admin/process/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<IFaqForm>> {
+      const response = await axios.delete<IResponseItem<IFaqForm>>('/api/private/admin/faq/destroy', {
         params: {
           ids,
         },

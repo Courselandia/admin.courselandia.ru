@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import ICategory from '@/interfaces/modules/category/category';
-import ICategoryForm from '@/interfaces/modules/category/categoryForm';
+import ITool from '@/interfaces/modules/tool/tool';
+import IToolForm from '@/interfaces/modules/tool/toolForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('category', {
+export default defineStore('tool', {
   state: () => ({
-    items: null as ICategory[] | null,
-    item: null as ICategory | null,
+    items: null as ITool[] | null,
+    item: null as ITool | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<ICategory>> {
+    async get(id: TId): Promise<IResponseItem<ITool>> {
       try {
-        const response = await axios.get<IResponseItem<ICategory>>(`/api/private/admin/category/get/${id}`, {
+        const response = await axios.get<IResponseItem<ITool>>(`/api/private/admin/tool/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('category', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<ICategory>> {
+    ): Promise<IResponseItems<ITool>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<ICategory>>(`/api/private/admin/category/read?${query}`, {
+        const response = await axios.get<IResponseItems<ITool>>(`/api/private/admin/tool/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,12 +59,8 @@ export default defineStore('category', {
         throw error;
       }
     },
-    async create(data: ICategoryForm): Promise<IResponseItem<ICategory>> {
-      const response = await axios.post<IResponseItem<ICategory>>('/api/private/admin/category/create', {
-        ...data,
-        directions: data.directions?.map((item) => item.key),
-        professions: data.professions?.map((item) => item.key),
-      }, {
+    async create(data: IToolForm): Promise<IResponseItem<ITool>> {
+      const response = await axios.post<IResponseItem<ITool>>('/api/private/admin/tool/create', data, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -72,12 +68,8 @@ export default defineStore('category', {
 
       return response.data;
     },
-    async update(data: ICategoryForm): Promise<IResponseItem<ICategory>> {
-      const response = await axios.put<IResponseItem<ICategory>>(`/api/private/admin/category/update/${data.id}`, {
-        ...data,
-        directions: data.directions?.map((item) => item.key),
-        professions: data.professions?.map((item) => item.key),
-      }, {
+    async update(data: IToolForm): Promise<IResponseItem<ITool>> {
+      const response = await axios.put<IResponseItem<ITool>>(`/api/private/admin/tool/update/${data.id}`, data, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -85,8 +77,8 @@ export default defineStore('category', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<ICategoryForm>> {
-      const response = await axios.put<IResponseItem<ICategoryForm>>(`/api/private/admin/category/update/status/${id}`, {
+    async status(id: TId, status: boolean): Promise<IResponseItem<IToolForm>> {
+      const response = await axios.put<IResponseItem<IToolForm>>(`/api/private/admin/tool/update/status/${id}`, {
         status,
       }, {
         headers: {
@@ -96,8 +88,8 @@ export default defineStore('category', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<ICategoryForm>> {
-      const response = await axios.delete<IResponseItem<ICategoryForm>>('/api/private/admin/category/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<IToolForm>> {
+      const response = await axios.delete<IResponseItem<IToolForm>>('/api/private/admin/tool/destroy', {
         params: {
           ids,
         },

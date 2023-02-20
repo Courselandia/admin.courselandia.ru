@@ -213,7 +213,7 @@ import {
 } from '@/helpers/state';
 import IPublication from '@/interfaces/modules/publication/publication';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import publication from '@/store/publication';
+import publication from '@/stores/publication';
 import TId from '@/types/id';
 
 const {

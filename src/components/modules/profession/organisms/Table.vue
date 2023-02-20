@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import IProfession from '@/interfaces/modules/profession/profession';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import profession from '@/store/profession';
+import profession from '@/stores/profession';
 import TId from '@/types/id';
 
 const {

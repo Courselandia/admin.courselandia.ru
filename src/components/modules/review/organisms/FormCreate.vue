@@ -29,7 +29,7 @@ import EStatus from '@/enums/modules/review/status';
 import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import review from '@/store/review';
+import review from '@/stores/review';
 
 useMeta({
   title: lang('review.createReview'),

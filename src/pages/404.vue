@@ -26,7 +26,7 @@ import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
-import access from '@/store/access';
+import access from '@/stores/access';
 
 const router = useRouter();
 const { user } = access();

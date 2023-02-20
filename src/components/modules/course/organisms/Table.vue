@@ -218,10 +218,10 @@ import {
 import ICourse from '@/interfaces/modules/course/course';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import course from '@/store/course';
-import direction from '@/store/direction';
-import profession from '@/store/profession';
-import school from '@/store/school';
+import course from '@/stores/course';
+import direction from '@/stores/direction';
+import profession from '@/stores/profession';
+import school from '@/stores/school';
 import TId from '@/types/id';
 
 const {

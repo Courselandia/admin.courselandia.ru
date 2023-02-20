@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import axios from '@/helpers/axios';
 import IUser from '@/interfaces/modules/user/user';
 import { IResponseItem } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 
 export default defineStore('profile', {
   actions: {

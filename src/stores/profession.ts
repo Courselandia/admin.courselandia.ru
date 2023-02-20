@@ -2,24 +2,24 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
-import IReview from '@/interfaces/modules/review/review';
-import IReviewForm from '@/interfaces/modules/review/reviewForm';
+import IProfession from '@/interfaces/modules/profession/profession';
+import IProfessionForm from '@/interfaces/modules/profession/professionForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
-import access from '@/store/access';
+import access from '@/stores/access';
 import TId from '@/types/id';
 
-export default defineStore('review', {
+export default defineStore('profession', {
   state: () => ({
-    items: null as IReview[] | null,
-    item: null as IReview | null,
+    items: null as IProfession[] | null,
+    item: null as IProfession | null,
     total: null as number | null,
   }),
   actions: {
-    async get(id: TId): Promise<IResponseItem<IReview>> {
+    async get(id: TId): Promise<IResponseItem<IProfession>> {
       try {
-        const response = await axios.get<IResponseItem<IReview>>(`/api/private/admin/review/get/${id}`, {
+        const response = await axios.get<IResponseItem<IProfession>>(`/api/private/admin/profession/get/${id}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -39,10 +39,10 @@ export default defineStore('review', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
-    ): Promise<IResponseItems<IReview>> {
+    ): Promise<IResponseItems<IProfession>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<IReview>>(`/api/private/admin/review/read?${query}`, {
+        const response = await axios.get<IResponseItems<IProfession>>(`/api/private/admin/profession/read?${query}`, {
           headers: {
             Authorization: access().accessToken || '',
           },
@@ -59,11 +59,27 @@ export default defineStore('review', {
         throw error;
       }
     },
-    async create(data: IReviewForm): Promise<IResponseItem<IReview>> {
-      const response = await axios.post<IResponseItem<IReview>>('/api/private/admin/review/create', {
-        ...data,
-        course_id: data.course_id?.key,
-        school_id: data.school_id?.key,
+    async create(data: IProfessionForm): Promise<IResponseItem<IProfession>> {
+      const response = await axios.post<IResponseItem<IProfession>>('/api/private/admin/profession/create', data, {
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
+    },
+    async update(data: IProfessionForm): Promise<IResponseItem<IProfession>> {
+      const response = await axios.put<IResponseItem<IProfession>>(`/api/private/admin/profession/update/${data.id}`, data, {
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
+    },
+    async status(id: TId, status: boolean): Promise<IResponseItem<IProfessionForm>> {
+      const response = await axios.put<IResponseItem<IProfessionForm>>(`/api/private/admin/profession/update/status/${id}`, {
+        status,
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -72,21 +88,8 @@ export default defineStore('review', {
 
       return response.data;
     },
-    async update(data: IReviewForm): Promise<IResponseItem<IReview>> {
-      const response = await axios.put<IResponseItem<IReview>>(`/api/private/admin/review/update/${data.id}`, {
-        ...data,
-        course_id: data.course_id?.key,
-        school_id: data.school_id?.key,
-      }, {
-        headers: {
-          Authorization: access().accessToken || '',
-        },
-      });
-
-      return response.data;
-    },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<IReviewForm>> {
-      const response = await axios.delete<IResponseItem<IReviewForm>>('/api/private/admin/review/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<IProfessionForm>> {
+      const response = await axios.delete<IResponseItem<IProfessionForm>>('/api/private/admin/profession/destroy', {
         params: {
           ids,
         },

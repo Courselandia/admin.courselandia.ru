@@ -820,16 +820,16 @@ import ICourseForm from '@/interfaces/modules/course/courseForm';
 import IFeature from '@/interfaces/modules/course/feature';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import category from '@/store/category';
-import course from '@/store/course';
-import direction from '@/store/direction';
-import employment from '@/store/employment';
-import process from '@/store/process';
-import profession from '@/store/profession';
-import school from '@/store/school';
-import skill from '@/store/skill';
-import teacher from '@/store/teacher';
-import tool from '@/store/tool';
+import category from '@/stores/category';
+import course from '@/stores/course';
+import direction from '@/stores/direction';
+import employment from '@/stores/employment';
+import process from '@/stores/process';
+import profession from '@/stores/profession';
+import school from '@/stores/school';
+import skill from '@/stores/skill';
+import teacher from '@/stores/teacher';
+import tool from '@/stores/tool';
 import TId from '@/types/id';
 
 useMeta({

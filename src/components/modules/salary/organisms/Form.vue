@@ -130,7 +130,7 @@ import ELevel from '@/enums/modules/salary/level';
 import lang from '@/helpers/lang';
 import ISalaryForm from '@/interfaces/modules/salary/salaryForm';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import profession from '@/store/profession';
+import profession from '@/stores/profession';
 
 const formRef = ref<FormInstance>();
 

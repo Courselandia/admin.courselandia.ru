@@ -32,7 +32,7 @@ import lang from '@/helpers/lang';
 import IReviewForm from '@/interfaces/modules/review/reviewForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import IOption from '@/interfaces/molecules/select/option';
-import review from '@/store/review';
+import review from '@/stores/review';
 import TId from '@/types/id';
 
 useMeta({

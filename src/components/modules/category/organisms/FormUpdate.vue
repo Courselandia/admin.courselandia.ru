@@ -30,7 +30,7 @@ import Form from '@/components/modules/category/organisms/Form.vue';
 import lang from '@/helpers/lang';
 import ICategoryForm from '@/interfaces/modules/category/categoryForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import category from '@/store/category';
+import category from '@/stores/category';
 import TId from '@/types/id';
 
 useMeta({

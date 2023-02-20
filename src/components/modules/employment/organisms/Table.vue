@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import IEmployment from '@/interfaces/modules/employment/employment';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import employment from '@/store/employment';
+import employment from '@/stores/employment';
 import TId from '@/types/id';
 
 const {

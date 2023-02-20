@@ -197,8 +197,8 @@ import {
 import IReview from '@/interfaces/modules/review/review';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import review from '@/store/review';
-import school from '@/store/school';
+import review from '@/stores/review';
+import school from '@/stores/school';
 import TId from '@/types/id';
 
 const {

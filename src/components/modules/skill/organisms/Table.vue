@@ -184,7 +184,7 @@ import {
 } from '@/helpers/state';
 import ISkill from '@/interfaces/modules/skill/skill';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import skill from '@/store/skill';
+import skill from '@/stores/skill';
 import TId from '@/types/id';
 
 const {
