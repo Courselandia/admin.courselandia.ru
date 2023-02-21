@@ -9,6 +9,7 @@ import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
 import access from '@/stores/access';
 import TId from '@/types/id';
+//
 
 export default defineStore('course', {
   state: () => ({
