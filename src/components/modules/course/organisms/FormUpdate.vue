@@ -319,12 +319,12 @@
                 </Item>
                 <Item
                   :label="lang('course.priceRecurrentPrice')"
-                  name="price_recurrent_price"
+                  name="price_recurrent"
                   has-feedback
                   :rules="[{ required: false, type: 'number', min: 0, max: 999999 }]"
                 >
                   <InputNumber
-                    v-model:value="form.price_recurrent_price"
+                    v-model:value="form.price_recurrent"
                     class="width--wide"
                   />
                 </Item>
@@ -924,7 +924,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   rating: item.value?.rating || null,
   price: item.value?.price || null,
   price_old: item.value?.price_old || null,
-  price_recurrent_price: item.value?.price_recurrent_price || null,
+  price_recurrent: item.value?.price_recurrent || null,
   currency: item.value?.currency || null,
   online: item.value?.online || null,
   employment: item.value?.employment || null,

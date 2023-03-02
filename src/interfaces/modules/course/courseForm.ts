@@ -18,7 +18,7 @@ export default interface ICourseForm {
   rating: number | null;
   price: number | null;
   price_old: number | null;
-  price_recurrent_price: number | null;
+  price_recurrent: number | null;
   currency: ECurrency | null;
   online: boolean | null;
   employment: boolean | null;

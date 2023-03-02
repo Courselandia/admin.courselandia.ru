@@ -70,7 +70,7 @@ export default defineStore('course', {
       formData.append('rating', data.rating ? String(data.rating) : '');
       formData.append('price', data.price ? String(data.price) : '');
       formData.append('price_old', data.price_old ? String(data.price_old) : '');
-      formData.append('price_recurrent_price', data.price_recurrent_price ? String(data.price_recurrent_price) : '');
+      formData.append('price_recurrent', data.price_recurrent ? String(data.price_recurrent) : '');
       formData.append('currency', data.currency ? String(data.currency) : '');
       formData.append('online', data.online ? '1' : '0');
       formData.append('employment', data.employment ? '1' : '0');
