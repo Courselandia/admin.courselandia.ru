@@ -2,6 +2,7 @@ import cookies from 'js-cookie';
 import { RouteLocationNormalized } from 'vue-router';
 
 import ERole from '@/enums/modules/user/role';
+import IUser from '@/interfaces/modules/user/user';
 import access from '@/stores/access';
 
 export default async (to: RouteLocationNormalized): Promise<boolean | string> => {
@@ -22,11 +23,18 @@ export default async (to: RouteLocationNormalized): Promise<boolean | string> =>
   const roles: Array<ERole> = to?.meta?.roles as Array<ERole>;
 
   try {
-    const gate = await store.getGate();
+    let gate :IUser;
+
+    if (store.user) {
+      gate = store.user;
+    } else {
+      const response = await store.getGate();
+      gate = response.data;
+    }
 
     if (gate) {
       if (roles) {
-        if (roles.indexOf(gate.data.role.name) !== -1) {
+        if (roles.indexOf(gate.role.name) !== -1) {
           return true;
         }
 
