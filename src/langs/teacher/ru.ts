@@ -2,7 +2,7 @@ export default {
   name: 'Учителя',
   addTeacher: 'Добавить учителя',
   updateTeacher: 'Редактировать школу',
-  nameField: 'Название',
+  nameField: 'ФИО',
   link: 'Ссылка',
   text: 'Текст',
   rating: 'Рейтинг',
