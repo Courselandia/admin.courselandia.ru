@@ -621,19 +621,19 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('course.title')"
-                  name="title"
+                  name="template_title"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input v-model:value="form.template_title" />
                 </Item>
                 <Item
                   :label="lang('course.description')"
-                  name="description"
+                  name="template_description"
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input v-model:value="form.template_description" />
                 </Item>
                 <Item
                   :label="lang('course.keywords')"
@@ -897,8 +897,8 @@ const form = ref<ICourseForm>({
   modules_amount: null,
   status: EStatus.ACTIVE,
 
-  title: null,
-  description: null,
+  template_title: null,
+  template_description: null,
   keywords: null,
 
   directions: [],

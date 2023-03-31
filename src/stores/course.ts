@@ -79,8 +79,8 @@ export default defineStore('course', {
       formData.append('lessons_amount', data.lessons_amount ? String(data.lessons_amount) : '');
       formData.append('modules_amount', data.modules_amount ? String(data.modules_amount) : '');
       formData.append('status', data.status ? String(data.status) : '');
-      formData.append('title', data.title || '');
-      formData.append('description', data.description || '');
+      formData.append('template_title', data.template_title || '');
+      formData.append('template_description', data.template_description || '');
       formData.append('keywords', data.keywords || '');
       formData.append('image', data.image || '');
 

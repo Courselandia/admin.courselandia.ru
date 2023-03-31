@@ -621,19 +621,19 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('course.title')"
-                  name="title"
+                  name="template_title"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input v-model:value="form.template_title" />
                 </Item>
                 <Item
                   :label="lang('course.description')"
-                  name="description"
+                  name="template_description"
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input v-model:value="form.template_description" />
                 </Item>
                 <Item
                   :label="lang('course.keywords')"
@@ -934,8 +934,8 @@ const getDefaultFormValue = (): ICourseForm => ({
   modules_amount: item.value?.modules_amount || null,
   status: item.value?.status || EStatus.ACTIVE,
 
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
+  template_title: item.value?.metatag?.template_title || null,
+  template_description: item.value?.metatag?.template_description || null,
   keywords: item.value?.metatag?.keywords || null,
 
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],

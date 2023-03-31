@@ -28,8 +28,8 @@ export default interface ICourseForm {
   modules_amount: number | null
   status: EStatus;
 
-  title: string | null;
-  description: string | null;
+  template_title: string | null;
+  template_description: string | null;
   keywords: string | null;
 
   directions: Array<IOption> | null;
