@@ -1,9 +1,11 @@
 import access from '@/stores/access';
 
 export default async (): Promise<boolean | string> => {
-  const { getRefreshToken, refreshToken, remember } = access();
+  const { getRefreshToken, remember } = access();
 
   const toRefresh = async () => {
+    const { refreshToken } = access();
+
     if (refreshToken) {
       try {
         await getRefreshToken(refreshToken, remember || false);
@@ -13,7 +15,6 @@ export default async (): Promise<boolean | string> => {
     }
   };
 
-  // await toRefresh();
   window.setInterval(toRefresh, 1000 * 60 * 5);
 
   return true;
