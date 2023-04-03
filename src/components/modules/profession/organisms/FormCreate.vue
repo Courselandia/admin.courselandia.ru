@@ -47,10 +47,13 @@ const alert = ref<IAlert>({
 const form = ref<IProfessionForm>({
   name: '',
   header: null,
+  header_template: 'Онлайн-курсы по профессии {profession:nominative}',
   link: '',
   text: null,
   title: null,
+  title_template: 'Онлайн-курсы по профессии {profession:nominative} [countProfessionCourses:— {countProfessionCourses:курс|nominative} для обучения] — Courselandia',
   description: null,
+  description_template: 'Найдите для себя онлайн-курс по профессии {profession:nominative} из каталога Courselandia [countProfessionCourses:— {countProfessionCourses:курс|nominative} на выбор]. Рейтинг онлайн-школ и курсов, легкий поиск, сравнение цен.',
   keywords: null,
   status: true,
 });
