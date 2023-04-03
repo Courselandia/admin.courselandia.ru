@@ -5,8 +5,8 @@ export default interface IMetatag {
   description: string;
   keywords: string;
   title: string;
-  template_title: string,
-  template_description: string,
+  title_template: string,
+  description_template: string,
   created_at: string;
   updated_at: string;
   deleted_at: string

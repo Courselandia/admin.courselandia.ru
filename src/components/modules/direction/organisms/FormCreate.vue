@@ -46,12 +46,15 @@ const alert = ref<IAlert>({
 
 const form = ref<IDirectionForm>({
   name: '',
-  header: null,
+  header_template: 'Онлайн курсы по {direction:dative}',
+  header: '',
   link: '',
   text: null,
   weight: null,
-  title: null,
-  description: null,
+  title_template: 'Онлайн-курсы по {direction:dative}[countDirectionCourses:: {countDirectionCourses:курс|genitive} для обучения] — Courselandia',
+  description_template: 'В каталоге Courselandia вы можете найти интересные курсы по направлению {direction:genitive} [countDirectionCourses:из {countDirectionCourses:вариант|genitive}]. Здесь полное описание курсов, удобный поиск, рейтинги, обучающие программы.',
+  title: '',
+  description: '',
   keywords: null,
   status: true,
 });

@@ -38,7 +38,7 @@ useMeta({
 });
 
 const route = useRoute();
-const { update } = direction();
+const { update, get } = direction();
 const { item } = storeToRefs(direction());
 const { id } = route.params;
 
@@ -53,10 +53,13 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): IDirectionForm => ({
   id: id as TId,
   name: item.value?.name || '',
+  header_template: item.value?.header_template || null,
   header: item.value?.header || null,
   link: item.value?.link || '',
   text: item.value?.text || null,
   weight: item.value?.weight || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
@@ -78,6 +81,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

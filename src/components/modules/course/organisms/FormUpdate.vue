@@ -59,14 +59,25 @@
                   </RadioGroup>
                 </Item>
                 <Item
-                  :label="lang('course.header')"
-                  name="header"
+                  :label="lang('course.nameCourse')"
+                  name="name"
                   has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
-                    v-model:value="form.header"
-                    @keyup="onChangeHeader"
+                    v-model:value="form.name"
+                    @keyup="onChangeName"
+                  />
+                </Item>
+                <Item
+                  :label="lang('course.header')"
+                  name="header_template"
+                  has-feedback
+                  :rules="[{ required: true, type: 'string', max: 191 }]"
+                  :extra="form.header"
+                >
+                  <Input
+                    v-model:value="form.header_template"
                   />
                 </Item>
                 <Item
@@ -621,19 +632,21 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('course.title')"
-                  name="template_title"
+                  name="title_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
+                  :extra="form.title"
                 >
-                  <Input v-model:value="form.template_title" />
+                  <Input v-model:value="form.title_template" />
                 </Item>
                 <Item
                   :label="lang('course.description')"
-                  name="template_description"
+                  name="description_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
+                  :extra="form.description"
                 >
-                  <Input v-model:value="form.template_description" />
+                  <Input v-model:value="form.description_template" />
                 </Item>
                 <Item
                   :label="lang('course.keywords')"
@@ -842,6 +855,7 @@ const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const {
   update,
+  get,
   imageUpdate,
   imageDestroy,
 } = course();
@@ -916,6 +930,8 @@ const getDefaultFormValue = (): ICourseForm => ({
     ? { key: item.value?.school?.id, value: item.value?.school?.name }
     : null,
   image: null,
+  name: item.value?.name || '',
+  header_template: item.value?.header_template || '',
   header: item.value?.header || '',
   text: item.value?.text || null,
   link: item.value?.link || '',
@@ -934,8 +950,10 @@ const getDefaultFormValue = (): ICourseForm => ({
   modules_amount: item.value?.modules_amount || null,
   status: item.value?.status || EStatus.ACTIVE,
 
-  template_title: item.value?.metatag?.template_title || null,
-  template_description: item.value?.metatag?.template_description || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
+  title: item.value?.metatag?.title || null,
+  description: item.value?.metatag?.description || null,
   keywords: item.value?.metatag?.keywords || null,
 
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -1026,6 +1044,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
@@ -1085,8 +1106,8 @@ const onClickImageDestroy = async (): Promise<void> => {
   });
 };
 
-const onChangeHeader = () => {
-  form.value.link = latin(form.value.header);
+const onChangeName = () => {
+  form.value.link = latin(form.value.name);
 };
 
 const filterOption = (input: string, option: any) => option

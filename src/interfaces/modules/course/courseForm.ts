@@ -10,7 +10,9 @@ export default interface ICourseForm {
   id?: TId;
   school_id: IOption | null;
   image: File | null;
-  header: string;
+  name: string;
+  header_template: string | null;
+  header: string | null;
   text: string | null;
   link: string;
   url: string;
@@ -28,8 +30,10 @@ export default interface ICourseForm {
   modules_amount: number | null
   status: EStatus;
 
-  template_title: string | null;
-  template_description: string | null;
+  title_template: string | null;
+  description_template: string | null;
+  title: string | null;
+  description: string | null;
   keywords: string | null;
 
   directions: Array<IOption> | null;
