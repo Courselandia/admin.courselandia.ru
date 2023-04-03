@@ -47,10 +47,13 @@ const alert = ref<IAlert>({
 const form = ref<IToolForm>({
   name: '',
   header: null,
+  header_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}',
   link: '',
   text: null,
   title: null,
   description: null,
+  title_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}[countToolCourses:: {countToolCourses:курс|nominative} для обучения с нуля] — Courselandia',
+  description_template: 'Выбирайте обучающий онлайн-курс по изучению инструмента {tool:nominative} из каталога Courselandia [countToolCourses:— {countToolCourses:курс|nominative} на ваш выбор]. Рейтинг онлайн-школ, сравнение цен, легкий поиск онлайн-курсов.',
   keywords: null,
   status: true,
 });
