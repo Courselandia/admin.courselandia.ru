@@ -47,10 +47,13 @@ const alert = ref<IAlert>({
 const form = ref<ICategoryForm>({
   name: '',
   header: null,
+  header_template: 'Онлайн курсы по {category:dative}',
   link: '',
   text: null,
   title: null,
   description: null,
+  title_template: 'Каталог онлайн-курсов по {category:dative}[countCategoryCourses:: {countCategoryCourses:курс|genitive} для обучения с нуля] — Courselandia',
+  description_template: 'Выберите обучающий онлайн-курс в категории {category:nominative} в каталоге Courselandia [countCategoryCourses:— {countProfessionCourses:курс|nominative} для вас]. Рейтинги онлайн-школ, сравнение цен, быстрый поиск, сравнение курсов, обучающие программы.',
   keywords: null,
   status: true,
   directions: [],

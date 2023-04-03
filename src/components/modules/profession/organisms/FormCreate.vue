@@ -51,7 +51,7 @@ const form = ref<IProfessionForm>({
   link: '',
   text: null,
   title: null,
-  title_template: 'Онлайн-курсы по профессии {profession:nominative} [countProfessionCourses:— {countProfessionCourses:курс|nominative} для обучения] — Courselandia',
+  title_template: 'Каталог онлайн-курсов по профессии {profession:nominative} [countProfessionCourses:— {countProfessionCourses:курс|nominative} для обучения] — Courselandia',
   description: null,
   description_template: 'Найдите для себя онлайн-курс по профессии {profession:nominative} из каталога Courselandia [countProfessionCourses:— {countProfessionCourses:курс|nominative} на выбор]. Рейтинг онлайн-школ и курсов, легкий поиск, сравнение цен.',
   keywords: null,

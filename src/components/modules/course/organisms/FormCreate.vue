@@ -909,8 +909,8 @@ const form = ref<ICourseForm>({
   modules_amount: null,
   status: EStatus.ACTIVE,
 
-  title_template: 'Курс {course} от {school:genitive} [price:по цене {price}|бесплатно] — Courselandia',
-  description_template: 'Приступите к программе обучения прям сейчас онлайн-курса {course} от {school:genitive} выбрав его в каталоге Courselandia, легкий поиск, возможность сравнивать курсы по разным параметрам',
+  title_template: 'Курс {course} от {school:genitive} [price:по цене {price}/бесплатно] — Courselandia',
+  description_template: 'Приступите к программе обучения прям сейчас онлайн-курса {course} от {school:genitive} выбрав его в каталоге Courselandia, легкий поиск, возможность сравнивать курсы по разным параметрам.',
   title: '',
   description: '',
 
