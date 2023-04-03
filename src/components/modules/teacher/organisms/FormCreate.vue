@@ -126,18 +126,20 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('teacher.title')"
-                  name="title"
+                  name="title_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
+                  :extra="form.title"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input v-model:value="form.title_template" />
                 </Item>
                 <Item
                   :label="lang('teacher.description')"
-                  name="description"
+                  name="description_template"
                   :rules="[{ type: 'string', max: 1000 }]"
+                  :extra="form.description"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input v-model:value="form.description_template" />
                 </Item>
                 <Item
                   :label="lang('teacher.keywords')"
@@ -326,6 +328,8 @@ const form = ref<ITeacherForm>({
   schools: [],
   title: null,
   description: null,
+  title_template: 'Преподаватель {teacher} — отзывы, рейтинг[countTeacherCourses:, список из {countTeacherCourses:курс|nominative}] — Courselandia',
+  description_template: 'Все курсы преподавателя {teacher} — полный список обучающих онлайн-курсов в каталоге Courselandia.',
   keywords: null,
   status: true,
 });

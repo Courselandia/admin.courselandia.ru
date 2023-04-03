@@ -12,6 +12,8 @@ export default interface ITeacherForm {
   schools: Array<IOption>;
   title: string | null;
   description: string | null;
+  title_template: string | null;
+  description_template: string | null;
   keywords: string | null;
   status: boolean;
 }
