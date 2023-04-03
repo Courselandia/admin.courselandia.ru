@@ -51,7 +51,7 @@ const form = ref<IDirectionForm>({
   link: '',
   text: null,
   weight: null,
-  title_template: 'Каталог онлайн-курсов по {direction:dative}[countDirectionCourses:: {countDirectionCourses:курс|genitive} для обучения] — Courselandia',
+  title_template: 'Каталог онлайн-курсов по {direction:dative}[countDirectionCourses:: {countDirectionCourses:курс|nominative} для обучения] — Courselandia',
   description_template: 'В каталоге Courselandia вы можете найти интересные курсы по направлению {direction:nominative} [countDirectionCourses:из {countDirectionCourses:вариант|genitive}]. Здесь полное описание курсов, удобный поиск, рейтинги, обучающие программы.',
   title: '',
   description: '',
