@@ -347,7 +347,7 @@ const form = ref<ISchoolForm>({
   title: null,
   description: null,
   title_template: '{school}:[countSchoolCourses: {countSchoolCourses:онлайн-курс|nominative} — ] цены, сравнения, описание программ и курсов — Courselandia',
-  description_template: 'Начни учиться в онлайн-школе {school} [countSchoolCourses: — {countSchoolCourses:профессиональный онлайн-курс|nominative} от ведущих преподавателей], подробное описание курса в каталоге Courselandia.',
+  description_template: 'Начни учиться в онлайн-школе {school} [countSchoolCourses: — {countSchoolCourses:профессиональный онлайн-курс|nominative} от ведущих преподавателей], подробное описание курсов в каталоге Courselandia.',
   keywords: null,
   status: true,
 });

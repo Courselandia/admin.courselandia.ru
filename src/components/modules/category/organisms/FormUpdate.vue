@@ -54,7 +54,7 @@ const getDefaultFormValue = (): ICategoryForm => ({
   id: id as TId,
   name: item.value?.name || '',
   header: item.value?.header || null,
-  header_template: item.value?.header || null,
+  header_template: item.value?.header_template || null,
   link: item.value?.link || '',
   text: item.value?.text || null,
   title: item.value?.metatag?.title || null,
