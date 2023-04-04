@@ -68,12 +68,13 @@
                 </Item>
                 <Item
                   :label="lang('school.header')"
-                  name="header"
+                  name="header_template"
                   has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
+                  :extra="form.header"
                 >
                   <Input
-                    v-model:value="form.header"
+                    v-model:value="form.header_template"
                   />
                 </Item>
                 <Item
@@ -112,19 +113,21 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('school.title')"
-                  name="title"
+                  name="title_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
+                  :extra="form.title"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input v-model:value="form.title_template" />
                 </Item>
                 <Item
                   :label="lang('school.description')"
-                  name="description"
+                  name="description_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
+                  :extra="form.description"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input v-model:value="form.description_template" />
                 </Item>
                 <Item
                   :label="lang('school.keywords')"
@@ -352,6 +355,7 @@ const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const {
   update,
+  get,
   imageUpdate,
   imageDestroy,
 } = school();
@@ -389,6 +393,7 @@ const getDefaultFormValue = (): ISchoolForm => ({
   id: id as TId,
   name: item.value?.name || '',
   header: item.value?.header || '',
+  header_template: item.value?.header_template || '',
   link: item.value?.link || '',
   text: item.value?.text || null,
   rating: item.value?.rating || null,
@@ -397,6 +402,8 @@ const getDefaultFormValue = (): ISchoolForm => ({
   imageSite: null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
@@ -416,6 +423,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

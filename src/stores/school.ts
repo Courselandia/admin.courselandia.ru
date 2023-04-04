@@ -63,12 +63,15 @@ export default defineStore('school', {
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('header', data.header);
+      formData.append('header_template', data.header_template);
       formData.append('link', data.link);
       formData.append('text', data.text || '');
       formData.append('site', data.site || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
+      formData.append('title_template', data.title_template || '');
+      formData.append('description_template', data.description_template || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
       formData.append('imageLogo', data.imageLogo || '');

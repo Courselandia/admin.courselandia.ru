@@ -2,6 +2,7 @@ export default {
   name: 'Courses',
   addCourse: 'Add course',
   updateCourse: 'Edit course',
+  nameCourse: 'Name',
   header: 'Header',
   school: 'School',
   price: 'Price',

@@ -38,7 +38,7 @@ useMeta({
 });
 
 const route = useRoute();
-const { update } = category();
+const { update, get } = category();
 const { item } = storeToRefs(category());
 const { id } = route.params;
 
@@ -54,10 +54,13 @@ const getDefaultFormValue = (): ICategoryForm => ({
   id: id as TId,
   name: item.value?.name || '',
   header: item.value?.header || null,
+  header_template: item.value?.header_template || null,
   link: item.value?.link || '',
   text: item.value?.text || null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -79,6 +82,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

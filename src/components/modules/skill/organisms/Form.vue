@@ -50,11 +50,12 @@
           </Item>
           <Item
             :label="lang('skill.header')"
-            name="header"
+            name="header_template"
             has-feedback
             :rules="[{ required: true, type: 'string', max: 191 }]"
+            :extra="form.header"
           >
-            <Input v-model:value="form.header" />
+            <Input v-model:value="form.header_template" />
           </Item>
           <Item
             :label="lang('skill.link')"
@@ -73,19 +74,21 @@
         <div class="width--wide max--width-600">
           <Item
             :label="lang('skill.title')"
-            name="title"
+            name="title_template"
             has-feedback
             :rules="[{ type: 'string', max: 500 }]"
+            :extra="form.title"
           >
-            <Input v-model:value="form.title" />
+            <Input v-model:value="form.title_template" />
           </Item>
           <Item
             :label="lang('skill.description')"
-            name="description"
+            name="description_template"
             has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
+            :extra="form.description"
           >
-            <Input v-model:value="form.description" />
+            <Input v-model:value="form.description_template" />
           </Item>
           <Item
             :label="lang('skill.keywords')"

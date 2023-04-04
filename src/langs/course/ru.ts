@@ -2,6 +2,7 @@ export default {
   name: 'Курсы',
   addCourse: 'Добавить курс',
   updateCourse: 'Редактировать курс',
+  nameCourse: 'Название',
   header: 'Заголовок',
   school: 'Школа',
   price: 'Цена',

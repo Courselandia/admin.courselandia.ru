@@ -126,19 +126,21 @@
               <div class="width--wide max--width-600">
                 <Item
                   :label="lang('teacher.title')"
-                  name="title"
+                  name="title_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
+                  :extra="form.title"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input v-model:value="form.title_template" />
                 </Item>
                 <Item
                   :label="lang('teacher.description')"
-                  name="description"
+                  name="description_template"
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
+                  :extra="form.description"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input v-model:value="form.description_template" />
                 </Item>
                 <Item
                   :label="lang('teacher.keywords')"
@@ -317,6 +319,7 @@ const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const {
   update,
+  get,
   imageUpdate,
   imageDestroy,
 } = teacher();
@@ -376,6 +379,8 @@ const getDefaultFormValue = (): ITeacherForm => ({
   image: null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -397,6 +402,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

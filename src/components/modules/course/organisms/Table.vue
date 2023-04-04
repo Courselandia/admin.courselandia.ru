@@ -316,15 +316,15 @@ const columns = computed<ITableColumnType<ICourse>[]>(() => [
     filters: getSchoolsFilter(),
   },
   {
-    title: lang('course.header'),
-    dataIndex: 'header',
-    key: 'header',
+    title: lang('course.name'),
+    dataIndex: 'name',
+    key: 'name',
     sorter: {
       multiple: 1,
     },
     customFilterDropdown: true,
-    sortOrder: stateColumnSort('header', sortedInfo.value),
-    filteredValue: stateColumnFilter('header', filteredInfo.value, 'string'),
+    sortOrder: stateColumnSort('name', sortedInfo.value),
+    filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
   },
   {
     title: lang('course.price'),
@@ -434,7 +434,7 @@ const defaultSorts: Array<SorterResult> = [
     order: 'ascend',
   },
   {
-    columnKey: 'header',
+    columnKey: 'name',
     order: 'ascend',
   },
 ];

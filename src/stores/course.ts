@@ -61,7 +61,8 @@ export default defineStore('course', {
     },
     async create(data: ICourseForm): Promise<IResponseItem<ICourse>> {
       const formData = new FormData();
-      formData.append('header', data.header);
+      formData.append('name', data.name);
+      formData.append('header_template', data.header_template || '');
       formData.append('school_id', data.school_id?.key as string);
       formData.append('text', data.text || '');
       formData.append('link', data.link);
@@ -79,8 +80,8 @@ export default defineStore('course', {
       formData.append('lessons_amount', data.lessons_amount ? String(data.lessons_amount) : '');
       formData.append('modules_amount', data.modules_amount ? String(data.modules_amount) : '');
       formData.append('status', data.status ? String(data.status) : '');
-      formData.append('title', data.title || '');
-      formData.append('description', data.description || '');
+      formData.append('title_template', data.title_template || '');
+      formData.append('description_template', data.description_template || '');
       formData.append('keywords', data.keywords || '');
       formData.append('image', data.image || '');
 

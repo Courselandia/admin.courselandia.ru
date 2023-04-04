@@ -38,7 +38,7 @@ useMeta({
 });
 
 const route = useRoute();
-const { update } = skill();
+const { update, get } = skill();
 const { item } = storeToRefs(skill());
 const { id } = route.params;
 
@@ -54,10 +54,13 @@ const getDefaultFormValue = (): ISkillForm => ({
   id: id as TId,
   name: item.value?.name || '',
   header: item.value?.header || null,
+  header_template: item.value?.header_template || null,
   link: item.value?.link || '',
   text: item.value?.text || null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
+  title_template: item.value?.metatag?.title_template || null,
+  description_template: item.value?.metatag?.description_template || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
@@ -77,6 +80,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    await get(id as TId);
+    form.value = getDefaultFormValue();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

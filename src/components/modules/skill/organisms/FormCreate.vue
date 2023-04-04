@@ -47,10 +47,13 @@ const alert = ref<IAlert>({
 const form = ref<ISkillForm>({
   name: '',
   header: null,
+  header_template: 'Онлайн курсы по {skill:dative}',
   link: '',
   text: null,
   title: null,
   description: null,
+  title_template: 'Каталог онлайн-курсов по {skill:dative}[countSkillCourses:: {countSkillCourses:курс|nominative} для обучения] — Courselandia',
+  description_template: 'Подберите обучающий онлайн-курс для получения навыка {skill:nominative} из каталога Courselandia [countSkillCourses:— {countSkillCourses:курс|nominative} для вас]. Сравнение цен, рейтинг онлайн-школ, сравнение курсов.',
   keywords: null,
   status: true,
 });
