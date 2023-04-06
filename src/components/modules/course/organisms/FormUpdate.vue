@@ -626,6 +626,112 @@
               </Table>
             </TabPane>
             <TabPane
+              key="program"
+              :tab="lang('course.program')"
+            >
+              <Button
+                class="mb-10"
+                @click="onClickAddProgram()"
+              >
+                <template #icon>
+                  <PlusOutlined />
+                </template>
+                <span>
+                  <Lang value="dashboard.add" />
+                </span>
+              </Button>
+              <Table
+                bordered
+                class="mb-25"
+                row-key="id"
+                :pagination="false"
+                :data-source="programItems"
+                :columns="programColumns"
+              >
+                <template #bodyCell="{ column, text, record }">
+                  <template v-if="column.dataIndex === 'name'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="programEditableData[record.id]?.name !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="programEditableData[record.id].name"
+                          @press-enter="programSave(record.id)"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="programSave(record.id)"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="programEdit(record.id, 'name')"
+                        @keydown.enter="programEdit(record.id, 'name')"
+                      >
+                        {{ text }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'text'">
+                    <div class="editable-cell">
+                      <Modal
+                        v-model:visible="programShowModalText[record.id]"
+                        :title="lang('course.programDescription')"
+                        :width="900"
+                        @ok="programSave(record.id)"
+                      >
+                        <Ckeditor
+                          v-if="programEditableData[record.id]?.text !== undefined"
+                          v-model:value="programEditableData[record.id].text"
+                          name="text"
+                        />
+                      </Modal>
+                      <div
+                        class="editable-cell-text-wrapper"
+                        style="display: flex"
+                        @click="programEdit(record.id, 'text')"
+                        @keydown.enter="programEdit(record.id, 'text')"
+                      >
+                        <span v-html="text" />
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else-if="column.dataIndex === 'actions'">
+                    <Space>
+                      <Button
+                        @click="onClickAddProgram(record.id)"
+                      >
+                        <template #icon>
+                          <PlusOutlined />
+                        </template>
+                        <span>
+                          <Lang value="dashboard.add" />
+                        </span>
+                      </Button>
+                      <Popconfirm
+                        v-if="programItems.length"
+                        :title="lang('dashboard.askDestroyRecord')"
+                        @confirm="onClickDeleteProgram(record.id)"
+                      >
+                        <Button danger>
+                          <template #icon>
+                            <DeleteOutlined />
+                          </template>
+                          <span>
+                            <Lang value="dashboard.destroy" />
+                          </span>
+                        </Button>
+                      </Popconfirm>
+                    </Space>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
+            <TabPane
               key="meta"
               :tab="lang('dashboard.meta')"
             >
@@ -816,8 +922,16 @@ import {
   learnSave,
   onClickAddFeature,
   onClickAddLearn,
+  onClickAddProgram,
   onClickDeleteFeature,
   onClickDeleteLearn,
+  onClickDeleteProgram,
+  programColumns,
+  programEdit,
+  programEditableData,
+  programItems,
+  programSave,
+  programShowModalText,
 } from '@/components/modules/course/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import ECurrency from '@/enums/modules/course/currency';
@@ -831,6 +945,7 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ICourseForm from '@/interfaces/modules/course/courseForm';
 import IFeature from '@/interfaces/modules/course/feature';
+import IProgram from '@/interfaces/modules/course/program';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import category from '@/stores/category';
@@ -970,6 +1085,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   features: item.value?.features?.map(
     (itm) => ({ icon: itm.icon, text: itm.text }),
   ) as Array<IFeature> || [],
+  program: item.value?.program,
 });
 
 learnItems.value = item.value?.learns?.map((itm) => ({
@@ -982,6 +1098,24 @@ featureItems.value = item.value?.features?.map((itm) => ({
   icon: itm.icon,
   text: itm.text,
 })) || [];
+
+programItems.value = item.value?.program || [];
+
+const setProgramShowModalText = (items: IProgram[]): void => {
+  for (let i = 0; i < items.length; i++) {
+    const idItem = items[i].id;
+
+    if (idItem) {
+      programShowModalText[idItem] = false;
+    }
+
+    if (items[i].children) {
+      setProgramShowModalText(items[i].children || []);
+    }
+  }
+};
+
+setProgramShowModalText(programItems.value);
 
 const form = ref<ICourseForm>(getDefaultFormValue());
 
@@ -1039,6 +1173,8 @@ const onSubmit = async (): Promise<void> => {
         };
       }
     });
+
+    form.value.program = programItems.value;
 
     await update(form.value);
 

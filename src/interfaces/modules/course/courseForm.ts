@@ -3,6 +3,7 @@ import EDuration from '@/enums/modules/course/duration';
 import ELanguage from '@/enums/modules/course/language';
 import EStatus from '@/enums/modules/course/status';
 import IFeature from '@/interfaces/modules/course/feature';
+import IProgram from '@/interfaces/modules/course/program';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -47,4 +48,5 @@ export default interface ICourseForm {
   employments: Array<IOption> | null;
   processes: Array<IOption> | null;
   features: Array<IFeature> | null;
+  program: Array<IProgram> | null;
 }

@@ -625,6 +625,112 @@
               </Table>
             </TabPane>
             <TabPane
+              key="program"
+              :tab="lang('course.program')"
+            >
+              <Button
+                class="mb-10"
+                @click="onClickAddProgram()"
+              >
+                <template #icon>
+                  <PlusOutlined />
+                </template>
+                <span>
+                  <Lang value="dashboard.add" />
+                </span>
+              </Button>
+              <Table
+                bordered
+                class="mb-25"
+                row-key="id"
+                :pagination="false"
+                :data-source="programItems"
+                :columns="programColumns"
+              >
+                <template #bodyCell="{ column, text, record }">
+                  <template v-if="column.dataIndex === 'name'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="programEditableData[record.id]?.name !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="programEditableData[record.id].name"
+                          @press-enter="programSave(record.id)"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="programSave(record.id)"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="programEdit(record.id, 'name')"
+                        @keydown.enter="programEdit(record.id, 'name')"
+                      >
+                        {{ text }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'text'">
+                    <div class="editable-cell">
+                      <Modal
+                        v-model:visible="programShowModalText[record.id]"
+                        :title="lang('course.programDescription')"
+                        :width="900"
+                        @ok="programSave(record.id)"
+                      >
+                        <Ckeditor
+                          v-if="programEditableData[record.id]?.text !== undefined"
+                          v-model:value="programEditableData[record.id].text"
+                          name="text"
+                        />
+                      </Modal>
+                      <div
+                        class="editable-cell-text-wrapper"
+                        style="display: flex"
+                        @click="programEdit(record.id, 'text')"
+                        @keydown.enter="programEdit(record.id, 'text')"
+                      >
+                        <span v-html="text" />
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else-if="column.dataIndex === 'actions'">
+                    <Space>
+                      <Button
+                        @click="onClickAddProgram(record.id)"
+                      >
+                        <template #icon>
+                          <PlusOutlined />
+                        </template>
+                        <span>
+                          <Lang value="dashboard.add" />
+                        </span>
+                      </Button>
+                      <Popconfirm
+                        v-if="programItems.length"
+                        :title="lang('dashboard.askDestroyRecord')"
+                        @confirm="onClickDeleteProgram(record.id)"
+                      >
+                        <Button danger>
+                          <template #icon>
+                            <DeleteOutlined />
+                          </template>
+                          <span>
+                            <Lang value="dashboard.destroy" />
+                          </span>
+                        </Button>
+                      </Popconfirm>
+                    </Space>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
+            <TabPane
               key="meta"
               :tab="lang('dashboard.meta')"
             >
@@ -776,6 +882,7 @@ import Switch from 'ant-design-vue/lib/switch';
 import Table from 'ant-design-vue/lib/table';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
+import { cloneDeep } from 'lodash';
 import { storeToRefs } from 'pinia';
 import {
   createVNode,
@@ -799,8 +906,16 @@ import {
   learnSave,
   onClickAddFeature,
   onClickAddLearn,
+  onClickAddProgram,
   onClickDeleteFeature,
   onClickDeleteLearn,
+  onClickDeleteProgram,
+  programColumns,
+  programEdit,
+  programEditableData,
+  programItems,
+  programSave,
+  programShowModalText,
 } from '@/components/modules/course/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import ECurrency from '@/enums/modules/course/currency';
@@ -927,6 +1042,7 @@ const form = ref<ICourseForm>({
   employments: [],
   processes: [],
   features: [],
+  program: [],
 });
 
 onMounted(async (): Promise<void> => {
@@ -967,6 +1083,9 @@ const onClickReset = (): void => {
 
   form.value.features = [];
   featureItems.value = [];
+
+  form.value.program = [];
+  programItems.value = [];
 };
 
 const onSubmit = async (): Promise<void> => {
@@ -986,6 +1105,12 @@ const onSubmit = async (): Promise<void> => {
 
     if (!form.value.features) {
       form.value.features = [];
+    }
+
+    if (!form.value.program) {
+      form.value.program = [];
+    } else {
+      form.value.program = cloneDeep(programItems.value);
     }
 
     Object.values(featureItems.value).forEach((itm) => {

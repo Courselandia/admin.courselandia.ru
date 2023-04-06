@@ -50,4 +50,7 @@ export default {
   checkbox: 'Checkbox',
   calendar: 'Calendar',
   note: 'Note',
+  program: 'Program',
+  programName: 'Program name',
+  programDescription: 'Program description',
 };

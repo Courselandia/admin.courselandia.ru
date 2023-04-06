@@ -152,6 +152,10 @@ export default defineStore('course', {
         }
       }
 
+      if (data.program) {
+        formData.append('program', JSON.stringify(data.program));
+      }
+
       const response = await axios.post<IResponseItem<ICourse>>('/api/private/admin/course/create', formData, {
         headers: {
           Authorization: access().accessToken || '',
@@ -172,6 +176,7 @@ export default defineStore('course', {
         employments: data.employments?.map((item) => item.key),
         processes: data.processes?.map((item) => item.key),
         school_id: data.school_id?.key,
+        program: JSON.stringify(data.program),
       }, {
         headers: {
           Authorization: access().accessToken || '',

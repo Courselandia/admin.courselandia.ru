@@ -50,4 +50,7 @@ export default {
   checkbox: 'Чекбокс',
   calendar: 'Календарь',
   note: 'Заметка',
+  program: 'Программа',
+  programName: 'Название пункта программы',
+  programDescription: 'Описание пункта программы',
 };
