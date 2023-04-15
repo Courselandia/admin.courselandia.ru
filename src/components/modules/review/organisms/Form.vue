@@ -70,7 +70,7 @@
         :label="lang('review.nameAuthor')"
         name="name"
         has-feedback
-        :rules="[{ required: true, type: 'string', max: 191 }]"
+        :rules="[{ required: false, type: 'string', max: 191 }]"
       >
         <Input
           v-model:value="form.name"
@@ -80,17 +80,28 @@
         :label="lang('review.title')"
         name="title"
         has-feedback
-        :rules="[{ type: 'string', max: 191 }]"
+        :rules="[{ required: false, type: 'string', max: 191 }]"
       >
         <Input
           v-model:value="form.title"
         />
       </Item>
       <Item
+        :label="lang('review.review')"
+        name="review"
+        has-feedback
+        :rules="[{ required: false, type: 'string', max: 65000 }]"
+      >
+        <TextArea
+          v-model:value="form.review"
+          style="height: 200px"
+        />
+      </Item>
+      <Item
         :label="lang('review.advantages')"
         name="advantages"
         has-feedback
-        :rules="[{ required: false, type: 'string', max: 5000 }]"
+        :rules="[{ required: false, type: 'string', max: 65000 }]"
       >
         <TextArea
           v-model:value="form.advantages"
@@ -101,7 +112,7 @@
         :label="lang('review.disadvantages')"
         name="disadvantages"
         has-feedback
-        :rules="[{ required: false, type: 'string', max: 5000 }]"
+        :rules="[{ required: false, type: 'string', max: 65000 }]"
       >
         <TextArea
           v-model:value="form.disadvantages"
@@ -112,7 +123,7 @@
         :label="lang('review.rating')"
         name="rating"
         has-feedback
-        :rules="[{ required: true, type: 'number', min: 1, max: 5 }]"
+        :rules="[{ required: false, type: 'integer', min: 1, max: 5 }]"
       >
         <InputNumber
           v-model:value="form.rating"

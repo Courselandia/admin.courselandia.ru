@@ -48,11 +48,12 @@ const alert = ref<IAlert>({
 const form = ref<IReviewForm>({
   school_id: null,
   course_id: null,
-  name: '',
+  name: null,
   title: null,
+  review: null,
   advantages: null,
   disadvantages: null,
-  rating: 1,
+  rating: null,
   status: EStatus.ACTIVE,
 });
 

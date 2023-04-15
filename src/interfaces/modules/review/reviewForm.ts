@@ -6,10 +6,11 @@ export default interface IReviewForm {
   id?: TId;
   school_id: IOption | null;
   course_id: IOption | null;
-  name: string;
+  name: string | null;
   title: string | null;
+  review: string | null;
   advantages: string | null;
   disadvantages: string | null;
-  rating: number;
+  rating: number | null;
   status: EStatus;
 }

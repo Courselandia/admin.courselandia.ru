@@ -6,6 +6,7 @@ export default {
   schools: 'School',
   nameAuthor: 'Name',
   title: 'Title',
+  review: 'Review',
   advantages: 'Advantages',
   disadvantages: 'Disadvantages',
   rating: 'Rating',

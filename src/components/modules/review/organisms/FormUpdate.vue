@@ -63,11 +63,12 @@ const getDefaultFormValue = (): IReviewForm => ({
     ? { key: item.value?.school.id, value: item.value?.school.name }
     : null,
   course_id: courseId,
-  name: item.value?.name || '',
+  name: item.value?.name || null,
   title: item.value?.title || null,
+  review: item.value?.review || null,
   advantages: item.value?.advantages || null,
   disadvantages: item.value?.disadvantages || null,
-  rating: item.value?.rating || 1,
+  rating: item.value?.rating || null,
   status: item.value?.status || EStatus.ACTIVE,
 });
 
