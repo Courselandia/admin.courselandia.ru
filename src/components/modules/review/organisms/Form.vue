@@ -36,6 +36,19 @@
         </RadioGroup>
       </Item>
       <Item
+        :label="lang('review.createdAt')"
+        name="created_at"
+        has-feedback
+        :rules="[{ required: true }]"
+      >
+        <DatePicker
+          v-model:value="form.created_at"
+          format="DD.MM.YYYY HH:mm:ss"
+          show-time
+          style="width: 100%"
+        />
+      </Item>
+      <Item
         :label="lang('review.school')"
         name="school_id"
         has-feedback
@@ -49,6 +62,16 @@
           :filter-option="filterOption"
           :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
           :loading="loadingSelects"
+        />
+      </Item>
+      <Item
+        :label="lang('review.source')"
+        name="source"
+        has-feedback
+        :rules="[{ required: false, type: 'string', max: 191 }]"
+      >
+        <Input
+          v-model:value="form.source"
         />
       </Item>
       <Item
@@ -161,6 +184,7 @@ import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import AutoComplete from 'ant-design-vue/lib/auto-complete';
 import Button from 'ant-design-vue/lib/button';
+import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';

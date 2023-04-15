@@ -20,6 +20,7 @@
 
 <script lang="ts" setup>
 import Card from 'ant-design-vue/lib/card';
+import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
@@ -62,6 +63,7 @@ const getDefaultFormValue = (): IReviewForm => ({
   school_id: item.value?.school_id
     ? { key: item.value?.school.id, value: item.value?.school.name }
     : null,
+  source: item.value?.source || null,
   course_id: courseId,
   name: item.value?.name || null,
   title: item.value?.title || null,
@@ -70,6 +72,8 @@ const getDefaultFormValue = (): IReviewForm => ({
   disadvantages: item.value?.disadvantages || null,
   rating: item.value?.rating || null,
   status: item.value?.status || EStatus.ACTIVE,
+  created_at: dayjs.utc(item.value?.created_at)
+    .tz(dayjs.tz.guess()) || null,
 });
 
 const form = ref<IReviewForm>(getDefaultFormValue());

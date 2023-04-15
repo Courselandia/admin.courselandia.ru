@@ -14,4 +14,5 @@ export default {
   status: 'Статус',
   createdAt: 'Создан',
   course: 'Курс',
+  source: 'Источник',
 };

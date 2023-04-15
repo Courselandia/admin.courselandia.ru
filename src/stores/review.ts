@@ -64,6 +64,7 @@ export default defineStore('review', {
         ...data,
         course_id: data.course_id?.key,
         school_id: data.school_id?.key,
+        created_at: data.created_at?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -77,6 +78,7 @@ export default defineStore('review', {
         ...data,
         course_id: data.course_id?.key,
         school_id: data.school_id?.key,
+        created_at: data.created_at?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
       }, {
         headers: {
           Authorization: access().accessToken || '',

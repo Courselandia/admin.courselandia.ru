@@ -13,4 +13,5 @@ export default {
   status: 'Status',
   createdAt: 'Created At',
   course: 'Course',
+  source: 'Source',
 };

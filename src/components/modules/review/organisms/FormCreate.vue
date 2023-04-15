@@ -20,6 +20,7 @@
 <script lang="ts" setup>
 import type { FormInstance } from 'ant-design-vue';
 import Card from 'ant-design-vue/lib/card';
+import dayjs from 'dayjs';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
@@ -48,6 +49,7 @@ const alert = ref<IAlert>({
 const form = ref<IReviewForm>({
   school_id: null,
   course_id: null,
+  source: null,
   name: null,
   title: null,
   review: null,
@@ -55,6 +57,7 @@ const form = ref<IReviewForm>({
   disadvantages: null,
   rating: null,
   status: EStatus.ACTIVE,
+  created_at: dayjs.utc().tz(dayjs.tz.guess()),
 });
 
 const onReset = (formRef?: FormInstance) => {
