@@ -109,11 +109,14 @@
           v-model:value="form.title"
         />
       </Item>
+    </div>
+    <div class="width--wide max--width-900">
       <Item
         :label="lang('review.review')"
         name="review"
         has-feedback
         :rules="[{ required: false, type: 'string', max: 65000 }]"
+        :label-col="{ span: 4 }"
       >
         <TextArea
           v-model:value="form.review"
@@ -125,6 +128,7 @@
         name="advantages"
         has-feedback
         :rules="[{ required: false, type: 'string', max: 65000 }]"
+        :label-col="{ span: 4 }"
       >
         <TextArea
           v-model:value="form.advantages"
@@ -136,12 +140,15 @@
         name="disadvantages"
         has-feedback
         :rules="[{ required: false, type: 'string', max: 65000 }]"
+        :label-col="{ span: 4 }"
       >
         <TextArea
           v-model:value="form.disadvantages"
           style="height: 200px"
         />
       </Item>
+    </div>
+    <div class="width--wide max--width-600">
       <Item
         :label="lang('review.rating')"
         name="rating"
