@@ -88,7 +88,9 @@
           />
         </template>
         <template v-if="column.key === 'created_at'">
-          {{ dayjs.utc(record.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
+          {{ record.created_at
+            ? dayjs.utc(record.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss')
+            : '' }}
         </template>
         <template v-if="column.key === 'status'">
           <template v-if="record.status === EStatus.ACTIVE">
