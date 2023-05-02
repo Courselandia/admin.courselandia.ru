@@ -219,7 +219,7 @@ export const programSave = (id: number): void => {
   if (itemFound) {
     if (
       (programEditableData[id]?.name && programEditableData[id].name !== '')
-      || (programEditableData[id]?.text && programEditableData[id].text !== '')
+      || programEditableData[id]?.text !== undefined
     ) {
       Object.keys(programEditableData[id]).forEach((filedKey) => {
         itemFound[filedKey] = programEditableData[id][filedKey];
@@ -228,6 +228,7 @@ export const programSave = (id: number): void => {
       delete programEditableData[id];
       programShowModalText[id] = false;
     } else {
+      console.log(2);
       Modal.warning({
         title: lang('dashboard.warning'),
         content: lang('dashboard.notEmpty'),

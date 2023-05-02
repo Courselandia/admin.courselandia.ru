@@ -695,7 +695,7 @@
                         @click="programEdit(record.id, 'text')"
                         @keydown.enter="programEdit(record.id, 'text')"
                       >
-                        <span v-html="text" />
+                          <span v-html="text ? text : '&nbsp;'" />
                         <EditOutlined class="editable-cell-icon" />
                       </div>
                     </div>
