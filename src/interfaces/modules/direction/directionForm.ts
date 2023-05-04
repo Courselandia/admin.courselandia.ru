@@ -6,8 +6,8 @@ export default interface IDirectionForm {
   header_template: string | null;
   header: string | null;
   link: string;
-  text: string | null;
-  weight: number | null;
+  text: string;
+  weight: number | string;
   title_template: string | null;
   description_template: string | null;
   title: string | null;

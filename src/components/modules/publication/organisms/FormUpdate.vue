@@ -315,7 +315,7 @@ const getDefaultFormValue = (): IPublicationForm => ({
   header: item.value?.header || '',
   link: item.value?.link || '',
   anons: item.value?.anons || null,
-  article: item.value?.article || null,
+  article: item.value?.article || '',
   image: null,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,

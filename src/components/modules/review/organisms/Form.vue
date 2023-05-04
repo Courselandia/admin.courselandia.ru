@@ -197,7 +197,7 @@ import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';
 import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
-import Select from 'ant-design-vue/lib/select';
+import Select, { LabeledValue } from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import { storeToRefs } from 'pinia';
 import {
@@ -268,7 +268,7 @@ const emit = defineEmits({
   reset: (_?: FormInstance) => true,
 });
 
-const form = ref(value.value);
+const form = ref<IReviewForm>(value.value);
 
 onMounted(async (): Promise<void> => {
   loadingSelects.value = true;

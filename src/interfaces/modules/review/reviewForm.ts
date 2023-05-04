@@ -14,7 +14,7 @@ export default interface IReviewForm {
   review: string | null;
   advantages: string | null;
   disadvantages: string | null;
-  rating: number | null;
+  rating: number | string;
   status: EStatus;
-  created_at: dayjs.Dayjs | null;
+  created_at: dayjs.Dayjs | string;
 }

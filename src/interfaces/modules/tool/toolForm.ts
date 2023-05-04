@@ -6,7 +6,7 @@ export default interface IToolForm {
   header: string | null;
   header_template: string | null;
   link: string;
-  text: string | null;
+  text: string;
   title: string | null;
   description: string | null;
   title_template: string | null;

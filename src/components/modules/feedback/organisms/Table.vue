@@ -167,7 +167,7 @@ const {
 } = storeToRefs(feedback());
 const router = useRouter();
 const route = useRoute();
-const filteredInfo = ref<Record<string, FilterValue | null> | null>();
+const filteredInfo = ref<Record<string, FilterValue | null>>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
 
 const columns = computed<ITableColumnType<IFeedback>[]>(() => [

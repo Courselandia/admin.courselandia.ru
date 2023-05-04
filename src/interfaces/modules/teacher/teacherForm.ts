@@ -5,8 +5,8 @@ export default interface ITeacherForm {
   id?: TId;
   name: string;
   link: string;
-  text: string | null;
-  rating: number | null;
+  text: string;
+  rating: number | string;
   image: File | null;
   directions: Array<IOption>;
   schools: Array<IOption>;

@@ -45,7 +45,6 @@
           >
             <Input
               v-model:value="form.name"
-              @keyup="onChangeName"
             />
           </Item>
         </div>
@@ -147,7 +146,7 @@ const emit = defineEmits({
   reset: (_?: FormInstance) => true,
 });
 
-const form = ref(value.value);
+const form = ref<IEmploymentForm>(value.value);
 
 watch(form, () => {
   emit('update:value', form.value);

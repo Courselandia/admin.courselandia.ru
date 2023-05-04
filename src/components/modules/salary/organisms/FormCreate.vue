@@ -46,7 +46,7 @@ const alert = ref<IAlert>({
 
 const form = ref<ISalaryForm>({
   level: null,
-  salary: null,
+  salary: '',
   profession_id: null,
   status: true,
 });

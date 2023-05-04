@@ -46,7 +46,7 @@ const alert = ref<IAlert>({
 
 const form = ref<IEmploymentForm>({
   name: '',
-  text: null,
+  text: '',
   status: true,
 });
 

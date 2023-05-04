@@ -49,7 +49,7 @@ const form = ref<IToolForm>({
   header: null,
   header_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}',
   link: '',
-  text: null,
+  text: '',
   title: null,
   description: null,
   title_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}[countToolCourses:: {countToolCourses:курс|nominative} для обучения с нуля] — Courselandia',

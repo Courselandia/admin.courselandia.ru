@@ -280,11 +280,11 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IPublicationForm>({
-  published_at: null,
+  published_at: '',
   header: '',
   link: '',
   anons: null,
-  article: null,
+  article: '',
   image: null,
   title: null,
   description: null,

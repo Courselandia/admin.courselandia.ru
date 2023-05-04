@@ -39,7 +39,7 @@ const { create } = skill();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 
-const alert = ref({
+const alert = ref<IAlert>({
   message: null,
   type: null,
 });
@@ -49,7 +49,7 @@ const form = ref<ISkillForm>({
   header: null,
   header_template: 'Онлайн курсы по {skill:dative}',
   link: '',
-  text: null,
+  text: '',
   title: null,
   description: null,
   title_template: 'Каталог онлайн-курсов по {skill:dative}[countSkillCourses:: {countSkillCourses:курс|nominative} для обучения] — Courselandia',

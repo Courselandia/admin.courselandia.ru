@@ -7,7 +7,7 @@ export default interface IProfessionForm {
 
   header_template: string | null;
   link: string;
-  text: string | null;
+  text: string;
   title: string | null;
   description: string | null;
   title_template: string | null;

@@ -321,8 +321,8 @@ const alert = ref<IAlert>({
 const form = ref<ITeacherForm>({
   name: '',
   link: '',
-  text: null,
-  rating: null,
+  text: '',
+  rating: '',
   image: null,
   directions: [],
   schools: [],

@@ -55,7 +55,7 @@ const form = ref<IReviewForm>({
   review: null,
   advantages: null,
   disadvantages: null,
-  rating: null,
+  rating: '',
   status: EStatus.ACTIVE,
   created_at: dayjs.utc().tz(dayjs.tz.guess()),
 });

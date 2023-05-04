@@ -53,9 +53,9 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): ISalaryForm => ({
   id: id as TId,
   level: item.value?.level || null,
-  salary: item.value?.salary || null,
+  salary: item.value?.salary || '',
   profession_id: item.value?.profession
-    ? { key: item.value?.profession.id, value: item.value?.profession.name }
+    ? { key: item.value?.profession.id as string, value: item.value?.profession.name }
     : null,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });

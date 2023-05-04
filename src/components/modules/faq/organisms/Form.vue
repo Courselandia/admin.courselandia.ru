@@ -168,7 +168,7 @@ const emit = defineEmits({
   reset: (_?: FormInstance) => true,
 });
 
-const form = ref(value.value);
+const form = ref<IFaqForm>(value.value);
 
 onMounted(async (): Promise<void> => {
   loadingSelects.value = true;

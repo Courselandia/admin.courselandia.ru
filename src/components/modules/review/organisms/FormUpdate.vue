@@ -61,7 +61,7 @@ const courseId: IOption | null = item.value?.course ? {
 const getDefaultFormValue = (): IReviewForm => ({
   id: id as TId,
   school_id: item.value?.school_id
-    ? { key: item.value?.school.id, value: item.value?.school.name }
+    ? { key: item.value?.school.id as string, value: item.value?.school.name }
     : null,
   source: item.value?.source || null,
   course_id: courseId,
@@ -70,7 +70,7 @@ const getDefaultFormValue = (): IReviewForm => ({
   review: item.value?.review || null,
   advantages: item.value?.advantages || null,
   disadvantages: item.value?.disadvantages || null,
-  rating: item.value?.rating || null,
+  rating: item.value?.rating || '',
   status: item.value?.status || EStatus.ACTIVE,
   created_at: dayjs.utc(item.value?.created_at)
     .tz(dayjs.tz.guess()) || null,

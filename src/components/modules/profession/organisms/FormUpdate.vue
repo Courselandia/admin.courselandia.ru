@@ -56,7 +56,7 @@ const getDefaultFormValue = (): IProfessionForm => ({
   header: item.value?.header || null,
   header_template: item.value?.header_template || null,
   link: item.value?.link || '',
-  text: item.value?.text || null,
+  text: item.value?.text || '',
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
   title_template: item.value?.metatag?.title_template || null,

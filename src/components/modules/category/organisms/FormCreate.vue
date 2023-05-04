@@ -49,7 +49,7 @@ const form = ref<ICategoryForm>({
   header: null,
   header_template: 'Онлайн курсы по {category:dative}',
   link: '',
-  text: null,
+  text: '',
   title: null,
   description: null,
   title_template: 'Каталог онлайн-курсов по {category:dative}[countCategoryCourses:: {countCategoryCourses:курс|nominative} для обучения с нуля] — Courselandia',

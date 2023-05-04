@@ -269,7 +269,7 @@ const emit = defineEmits({
   reset: (_?: FormInstance) => true,
 });
 
-const form = ref(value.value);
+const form = ref<ICategoryForm>(value.value);
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 watch(form, () => {

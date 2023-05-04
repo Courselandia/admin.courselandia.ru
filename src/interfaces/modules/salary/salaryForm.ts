@@ -6,6 +6,6 @@ export default interface ISalaryForm {
   id?: TId;
   profession_id: IOption | null;
   level: ELevel | null;
-  salary: number | null;
+  salary: number | string;
   status: boolean;
 }
