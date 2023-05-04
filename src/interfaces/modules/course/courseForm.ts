@@ -14,21 +14,21 @@ export default interface ICourseForm {
   name: string;
   header_template: string | null;
   header: string | null;
-  text: string | null;
+  text: string;
   link: string;
   url: string;
   language: ELanguage | null;
-  rating: number | null;
-  price: number | null;
-  price_old: number | null;
-  price_recurrent: number | null;
+  rating: number | string;
+  price: number | string;
+  price_old: number | string;
+  price_recurrent: number | string;
   currency: ECurrency | null;
   online: boolean | null;
   employment: boolean | null;
-  duration: number | null;
+  duration: number | string;
   duration_unit: EDuration | null;
-  lessons_amount: number | null;
-  modules_amount: number | null
+  lessons_amount: number | string;
+  modules_amount: number | string
   status: EStatus;
 
   title_template: string | null;

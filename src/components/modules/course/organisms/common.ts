@@ -51,7 +51,7 @@ export const programColumns = [
   {
     title: lang('dashboard.id'),
     dataIndex: 'id',
-    width: 100,
+    width: 120,
   },
   {
     title: lang('dashboard.name'),

@@ -695,7 +695,7 @@
                         @click="programEdit(record.id, 'text')"
                         @keydown.enter="programEdit(record.id, 'text')"
                       >
-                          <span v-html="text ? text : '&nbsp;'" />
+                        <span v-html="text ? text : '&nbsp;'" />
                         <EditOutlined class="editable-cell-icon" />
                       </div>
                     </div>
@@ -1048,21 +1048,21 @@ const getDefaultFormValue = (): ICourseForm => ({
   name: item.value?.name || '',
   header_template: item.value?.header_template || '',
   header: item.value?.header || '',
-  text: item.value?.text || null,
+  text: item.value?.text || '',
   link: item.value?.link || '',
   url: item.value?.url || '',
   language: item.value?.language || null,
-  rating: item.value?.rating || null,
-  price: item.value?.price || null,
-  price_old: item.value?.price_old || null,
-  price_recurrent: item.value?.price_recurrent || null,
+  rating: item.value?.rating || '',
+  price: item.value?.price || '',
+  price_old: item.value?.price_old || '',
+  price_recurrent: item.value?.price_recurrent || '',
   currency: item.value?.currency || null,
   online: item.value?.online || null,
   employment: item.value?.employment || null,
-  duration: item.value?.duration || null,
+  duration: item.value?.duration || '',
   duration_unit: item.value?.duration_unit || null,
-  lessons_amount: item.value?.lessons_amount || null,
-  modules_amount: item.value?.modules_amount || null,
+  lessons_amount: item.value?.lessons_amount || '',
+  modules_amount: item.value?.modules_amount || '',
   status: item.value?.status || EStatus.ACTIVE,
 
   title_template: item.value?.metatag?.title_template || null,
