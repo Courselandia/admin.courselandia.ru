@@ -9,6 +9,7 @@ import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
 import access from '@/stores/access';
 import TId from '@/types/id';
+import dayjs from 'dayjs';
 
 export default defineStore('review', {
   state: () => ({
@@ -60,11 +61,12 @@ export default defineStore('review', {
       }
     },
     async create(data: IReviewForm): Promise<IResponseItem<IReview>> {
+      const createdAt = data.created_at as dayjs.Dayjs;
       const response = await axios.post<IResponseItem<IReview>>('/api/private/admin/review/create', {
         ...data,
         course_id: data.course_id?.key,
         school_id: data.school_id?.key,
-        created_at: data.created_at?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
+        created_at: createdAt?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -74,11 +76,13 @@ export default defineStore('review', {
       return response.data;
     },
     async update(data: IReviewForm): Promise<IResponseItem<IReview>> {
+      const createdAt = data.created_at as dayjs.Dayjs;
+
       const response = await axios.put<IResponseItem<IReview>>(`/api/private/admin/review/update/${data.id}`, {
         ...data,
         course_id: data.course_id?.key,
         school_id: data.school_id?.key,
-        created_at: data.created_at?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
+        created_at: createdAt?.format('YYYY-MM-DD HH:mm:ss ZZ') || '',
       }, {
         headers: {
           Authorization: access().accessToken || '',

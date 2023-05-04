@@ -9,6 +9,7 @@ import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
 import access from '@/stores/access';
 import TId from '@/types/id';
+import dayjs from 'dayjs';
 
 export default defineStore('publication', {
   state: () => ({
@@ -61,7 +62,8 @@ export default defineStore('publication', {
     },
     async create(data: IPublicationForm): Promise<IResponseItem<IPublication>> {
       const formData = new FormData();
-      formData.append('published_at', data.published_at?.format('YYYY-MM-DD HH:mm:ss ZZ') || '');
+      const publishedAt = data.published_at as dayjs.Dayjs;
+      formData.append('published_at', publishedAt?.format('YYYY-MM-DD HH:mm:ss ZZ') || '');
       formData.append('header', data.header);
       formData.append('link', data.link);
       formData.append('anons', data.anons || '');
@@ -81,9 +83,11 @@ export default defineStore('publication', {
       return response.data;
     },
     async update(data: IPublicationForm): Promise<IResponseItem<IPublication>> {
+      const publishedAt = data.published_at as dayjs.Dayjs;
+
       const response = await axios.put<IResponseItem<IPublication>>(`/api/private/admin/publication/update/${data.id}`, {
         ...data,
-        published_at: data.published_at?.format('YYYY-MM-DD HH:mm:ss ZZ'),
+        published_at: publishedAt?.format('YYYY-MM-DD HH:mm:ss ZZ'),
       }, {
         headers: {
           Authorization: access().accessToken || '',

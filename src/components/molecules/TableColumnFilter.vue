@@ -101,6 +101,7 @@ import {
 
 import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
+import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
 
 const { RangePicker } = DatePicker;
 
@@ -127,7 +128,7 @@ const props = defineProps({
     required: true,
   },
   column: {
-    type: Object as PropType<TableColumnType>,
+    type: Object as PropType<ITableColumnType<any>>,
     required: true,
   },
   visible: {
@@ -151,7 +152,7 @@ const {
 
 const isMultiple = type.value === 'dateRange' || type.value === 'select' || type.value === 'slider';
 
-const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false): void => {
+const onFilterSearch = (selectedKeys: any[], key?: Key, multiple: boolean = false): void => {
   confirm.value();
 
   if (multiple) {
@@ -165,7 +166,9 @@ const onFilterSearch = (selectedKeys: any[], key: Key, multiple: boolean = false
     filter.value = value;
   }
 
-  filter.column = key;
+  if (key) {
+    filter.column = key;
+  }
 };
 
 const onFilterReset = (): void => {
