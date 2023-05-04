@@ -8,8 +8,8 @@
 
     <Form
       v-model:value="form"
-      :alert-message="alert.message"
-      :alert-type="alert.type"
+      :alert-message="alert.message as string"
+      :alert-type="alert.type as string"
       :loading="loading"
       :button-text="lang('dashboard.edit')"
       @submit="onSubmit"

@@ -15,7 +15,9 @@
     :label-col="{ span: 6 }"
     @finish="onSubmit"
   >
-    <Tabs>
+    <Tabs
+      v-if="form"
+    >
       <TabPane
         key="info"
         :tab="lang('dashboard.info')"

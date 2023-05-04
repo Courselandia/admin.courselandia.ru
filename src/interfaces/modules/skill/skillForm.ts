@@ -6,7 +6,7 @@ export default interface ISkillForm {
   header: string | null;
   header_template: string | null;
   link: string;
-  text: string | null;
+  text: string | undefined;
   title: string | null;
   description: string | null;
   title_template: string | null;

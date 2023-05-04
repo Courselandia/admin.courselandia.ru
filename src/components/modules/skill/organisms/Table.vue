@@ -154,7 +154,8 @@ import Table from 'ant-design-vue/lib/table';
 import {
   FilterValue,
   SorterResult,
-  TablePaginationConfig, TableRowSelection,
+  TablePaginationConfig,
+  TableRowSelection,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
 import { storeToRefs } from 'pinia';

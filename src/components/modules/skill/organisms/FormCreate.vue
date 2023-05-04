@@ -8,8 +8,8 @@
 
     <Form
       v-model:value="form"
-      :alert-message="alert.message"
-      :alert-type="alert.type"
+      :alert-message="alert.message as string"
+      :alert-type="alert.type as string"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -39,7 +39,7 @@ const { create } = skill();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 
-const alert = ref<IAlert>({
+const alert = ref({
   message: null,
   type: null,
 });

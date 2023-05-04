@@ -25,10 +25,10 @@
 
     <Table
       :columns="columns"
-      :data-source="items"
-      :pagination="pagination"
+      :data-source="items || undefined"
+      :pagination="pagination as TablePaginationConfig"
       :loading="loading"
-      :row-selection="rowSelection"
+      :row-selection="rowSelection as TableRowSelection<any>"
       row-key="id"
       class="table--responsive"
       @change="onChange"
@@ -148,7 +148,7 @@ import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import {
   FilterValue,
-  SorterResult,
+  SorterResult, TablePaginationConfig, TableRowSelection,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
 import dayjs from 'dayjs';
