@@ -52,23 +52,43 @@
         <template v-if="column.key === 'text'">
           <div v-html="record.text" />
         </template>
+
         <template v-if="column.key === 'status'">
           <Tag
-            :color="record.status === true ? 'green' : 'red'"
-            class="cursor--pointer"
-            @click="onClickStatus(record.id, !record.status)"
+            v-if="record.status === EStatus.PENDING"
+            color="cyan"
           >
-            <template #icon>
-              <template v-if="record.status === true">
-                <CheckOutlined />
-              </template>
-              <template v-else>
-                <CloseOutlined />
-              </template>
-            </template>
-            {{ record.status === true
-              ? lang('dashboard.active')
-              : lang('dashboard.deactivated') }}
+            <Lang value="article.pending" />
+          </Tag>
+          <Tag
+            v-else-if="record.status === EStatus.READY"
+            color="blue"
+          >
+            <Lang value="article.ready" />
+          </Tag>
+          <Tag
+            v-else-if="record.status === EStatus.PROCESSING"
+            color="orange"
+          >
+            <Lang value="article.processing" />
+          </Tag>
+          <Tag
+            v-else-if="record.status === EStatus.FAILED"
+            color="red"
+          >
+            <Lang value="article.failed" />
+          </Tag>
+          <Tag
+            v-else-if="record.status === EStatus.DISABLED"
+            color="pink"
+          >
+            <Lang value="article.disabled" />
+          </Tag>
+          <Tag
+            v-else-if="record.status === EStatus.APPLIED"
+            color="green"
+          >
+            <Lang value="article.applied" />
           </Tag>
         </template>
       </template>
@@ -217,10 +237,16 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
       multiple: 1,
     },
     sortable: false,
-    customFilterDropdown: true,
     sortOrder: stateColumnSort('category', sortedInfo.value),
     filteredValue: stateColumnFilter('category', filteredInfo.value, 'string'),
     width: 150,
+    filterMultiple: true,
+    filters: [
+      {
+        text: 'Курс / Описание',
+        value: 'course.text',
+      },
+    ],
   },
   {
     title: lang('article.textCurrent'),
@@ -230,9 +256,7 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
       multiple: 1,
     },
     sortable: false,
-    customFilterDropdown: true,
     sortOrder: stateColumnSort('text_current', sortedInfo.value),
-    filteredValue: stateColumnFilter('text_current', filteredInfo.value, 'string'),
   },
   {
     title: lang('article.text'),
@@ -255,7 +279,7 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
-    filterMultiple: true,
+    filterMultiple: false,
     filters: [
       {
         text: lang('article.pending'),
