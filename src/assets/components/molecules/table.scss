@@ -4,4 +4,12 @@
       overflow-x: auto;
     }
   }
+
+  &--vertical-top {
+    TR {
+      TD {
+        vertical-align: top !important;
+      }
+    }
+  }
 }

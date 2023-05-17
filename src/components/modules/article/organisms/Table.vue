@@ -18,7 +18,7 @@
       :loading="loading"
       :row-selection="rowSelection as TableRowSelection<any>"
       row-key="id"
-      class="table--responsive"
+      class="table--responsive table--vertical-top"
       sticky
       @change="onChange"
     >

@@ -453,6 +453,7 @@
                 :pagination="false"
                 :data-source="learnItems"
                 :columns="learnColumns"
+                sticky
               >
                 <template #bodyCell="{ column, text, record }">
                   <template v-if="column.dataIndex === 'text'">
@@ -522,6 +523,7 @@
                 :pagination="false"
                 :data-source="featureItems"
                 :columns="featureColumns"
+                sticky
               >
                 <template #bodyCell="{ column, text, record }">
                   <template v-if="column.dataIndex === 'icon'">
@@ -647,6 +649,7 @@
                 :pagination="false"
                 :data-source="programItems"
                 :columns="programColumns"
+                sticky
               >
                 <template #bodyCell="{ column, text, record }">
                   <template v-if="column.dataIndex === 'name'">
