@@ -1,0 +1,15 @@
+export default {
+  name: 'Статьи',
+  updateDirection: 'Редактировать статью',
+  nameField: 'Название',
+  text: 'Написанный текст',
+  textCurrent: 'Текущий текст',
+  category: 'Категория',
+  pending: 'В ожидании',
+  ready: 'Готово',
+  processing: 'Идет написание текста',
+  failed: 'Неуспешно',
+  disabled: 'Отключено',
+  applied: 'Принят',
+  ownId: 'ID сущности',
+};

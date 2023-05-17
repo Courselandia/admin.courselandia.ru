@@ -1,0 +1,15 @@
+export default {
+  name: 'Articles',
+  updateArticle: 'Edit article',
+  nameField: 'Name',
+  text: 'Text',
+  textCurrent: 'Current text',
+  category: 'Category',
+  pending: 'Pending',
+  ready: 'Ready',
+  processing: 'Processing',
+  failed: 'Failed',
+  disabled: 'Disabled',
+  applied: 'Applied',
+  ownId: 'Own ID',
+};

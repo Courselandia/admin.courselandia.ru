@@ -11,7 +11,7 @@
       :alert-message="alert.message as string"
       :alert-type="alert.type as string"
       :loading="loading"
-      :button-text="lang('dashboard.edit')"
+      :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
       @reset="onReset"
     />
@@ -53,7 +53,7 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): IFaqForm => ({
   id: id as TId,
   school_id: item.value?.school_id
-    ? { key: item.value?.school.id, value: item.value?.school.name }
+    ? { key: item.value?.school.id as string, value: item.value?.school.name }
     : null,
   question: item.value?.question || '',
   answer: item.value?.answer || null,

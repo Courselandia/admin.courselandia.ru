@@ -2,7 +2,7 @@
   <Card>
     <template #title>
       <div ref="titleRef">
-        <Lang value="direction.updateDirection" />
+        <Lang value="article.updateArticle" />
       </div>
     </template>
 
@@ -11,7 +11,7 @@
       :alert-message="alert.message as string"
       :alert-type="alert.type as string"
       :loading="loading"
-      :button-text="lang('dashboard.edit') || undefined"
+      :button-text="lang('article.edit') || undefined"
       @submit="onSubmit"
       @reset="onReset"
     />
@@ -26,20 +26,20 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import Form from '@/components/modules/direction/organisms/Form.vue';
+import Form from '@/components/modules/article/organisms/Form.vue';
 import lang from '@/helpers/lang';
-import IDirectionForm from '@/interfaces/modules/direction/directionForm';
+import IArticleForm from '@/interfaces/modules/article/articleForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import direction from '@/stores/direction';
+import article from '@/stores/article';
 import TId from '@/types/id';
 
 useMeta({
-  title: lang('direction.updateDirection'),
+  title: lang('article.updateArticle'),
 });
 
 const route = useRoute();
-const { update, get } = direction();
-const { item } = storeToRefs(direction());
+const { update, get } = article();
+const { item } = storeToRefs(article());
 const { id } = route.params;
 
 const titleRef = ref<HTMLElement|null>();
@@ -50,23 +50,12 @@ const alert = ref<IAlert>({
   type: null,
 });
 
-const getDefaultFormValue = (): IDirectionForm => ({
+const getDefaultFormValue = (): IArticleForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  header_template: item.value?.header_template || null,
-  header: item.value?.header || null,
-  link: item.value?.link || '',
   text: item.value?.text || '',
-  weight: item.value?.weight || '',
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  keywords: item.value?.metatag?.keywords || null,
-  status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
-const form = ref<IDirectionForm>(getDefaultFormValue());
+const form = ref<IArticleForm>(getDefaultFormValue());
 
 const onReset = () => {
   form.value = getDefaultFormValue();

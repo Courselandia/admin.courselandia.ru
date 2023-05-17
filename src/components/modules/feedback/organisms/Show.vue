@@ -9,6 +9,7 @@
         </template>
 
         <Descriptions
+          v-if="item"
           bordered
           layout="horizontal"
           class="mb-20"

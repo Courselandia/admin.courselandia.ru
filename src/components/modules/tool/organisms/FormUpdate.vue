@@ -11,7 +11,7 @@
       :alert-message="alert.message as string"
       :alert-type="alert.type as string"
       :loading="loading"
-      :button-text="lang('dashboard.edit')"
+      :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
       @reset="onReset"
     />
