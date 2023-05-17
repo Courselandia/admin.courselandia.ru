@@ -11,7 +11,7 @@
       :alert-message="alert.message as string"
       :alert-type="alert.type as string"
       :loading="loading"
-      :button-text="lang('article.edit') || undefined"
+      :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
       @reset="onReset"
     />
@@ -52,7 +52,8 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IArticleForm => ({
   id: id as TId,
-  text: item.value?.text || '',
+  text: item.value?.text || undefined,
+  text_current: item.value?.text_current || undefined,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());

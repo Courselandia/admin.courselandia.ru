@@ -15,41 +15,45 @@
     :label-col="{ span: 6 }"
     @finish="onSubmit"
   >
-    <div class="width--wide max--width-600">
+    <Descriptions
+      v-if="form"
+      bordered
+      layout="horizontal"
+      class="mb-20"
+    >
       <Item
-        :label="lang('article.text')"
-        name="text"
-        has-feedback
-        :rules="[{ required: true, type: 'string', max: 65000 }]"
+        :span="3"
+        :label="lang('article.textCurrent')"
       >
-        <Ckeditor
-          v-model:value="form.text"
-          name="text"
-          class="mb-30"
-        />
+        <div v-html="form.text_current" />
       </Item>
-      <Item
-        :wrapper-col="{ offset: 0 }"
-        class="buttons-flex"
-      >
-        <Space>
-          <Button
-            :loading="loading"
-            type="primary"
-            html-type="submit"
-          >
-            <span>
-              {{ buttonText }}
-            </span>
-          </Button>
-          <Button
-            @click="onReset"
-          >
-            <Lang value="dashboard.reset" />
-          </Button>
-        </Space>
-      </Item>
-    </div>
+    </Descriptions>
+    <Ckeditor
+      v-model:value="form.text"
+      name="text"
+      class="mb-30"
+    />
+    <Item
+      :wrapper-col="{ offset: 0 }"
+      class="buttons-flex"
+    >
+      <Space>
+        <Button
+          :loading="loading"
+          type="primary"
+          html-type="submit"
+        >
+          <span>
+            {{ buttonText }}
+          </span>
+        </Button>
+        <Button
+          @click="onReset"
+        >
+          <Lang value="dashboard.reset" />
+        </Button>
+      </Space>
+    </Item>
   </Form>
 </template>
 
@@ -57,10 +61,12 @@
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
+import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
 import Radio from 'ant-design-vue/lib/radio';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
+import dayjs from 'dayjs';
 import {
   PropType,
   ref,
@@ -68,6 +74,7 @@ import {
   watch,
 } from 'vue';
 
+import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import lang from '@/helpers/lang';
 import IArticleForm from '@/interfaces/modules/article/articleForm';

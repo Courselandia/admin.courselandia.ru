@@ -1,6 +1,6 @@
 export default {
   name: 'Статьи',
-  updateDirection: 'Редактировать статью',
+  updateArticle: 'Редактировать статью',
   nameField: 'Название',
   text: 'Написанный текст',
   textCurrent: 'Текущий текст',

@@ -19,6 +19,7 @@
       :row-selection="rowSelection as TableRowSelection<any>"
       row-key="id"
       class="table--responsive"
+      sticky
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
@@ -128,8 +129,6 @@
 
 <script lang="ts" setup>
 import {
-  CheckOutlined,
-  CloseOutlined,
   EditOutlined,
   ExclamationCircleOutlined,
   MehOutlined,
