@@ -252,11 +252,7 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     title: lang('article.textCurrent'),
     dataIndex: 'text_current',
     key: 'text_current',
-    sorter: {
-      multiple: 1,
-    },
-    sortable: false,
-    sortOrder: stateColumnSort('text_current', sortedInfo.value),
+    sorter: false,
   },
   {
     title: lang('article.text'),
