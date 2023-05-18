@@ -54,6 +54,7 @@ const getDefaultFormValue = (): IArticleForm => ({
   id: id as TId,
   text: item.value?.text || undefined,
   text_current: item.value?.text_current || undefined,
+  apply: false,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());
@@ -69,7 +70,12 @@ const onSubmit = async (): Promise<void> => {
   try {
     await update(form.value);
 
-    alert.value.message = lang('dashboard.successUpdateText');
+    if (form.value.apply) {
+      alert.value.message = lang('article.successUpdateAndApplyText');
+    } else {
+      alert.value.message = lang('dashboard.successUpdateText');
+    }
+
     alert.value.type = 'success';
 
     await get(id as TId);

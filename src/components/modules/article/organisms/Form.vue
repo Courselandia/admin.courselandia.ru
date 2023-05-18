@@ -48,6 +48,15 @@
           </span>
         </Button>
         <Button
+          :loading="loading"
+          type="dashed"
+          @click="onSubmitAndApply()"
+        >
+          <span>
+            <Lang value="article.updateAndApply" />
+          </span>
+        </Button>
+        <Button
           @click="onReset"
         >
           <Lang value="dashboard.reset" />
@@ -66,7 +75,6 @@ import Form from 'ant-design-vue/lib/form';
 import Radio from 'ant-design-vue/lib/radio';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
-import dayjs from 'dayjs';
 import {
   PropType,
   ref,
@@ -134,6 +142,12 @@ watch(value, () => {
 });
 
 const onSubmit = () => {
+  form.value.apply = false;
+  emit('submit', form.value, formRef.value);
+};
+
+const onSubmitAndApply = () => {
+  form.value.apply = true;
   emit('submit', form.value, formRef.value);
 };
 

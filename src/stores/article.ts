@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+import EStatus from '@/enums/modules/article/status';
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
 import IArticle from '@/interfaces/modules/article/article';
@@ -68,7 +69,7 @@ export default defineStore('article', {
 
       return response.data;
     },
-    async status(id: TId, status: boolean): Promise<IResponseItem<IArticle>> {
+    async status(id: TId, status: EStatus): Promise<IResponseItem<IArticle>> {
       const response = await axios.put<IResponseItem<IArticle>>(`/api/private/admin/article/update/status/${id}`, {
         status,
       }, {

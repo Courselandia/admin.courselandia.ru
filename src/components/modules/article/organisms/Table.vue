@@ -26,13 +26,51 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              :title="lang('dashboard.edit')"
+              v-if="record.status === EStatus.READY"
+              :title="lang('article.apply')"
+              :loading="appliesLoading[record.id]"
               type="primary"
+              shape="circle"
+              @click="onClickApply(record.id)"
+            >
+              <template #icon>
+                <CheckOutlined />
+              </template>
+            </Button>
+            <Button
+              :title="lang('dashboard.edit')"
               shape="circle"
               @click="onClickUpdate(record.id)"
             >
               <template #icon>
                 <EditOutlined />
+              </template>
+            </Button>
+            <Button
+              v-if="
+                record.status === EStatus.READY
+                  || record.status === EStatus.FAILED
+                  || record.status === EStatus.DISABLED
+                  || record.status === EStatus.APPLIED
+              "
+              :title="lang('article.rewrite')"
+              shape="circle"
+              @click="onClickRewrite(record.id)"
+            >
+              <template #icon>
+                <HighlightOutlined />
+              </template>
+            </Button>
+            <Button
+              v-if="record.status === EStatus.READY"
+              :title="lang('article.disable')"
+              :loading="disablesLoading[record.id]"
+              danger
+              shape="circle"
+              @click="onClickDisable(record.id)"
+            >
+              <template #icon>
+                <CloseOutlined />
               </template>
             </Button>
           </Space>
@@ -129,8 +167,11 @@
 
 <script lang="ts" setup>
 import {
+  CheckOutlined,
+  CloseOutlined,
   EditOutlined,
   ExclamationCircleOutlined,
+  HighlightOutlined,
   MehOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
@@ -182,6 +223,7 @@ import TId from '@/types/id';
 const {
   read,
   status,
+  apply,
 } = article();
 const {
   items,
@@ -320,7 +362,8 @@ const pagination = ref({
   position: ['topLeft', 'bottomLeft'],
   showSizeChanger: true,
 });
-const destroysLoading = ref<Record<TId, boolean>>({});
+const appliesLoading = ref<Record<TId, boolean>>({});
+const disablesLoading = ref<Record<TId, boolean>>({});
 const selected = ref<Array<IArticle>>();
 const destroySelectedDisabled = ref(true);
 const destroySelectedLoading = ref(false);
@@ -432,6 +475,64 @@ const onClickUpdate = (id: TId): void => {
     name: 'ArticleUpdate',
     params: {
       id,
+    },
+  });
+};
+
+const onClickApply = (id: TId): void => {
+  Modal.confirm({
+    title: lang('article.apply'),
+    icon: createVNode(ExclamationCircleOutlined),
+    content: lang('article.askApplyRecord'),
+    async onOk() {
+      appliesLoading.value[id] = true;
+
+      try {
+        await apply(id);
+        await reload();
+      } catch (error: Error | any) {
+        notification.open({
+          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+          message: lang('dashboard.error'),
+          description: error.response.data.message ? error.response.data.message : error.message,
+          style: {
+            color: '#ff0000',
+          },
+        });
+      }
+
+      appliesLoading.value[id] = false;
+    },
+  });
+};
+
+const onClickRewrite = (id: TId): void => {
+
+};
+
+const onClickDisable = (id: TId): void => {
+  Modal.confirm({
+    title: lang('article.disable'),
+    icon: createVNode(ExclamationCircleOutlined),
+    content: lang('article.askDisableRecord'),
+    async onOk() {
+      disablesLoading.value[id] = true;
+
+      try {
+        await status(id, EStatus.DISABLED);
+        await reload();
+      } catch (error: Error | any) {
+        notification.open({
+          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+          message: lang('dashboard.error'),
+          description: error.response.data.message ? error.response.data.message : error.message,
+          style: {
+            color: '#ff0000',
+          },
+        });
+      }
+
+      disablesLoading.value[id] = false;
     },
   });
 };

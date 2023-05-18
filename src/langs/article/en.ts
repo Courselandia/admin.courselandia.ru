@@ -12,4 +12,11 @@ export default {
   disabled: 'Disabled',
   applied: 'Applied',
   ownId: 'Own ID',
+  apply: 'Apply',
+  rewrite: 'Rewrite',
+  disable: 'Disabled',
+  askApplyRecord: 'Are you sure that you want to apply this text?',
+  askDisableRecord: 'Are you sure that you want to disable this text?',
+  updateAndApply: 'Update and Apply',
+  successUpdateAndApplyText: 'The record was successfully updated and applied.',
 };
