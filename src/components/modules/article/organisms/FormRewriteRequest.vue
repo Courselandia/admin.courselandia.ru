@@ -13,6 +13,7 @@
     ref="formRef"
     :model="form"
     :label-col="{ span: 6 }"
+    layout="vertical"
     @finish="onSubmit"
   >
     <Descriptions
@@ -27,12 +28,25 @@
       >
         <div v-html="form.text_current" />
       </Item>
+      <Item
+        :span="3"
+        :label="lang('article.text')"
+      >
+        <div v-html="form.text" />
+      </Item>
     </Descriptions>
-    <Ckeditor
-      v-model:value="form.text"
-      name="text"
-      class="mb-30"
-    />
+    <Item
+      :label="lang('article.request')"
+      name="request"
+      has-feedback
+      :rules="[{ required: true, type: 'string', max: 65000 }]"
+      :extra="lang('article.requestExplanation')"
+    >
+      <TextArea
+        v-model:value="form.request"
+        style="height: 200px"
+      />
+    </Item>
     <Item
       :wrapper-col="{ offset: 0 }"
       class="buttons-flex"
@@ -45,15 +59,6 @@
         >
           <span>
             {{ buttonText }}
-          </span>
-        </Button>
-        <Button
-          :loading="loading"
-          type="dashed"
-          @click="onSubmitAndApply()"
-        >
-          <span>
-            <Lang value="article.updateAndApply" />
           </span>
         </Button>
         <Button
@@ -72,6 +77,7 @@ import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
+import Input from 'ant-design-vue/lib/input';
 import Space from 'ant-design-vue/lib/space';
 import {
   PropType,
@@ -81,15 +87,14 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
-import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import lang from '@/helpers/lang';
-import IArticleForm from '@/interfaces/modules/article/articleForm';
+import IArticleRewriteForm from '@/interfaces/modules/article/articleRewriteForm';
 
 const formRef = ref<FormInstance>();
 
 const props = defineProps({
   value: {
-    type: Object as PropType<IArticleForm>,
+    type: Object as PropType<IArticleRewriteForm>,
     required: true,
   },
   alertMessage: {
@@ -107,7 +112,7 @@ const props = defineProps({
   },
   buttonText: {
     type: String,
-    default: lang('dashboard.create'),
+    default: lang('article.rewrite'),
   },
 });
 
@@ -115,14 +120,15 @@ const {
   value,
 } = toRefs(props);
 const { Item } = Form;
+const { TextArea } = Input;
 
 const emit = defineEmits({
-  'update:value': (_: IArticleForm) => true,
-  submit: (_: IArticleForm, __?: FormInstance) => true,
+  'update:value': (_: IArticleRewriteForm) => true,
+  submit: (_: IArticleRewriteForm, __?: FormInstance) => true,
   reset: (_?: FormInstance) => true,
 });
 
-const form = ref<IArticleForm>(value.value);
+const form = ref<IArticleRewriteForm>(value.value);
 
 watch(form, () => {
   emit('update:value', form.value);
@@ -137,12 +143,6 @@ watch(value, () => {
 });
 
 const onSubmit = () => {
-  form.value.apply = false;
-  emit('submit', form.value, formRef.value);
-};
-
-const onSubmitAndApply = () => {
-  form.value.apply = true;
   emit('submit', form.value, formRef.value);
 };
 

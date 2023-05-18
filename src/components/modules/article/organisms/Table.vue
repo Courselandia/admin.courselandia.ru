@@ -507,7 +507,12 @@ const onClickApply = (id: TId): void => {
 };
 
 const onClickRewrite = (id: TId): void => {
-
+  router.push({
+    name: 'ArticleRewrite',
+    params: {
+      id,
+    },
+  });
 };
 
 const onClickDisable = (id: TId): void => {

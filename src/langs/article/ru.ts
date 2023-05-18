@@ -19,4 +19,8 @@ export default {
   askDisableRecord: 'Вы точно хотите отклонить этот текст?',
   updateAndApply: 'Обновить и принять',
   successUpdateAndApplyText: 'Данные были удачно обновлены и приняты.',
+  rewriteArticle: 'Запрос на переписание статьи',
+  successRewriteText: 'Запрос на переписания текста был отправлен.',
+  request: 'Запрос',
+  requestExplanation: 'Максимально опишите для искусственного интеллекта, о чем должен быть текст и количество символов.',
 };

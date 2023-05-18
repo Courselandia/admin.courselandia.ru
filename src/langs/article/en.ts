@@ -19,4 +19,8 @@ export default {
   askDisableRecord: 'Are you sure that you want to disable this text?',
   updateAndApply: 'Update and Apply',
   successUpdateAndApplyText: 'The record was successfully updated and applied.',
+  rewriteArticle: 'Request to rewrite article',
+  successRewriteText: 'The request to rewrite the text has been sent.',
+  request: 'Request',
+  requestExplanation: '',
 };

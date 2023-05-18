@@ -47,4 +47,30 @@ export default [
       }
     },
   },
+  {
+    path: '/dashboard/articles/rewrite/:id',
+    name: 'ArticleRewrite',
+    component: () => import('@/pages/dashboard/articles/Rewrite.vue'),
+    meta: {
+      layout: 'default-layout',
+      middleware: [
+        tokenRefresh,
+        auth,
+      ],
+      roles: [ERole.ADMIN, ERole.MANAGER],
+      redirect: '/',
+    },
+    beforeEnter: async (to, from, next) => {
+      const { get } = article();
+
+      try {
+        await get(to.params.id as TId);
+        next();
+      } catch (error: Error | any) {
+        // eslint-disable-next-line no-param-reassign
+        to.meta.layout = 'center-layout';
+        next();
+      }
+    },
+  },
 ] as Array<RouteRecordRaw>;
