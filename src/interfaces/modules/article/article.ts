@@ -8,6 +8,7 @@ export default interface IArticle extends IColumn {
   task_id: TId,
   category: string,
   request: string,
+  request_template: string,
   text: string | null,
   text_current: string | null,
   params: Array<any> | null,

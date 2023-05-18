@@ -52,7 +52,7 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IArticleRewriteForm => ({
   id: id as TId,
-  request: item.value?.request || '',
+  request: item.value?.request_template || '',
   text: item.value?.text || null,
   text_current: item.value?.text_current || null,
 });
@@ -70,7 +70,7 @@ const onSubmit = async (): Promise<void> => {
   try {
     await rewrite(form.value.id, form.value.request);
 
-    alert.value.message = lang('dashboard.successRewriteText');
+    alert.value.message = lang('article.successRewriteText');
     alert.value.type = 'success';
 
     await get(id as TId);
