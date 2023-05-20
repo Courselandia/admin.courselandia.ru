@@ -9,60 +9,65 @@
     class="mb-25"
   />
 
-  <Form
-    ref="formRef"
-    :model="form"
-    :label-col="{ span: 6 }"
-    layout="vertical"
-    @finish="onSubmit"
+  <Spin
+    :spinning="writing"
+    tip="Идет процесс написания текста, ждите..."
   >
-    <Descriptions
-      v-if="form.result"
-      bordered
-      layout="horizontal"
-      class="mb-20"
+    <Form
+      ref="formRef"
+      :model="form"
+      :label-col="{ span: 6 }"
+      layout="vertical"
+      @finish="onSubmit"
     >
-      <Item
-        :span="3"
-        :label="lang('article.result')"
+      <Descriptions
+        v-if="form.result"
+        bordered
+        layout="horizontal"
+        class="mb-20"
       >
-        <div v-html="form.result" />
+        <Item
+          :span="3"
+          :label="lang('article.result')"
+        >
+          <div v-html="form.result" />
+        </Item>
+      </Descriptions>
+      <Item
+        :label="lang('article.request')"
+        name="request"
+        has-feedback
+        :rules="[{ required: true, type: 'string', max: 65000 }]"
+        :extra="lang('article.requestExplanation')"
+      >
+        <TextArea
+          v-model:value="form.request"
+          style="height: 200px"
+        />
       </Item>
-    </Descriptions>
-    <Item
-      :label="lang('article.request')"
-      name="request"
-      has-feedback
-      :rules="[{ required: true, type: 'string', max: 65000 }]"
-      :extra="lang('article.requestExplanation')"
-    >
-      <TextArea
-        v-model:value="form.request"
-        style="height: 200px"
-      />
-    </Item>
-    <Item
-      :wrapper-col="{ offset: 0 }"
-      class="buttons-flex"
-    >
-      <Space>
-        <Button
-          :loading="loading"
-          type="primary"
-          html-type="submit"
-        >
-          <span>
-            {{ buttonText }}
-          </span>
-        </Button>
-        <Button
-          @click="onReset"
-        >
-          <Lang value="dashboard.reset" />
-        </Button>
-      </Space>
-    </Item>
-  </Form>
+      <Item
+        :wrapper-col="{ offset: 0 }"
+        class="buttons-flex"
+      >
+        <Space>
+          <Button
+            :loading="loading"
+            type="primary"
+            html-type="submit"
+          >
+            <span>
+              {{ buttonText }}
+            </span>
+          </Button>
+          <Button
+            @click="onReset"
+          >
+            <Lang value="dashboard.reset" />
+          </Button>
+        </Space>
+      </Item>
+    </Form>
+  </Spin>
 </template>
 
 <script lang="ts" setup>
@@ -73,6 +78,7 @@ import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import Space from 'ant-design-vue/lib/space';
+import Spin from 'ant-design-vue/lib/spin';
 import {
   PropType,
   ref,
@@ -108,10 +114,15 @@ const props = defineProps({
     type: String,
     default: lang('article.write'),
   },
+  writing: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const {
   value,
+  writing,
 } = toRefs(props);
 const { Item } = Form;
 const { TextArea } = Input;

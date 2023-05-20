@@ -23,7 +23,6 @@
 
 <script lang="ts" setup>
 import Breadcrumb from 'ant-design-vue/lib/breadcrumb';
-import { storeToRefs } from 'pinia';
 import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 

@@ -12,6 +12,7 @@
       :alert-type="alert.type as string"
       :loading="loading"
       :button-text="lang('article.write') || undefined"
+      :writing="writing"
       @submit="onSubmit"
       @reset="onReset"
     />
@@ -20,7 +21,6 @@
 
 <script lang="ts" setup>
 import Card from 'ant-design-vue/lib/card';
-import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
@@ -30,7 +30,7 @@ import FormWriteRequest from '@/components/modules/article/organisms/FormWriteRe
 import lang from '@/helpers/lang';
 import IArticleWriteForm from '@/interfaces/modules/article/articleWriteForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import write from '@/stores/write';
+import writer from '@/stores/writer';
 import TId from '@/types/id';
 
 useMeta({
@@ -38,10 +38,9 @@ useMeta({
 });
 
 const route = useRoute();
-const { request, result } = write();
-const { item } = storeToRefs(write());
-const { id } = route.params;
-
+const { request, result } = writer();
+const writing = ref(false);
+const waitResult = 10; // секунды
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 
@@ -60,16 +59,44 @@ const onReset = () => {
   form.value = getDefaultFormValue();
 };
 
+const getResult = async (id: TId): Promise<void> => {
+  try {
+    const responseResult = await result(id);
+    form.value.result = responseResult.data.text;
+    alert.value.message = '';
+    writing.value = false;
+  } catch (error: Error | any) {
+    if (error.response.status === 501) {
+      window.setTimeout(async () => {
+        await getResult(id);
+      }, 1000 * waitResult);
+    } else {
+      alert.value.message = error.response.data.message
+        ? error.response.data.message
+        : error.message;
+      alert.value.type = 'error';
+
+      writing.value = false;
+    }
+  }
+};
+
 const onSubmit = async (): Promise<void> => {
   alert.value.message = '';
   loading.value = true;
 
   try {
-    await request(form.value.request);
+    form.value.result = '';
+    const response = await request(form.value.request);
 
     alert.value.message = lang('article.successWriteText');
     alert.value.type = 'success';
-    form.value = getDefaultFormValue();
+
+    writing.value = true;
+
+    window.setTimeout(async () => {
+      await getResult(response.data.id);
+    }, 1000 * waitResult);
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
