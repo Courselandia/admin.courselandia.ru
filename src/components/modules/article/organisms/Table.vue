@@ -4,6 +4,22 @@
       <Lang value="article.name" />
     </template>
 
+    <template #extra>
+      <Space>
+        <Button
+          type="primary"
+          @click="onClickWrite"
+        >
+          <template #icon>
+            <RobotOutlined />
+          </template>
+          <span>
+            <Lang value="article.write" />
+          </span>
+        </Button>
+      </Space>
+    </template>
+
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
@@ -173,6 +189,7 @@ import {
   ExclamationCircleOutlined,
   HighlightOutlined,
   MehOutlined,
+  RobotOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -347,7 +364,7 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
   },
   {
     key: 'actions',
-    width: 170,
+    width: 190,
   },
 ]);
 filteredInfo.value = stateFilters<IArticle>(columns.value);
@@ -546,30 +563,9 @@ const onTagsChange = (): void => {
   reloadToFirstPagination();
 };
 
-const onClickStatus = async (id: TId, active: boolean): Promise<void> => {
-  Modal.confirm({
-    title: lang('dashboard.alert'),
-    icon: createVNode(ExclamationCircleOutlined),
-    content: lang('dashboard.confirmChangeStatus'),
-    async onOk() {
-      loading.value = true;
-
-      try {
-        await status(id, active);
-        await reload();
-      } catch (error: Error | any) {
-        notification.open({
-          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
-          message: lang('dashboard.error'),
-          description: error.response.data.message ? error.response.data.message : error.message,
-          style: {
-            color: '#ff0000',
-          },
-        });
-      }
-
-      loading.value = false;
-    },
+const onClickWrite = (): void => {
+  router.push({
+    name: 'ArticleWrite',
   });
 };
 </script>

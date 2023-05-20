@@ -23,4 +23,8 @@ export default {
   successRewriteText: 'The request to rewrite the text has been sent.',
   request: 'Request',
   requestExplanation: '',
+  write: 'Write',
+  writeArticle: 'Request to write text',
+  successWriteText: 'Request has been sent.',
+  result: 'Result',
 };

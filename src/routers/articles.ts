@@ -73,4 +73,18 @@ export default [
       }
     },
   },
+  {
+    path: '/dashboard/articles/write',
+    name: 'ArticleWrite',
+    component: () => import('@/pages/dashboard/articles/Write.vue'),
+    meta: {
+      layout: 'default-layout',
+      middleware: [
+        tokenRefresh,
+        auth,
+      ],
+      roles: [ERole.ADMIN, ERole.MANAGER],
+      redirect: '/',
+    },
+  },
 ] as Array<RouteRecordRaw>;
