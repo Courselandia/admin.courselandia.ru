@@ -103,9 +103,32 @@
         </template>
         <template v-if="column.key === 'text_current'">
           <div v-html="record.text_current" />
+          <div
+            v-if="record.text_current?.length"
+          >
+            <Tag
+              color="purple"
+              style="margin-top: 20px"
+            >
+              <Lang value="article.lengthText" />
+              {{ record.text_current?.length }}
+            </Tag>
+          </div>
         </template>
         <template v-if="column.key === 'text'">
           <div v-html="record.text" />
+
+          <div
+            v-if="record.text?.length"
+          >
+            <Tag
+              color="purple"
+              style="margin-top: 20px"
+            >
+              <Lang value="article.lengthText" />
+              {{ record.text?.length }}
+            </Tag>
+          </div>
         </template>
 
         <template v-if="column.key === 'status'">

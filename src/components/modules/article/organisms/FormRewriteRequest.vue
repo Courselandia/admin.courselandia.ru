@@ -27,12 +27,34 @@
         :label="lang('article.textCurrent')"
       >
         <div v-html="form.text_current" />
+        <div
+          v-if="form.text_current?.length"
+        >
+          <Tag
+            color="purple"
+            style="margin-top: 20px"
+          >
+            <Lang value="article.lengthText" />
+            {{ form.text_current?.length }}
+          </Tag>
+        </div>
       </Item>
       <Item
         :span="3"
         :label="lang('article.text')"
       >
         <div v-html="form.text" />
+        <div
+          v-if="form.text?.length"
+        >
+          <Tag
+            color="purple"
+            style="margin-top: 20px"
+          >
+            <Lang value="article.lengthText" />
+            {{ form.text?.length }}
+          </Tag>
+        </div>
       </Item>
     </Descriptions>
     <Item
@@ -79,6 +101,7 @@ import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import Space from 'ant-design-vue/lib/space';
+import Tag from 'ant-design-vue/lib/tag';
 import {
   PropType,
   ref,

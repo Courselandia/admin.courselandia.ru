@@ -26,6 +26,17 @@
         :label="lang('article.textCurrent')"
       >
         <div v-html="form.text_current" />
+        <div
+          v-if="form.text_current?.length"
+        >
+          <Tag
+            color="purple"
+            style="margin-top: 20px"
+          >
+            <Lang value="article.lengthText" />
+            {{ form.text_current?.length }}
+          </Tag>
+        </div>
       </Item>
     </Descriptions>
     <Ckeditor
@@ -33,6 +44,15 @@
       name="text"
       class="mb-30"
     />
+    <div
+      v-if="form.text?.length"
+      style="margin-bottom: 25px"
+    >
+      <Tag color="purple">
+        <Lang value="article.lengthText" />
+        {{ form.text?.length }}
+      </Tag>
+    </div>
     <Item
       :wrapper-col="{ offset: 0 }"
       class="buttons-flex"
@@ -73,6 +93,7 @@ import Button from 'ant-design-vue/lib/button';
 import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
 import Space from 'ant-design-vue/lib/space';
+import Tag from 'ant-design-vue/lib/tag';
 import {
   PropType,
   ref,

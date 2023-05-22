@@ -27,4 +27,5 @@ export default {
   writeArticle: 'Запрос на написания текста',
   successWriteText: 'Запрос на написание текста был отправлен.',
   result: 'Результат',
+  lengthText: 'Длина текста:',
 };

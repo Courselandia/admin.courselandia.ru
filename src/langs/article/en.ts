@@ -27,4 +27,5 @@ export default {
   writeArticle: 'Request to write text',
   successWriteText: 'Request has been sent.',
   result: 'Result',
+  lengthText: 'Text length:',
 };
