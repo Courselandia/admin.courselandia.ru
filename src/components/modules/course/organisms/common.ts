@@ -228,7 +228,6 @@ export const programSave = (id: number): void => {
       delete programEditableData[id];
       programShowModalText[id] = false;
     } else {
-      console.log(2);
       Modal.warning({
         title: lang('dashboard.warning'),
         content: lang('dashboard.notEmpty'),
