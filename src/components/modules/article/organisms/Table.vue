@@ -100,6 +100,9 @@
         </template>
         <template v-if="column.key === 'category'">
           {{ record.category_name }}
+          <template v-if="record.category_label">
+            / {{ record.category_label }}
+          </template>
         </template>
         <template v-if="column.key === 'text_current'">
           <div v-html="record.text_current" />
