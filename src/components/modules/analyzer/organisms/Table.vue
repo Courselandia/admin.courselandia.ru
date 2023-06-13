@@ -46,12 +46,12 @@
                 record.status === EStatus.READY
                   || record.status === EStatus.FAILED
               "
-              :title="lang('analyzer.analyze')"
+              :title="lang('analyzer.reanalyze')"
               shape="circle"
               @click="onClickAnalyze(record.id)"
             >
               <template #icon>
-                <HighlightOutlined />
+                <SendOutlined />
               </template>
             </Button>
           </Space>
@@ -71,18 +71,30 @@
         </template>
         <template v-if="column.key === 'text'">
           <div v-html="record.text" />
-
-          <div
-            v-if="record.text?.length"
+        </template>
+        <template v-if="column.key === 'unique'">
+          <Tag
+            v-if="record.unique"
+            :color="record.unique >= EQuality.UNIQUE ? 'green' : 'red'"
           >
-            <Tag
-              color="purple"
-              style="margin-top: 20px"
-            >
-              <Lang value="analyzer.lengthText" />
-              {{ record.text?.length }}
-            </Tag>
-          </div>
+            {{ record.unique }}%
+          </Tag>
+        </template>
+        <template v-if="column.key === 'water'">
+          <Tag
+            v-if="record.water"
+            :color="record.water <= EQuality.WATER ? 'green' : 'red'"
+          >
+            {{ record.water }}%
+          </Tag>
+        </template>
+        <template v-if="column.key === 'spam'">
+          <Tag
+            v-if="record.spam"
+            :color="record.spam <= EQuality.SPAM ? 'green' : 'red'"
+          >
+            {{ record.spam }}%
+          </Tag>
         </template>
         <template v-if="column.key === 'status'">
           <Tag
@@ -93,7 +105,7 @@
           </Tag>
           <Tag
             v-else-if="record.status === EStatus.READY"
-            color="blue"
+            color="green"
           >
             <Lang value="analyzer.ready" />
           </Tag>
@@ -147,14 +159,10 @@
 
 <script lang="ts" setup>
 import {
-  CheckOutlined,
-  CloseOutlined,
-  EditOutlined,
-  ExclamationCircleOutlined,
-  HighlightOutlined,
   MehOutlined,
   RobotOutlined,
   SearchOutlined,
+  SendOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/lib/_util/type';
@@ -183,6 +191,7 @@ import { useRoute, useRouter } from 'vue-router';
 import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
+import EQuality from '@/enums/modules/analyzer/quality';
 import EStatus from '@/enums/modules/analyzer/status';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
@@ -281,6 +290,48 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     filteredValue: stateColumnFilter('text', filteredInfo.value, 'string'),
   },
   {
+    title: lang('analyzer.unique'),
+    dataIndex: 'unique',
+    key: 'unique',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('unique', sortedInfo.value),
+    filteredValue: stateColumnFilter('unique', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
+  },
+  {
+    title: lang('analyzer.spam'),
+    dataIndex: 'spam',
+    key: 'spam',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('spam', sortedInfo.value),
+    filteredValue: stateColumnFilter('spam', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
+  },
+  {
+    title: lang('analyzer.water'),
+    dataIndex: 'water',
+    key: 'water',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('water', sortedInfo.value),
+    filteredValue: stateColumnFilter('water', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
+  },
+  {
     title: lang('dashboard.status'),
     dataIndex: 'status',
     key: 'status',
@@ -312,7 +363,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
   },
   {
     key: 'actions',
-    width: 190,
+    width: 100,
   },
 ]);
 filteredInfo.value = stateFilters<IAnalyzer>(columns.value);

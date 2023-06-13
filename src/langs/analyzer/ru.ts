@@ -10,4 +10,8 @@ export default {
   ownId: 'ID сущности',
   analyze: 'Анализировать',
   successAnalyzeText: 'Запрос на анализ текста был отправлен.',
+  reanalyze: 'Переанализировать текст',
+  unique: 'Уникальность',
+  water: 'Процент воды',
+  spam: 'Процет спама',
 };

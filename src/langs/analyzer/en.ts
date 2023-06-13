@@ -10,4 +10,8 @@ export default {
   ownId: 'Own ID',
   analyze: 'Analyze',
   successAnalyzeText: 'The request to analyze the text has been sent.',
+  reanalyze: 'Reanalyze',
+  unique: 'unique',
+  water: 'Water',
+  spam: 'Spam',
 };
