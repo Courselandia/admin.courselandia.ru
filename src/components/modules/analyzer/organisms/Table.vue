@@ -493,7 +493,10 @@ const onClickUpdate = (id: TId): void => {
   });
 };
 
-const onClickAnalyze = (id: TId): void => {
+const onClickAnalyze = (): void => {
+  router.push({
+    name: 'AnalyzerAnalyze',
+  });
 };
 
 const onTagsChange = (): void => {

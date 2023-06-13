@@ -11,7 +11,7 @@
 
   <Spin
     :spinning="writing"
-    tip="Идет процесс написания текста, ждите..."
+    :tip="lang('analyzer.analyzing')"
   >
     <Form
       ref="formRef"
@@ -24,13 +24,41 @@
         v-if="form.result"
         bordered
         layout="horizontal"
+        :column="2"
         class="mb-20"
       >
         <Item
           :span="3"
-          :label="lang('analyzer.result')"
+          :label="lang('analyzer.unique')"
         >
-          <div v-html="form.result" />
+          <Tag
+            v-if="form.result.unique"
+            :color="form.result.unique >= EQuality.UNIQUE ? 'green' : 'red'"
+          >
+            {{ form.result?.unique }}%
+          </Tag>
+        </Item>
+        <Item
+          :span="3"
+          :label="lang('analyzer.spam')"
+        >
+          <Tag
+            v-if="form.result.spam"
+            :color="form.result.spam <= EQuality.SPAM ? 'green' : 'red'"
+          >
+            {{ form.result?.spam }}%
+          </Tag>
+        </Item>
+        <Item
+          :span="3"
+          :label="lang('analyzer.water')"
+        >
+          <Tag
+            v-if="form.result.water"
+            :color="form.result.water <= EQuality.WATER ? 'green' : 'red'"
+          >
+            {{ form.result?.water }}%
+          </Tag>
         </Item>
       </Descriptions>
       <Item
@@ -78,6 +106,7 @@ import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import Space from 'ant-design-vue/lib/space';
 import Spin from 'ant-design-vue/lib/spin';
+import Tag from 'ant-design-vue/lib/tag';
 import {
   PropType,
   ref,
@@ -86,6 +115,7 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import EQuality from '@/enums/modules/analyzer/quality';
 import lang from '@/helpers/lang';
 import IAnalyzerAnalyzeForm from '@/interfaces/modules/analyzer/analyzerAnalyzeForm';
 
@@ -153,4 +183,6 @@ const onSubmit = () => {
 const onReset = () => {
   emit('reset', formRef.value);
 };
+
+// form.value.result?.spam
 </script>

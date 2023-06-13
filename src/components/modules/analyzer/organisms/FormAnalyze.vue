@@ -50,7 +50,7 @@ const alert = ref<IAlert>({
 });
 
 const getDefaultFormValue = (): IAnalyzerAnalyzeForm => ({
-  request: '',
+  text: '',
 });
 
 const form = ref<IAnalyzerAnalyzeForm>(getDefaultFormValue());
@@ -62,7 +62,7 @@ const onReset = () => {
 const getResult = async (id: TId): Promise<void> => {
   try {
     const responseResult = await result(id);
-    form.value.result = responseResult.data.text;
+    form.value.result = responseResult.data;
     alert.value.message = '';
     writing.value = false;
   } catch (error: Error | any) {
@@ -87,7 +87,7 @@ const onSubmit = async (): Promise<void> => {
 
   try {
     form.value.result = '';
-    const response = await request(form.value.request);
+    const response = await request(form.value.text);
 
     alert.value.message = lang('analyzer.successAnalyzeText');
     alert.value.type = 'success';
