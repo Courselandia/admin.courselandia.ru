@@ -48,7 +48,8 @@
               "
               :title="lang('analyzer.reanalyze')"
               shape="circle"
-              @click="onClickAnalyze(record.id)"
+              :loading="reanalyzeLoading[record.id]"
+              @click="onClickReanalyze(record.id)"
             >
               <template #icon>
                 <SendOutlined />
@@ -159,6 +160,7 @@
 
 <script lang="ts" setup>
 import {
+  ExclamationCircleOutlined,
   MehOutlined,
   RobotOutlined,
   SearchOutlined,
@@ -212,6 +214,7 @@ import TId from '@/types/id';
 
 const {
   read,
+  analyze,
 } = analyzer();
 const {
   items,
@@ -221,6 +224,7 @@ const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null>>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
+const reanalyzeLoading = ref<Record<TId, boolean>>({});
 
 const getLink = (id: TId, category: string): string | null => {
   if (category === 'course.text') {
@@ -496,6 +500,33 @@ const onClickUpdate = (id: TId): void => {
 const onClickAnalyze = (): void => {
   router.push({
     name: 'AnalyzerAnalyze',
+  });
+};
+
+const onClickReanalyze = (id: TId): void => {
+  Modal.confirm({
+    title: lang('analyzer.reanalyze'),
+    icon: createVNode(ExclamationCircleOutlined),
+    content: lang('analyzer.askReanalyze'),
+    async onOk() {
+      reanalyzeLoading.value[id] = true;
+
+      try {
+        await analyze(id);
+        await reload();
+      } catch (error: Error | any) {
+        notification.open({
+          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+          message: lang('dashboard.error'),
+          description: error.response.data.message ? error.response.data.message : error.message,
+          style: {
+            color: '#ff0000',
+          },
+        });
+      }
+
+      reanalyzeLoading.value[id] = false;
+    },
   });
 };
 

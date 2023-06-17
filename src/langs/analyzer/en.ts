@@ -15,4 +15,5 @@ export default {
   water: 'Water',
   spam: 'Spam',
   analyzing: 'The request to analyze the text is being proceeding.',
+  askReanalyze: 'Do you want to reanalyze the text?',
 };

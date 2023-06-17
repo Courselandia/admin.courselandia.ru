@@ -24,37 +24,36 @@
         v-if="form.result"
         bordered
         layout="horizontal"
-        :column="2"
         class="mb-20"
       >
         <Item
+          v-if="form.result.unique"
           :span="3"
           :label="lang('analyzer.unique')"
         >
           <Tag
-            v-if="form.result.unique"
             :color="form.result.unique >= EQuality.UNIQUE ? 'green' : 'red'"
           >
             {{ form.result?.unique }}%
           </Tag>
         </Item>
         <Item
+          v-if="form.result.spam"
           :span="3"
           :label="lang('analyzer.spam')"
         >
           <Tag
-            v-if="form.result.spam"
             :color="form.result.spam <= EQuality.SPAM ? 'green' : 'red'"
           >
             {{ form.result?.spam }}%
           </Tag>
         </Item>
         <Item
+          v-if="form.result.water"
           :span="3"
           :label="lang('analyzer.water')"
         >
           <Tag
-            v-if="form.result.water"
             :color="form.result.water <= EQuality.WATER ? 'green' : 'red'"
           >
             {{ form.result?.water }}%
