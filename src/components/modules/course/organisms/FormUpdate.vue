@@ -776,6 +776,9 @@
                 name="text"
                 class="mb-30"
               />
+              <template>
+
+              </template>
             </TabPane>
           </Tabs>
           <Item
@@ -1045,7 +1048,7 @@ const imageAlert = ref<IAlert>(
 const getDefaultFormValue = (): ICourseForm => ({
   id: id as TId,
   school_id: item.value?.school
-    ? { key: item.value?.school?.id, value: item.value?.school?.name }
+    ? { key: item.value?.school?.id as string, value: item.value?.school?.name }
     : null,
   image: null,
   name: item.value?.name || '',
@@ -1089,6 +1092,7 @@ const getDefaultFormValue = (): ICourseForm => ({
     (itm) => ({ icon: itm.icon, text: itm.text }),
   ) as Array<IFeature> || [],
   program: item.value?.program,
+  analyzers: item.value?.analyzers,
 });
 
 learnItems.value = item.value?.learns?.map((itm) => ({

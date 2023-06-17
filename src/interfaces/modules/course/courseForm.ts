@@ -2,6 +2,7 @@ import ECurrency from '@/enums/modules/course/currency';
 import EDuration from '@/enums/modules/course/duration';
 import ELanguage from '@/enums/modules/course/language';
 import EStatus from '@/enums/modules/course/status';
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IFeature from '@/interfaces/modules/course/feature';
 import IProgram from '@/interfaces/modules/course/program';
 import IOption from '@/interfaces/molecules/select/option';
@@ -49,4 +50,6 @@ export default interface ICourseForm {
   processes: Array<IOption> | null;
   features: Array<IFeature> | null;
   program: Array<IProgram> | null;
+
+  analyzers?: Array<IAnalyzer> | null;
 }
