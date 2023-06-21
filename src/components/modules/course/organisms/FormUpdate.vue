@@ -1045,7 +1045,7 @@ const imageAlert = ref<IAlert>(
 const getDefaultFormValue = (): ICourseForm => ({
   id: id as TId,
   school_id: item.value?.school
-    ? { key: item.value?.school?.id, value: item.value?.school?.name }
+    ? { key: item.value?.school?.id as string, value: item.value?.school?.name }
     : null,
   image: null,
   name: item.value?.name || '',
