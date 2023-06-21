@@ -310,7 +310,7 @@
                   :label="lang('course.price')"
                   name="price"
                   has-feedback
-                  :rules="[{ required: false, type: 'number', min: 0, max: 999999 }]"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
                 >
                   <InputNumber
                     v-model:value="form.price"
@@ -321,7 +321,7 @@
                   :label="lang('course.priceOld')"
                   name="price_old"
                   has-feedback
-                  :rules="[{ required: false, type: 'number', min: 0, max: 999999 }]"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
                 >
                   <InputNumber
                     v-model:value="form.price_old"
@@ -332,7 +332,7 @@
                   :label="lang('course.priceRecurrentPrice')"
                   name="price_recurrent"
                   has-feedback
-                  :rules="[{ required: false, type: 'number', min: 0, max: 999999 }]"
+                  :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
                 >
                   <InputNumber
                     v-model:value="form.price_recurrent"
