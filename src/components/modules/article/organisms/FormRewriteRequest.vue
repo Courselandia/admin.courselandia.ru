@@ -44,17 +44,22 @@
         :label="lang('article.text')"
       >
         <div v-html="form.text" />
-        <div
-          v-if="form.text?.length"
-        >
+        <div style="margin-top: 20px">
           <Tag
+            v-if="form.text?.length"
             color="purple"
-            style="margin-top: 20px"
+            style="margin-bottom: 5px"
           >
             <Lang value="article.lengthText" />
             {{ form.text?.length }}
           </Tag>
+          <Info
+            v-if="form.analyzers?.length"
+            :analyzers="form.analyzers"
+            category="article.text"
+          />
         </div>
+
       </Item>
     </Descriptions>
     <Item
@@ -110,6 +115,7 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import lang from '@/helpers/lang';
 import IArticleRewriteForm from '@/interfaces/modules/article/articleRewriteForm';
 

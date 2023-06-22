@@ -776,9 +776,12 @@
                 name="text"
                 class="mb-30"
               />
-              <template>
-
-              </template>
+              <Info
+                v-if="form.analyzers?.length"
+                :analyzers="form.analyzers"
+                category="course.text"
+                class="mb-30"
+              />
             </TabPane>
           </Tabs>
           <Item
@@ -915,6 +918,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import {
   featureColumns,
   featureEdit,

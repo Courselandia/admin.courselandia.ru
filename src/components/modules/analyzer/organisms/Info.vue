@@ -5,6 +5,7 @@
     <Tag
       v-if="analyzer.unique"
       :color="analyzer.unique >= EQuality.UNIQUE ? 'green' : 'red'"
+      style="margin-bottom: 5px"
     >
       <Lang value="analyzer.unique" />
       {{ analyzer.unique }}%
@@ -12,6 +13,7 @@
     <Tag
       v-if="analyzer.water"
       :color="analyzer.water <= EQuality.WATER ? 'green' : 'red'"
+      style="margin-bottom: 5px"
     >
       <Lang value="analyzer.water" />
       {{ analyzer.water }}%
@@ -19,6 +21,7 @@
     <Tag
       v-if="analyzer.spam"
       :color="analyzer.spam <= EQuality.SPAM ? 'green' : 'red'"
+      style="margin-bottom: 5px"
     >
       <Lang value="analyzer.spam" />
       {{ analyzer.spam }}%

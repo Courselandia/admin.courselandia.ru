@@ -231,6 +231,10 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/courses/${id}`;
   }
 
+  if (category === 'article.text') {
+    return `/dashboard/articles/${id}`;
+  }
+
   return null;
 };
 
@@ -278,6 +282,10 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
       {
         text: 'Курс / Описание',
         value: 'course.text',
+      },
+      {
+        text: 'Статьи / Написанный текст',
+        value: 'article.text',
       },
     ],
   },

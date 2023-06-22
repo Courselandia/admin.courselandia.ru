@@ -121,16 +121,19 @@
         <template v-if="column.key === 'text'">
           <div v-html="record.text" />
 
-          <div
-            v-if="record.text?.length"
-          >
+          <div style="margin-top: 20px">
             <Tag
+              v-if="record.text?.length"
               color="purple"
-              style="margin-top: 20px"
+              style="margin-bottom: 5px"
             >
               <Lang value="article.lengthText" />
               {{ record.text?.length }}
             </Tag>
+            <Info
+              :analyzers="record.analyzers"
+              category="article.text"
+            />
           </div>
         </template>
 
@@ -243,6 +246,7 @@ import {
 import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import EStatus from '@/enums/modules/article/status';
