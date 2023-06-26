@@ -3,6 +3,7 @@ enum EStatus {
   READY = 'ready',
   PROCESSING = 'processing',
   FAILED = 'failed',
+  SKIPPED = 'skipped',
 }
 
 export default EStatus;

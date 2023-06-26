@@ -122,6 +122,12 @@
           >
             <Lang value="analyzer.failed" />
           </Tag>
+          <Tag
+            v-if="record.status === EStatus.SKIPPED"
+            color="blue"
+          >
+            <Lang value="analyzer.skipped" />
+          </Tag>
         </template>
       </template>
       <template
@@ -369,6 +375,10 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
       {
         text: lang('analyzer.failed'),
         value: EStatus.FAILED,
+      },
+      {
+        text: lang('analyzer.skipped'),
+        value: EStatus.SKIPPED,
       },
     ],
     width: 200,
