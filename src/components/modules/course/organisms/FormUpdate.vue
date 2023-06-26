@@ -776,12 +776,15 @@
                 name="text"
                 class="mb-30"
               />
-              <Info
+              <div
                 v-if="form.analyzers?.length"
-                :analyzers="form.analyzers"
-                category="course.text"
                 class="mb-30"
-              />
+              >
+                <Info
+                  :analyzers="form.analyzers"
+                  category="course.text"
+                />
+              </div>
             </TabPane>
           </Tabs>
           <Item

@@ -59,7 +59,6 @@
             category="article.text"
           />
         </div>
-
       </Item>
     </Descriptions>
     <Item
