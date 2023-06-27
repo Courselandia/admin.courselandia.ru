@@ -162,6 +162,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="analyzers"
+        @click="onClickMenuItem('Analyzers')"
+      >
+        <template #icon>
+          <ProjectOutlined />
+        </template>
+        <Lang value="analyzer.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -218,6 +228,7 @@ import {
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
+  ProjectOutlined,
   QuestionOutlined,
   ReadOutlined,
   RobotOutlined,
@@ -269,6 +280,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     publications: '/dashboard/publications',
     directions: '/dashboard/directions',
     articles: '/dashboard/articles',
+    analyzers: '/dashboard/analyzers',
     professions: '/dashboard/professions',
     categories: '/dashboard/categories',
     skills: '/dashboard/skills',

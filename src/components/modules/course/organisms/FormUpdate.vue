@@ -776,6 +776,15 @@
                 name="text"
                 class="mb-30"
               />
+              <div
+                v-if="form.analyzers?.length"
+                class="mb-30"
+              >
+                <Info
+                  :analyzers="form.analyzers"
+                  category="course.text"
+                />
+              </div>
             </TabPane>
           </Tabs>
           <Item
@@ -912,6 +921,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import {
   featureColumns,
   featureEdit,
@@ -1089,6 +1099,7 @@ const getDefaultFormValue = (): ICourseForm => ({
     (itm) => ({ icon: itm.icon, text: itm.text }),
   ) as Array<IFeature> || [],
   program: item.value?.program,
+  analyzers: item.value?.analyzers,
 });
 
 learnItems.value = item.value?.learns?.map((itm) => ({

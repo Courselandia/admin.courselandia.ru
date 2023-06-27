@@ -55,6 +55,7 @@ const getDefaultFormValue = (): IArticleRewriteForm => ({
   request: item.value?.request_template || '',
   text: item.value?.text || null,
   text_current: item.value?.text_current || null,
+  analyzers: item.value?.analyzers || null,
 });
 
 const form = ref<IArticleRewriteForm>(getDefaultFormValue());

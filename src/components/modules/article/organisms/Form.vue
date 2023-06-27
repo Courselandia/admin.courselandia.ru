@@ -26,16 +26,20 @@
         :label="lang('article.textCurrent')"
       >
         <div v-html="form.text_current" />
-        <div
-          v-if="form.text_current?.length"
-        >
+        <div style="margin-top: 20px">
           <Tag
+            v-if="form.text_current?.length"
             color="purple"
-            style="margin-top: 20px"
+            style="margin-top: 5px"
           >
             <Lang value="article.lengthText" />
             {{ form.text_current?.length }}
           </Tag>
+          <Info
+            v-if="form.analyzers?.length"
+            :analyzers="form.analyzers"
+            category="article.text"
+          />
         </div>
       </Item>
     </Descriptions>
@@ -102,6 +106,7 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import lang from '@/helpers/lang';
 import IArticleForm from '@/interfaces/modules/article/articleForm';

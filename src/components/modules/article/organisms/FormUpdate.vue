@@ -55,6 +55,7 @@ const getDefaultFormValue = (): IArticleForm => ({
   text: item.value?.text || undefined,
   text_current: item.value?.text_current || undefined,
   apply: false,
+  analyzers: item.value?.analyzers || null,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());

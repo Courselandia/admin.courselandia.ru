@@ -1,20 +1,20 @@
 <template>
   <Card :bordered="false">
     <template #title>
-      <Lang value="article.name" />
+      <Lang value="analyzer.name" />
     </template>
 
     <template #extra>
       <Space>
         <Button
           type="primary"
-          @click="onClickWrite"
+          @click="onClickAnalyze"
         >
           <template #icon>
             <RobotOutlined />
           </template>
           <span>
-            <Lang value="article.write" />
+            <Lang value="analyzer.analyze" />
           </span>
         </Button>
       </Space>
@@ -42,60 +42,26 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              v-if="record.status === EStatus.READY"
-              :title="lang('article.apply')"
-              :loading="appliesLoading[record.id]"
-              type="primary"
-              shape="circle"
-              @click="onClickApply(record.id)"
-            >
-              <template #icon>
-                <CheckOutlined />
-              </template>
-            </Button>
-            <Button
-              :title="lang('dashboard.edit')"
-              shape="circle"
-              @click="onClickUpdate(record.id)"
-            >
-              <template #icon>
-                <EditOutlined />
-              </template>
-            </Button>
-            <Button
               v-if="
                 record.status === EStatus.READY
                   || record.status === EStatus.FAILED
-                  || record.status === EStatus.DISABLED
-                  || record.status === EStatus.APPLIED
               "
-              :title="lang('article.rewrite')"
+              :title="lang('analyzer.reanalyze')"
               shape="circle"
-              @click="onClickRewrite(record.id)"
+              :loading="reanalyzeLoading[record.id]"
+              @click="onClickReanalyze(record.id)"
             >
               <template #icon>
-                <HighlightOutlined />
-              </template>
-            </Button>
-            <Button
-              v-if="record.status === EStatus.READY"
-              :title="lang('article.disable')"
-              :loading="disablesLoading[record.id]"
-              danger
-              shape="circle"
-              @click="onClickDisable(record.id)"
-            >
-              <template #icon>
-                <CloseOutlined />
+                <SendOutlined />
               </template>
             </Button>
           </Space>
         </template>
-        <template v-if="column.key === 'articleable_id'">
+        <template v-if="column.key === 'analyzerable_id'">
           <router-link
-            :to="getLink(record.articleable_id, record.category)"
+            :to="getLink(record.analyzerable_id, record.category)"
           >
-            {{ record.articleable_id }}
+            {{ record.analyzerable_id }}
           </router-link>
         </template>
         <template v-if="column.key === 'category'">
@@ -104,75 +70,63 @@
             / {{ record.category_label }}
           </template>
         </template>
-        <template v-if="column.key === 'text_current'">
-          <div v-html="record.text_current" />
-          <div
-            v-if="record.text_current?.length"
-          >
-            <Tag
-              color="purple"
-              style="margin-top: 20px"
-            >
-              <Lang value="article.lengthText" />
-              {{ record.text_current?.length }}
-            </Tag>
-          </div>
-        </template>
         <template v-if="column.key === 'text'">
           <div v-html="record.text" />
-
-          <div style="margin-top: 20px">
-            <Tag
-              v-if="record.text?.length"
-              color="purple"
-              style="margin-bottom: 5px"
-            >
-              <Lang value="article.lengthText" />
-              {{ record.text?.length }}
-            </Tag>
-            <Info
-              :analyzers="record.analyzers"
-              category="article.text"
-            />
-          </div>
         </template>
-
+        <template v-if="column.key === 'unique'">
+          <Tag
+            v-if="record.unique"
+            :color="record.unique >= EQuality.UNIQUE ? 'green' : 'red'"
+          >
+            {{ record.unique }}%
+          </Tag>
+        </template>
+        <template v-if="column.key === 'water'">
+          <Tag
+            v-if="record.water"
+            :color="record.water <= EQuality.WATER ? 'green' : 'red'"
+          >
+            {{ record.water }}%
+          </Tag>
+        </template>
+        <template v-if="column.key === 'spam'">
+          <Tag
+            v-if="record.spam"
+            :color="record.spam <= EQuality.SPAM ? 'green' : 'red'"
+          >
+            {{ record.spam }}%
+          </Tag>
+        </template>
         <template v-if="column.key === 'status'">
           <Tag
             v-if="record.status === EStatus.PENDING"
             color="cyan"
           >
-            <Lang value="article.pending" />
+            <Lang value="analyzer.pending" />
           </Tag>
           <Tag
             v-else-if="record.status === EStatus.READY"
-            color="blue"
+            color="green"
           >
-            <Lang value="article.ready" />
+            <Lang value="analyzer.ready" />
           </Tag>
           <Tag
             v-else-if="record.status === EStatus.PROCESSING"
             color="orange"
           >
-            <Lang value="article.processing" />
+            <Lang value="analyzer.processing" />
           </Tag>
           <Tag
             v-else-if="record.status === EStatus.FAILED"
             color="red"
           >
-            <Lang value="article.failed" />
+            <Lang value="analyzer.failed" />
           </Tag>
           <Tag
-            v-else-if="record.status === EStatus.DISABLED"
-            color="pink"
+            v-if="record.status === EStatus.SKIPPED"
+            color="blue"
           >
-            <Lang value="article.disabled" />
-          </Tag>
-          <Tag
-            v-else-if="record.status === EStatus.APPLIED"
-            color="green"
-          >
-            <Lang value="article.applied" />
+            <Lang value="analyzer.skipped" />
           </Tag>
         </template>
       </template>
@@ -212,14 +166,11 @@
 
 <script lang="ts" setup>
 import {
-  CheckOutlined,
-  CloseOutlined,
-  EditOutlined,
   ExclamationCircleOutlined,
-  HighlightOutlined,
   MehOutlined,
   RobotOutlined,
   SearchOutlined,
+  SendOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/lib/_util/type';
@@ -246,10 +197,10 @@ import {
 import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
-import EStatus from '@/enums/modules/article/status';
+import EQuality from '@/enums/modules/analyzer/quality';
+import EStatus from '@/enums/modules/analyzer/status';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
 import sorts from '@/helpers/sorts';
@@ -262,34 +213,38 @@ import {
   stateSet,
   stateSorts,
 } from '@/helpers/state';
-import IArticle from '@/interfaces/modules/article/article';
+import IAnalyzer from '@/interfaces/modules/analyzer/analyzer';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
-import article from '@/stores/article';
+import analyzer from '@/stores/analyzer';
 import TId from '@/types/id';
 
 const {
   read,
-  status,
-  apply,
-} = article();
+  analyze,
+} = analyzer();
 const {
   items,
   total,
-} = storeToRefs(article());
+} = storeToRefs(analyzer());
 const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null>>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
+const reanalyzeLoading = ref<Record<TId, boolean>>({});
 
 const getLink = (id: TId, category: string): string | null => {
   if (category === 'course.text') {
     return `/dashboard/courses/${id}`;
   }
 
+  if (category === 'article.text') {
+    return `/dashboard/articles/${id}`;
+  }
+
   return null;
 };
 
-const columns = computed<ITableColumnType<IArticle>[]>(() => [
+const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
   {
     title: lang('dashboard.id'),
     dataIndex: 'id',
@@ -304,21 +259,21 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     width: 100,
   },
   {
-    title: lang('article.ownId'),
-    dataIndex: 'articleable_id',
-    key: 'articleable_id',
+    title: lang('analyzer.ownId'),
+    dataIndex: 'analyzerable_id',
+    key: 'analyzerable_id',
     sorter: {
       multiple: 1,
     },
     sortable: false,
     customFilterDropdown: true,
-    sortOrder: stateColumnSort('articleable_id', sortedInfo.value),
-    filteredValue: stateColumnFilter('articleable_id', filteredInfo.value, 'number'),
+    sortOrder: stateColumnSort('analyzerable_id', sortedInfo.value),
+    filteredValue: stateColumnFilter('analyzerable_id', filteredInfo.value, 'number'),
     filterType: 'number',
     width: 150,
   },
   {
-    title: lang('article.category'),
+    title: lang('analyzer.category'),
     dataIndex: 'category',
     key: 'category',
     sorter: {
@@ -334,16 +289,14 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
         text: 'Курс / Описание',
         value: 'course.text',
       },
+      {
+        text: 'Статьи / Написанный текст',
+        value: 'article.text',
+      },
     ],
   },
   {
-    title: lang('article.textCurrent'),
-    dataIndex: 'text_current',
-    key: 'text_current',
-    sorter: false,
-  },
-  {
-    title: lang('article.text'),
+    title: lang('analyzer.text'),
     dataIndex: 'text',
     key: 'text',
     sorter: {
@@ -353,6 +306,48 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     customFilterDropdown: true,
     sortOrder: stateColumnSort('text', sortedInfo.value),
     filteredValue: stateColumnFilter('text', filteredInfo.value, 'string'),
+  },
+  {
+    title: lang('analyzer.unique'),
+    dataIndex: 'unique',
+    key: 'unique',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('unique', sortedInfo.value),
+    filteredValue: stateColumnFilter('unique', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
+  },
+  {
+    title: lang('analyzer.spam'),
+    dataIndex: 'spam',
+    key: 'spam',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('spam', sortedInfo.value),
+    filteredValue: stateColumnFilter('spam', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
+  },
+  {
+    title: lang('analyzer.water'),
+    dataIndex: 'water',
+    key: 'water',
+    sorter: {
+      multiple: 1,
+    },
+    sortable: false,
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('water', sortedInfo.value),
+    filteredValue: stateColumnFilter('water', filteredInfo.value, 'number'),
+    filterType: 'number',
+    width: 170,
   },
   {
     title: lang('dashboard.status'),
@@ -366,38 +361,34 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     filterMultiple: false,
     filters: [
       {
-        text: lang('article.pending'),
+        text: lang('analyzer.pending'),
         value: EStatus.PENDING,
       },
       {
-        text: lang('article.ready'),
+        text: lang('analyzer.ready'),
         value: EStatus.READY,
       },
       {
-        text: lang('article.processing'),
+        text: lang('analyzer.processing'),
         value: EStatus.PROCESSING,
       },
       {
-        text: lang('article.failed'),
+        text: lang('analyzer.failed'),
         value: EStatus.FAILED,
       },
       {
-        text: lang('article.disabled'),
-        value: EStatus.DISABLED,
-      },
-      {
-        text: lang('article.applied'),
-        value: EStatus.APPLIED,
+        text: lang('analyzer.skipped'),
+        value: EStatus.SKIPPED,
       },
     ],
     width: 200,
   },
   {
     key: 'actions',
-    width: 190,
+    width: 100,
   },
 ]);
-filteredInfo.value = stateFilters<IArticle>(columns.value);
+filteredInfo.value = stateFilters<IAnalyzer>(columns.value);
 const loading = ref(false);
 const pageSizeDefault = stateLimit() || 20;
 const pageCurrentDefault = statePage() || 1;
@@ -409,14 +400,12 @@ const pagination = ref({
   position: ['topLeft', 'bottomLeft'],
   showSizeChanger: true,
 });
-const appliesLoading = ref<Record<TId, boolean>>({});
-const disablesLoading = ref<Record<TId, boolean>>({});
-const selected = ref<Array<IArticle>>();
+const selected = ref<Array<IAnalyzer>>();
 const destroySelectedDisabled = ref(true);
 const destroySelectedLoading = ref(false);
 
 const rowSelection: TableProps['rowSelection'] = {
-  onChange: (selectedRowKeys: Key[], selectedRows: IArticle[]): void => {
+  onChange: (selectedRowKeys: Key[], selectedRows: IAnalyzer[]): void => {
     selected.value = selectedRows;
   },
 };
@@ -427,7 +416,7 @@ const defaultSorts: Array<SorterResult> = [
     order: 'ascend',
   },
 ];
-sortedInfo.value = stateSorts<IArticle>(columns.value, defaultSorts);
+sortedInfo.value = stateSorts<IAnalyzer>(columns.value, defaultSorts);
 
 const load = async (
   offset: number,
@@ -463,7 +452,7 @@ onMounted(async (): Promise<void> => {
 });
 
 watch(route, (): void => {
-  const currentRoute = router.getRoutes().find((item) => item.name === 'Articles');
+  const currentRoute = router.getRoutes().find((item) => item.name === 'Analyzers');
 
   if (route.path === currentRoute?.path) {
     const pageSize = stateLimit() || pageSizeDefault;
@@ -472,8 +461,8 @@ watch(route, (): void => {
 
     pagination.value.current = current;
     pagination.value.pageSize = pageSize;
-    sortedInfo.value = stateSorts<IArticle>(columns.value);
-    filteredInfo.value = stateFilters<IArticle>(columns.value);
+    sortedInfo.value = stateSorts<IAnalyzer>(columns.value);
+    filteredInfo.value = stateFilters<IAnalyzer>(columns.value);
 
     load(offset, pageSize, sortedInfo.value, filteredInfo.value);
   }
@@ -483,7 +472,7 @@ watch(selected, () => {
   destroySelectedDisabled.value = selected.value?.length === 0;
 });
 
-const onChange: TableProps<IArticle>['onChange'] = async (pag, filter, sorter): Promise<void> => {
+const onChange: TableProps<IAnalyzer>['onChange'] = async (pag, filter, sorter): Promise<void> => {
   filteredInfo.value = {
     ...filteredInfo.value,
     ...filter,
@@ -519,59 +508,29 @@ const reload = async (): Promise<void> => {
 
 const onClickUpdate = (id: TId): void => {
   router.push({
-    name: 'ArticleUpdate',
+    name: 'AnalyzerUpdate',
     params: {
       id,
     },
   });
 };
 
-const onClickApply = (id: TId): void => {
-  Modal.confirm({
-    title: lang('article.apply'),
-    icon: createVNode(ExclamationCircleOutlined),
-    content: lang('article.askApplyRecord'),
-    async onOk() {
-      appliesLoading.value[id] = true;
-
-      try {
-        await apply(id);
-        await reload();
-      } catch (error: Error | any) {
-        notification.open({
-          icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
-          message: lang('dashboard.error'),
-          description: error.response.data.message ? error.response.data.message : error.message,
-          style: {
-            color: '#ff0000',
-          },
-        });
-      }
-
-      appliesLoading.value[id] = false;
-    },
-  });
-};
-
-const onClickRewrite = (id: TId): void => {
+const onClickAnalyze = (): void => {
   router.push({
-    name: 'ArticleRewrite',
-    params: {
-      id,
-    },
+    name: 'AnalyzerAnalyze',
   });
 };
 
-const onClickDisable = (id: TId): void => {
+const onClickReanalyze = (id: TId): void => {
   Modal.confirm({
-    title: lang('article.disable'),
+    title: lang('analyzer.reanalyze'),
     icon: createVNode(ExclamationCircleOutlined),
-    content: lang('article.askDisableRecord'),
+    content: lang('analyzer.askReanalyze'),
     async onOk() {
-      disablesLoading.value[id] = true;
+      reanalyzeLoading.value[id] = true;
 
       try {
-        await status(id, EStatus.DISABLED);
+        await analyze(id);
         await reload();
       } catch (error: Error | any) {
         notification.open({
@@ -584,19 +543,13 @@ const onClickDisable = (id: TId): void => {
         });
       }
 
-      disablesLoading.value[id] = false;
+      reanalyzeLoading.value[id] = false;
     },
   });
 };
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
-};
-
-const onClickWrite = (): void => {
-  router.push({
-    name: 'ArticleWrite',
-  });
 };
 </script>
 
