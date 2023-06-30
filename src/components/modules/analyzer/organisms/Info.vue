@@ -3,7 +3,7 @@
     v-if="analyzer"
   >
     <Tag
-      v-if="analyzer.unique"
+      v-if="analyzer.unique !== null"
       :color="analyzer.unique >= EQuality.UNIQUE ? 'green' : 'red'"
       style="margin-bottom: 5px"
     >
@@ -11,7 +11,7 @@
       {{ analyzer.unique }}%
     </Tag>
     <Tag
-      v-if="analyzer.water"
+      v-if="analyzer.water !== null"
       :color="analyzer.water <= EQuality.WATER ? 'green' : 'red'"
       style="margin-bottom: 5px"
     >
@@ -19,7 +19,7 @@
       {{ analyzer.water }}%
     </Tag>
     <Tag
-      v-if="analyzer.spam"
+      v-if="analyzer.spam !== null"
       :color="analyzer.spam <= EQuality.SPAM ? 'green' : 'red'"
       style="margin-bottom: 5px"
     >

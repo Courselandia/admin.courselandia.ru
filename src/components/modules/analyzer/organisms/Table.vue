@@ -75,7 +75,7 @@
         </template>
         <template v-if="column.key === 'unique'">
           <Tag
-            v-if="record.unique"
+            v-if="record.unique !== null"
             :color="record.unique >= EQuality.UNIQUE ? 'green' : 'red'"
           >
             {{ record.unique }}%
@@ -83,7 +83,7 @@
         </template>
         <template v-if="column.key === 'water'">
           <Tag
-            v-if="record.water"
+            v-if="record.water !== null"
             :color="record.water <= EQuality.WATER ? 'green' : 'red'"
           >
             {{ record.water }}%
@@ -91,7 +91,7 @@
         </template>
         <template v-if="column.key === 'spam'">
           <Tag
-            v-if="record.spam"
+            v-if="record.spam !== null"
             :color="record.spam <= EQuality.SPAM ? 'green' : 'red'"
           >
             {{ record.spam }}%
