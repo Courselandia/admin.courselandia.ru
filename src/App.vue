@@ -38,7 +38,7 @@ import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 const routeCurrent = useRoute();
-const layout = computed(() => routeCurrent.meta.layout);
+const layout = computed(() => routeCurrent.meta.layout); //
 </script>
 
 <style lang="scss">
