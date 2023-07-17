@@ -116,6 +116,10 @@
               <Lang value="article.lengthText" />
               {{ record.text_current?.length }}
             </Tag>
+            <Info
+              :analyzers="record.articleable.analyzers"
+              :category="record.category"
+            />
           </div>
         </template>
         <template v-if="column.key === 'text'">

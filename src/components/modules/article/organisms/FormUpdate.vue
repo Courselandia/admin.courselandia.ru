@@ -56,6 +56,8 @@ const getDefaultFormValue = (): IArticleForm => ({
   text_current: item.value?.text_current || undefined,
   apply: false,
   analyzers: item.value?.analyzers || null,
+  articleable: item.value?.articleable || null,
+  category: item.value?.category || null,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());

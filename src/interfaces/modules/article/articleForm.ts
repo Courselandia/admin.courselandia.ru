@@ -1,4 +1,5 @@
 import IAnalyzer from '@/interfaces/modules/course/analyzer';
+import ICourse from '@/interfaces/modules/course/course';
 import TId from '@/types/id';
 
 export default interface IArticleForm {
@@ -7,4 +8,6 @@ export default interface IArticleForm {
   text_current: string | undefined,
   apply: boolean,
   analyzers: Array<IAnalyzer> | null;
+  articleable: ICourse | null;
+  category: string | null;
 }

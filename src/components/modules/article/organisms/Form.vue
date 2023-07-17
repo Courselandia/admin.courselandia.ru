@@ -36,9 +36,9 @@
             {{ form.text_current?.length }}
           </Tag>
           <Info
-            v-if="form.analyzers?.length"
-            :analyzers="form.analyzers"
-            category="article.text"
+            v-if="form.articleable?.analyzers?.length && form.category"
+            :analyzers="form.articleable.analyzers"
+            :category="form.category"
           />
         </div>
       </Item>
@@ -56,6 +56,11 @@
         <Lang value="article.lengthText" />
         {{ form.text?.length }}
       </Tag>
+      <Info
+        v-if="form.analyzers?.length"
+        :analyzers="form.analyzers"
+        category="article.text"
+      />
     </div>
     <Item
       :wrapper-col="{ offset: 0 }"

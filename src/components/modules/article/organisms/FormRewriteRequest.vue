@@ -37,6 +37,11 @@
             <Lang value="article.lengthText" />
             {{ form.text_current?.length }}
           </Tag>
+          <Info
+            v-if="form.articleable?.analyzers?.length && form.category"
+            :analyzers="form.articleable.analyzers"
+            :category="form.category"
+          />
         </div>
       </Item>
       <Item

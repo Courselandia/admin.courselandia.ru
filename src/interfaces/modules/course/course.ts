@@ -17,6 +17,7 @@ import ITeacher from '@/interfaces/modules/teacher/teacher';
 import ITool from '@/interfaces/modules/tool/tool';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 
 export default interface ICourse extends IColumn {
   id: TId;
@@ -62,4 +63,6 @@ export default interface ICourse extends IColumn {
   learns: Array<ILearn> | null;
   employments: Array<IEmployment> | null;
   features: Array<IFeature> | null;
+
+  analyzers: Array<IAnalyzer> | null;
 }
