@@ -109,6 +109,16 @@
           name="text"
           class="mb-30"
         />
+
+        <div
+          v-if="form.analyzers?.length"
+          class="mb-30"
+        >
+          <Info
+            :analyzers="form.analyzers"
+            category="skill.text"
+          />
+        </div>
       </TabPane>
     </Tabs>
     <Item
@@ -152,6 +162,7 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';

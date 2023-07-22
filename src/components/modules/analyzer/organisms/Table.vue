@@ -237,6 +237,14 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/courses/${id}`;
   }
 
+  if (category === 'skill.text') {
+    return `/dashboard/skills/${id}`;
+  }
+
+  if (category === 'tool.text') {
+    return `/dashboard/tools/${id}`;
+  }
+
   if (category === 'article.text') {
     return `/dashboard/articles/${id}`;
   }
@@ -288,6 +296,14 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
       {
         text: 'Курс / Описание',
         value: 'course.text',
+      },
+      {
+        text: 'Навык / Описание',
+        value: 'skill.text',
+      },
+      {
+        text: 'Инструмент / Описание',
+        value: 'tool.text',
       },
       {
         text: 'Статьи / Написанный текст',

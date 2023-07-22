@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import TId from '@/types/id';
 
 export default interface ISkillForm {
@@ -13,4 +14,5 @@ export default interface ISkillForm {
   description_template: string | null;
   keywords: string | null;
   status: boolean;
+  analyzers?: Array<IAnalyzer> | null;
 }

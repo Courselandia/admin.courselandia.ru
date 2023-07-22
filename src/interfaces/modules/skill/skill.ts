@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IMetatag from '@/interfaces/modules/metatag';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
@@ -13,5 +14,6 @@ export default interface ISkill extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string;
+  analyzers: Array<IAnalyzer> | null;
 }
