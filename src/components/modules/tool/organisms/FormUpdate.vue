@@ -63,6 +63,7 @@ const getDefaultFormValue = (): IToolForm => ({
   description_template: item.value?.metatag?.description_template || null,
   keywords: item.value?.metatag?.keywords || null,
   status: item.value?.status !== undefined ? item.value?.status : true,
+  analyzers: item.value?.analyzers,
 });
 
 const form = ref<IToolForm>(getDefaultFormValue());
