@@ -23,6 +23,7 @@ import routerReviews from '@/routers/reviews';
 import routerSalaries from '@/routers/salaries';
 import routerSchools from '@/routers/schools';
 import routerSkills from '@/routers/skills';
+import routerTasks from '@/routers/tasks';
 import routerTeachers from '@/routers/teachers';
 import routerTools from '@/routers/tools';
 import routerUsers from '@/routers/users';
@@ -51,6 +52,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerLogs,
   ...routerArticles,
   ...routerAnalyzers,
+  ...routerTasks,
   ...router404,
 ];
 

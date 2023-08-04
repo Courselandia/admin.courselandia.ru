@@ -201,6 +201,16 @@
         <Lang value="dashboard.alerts" />
       </Item>
       <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="tasks"
+        @click="onClickMenuItem('Tasks')"
+      >
+        <template #icon>
+          <SisternodeOutlined />
+        </template>
+        <Lang value="task.name" />
+      </Item>
+      <Item
         v-if="hasRole([ERole.ADMIN])"
         key="logs"
         @click="onClickMenuItem('Logs')"
@@ -234,6 +244,7 @@ import {
   RobotOutlined,
   RocketOutlined,
   ShopOutlined,
+  SisternodeOutlined,
   TeamOutlined,
   ToolOutlined,
 } from '@ant-design/icons-vue';
@@ -293,6 +304,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     reviews: '/dashboard/reviews',
     faqs: '/dashboard/faqs',
     alerts: '/dashboard/alerts',
+    tasks: '/dashboard/tasks',
     feedbacks: '/dashboard/feedbacks',
     logs: '/dashboard/logs',
   };
