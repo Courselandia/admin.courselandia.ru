@@ -185,18 +185,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
   },
   {
-    title: lang('task.reason'),
-    dataIndex: 'reason',
-    key: 'reason',
-    sorter: {
-      multiple: 1,
-    },
-    customFilterDropdown: true,
-    sortOrder: stateColumnSort('reason', sortedInfo.value),
-    filteredValue: stateColumnFilter('reason', filteredInfo.value, 'string'),
-  },
-  {
-    title: lang('review.createdAt'),
+    title: lang('task.createdAt'),
     dataIndex: 'created_at',
     key: 'created_at',
     sorter: {
@@ -209,7 +198,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     width: 250,
   },
   {
-    title: lang('review.launchedAt'),
+    title: lang('task.launchedAt'),
     dataIndex: 'launched_at',
     key: 'launched_at',
     sorter: {
@@ -222,7 +211,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     width: 250,
   },
   {
-    title: lang('review.finishedAt'),
+    title: lang('task.finishedAt'),
     dataIndex: 'finished_at',
     key: 'finished_at',
     sorter: {
@@ -233,6 +222,17 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('finished_at', filteredInfo.value, 'dateRange'),
     width: 250,
+  },
+  {
+    title: lang('task.reason'),
+    dataIndex: 'reason',
+    key: 'reason',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('reason', sortedInfo.value),
+    filteredValue: stateColumnFilter('reason', filteredInfo.value, 'string'),
   },
   {
     title: lang('dashboard.status'),
@@ -246,19 +246,19 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     filterMultiple: false,
     filters: [
       {
-        text: lang('dashboard.waiting'),
+        text: lang('task.waiting'),
         value: EStatus.WAITING,
       },
       {
-        text: lang('dashboard.processing'),
+        text: lang('task.processing'),
         value: EStatus.PROCESSING,
       },
       {
-        text: lang('dashboard.finished'),
+        text: lang('task.finished'),
         value: EStatus.FINISHED,
       },
       {
-        text: lang('dashboard.failed'),
+        text: lang('task.failed'),
         value: EStatus.FAILED,
       },
     ],
@@ -290,8 +290,8 @@ const rowSelection: TableProps['rowSelection'] = {
 
 const defaultSorts: Array<SorterResult> = [
   {
-    columnKey: 'name',
-    order: 'ascend',
+    columnKey: 'created_at',
+    order: 'descend',
   },
 ];
 sortedInfo.value = stateSorts<ITask>(columns.value, defaultSorts);

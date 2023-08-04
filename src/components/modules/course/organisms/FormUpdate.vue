@@ -890,6 +890,7 @@ import {
   LoadingOutlined,
   MehOutlined,
   PlusOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
@@ -1194,6 +1195,12 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
 
     await get(id as TId);
     form.value = getDefaultFormValue();

@@ -19,9 +19,11 @@
 </template>
 
 <script lang="ts" setup>
+import { SisternodeOutlined } from '@ant-design/icons-vue';
 import Card from 'ant-design-vue/lib/card';
+import notification from 'ant-design-vue/lib/notification';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
@@ -75,6 +77,12 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('article.successRewriteText');
     alert.value.type = 'success';
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
 
     await get(id as TId);
     form.value = getDefaultFormValue();

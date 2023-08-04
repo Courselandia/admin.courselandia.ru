@@ -18,9 +18,11 @@
 </template>
 
 <script lang="ts" setup>
+import { SisternodeOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Card from 'ant-design-vue/lib/card';
-import { ref } from 'vue';
+import notification from 'ant-design-vue/lib/notification';
+import { h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
@@ -72,6 +74,13 @@ const onSubmit = async (data: IToolForm, formRef?: FormInstance): Promise<void> 
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
+
     onReset(formRef);
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message

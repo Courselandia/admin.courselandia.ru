@@ -863,8 +863,10 @@ import {
   CheckOutlined,
   DeleteOutlined,
   EditOutlined,
-  ExclamationCircleOutlined, MehOutlined,
+  ExclamationCircleOutlined,
+  MehOutlined,
   PlusOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
@@ -1138,6 +1140,12 @@ const onSubmit = async (): Promise<void> => {
 
     form.value.features = [];
     featureItems.value = [];
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
 
     onClickReset();
   } catch (error: Error | any) {

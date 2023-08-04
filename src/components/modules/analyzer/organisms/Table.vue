@@ -171,6 +171,7 @@ import {
   RobotOutlined,
   SearchOutlined,
   SendOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/lib/_util/type';
@@ -547,6 +548,13 @@ const onClickReanalyze = (id: TId): void => {
 
       try {
         await analyze(id);
+
+        notification.open({
+          icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+          message: lang('task.launchTitle'),
+          description: lang('task.launchText'),
+        });
+
         await reload();
       } catch (error: Error | any) {
         notification.open({
