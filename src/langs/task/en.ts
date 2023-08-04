@@ -11,4 +11,5 @@ export default {
   failed: 'Failed',
   launchTitle: 'Запущена задача Launched task',
   launchText: 'Launched a task in the Task Manager',
+  user: 'User',
 };

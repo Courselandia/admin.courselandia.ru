@@ -23,6 +23,19 @@
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'user-id'">
+          <router-link
+            v-if="hasRole([ERole.ADMIN])"
+            :to="`/dashboard/users/${record?.user.id}`"
+          >
+            {{ record?.user?.login }}
+          </router-link>
+          <template
+            v-else
+          >
+            {{ record?.user?.login }}
+          </template>
+        </template>
         <template v-if="column.key === 'status'">
           <template v-if="record.status === EStatus.WAITING">
             <Tag color="cyan">
@@ -106,6 +119,7 @@ import Card from 'ant-design-vue/lib/card';
 import notification from 'ant-design-vue/lib/notification';
 import Table from 'ant-design-vue/lib/table';
 import {
+  ColumnFilterItem,
   FilterValue,
   SorterResult,
   TablePaginationConfig,
@@ -130,6 +144,7 @@ import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import EStatus from '@/enums/modules/task/status';
+import ERole from '@/enums/modules/user/role';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
 import sorts from '@/helpers/sorts';
@@ -143,8 +158,11 @@ import {
   stateSorts,
 } from '@/helpers/state';
 import ITask from '@/interfaces/modules/task/task';
+import ISorts from '@/interfaces/molecules/table/sorts';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
+import access from '@/stores/access';
 import task from '@/stores/task';
+import user from '@/stores/user';
 import TId from '@/types/id';
 
 const {
@@ -158,6 +176,24 @@ const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null>>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
+
+const readUsers = user().read;
+const userData = storeToRefs(user());
+const userItems = userData.items;
+const { role } = storeToRefs(access());
+
+const getUsersFilter = (): Array<ColumnFilterItem> => {
+  const result: Array<ColumnFilterItem> = [];
+
+  userItems.value?.forEach((item) => {
+    result[result.length] = {
+      text: item.login,
+      value: item.id,
+    };
+  });
+
+  return result;
+};
 
 const columns = computed<ITableColumnType<ITask>[]>(() => [
   {
@@ -185,6 +221,19 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
   },
   {
+    title: lang('task.user'),
+    dataIndex: 'user-id',
+    key: 'user-id',
+    sorter: {
+      multiple: 1,
+    },
+    customFilterDropdown: true,
+    sortOrder: stateColumnSort('user-login', sortedInfo.value),
+    filteredValue: stateColumnFilter('user-id', filteredInfo.value, 'number'),
+    filterType: 'select',
+    filters: getUsersFilter(),
+  },
+  {
     title: lang('task.createdAt'),
     dataIndex: 'created_at',
     key: 'created_at',
@@ -195,7 +244,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     customFilterDropdown: true,
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('created_at', filteredInfo.value, 'dateRange'),
-    width: 250,
+    width: 200,
   },
   {
     title: lang('task.launchedAt'),
@@ -208,7 +257,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     customFilterDropdown: true,
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('launched_at', filteredInfo.value, 'dateRange'),
-    width: 250,
+    width: 200,
   },
   {
     title: lang('task.finishedAt'),
@@ -221,7 +270,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     customFilterDropdown: true,
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('finished_at', filteredInfo.value, 'dateRange'),
-    width: 250,
+    width: 200,
   },
   {
     title: lang('task.reason'),
@@ -320,6 +369,21 @@ const load = async (
   loading.value = false;
 };
 
+const loadUsers = async () => {
+  try {
+    await readUsers(null, null, { login: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+};
+
 onMounted(async (): Promise<void> => {
   await load(
     (pageCurrentDefault - 1) * pageSizeDefault,
@@ -327,6 +391,8 @@ onMounted(async (): Promise<void> => {
     sortedInfo.value,
     filteredInfo.value,
   );
+
+  await loadUsers();
 });
 
 watch(route, (): void => {
@@ -386,6 +452,14 @@ const reload = async (): Promise<void> => {
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
+};
+
+const hasRole = (roles: Array<ERole>) => {
+  if (role?.value) {
+    return roles.indexOf(role?.value) !== -1;
+  }
+
+  return false;
 };
 </script>
 
