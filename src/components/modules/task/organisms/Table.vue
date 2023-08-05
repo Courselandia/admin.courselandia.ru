@@ -461,6 +461,10 @@ const hasRole = (roles: Array<ERole>) => {
 
   return false;
 };
+
+window.setInterval(async () => {
+  await reload();
+}, 10000);
 </script>
 
 <style lang="scss">
