@@ -4,6 +4,10 @@
       <Lang value="task.name" />
     </template>
 
+    <div>
+      Total: {{ total }}
+    </div>
+
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
