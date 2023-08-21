@@ -419,6 +419,8 @@ onMounted(async (): Promise<void> => {
     filteredInfo.value,
   );
 
+  pagination.value.total = total.value || 0;
+
   await loadProfessions();
 });
 
@@ -457,6 +459,8 @@ const onChange: TableProps<ISalary>['onChange'] = async (pag, filter, sorter): P
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reloadToFirstPagination = async (): Promise<void> => {
@@ -466,6 +470,8 @@ const reloadToFirstPagination = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reload = async (): Promise<void> => {
@@ -475,6 +481,8 @@ const reload = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value, toFilterFields);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const onClickCreate = (): void => {

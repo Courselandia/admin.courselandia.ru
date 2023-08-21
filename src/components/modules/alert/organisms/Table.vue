@@ -292,6 +292,8 @@ onMounted(async (): Promise<void> => {
     (pageCurrentDefault - 1) * pageSizeDefault,
     pageSizeDefault,
   );
+
+  pagination.value.total = total.value || 0;
 });
 
 watch(route, (): void => {
@@ -329,6 +331,8 @@ const onChange: TableProps<IAlert>['onChange'] = async (pag, filter, sorter): Pr
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reload = async (): Promise<void> => {
@@ -338,6 +342,8 @@ const reload = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize);
+
+  pagination.value.total = total.value || 0;
 };
 
 const destroyIds = async (ids: Array<TId>): Promise<void> => {

@@ -480,6 +480,8 @@ onMounted(async (): Promise<void> => {
     sortedInfo.value,
     filteredInfo.value,
   );
+
+  pagination.value.total = total.value || 0;
 });
 
 watch(route, (): void => {
@@ -517,6 +519,8 @@ const onChange: TableProps<IArticle>['onChange'] = async (pag, filter, sorter): 
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reloadToFirstPagination = async (): Promise<void> => {
@@ -526,6 +530,8 @@ const reloadToFirstPagination = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reload = async (): Promise<void> => {
@@ -535,6 +541,8 @@ const reload = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const onClickUpdate = (id: TId): void => {

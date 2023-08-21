@@ -4,10 +4,6 @@
       <Lang value="task.name" />
     </template>
 
-    <div>
-      Total: {{ total }}
-    </div>
-
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
@@ -396,6 +392,8 @@ onMounted(async (): Promise<void> => {
     filteredInfo.value,
   );
 
+  pagination.value.total = total.value || 0;
+
   await loadUsers();
 });
 
@@ -413,6 +411,8 @@ watch(route, (): void => {
     filteredInfo.value = stateFilters<ITask>(columns.value);
 
     load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+    pagination.value.total = total.value || 0;
   }
 });
 
@@ -434,6 +434,8 @@ const onChange: TableProps<ITask>['onChange'] = async (pag, filter, sorter): Pro
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reloadToFirstPagination = async (): Promise<void> => {
@@ -443,6 +445,8 @@ const reloadToFirstPagination = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const reload = async (): Promise<void> => {
@@ -452,6 +456,8 @@ const reload = async (): Promise<void> => {
 
   stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
   await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
 };
 
 const onTagsChange = (): void => {

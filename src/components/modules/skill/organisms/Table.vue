@@ -4,6 +4,10 @@
       <Lang value="skill.name" />
     </template>
 
+    <div>
+      Total: {{ total }} | {{ pagination }}
+    </div>
+
     <template #extra>
       <Space>
         <Button
