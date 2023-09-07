@@ -252,6 +252,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Info from '@/components/modules/analyzer/organisms/Info.vue';
+import getLink from '@/components/modules/article/getLink';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import EStatus from '@/enums/modules/article/status';
@@ -287,22 +288,6 @@ const router = useRouter();
 const route = useRoute();
 const filteredInfo = ref<Record<string, FilterValue | null>>();
 const sortedInfo = ref<SorterResult | SorterResult[] | null>();
-
-const getLink = (id: TId, category: string): string | null => {
-  if (category === 'course.text') {
-    return `/dashboard/courses/${id}`;
-  }
-
-  if (category === 'skill.text') {
-    return `/dashboard/skills/${id}`;
-  }
-
-  if (category === 'tool.text') {
-    return `/dashboard/tools/${id}`;
-  }
-
-  return null;
-};
 
 const columns = computed<ITableColumnType<IArticle>[]>(() => [
   {

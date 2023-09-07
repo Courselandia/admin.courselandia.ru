@@ -22,6 +22,26 @@
       class="mb-20"
     >
       <Item
+        v-if="form.articleable?.id && form.category"
+        :span="3"
+        :label="lang('article.ownId')"
+      >
+        <router-link
+          :to="getLink(form.articleable.id, form.category)"
+        >
+          {{ form.articleable?.id }}
+        </router-link>
+      </Item>
+      <Item
+        :span="3"
+        :label="lang('article.category')"
+      >
+        {{ form.category_name }}
+        <template v-if="form.category_label">
+          / {{ form.category_label }}
+        </template>
+      </Item>
+      <Item
         :span="3"
         :label="lang('article.textCurrent')"
       >
@@ -113,6 +133,7 @@ import {
 
 import Lang from '@/components/atoms/Lang.vue';
 import Info from '@/components/modules/analyzer/organisms/Info.vue';
+import getLink from '@/components/modules/article/getLink';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import countLength from '@/helpers/countLength';
 import { stripTags } from '@/helpers/format';

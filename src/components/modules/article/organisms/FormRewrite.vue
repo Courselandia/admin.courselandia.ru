@@ -60,6 +60,8 @@ const getDefaultFormValue = (): IArticleRewriteForm => ({
   analyzers: item.value?.analyzers || null,
   articleable: item.value?.articleable || null,
   category: item.value?.category || null,
+  category_label: item.value?.category_label || null,
+  category_name: item.value?.category_name || null,
 });
 
 const form = ref<IArticleRewriteForm>(getDefaultFormValue());

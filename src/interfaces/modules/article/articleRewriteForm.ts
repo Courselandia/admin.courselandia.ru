@@ -10,4 +10,6 @@ export default interface IArticleRewriteForm {
   analyzers: Array<IAnalyzer> | null;
   articleable: ICourse | null;
   category: string | null;
+  category_name: string | null;
+  category_label: string | null;
 }

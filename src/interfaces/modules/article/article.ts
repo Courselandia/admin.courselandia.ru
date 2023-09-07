@@ -13,6 +13,7 @@ export default interface IArticle extends IColumn {
   text: string | null,
   text_current: string | null,
   category_label: string | null,
+  category_name: string | null;
   params: Array<any> | null,
   tries: number,
   status: EStatus,
