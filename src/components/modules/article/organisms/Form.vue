@@ -33,7 +33,7 @@
             style="margin-top: 5px"
           >
             <Lang value="article.lengthText" />
-            {{ form.text_current?.length }}
+            {{ form.text_current ? countLength(form.text_current) : 0 }}
           </Tag>
           <Info
             v-if="form.articleable?.analyzers?.length && form.category"
@@ -54,7 +54,7 @@
     >
       <Tag color="purple">
         <Lang value="article.lengthText" />
-        {{ form.text?.length }}
+        {{ form.text ? countLength(form.text) : 0 }}
       </Tag>
       <Info
         v-if="form.analyzers?.length"
@@ -103,6 +103,7 @@ import Descriptions from 'ant-design-vue/lib/descriptions';
 import Form from 'ant-design-vue/lib/form';
 import Space from 'ant-design-vue/lib/space';
 import Tag from 'ant-design-vue/lib/tag';
+import trim from 'lodash/trim';
 import {
   PropType,
   ref,
@@ -113,6 +114,8 @@ import {
 import Lang from '@/components/atoms/Lang.vue';
 import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import countLength from '@/helpers/countLength';
+import { stripTags } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IArticleForm from '@/interfaces/modules/article/articleForm';
 

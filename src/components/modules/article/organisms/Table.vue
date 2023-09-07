@@ -114,7 +114,7 @@
               style="margin-top: 20px"
             >
               <Lang value="article.lengthText" />
-              {{ record.text_current?.length }}
+              {{ record.text_current ? countLength(record.text_current) : 0 }}
             </Tag>
             <Info
               :analyzers="record.articleable.analyzers"
@@ -132,7 +132,7 @@
               style="margin-bottom: 5px"
             >
               <Lang value="article.lengthText" />
-              {{ record.text?.length }}
+              {{ record.text ? countLength(record.text) : 0 }}
             </Tag>
             <Info
               :analyzers="record.analyzers"
@@ -238,6 +238,7 @@ import {
   SorterResult, TablePaginationConfig, TableRowSelection,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
+import trim from 'lodash/trim';
 import { storeToRefs } from 'pinia';
 import {
   computed,
@@ -254,7 +255,9 @@ import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import EStatus from '@/enums/modules/article/status';
+import countLength from '@/helpers/countLength';
 import filters from '@/helpers/filters';
+import { stripTags } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import sorts from '@/helpers/sorts';
 import {

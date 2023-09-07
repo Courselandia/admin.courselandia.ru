@@ -122,3 +122,5 @@ export const rnToBr = (value: string): string => {
 
   return result;
 };
+
+export const stripTags = (value: string): string => value.replace(/<\/?[^>]+(>|$)/g, '');
