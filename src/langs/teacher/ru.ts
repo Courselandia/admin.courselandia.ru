@@ -1,7 +1,7 @@
 export default {
   name: 'Учителя',
   addTeacher: 'Добавить учителя',
-  updateTeacher: 'Редактировать школу',
+  updateTeacher: 'Редактировать учителя',
   nameField: 'ФИО',
   link: 'Ссылка',
   text: 'Текст',
@@ -13,4 +13,7 @@ export default {
   createTeacher: 'Создать учителя',
   directions: 'Направления',
   schools: 'Школы',
+  city: 'Город',
+  copied: 'Биография скопирована',
+  comment: 'Комментарий',
 };

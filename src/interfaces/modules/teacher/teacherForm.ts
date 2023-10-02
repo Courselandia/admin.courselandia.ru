@@ -6,6 +6,7 @@ export default interface ITeacherForm {
   name: string;
   link: string;
   text: string;
+  city: string;
   rating: number | string;
   image: File | null;
   directions: Array<IOption>;
@@ -16,4 +17,6 @@ export default interface ITeacherForm {
   description_template: string | null;
   keywords: string | null;
   status: boolean;
+  copied: boolean;
+  comment: string;
 }

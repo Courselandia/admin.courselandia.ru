@@ -64,6 +64,8 @@ export default defineStore('teacher', {
       formData.append('name', data.name);
       formData.append('link', data.link);
       formData.append('text', data.text || '');
+      formData.append('city', data.city || '');
+      formData.append('comment', data.comment || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
@@ -71,6 +73,7 @@ export default defineStore('teacher', {
       formData.append('description_template', data.description_template || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
+      formData.append('copied', data.copied ? '1' : '0');
       formData.append('image', data.image || '');
 
       for (let i = 0; i < data.directions.length; i++) {

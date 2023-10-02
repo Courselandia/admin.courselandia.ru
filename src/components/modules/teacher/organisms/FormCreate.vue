@@ -75,6 +75,26 @@
                   <Input v-model:value="form.link" />
                 </Item>
                 <Item
+                  :label="lang('teacher.city')"
+                  name="city"
+                  has-feedback
+                  :rules="[{ required: false, type: 'string', max: 191 }]"
+                >
+                  <Input
+                    v-model:value="form.city"
+                  />
+                </Item>
+                <Item
+                  :label="lang('teacher.comment')"
+                  name="comment"
+                  has-feedback
+                  :rules="[{ required: false, type: 'string', max: 191 }]"
+                >
+                  <Input
+                    v-model:value="form.comment"
+                  />
+                </Item>
+                <Item
                   :label="lang('teacher.rating')"
                   name="rating"
                   has-feedback
@@ -160,6 +180,17 @@
                 name="text"
                 class="mb-30"
               />
+              <Item
+                :wrapper-col="{offset: 0, span: 19}"
+                name="remember"
+                class="buttons-flex"
+              >
+                <Checkbox
+                  v-model:checked="form.copied"
+                >
+                  <Lang value="teacher.copied" />
+                </Checkbox>
+              </Item>
             </TabPane>
           </Tabs>
           <Item
@@ -248,13 +279,15 @@
 <script lang="ts" setup>
 import {
   DeleteOutlined,
-  ExclamationCircleOutlined, MehOutlined,
+  ExclamationCircleOutlined,
+  MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
+import Checkbox from 'ant-design-vue/lib/checkbox';
 import Col from 'ant-design-vue/lib/col';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
@@ -323,6 +356,7 @@ const form = ref<ITeacherForm>({
   link: '',
   text: '',
   rating: '',
+  city: '',
   image: null,
   directions: [],
   schools: [],
@@ -332,6 +366,8 @@ const form = ref<ITeacherForm>({
   description_template: 'Все курсы преподавателя {teacher} — полный список обучающих онлайн-курсов в каталоге Courselandia.',
   keywords: null,
   status: true,
+  copied: true,
+  comment: '',
 });
 
 const onClickReset = (): void => {

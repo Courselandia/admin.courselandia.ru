@@ -13,4 +13,7 @@ export default {
   createTeacher: 'Create Teacher',
   directions: 'Directions',
   schools: 'Schools',
+  city: 'City',
+  copied: 'Copied',
+  comment: 'Comment',
 };
