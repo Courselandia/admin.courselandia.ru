@@ -100,6 +100,17 @@
             :width="130"
           />
         </template>
+        <template v-if="column.key === 'name'">
+          <div>
+            {{ record.name }}
+          </div>
+          <Typography
+            v-if="record.comment"
+            type="secondary"
+          >
+            {{ record.comment }}
+          </Typography>
+        </template>
         <template v-if="column.key === 'status'">
           <Tag
             :color="record.status === true ? 'green' : 'red'"
@@ -180,6 +191,7 @@ import {
   SorterResult, TablePaginationConfig, TableRowSelection,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
+import Typography from 'ant-design-vue/lib/typography';
 import { storeToRefs } from 'pinia';
 import {
   computed,
