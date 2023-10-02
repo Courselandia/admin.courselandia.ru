@@ -202,7 +202,7 @@
                     class="width--wide"
                     show-search
                     :filter-option="filterOption"
-                    :options="teacherItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :options="teacherItems?.map(itm => getTeacher(itm))"
                     :loading="loadingSelects"
                   />
                 </Item>
@@ -960,7 +960,9 @@ import lang from '@/helpers/lang';
 import ICourseForm from '@/interfaces/modules/course/courseForm';
 import IFeature from '@/interfaces/modules/course/feature';
 import IProgram from '@/interfaces/modules/course/program';
+import ITeacher from '@/interfaces/modules/teacher/teacher';
 import IAlert from '@/interfaces/molecules/alert/alert';
+import IOption from '@/interfaces/molecules/select/option';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import category from '@/stores/category';
 import course from '@/stores/course';
@@ -1271,6 +1273,20 @@ const filterOption = (input: string, option: any) => option
   ?.label
   ?.toLowerCase()
   ?.indexOf(input.toLowerCase()) >= 0;
+
+const getTeacher = (itm: ITeacher): IOption => {
+  if (itm.comment) {
+    return {
+      value: itm.id,
+      label: `${itm.name} (${itm.comment})`,
+    };
+  }
+
+  return {
+    value: itm.id,
+    label: itm.name,
+  };
+};
 </script>
 
 <style lang="scss">

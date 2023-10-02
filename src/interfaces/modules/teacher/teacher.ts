@@ -10,6 +10,7 @@ export default interface ITeacher extends IColumn {
   metatag_id: TId;
   name: string;
   link: string;
+  comment: string;
   text: string | null;
   rating: number;
   status: boolean;
