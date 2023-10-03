@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
@@ -82,6 +83,22 @@ export default defineStore('teacher', {
 
       for (let i = 0; i < data.schools.length; i++) {
         formData.append(`schools[${i}]`, String(data.schools[i].key));
+      }
+
+      if (data.experiences) {
+        for (let i = 0, z = 0; i < data.experiences.length; i++) {
+          if (data.experiences[i].place && data.experiences[i].position) {
+            const started = data.experiences[i].started as unknown as dayjs.Dayjs;
+            const finished = data.experiences[i].finished as unknown as dayjs.Dayjs;
+
+            formData.append(`experiences[${z}][place]`, data.experiences[i].place || '');
+            formData.append(`experiences[${z}][position]`, data.experiences[i].position || '');
+            formData.append(`experiences[${z}][started]`, started?.format('YYYY-MM-DD') || '');
+            formData.append(`experiences[${z}][finished]`, finished?.format('YYYY-MM-DD') || '');
+            formData.append(`experiences[${z}][weight]`, String(data.experiences[i].weight || 0));
+            z++;
+          }
+        }
       }
 
       const response = await axios.post<IResponseItem<ITeacher>>('/api/private/admin/teacher/create', formData, {
