@@ -1,3 +1,4 @@
+import ITeacherExperience from '@/interfaces/modules/teacher/experience';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -19,4 +20,5 @@ export default interface ITeacherForm {
   status: boolean;
   copied: boolean;
   comment: string;
+  experiences: ITeacherExperience[];
 }

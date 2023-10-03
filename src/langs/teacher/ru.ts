@@ -16,4 +16,10 @@ export default {
   city: 'Город',
   copied: 'Биография скопирована',
   comment: 'Комментарий',
+  experiences: 'Опыт работы',
+  place: 'Место',
+  position: 'Должность',
+  started: 'Начала работы',
+  finished: 'Окончание работы',
+  weight: 'Вес',
 };

@@ -16,4 +16,10 @@ export default {
   city: 'City',
   copied: 'Copied',
   comment: 'Comment',
+  experiences: 'Experiences',
+  place: 'Place',
+  position: 'Position',
+  started: 'Started',
+  finished: 'Finished',
+  weight: 'Weight',
 };
