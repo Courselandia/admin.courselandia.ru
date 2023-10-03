@@ -22,4 +22,7 @@ export default {
   started: 'Started',
   finished: 'Finished',
   weight: 'Weight',
+  socialMedias: 'Social Medias',
+  value: 'Value',
+  nameSocialMedia: 'Social Media',
 };

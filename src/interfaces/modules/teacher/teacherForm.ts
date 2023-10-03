@@ -1,4 +1,5 @@
 import ITeacherExperience from '@/interfaces/modules/teacher/experience';
+import ISocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -21,4 +22,5 @@ export default interface ITeacherForm {
   copied: boolean;
   comment: string;
   experiences: ITeacherExperience[];
+  socialMedias: ISocialMedia[];
 }

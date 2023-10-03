@@ -321,6 +321,102 @@
               </Table>
             </TabPane>
             <TabPane
+              key="social_medias"
+              :tab="lang('teacher.socialMedias')"
+            >
+              <Button
+                class="mb-10"
+                @click="onClickAddSocialMedia"
+              >
+                <template #icon>
+                  <PlusOutlined />
+                </template>
+                <span>
+                  <Lang value="dashboard.add" />
+                </span>
+              </Button>
+              <Table
+                bordered
+                class="mb-25"
+                row-key="id"
+                :pagination="false"
+                :data-source="socialMediaItems"
+                :columns="socialMediaColumns"
+                sticky
+              >
+                <template #bodyCell="{ column, text, record }">
+                  <template v-if="column.dataIndex === 'name'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="socialMediaEditableData[record.id]?.name !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="socialMediaEditableData[record.id].name"
+                          @press-enter="socialMediaSave(record.id, 'name')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="socialMediaSave(record.id, 'name')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="socialMediaEdit(record.id, 'name')"
+                        @keydown.enter="socialMediaEdit(record.id, 'name')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'value'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="socialMediaEditableData[record.id]?.value !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="socialMediaEditableData[record.id].value"
+                          @press-enter="socialMediaSave(record.id, 'value')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="socialMediaSave(record.id, 'value')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="socialMediaEdit(record.id, 'value')"
+                        @keydown.enter="socialMediaEdit(record.id, 'value')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else-if="column.dataIndex === 'actions'">
+                    <Popconfirm
+                      v-if="socialMediaItems.length"
+                      :title="lang('dashboard.askDestroyRecord')"
+                      @confirm="onClickDeleteSocialMedia(record.id)"
+                    >
+                      <Button danger>
+                        <template #icon>
+                          <DeleteOutlined />
+                        </template>
+                        <span>
+                          <Lang value="dashboard.destroy" />
+                        </span>
+                      </Button>
+                    </Popconfirm>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
+            <TabPane
               key="meta"
               :tab="lang('dashboard.meta')"
             >
@@ -504,7 +600,14 @@ import {
   experienceItems,
   experienceSave,
   onClickAddExperience,
+  onClickAddSocialMedia,
   onClickDeleteExperience,
+  onClickDeleteSocialMedia,
+  socialMediaColumns,
+  socialMediaEdit,
+  socialMediaEditableData,
+  socialMediaItems,
+  socialMediaSave,
 } from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
@@ -530,6 +633,7 @@ const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const { create } = teacher();
 experienceItems.value = [];
+socialMediaItems.value = [];
 
 const directionData = storeToRefs(direction());
 const directionItems = directionData.items;
@@ -566,6 +670,7 @@ const form = ref<ITeacherForm>({
   copied: true,
   comment: '',
   experiences: [],
+  socialMedias: [],
 });
 
 const onClickReset = (): void => {
@@ -576,6 +681,9 @@ const onClickReset = (): void => {
 
   form.value.experiences = [];
   experienceItems.value = [];
+
+  form.value.socialMedias = [];
+  socialMediaItems.value = [];
 };
 
 onMounted(async (): Promise<void> => {
@@ -607,6 +715,10 @@ const onSubmit = async (): Promise<void> => {
       form.value.experiences = [];
     }
 
+    if (!form.value.socialMedias) {
+      form.value.socialMedias = [];
+    }
+
     Object.values(experienceItems.value).forEach((itm) => {
       if (
         form.value.experiences
@@ -614,6 +726,22 @@ const onSubmit = async (): Promise<void> => {
         && itm.position
       ) {
         form.value.experiences[form.value.experiences.length] = {
+          place: itm.place,
+          position: itm.position,
+          started: itm.started,
+          finished: itm.finished,
+          weight: itm.weight,
+        };
+      }
+    });
+
+    Object.values(socialMediaItems.value).forEach((itm) => {
+      if (
+        form.value.socialMedias
+        && itm.name
+        && itm.value
+      ) {
+        form.value.socialMedias[form.value.socialMedias.length] = {
           place: itm.place,
           position: itm.position,
           started: itm.started,
@@ -633,6 +761,9 @@ const onSubmit = async (): Promise<void> => {
 
     form.value.experiences = [];
     experienceItems.value = [];
+
+    form.value.socialMedias = [];
+    socialMediaItems.value = [];
 
     onClickReset();
   } catch (error: Error | any) {

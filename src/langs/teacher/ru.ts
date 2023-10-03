@@ -22,4 +22,7 @@ export default {
   started: 'Начала работы',
   finished: 'Окончание работы',
   weight: 'Вес',
+  socialMedias: 'Социальные сети',
+  value: 'Значение',
+  nameSocialMedia: 'Социальная сеть',
 };

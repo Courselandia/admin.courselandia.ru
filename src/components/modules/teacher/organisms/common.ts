@@ -9,6 +9,7 @@ import {
 
 import lang from '@/helpers/lang';
 import ITeacherExperience from '@/interfaces/modules/teacher/experience';
+import ITeacherSocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import TId from '@/types/id';
 
 export const experienceColumns = [
@@ -92,4 +93,69 @@ export const onClickAddExperience = (): void => {
 
 export const onClickDeleteExperience = (id: TId): void => {
   experienceItems.value = experienceItems.value.filter((item) => item.id !== id);
+};
+
+// ***************
+
+export const socialMediaColumns = [
+  {
+    title: lang('teacher.nameSocialMedia'),
+    dataIndex: 'name',
+    width: 250,
+  },
+  {
+    title: lang('teacher.value'),
+    dataIndex: 'value',
+  },
+  {
+    dataIndex: 'actions',
+    width: 150,
+  },
+];
+
+export const socialMediaItems: Ref<ITeacherSocialMedia[]> = ref([]);
+export const socialMediaEditableData: UnwrapRef<Record<TId, ITeacherSocialMedia>> = reactive({});
+
+export const socialMediaSave = (id: TId, index: string): void => {
+  const itemFound = socialMediaItems.value.filter((item) => id === item.id)[0];
+
+  if (
+    (index === 'name' && !socialMediaEditableData[id].name)
+    || (index === 'value' && !socialMediaEditableData[id].value)
+  ) {
+    Modal.warning({
+      title: lang('dashboard.warning'),
+      content: lang('dashboard.notEmpty'),
+    });
+  } else {
+    Object.keys(socialMediaEditableData[id]).forEach((filedKey) => {
+      itemFound[filedKey] = socialMediaEditableData[id][filedKey];
+    });
+
+    delete socialMediaEditableData[id];
+  }
+};
+
+export const socialMediaEdit = (id: TId, field: string): void => {
+  const cloned = cloneDeep(socialMediaItems.value.filter((item) => id === item.id)[0]);
+
+  if (!socialMediaEditableData[id]) {
+    socialMediaEditableData[id] = {};
+  }
+
+  socialMediaEditableData[id][field] = cloned[field];
+};
+
+export const onClickAddSocialMedia = (): void => {
+  const newData: ITeacherSocialMedia = {
+    id: Date.now(),
+    name: null,
+    value: null,
+  };
+
+  socialMediaItems.value.push(newData);
+};
+
+export const onClickDeleteSocialMedia = (id: TId): void => {
+  socialMediaItems.value = socialMediaItems.value.filter((item) => item.id !== id);
 };
