@@ -2,6 +2,7 @@ import IDirection from '@/interfaces/modules/direction/direction';
 import IImage from '@/interfaces/modules/image';
 import IMetatag from '@/interfaces/modules/metatag';
 import ISchool from '@/interfaces/modules/school/school';
+import ITeacherExperience from '@/interfaces/modules/teacher/experience';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
 
@@ -22,4 +23,5 @@ export default interface ITeacher extends IColumn {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+  experiences: ITeacherExperience[];
 }

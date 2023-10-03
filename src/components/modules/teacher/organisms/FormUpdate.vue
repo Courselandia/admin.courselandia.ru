@@ -140,6 +140,187 @@
               </div>
             </TabPane>
             <TabPane
+              key="experiences"
+              :tab="lang('teacher.experiences')"
+            >
+              <Button
+                class="mb-10"
+                @click="onClickAddExperience"
+              >
+                <template #icon>
+                  <PlusOutlined />
+                </template>
+                <span>
+                  <Lang value="dashboard.add" />
+                </span>
+              </Button>
+              <Table
+                bordered
+                class="mb-25"
+                row-key="id"
+                :pagination="false"
+                :data-source="experienceItems"
+                :columns="experienceColumns"
+                sticky
+              >
+                <template #bodyCell="{ column, text, record }">
+                  <template v-if="column.dataIndex === 'place'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="experienceEditableData[record.id]?.place !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="experienceEditableData[record.id].place"
+                          @press-enter="experienceSave(record.id, 'place')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="experienceSave(record.id, 'place')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="experienceEdit(record.id, 'place')"
+                        @keydown.enter="experienceEdit(record.id, 'place')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'position'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="experienceEditableData[record.id]?.position !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="experienceEditableData[record.id].position"
+                          @press-enter="experienceSave(record.id, 'position')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="experienceSave(record.id, 'position')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="experienceEdit(record.id, 'position')"
+                        @keydown.enter="experienceEdit(record.id, 'position')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'started'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="experienceEditableData[record.id]?.started !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <DatePicker
+                          v-model:value="experienceEditableData[record.id].started"
+                          format="DD.MM.YYYY"
+                          @change="experienceSave(record.id, 'started')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="experienceSave(record.id, 'started')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="experienceEdit(record.id, 'started')"
+                        @keydown.enter="experienceEdit(record.id, 'started')"
+                      >
+                        {{ text
+                          ? dayjs.utc(text).format('D MMMM YYYY')
+                          : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'finished'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="experienceEditableData[record.id]?.finished !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <DatePicker
+                          v-model:value="experienceEditableData[record.id].finished"
+                          format="DD.MM.YYYY"
+                          @change="experienceSave(record.id, 'finished')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="experienceSave(record.id, 'finished')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="experienceEdit(record.id, 'finished')"
+                        @keydown.enter="experienceEdit(record.id, 'finished')"
+                      >
+                        {{ text
+                          ? dayjs.utc(text).format('D MMMM YYYY')
+                          : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'weight'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="experienceEditableData[record.id]?.weight !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="experienceEditableData[record.id].weight"
+                          type="number"
+                          @press-enter="experienceSave(record.id, 'weight')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="experienceSave(record.id, 'weight')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="experienceEdit(record.id, 'weight')"
+                        @keydown.enter="experienceEdit(record.id, 'weight')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else-if="column.dataIndex === 'actions'">
+                    <Popconfirm
+                      v-if="experienceItems.length"
+                      :title="lang('dashboard.askDestroyRecord')"
+                      @confirm="onClickDeleteExperience(record.id)"
+                    >
+                      <Button danger>
+                        <template #icon>
+                          <DeleteOutlined />
+                        </template>
+                        <span>
+                          <Lang value="dashboard.destroy" />
+                        </span>
+                      </Button>
+                    </Popconfirm>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
+            <TabPane
               key="meta"
               :tab="lang('dashboard.meta')"
             >
@@ -289,7 +470,8 @@
 
 <script lang="ts" setup>
 import {
-  DeleteOutlined,
+  CheckOutlined,
+  DeleteOutlined, EditOutlined,
   ExclamationCircleOutlined,
   LoadingOutlined,
   MehOutlined,
@@ -301,17 +483,21 @@ import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Checkbox from 'ant-design-vue/lib/checkbox';
 import Col from 'ant-design-vue/lib/col';
+import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
 import notification from 'ant-design-vue/lib/notification';
+import Popconfirm from 'ant-design-vue/lib/popconfirm';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
 import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
+import Table from 'ant-design-vue/lib/table';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
+import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import {
   createVNode,
@@ -323,10 +509,20 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import {
+  experienceColumns,
+  experienceEdit,
+  experienceEditableData,
+  experienceItems,
+  experienceSave,
+  onClickAddExperience,
+  onClickDeleteExperience,
+} from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
+import ITeacherExperience from '@/interfaces/modules/teacher/experience';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
@@ -421,7 +617,24 @@ const getDefaultFormValue = (): ITeacherForm => ({
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   schools: item.value?.schools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   copied: item.value?.copied !== undefined ? item.value?.copied : true,
+  experiences: item.value?.experiences?.map((itm: ITeacherExperience) => ({
+    id: itm.id,
+    place: itm.place,
+    position: itm.position,
+    started: itm.started ? dayjs.utc(itm.started) : null,
+    finished: itm.finished ? dayjs.utc(itm.finished) : null,
+    weight: itm.weight,
+  })) || [],
 });
+
+experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) => ({
+  id: itm.id,
+  place: itm.place,
+  position: itm.position,
+  started: itm.started ? dayjs.utc(itm.started) : null,
+  finished: itm.finished ? dayjs.utc(itm.finished) : null,
+  weight: itm.weight,
+})) || [];
 
 const form = ref<ITeacherForm>(getDefaultFormValue());
 
@@ -434,6 +647,24 @@ const onSubmit = async (): Promise<void> => {
   loading.value = true;
 
   try {
+    form.value.experiences = [];
+
+    Object.values(experienceItems.value).forEach((itm) => {
+      if (
+        form.value.experiences
+        && itm.place
+        && itm.position
+      ) {
+        form.value.experiences[form.value.experiences.length] = {
+          place: itm.place,
+          position: itm.position,
+          started: itm.started,
+          finished: itm.finished,
+          weight: itm.weight,
+        };
+      }
+    });
+
     await update(form.value);
 
     alert.value.message = lang('dashboard.successUpdateText');
@@ -441,6 +672,14 @@ const onSubmit = async (): Promise<void> => {
 
     await get(id as TId);
     form.value = getDefaultFormValue();
+    experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) => ({
+      id: itm.id,
+      place: itm.place,
+      position: itm.position,
+      started: itm.started ? dayjs.utc(itm.started) : null,
+      finished: itm.finished ? dayjs.utc(itm.finished) : null,
+      weight: itm.weight,
+    })) || [];
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
@@ -510,7 +749,9 @@ const filterOption = (input: string, option: any) => option
   ?.indexOf(input.toLowerCase()) >= 0;
 </script>
 
-<style>
+<style lang="scss">
+@import "@/assets/components/organisms/editableCell.scss";
+
 .ant-upload.ant-upload-select-picture-card {
   width: 208px !important;
   height: 208px !important;

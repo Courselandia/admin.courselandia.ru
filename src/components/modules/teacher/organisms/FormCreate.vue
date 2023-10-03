@@ -239,7 +239,7 @@
                         @keydown.enter="experienceEdit(record.id, 'started')"
                       >
                         {{ text
-                          ? dayjs.utc(text).tz(dayjs.tz.guess()).format('D MMMM YYYY')
+                          ? dayjs.utc(text).format('D MMMM YYYY')
                           : '&nbsp;' }}
                         <EditOutlined class="editable-cell-icon" />
                       </div>
@@ -268,7 +268,7 @@
                         @keydown.enter="experienceEdit(record.id, 'finished')"
                       >
                         {{ text
-                          ? dayjs.utc(text).tz(dayjs.tz.guess()).format('D MMMM YYYY')
+                          ? dayjs.utc(text).format('D MMMM YYYY')
                           : '&nbsp;' }}
                         <EditOutlined class="editable-cell-icon" />
                       </div>
@@ -507,7 +507,6 @@ import {
   onClickDeleteExperience,
 } from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
-import EIcon from '@/enums/modules/course/icon';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
@@ -530,6 +529,7 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const { create } = teacher();
+experienceItems.value = [];
 
 const directionData = storeToRefs(direction());
 const directionItems = directionData.items;

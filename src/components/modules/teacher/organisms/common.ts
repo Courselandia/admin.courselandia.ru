@@ -31,6 +31,7 @@ export const experienceColumns = [
   {
     title: lang('teacher.weight'),
     dataIndex: 'weight',
+    width: 130,
   },
   {
     dataIndex: 'actions',

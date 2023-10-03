@@ -115,6 +115,18 @@ export default defineStore('teacher', {
         rating: data.rating ? String(data.rating) : '0',
         directions: data.directions?.map((item) => item.key),
         schools: data.schools?.map((item) => item.key),
+        experiences: data.experiences?.map((item) => {
+          const started = item.started ? dayjs.utc(item.started) : null;
+          const finished = item.finished ? dayjs.utc(item.finished) : null;
+
+          return {
+            place: item.place,
+            position: item.position,
+            started: started?.format('YYYY-MM-DD') || '',
+            finished: finished?.format('YYYY-MM-DD') || '',
+            weight: item.weight,
+          };
+        }),
       }, {
         headers: {
           Authorization: access().accessToken || '',
