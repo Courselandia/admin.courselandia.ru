@@ -14,7 +14,7 @@ enum ESocialMedia {
   TWITCH = 'twitch',
   TIK_TOK = 'tikTok',
   SITE = 'site',
-  VC = 'vc.ru',
+  VC = 'vc',
   YANDEX_Q = 'yandex_q',
   GITHUB = 'github',
   GITLAB = 'gitlab',

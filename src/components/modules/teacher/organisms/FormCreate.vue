@@ -439,7 +439,81 @@
                         @click="socialMediaEdit(record.id, 'name')"
                         @keydown.enter="socialMediaEdit(record.id, 'name')"
                       >
-                        {{ text ? text : '&nbsp;' }}
+                        <template v-if="text === ESocialMedia.LINKED_ID">
+                          <Lang value="teacher.linkedIn" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.FACEBOOK">
+                          <Lang value="teacher.facebook" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.VK">
+                          <Lang value="teacher.vk" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.OK">
+                          <Lang value="teacher.ok" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TELEGRAM">
+                          <Lang value="teacher.telegram" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.WHATS_APP">
+                          <Lang value="teacher.whatsApp" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.BEHANCE">
+                          <Lang value="teacher.behance" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.DRIBBLE">
+                          <Lang value="teacher.dribble" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.INSTAGRAM">
+                          <Lang value="teacher.instagram" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TWITTER">
+                          <Lang value="teacher.twitter" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.DISCORD">
+                          <Lang value="teacher.discord" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YOU_TUBE">
+                          <Lang value="teacher.youTube" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TWITCH">
+                          <Lang value="teacher.twitch" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TIK_TOK">
+                          <Lang value="teacher.tikTok" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.SITE">
+                          <Lang value="teacher.site" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.VC">
+                          <Lang value="teacher.vc" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YANDEX_Q">
+                          <Lang value="teacher.yandex_q" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.GITHUB">
+                          <Lang value="teacher.github" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.GITLAB">
+                          <Lang value="teacher.gitlab" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.SKYPE">
+                          <Lang value="teacher.skype" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YOUDO">
+                          <Lang value="teacher.youdo" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.PINTEREST">
+                          <Lang value="teacher.pinterest" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YANDEX_DZEN">
+                          <Lang value="teacher.yandex_dzen" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.HABR_CAREER">
+                          <Lang value="teacher.habr_career" />
+                        </template>
+                        <template v-else>
+                          &nbsp;
+                        </template>
                         <EditOutlined class="editable-cell-icon" />
                       </div>
                     </div>
@@ -817,11 +891,8 @@ const onSubmit = async (): Promise<void> => {
         && itm.value
       ) {
         form.value.socialMedias[form.value.socialMedias.length] = {
-          place: itm.place,
-          position: itm.position,
-          started: itm.started,
-          finished: itm.finished,
-          weight: itm.weight,
+          name: itm.name,
+          value: itm.value,
         };
       }
     });

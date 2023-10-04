@@ -101,6 +101,16 @@ export default defineStore('teacher', {
         }
       }
 
+      if (data.socialMedias) {
+        for (let i = 0, z = 0; i < data.socialMedias.length; i++) {
+          if (data.socialMedias[i].name && data.socialMedias[i].value) {
+            formData.append(`socialMedias[${z}][name]`, data.socialMedias[i].name || '');
+            formData.append(`socialMedias[${z}][value]`, data.socialMedias[i].value || '');
+            z++;
+          }
+        }
+      }
+
       const response = await axios.post<IResponseItem<ITeacher>>('/api/private/admin/teacher/create', formData, {
         headers: {
           Authorization: access().accessToken || '',
