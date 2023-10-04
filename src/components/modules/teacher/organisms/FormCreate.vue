@@ -351,10 +351,83 @@
                         v-if="socialMediaEditableData[record.id]?.name !== undefined"
                         class="editable-cell-input-wrapper"
                       >
-                        <Input
+                        <Select
                           v-model:value="socialMediaEditableData[record.id].name"
-                          @press-enter="socialMediaSave(record.id, 'name')"
-                        />
+                          class="width--wide"
+                        >
+                          <Option :value="ESocialMedia.LINKED_ID">
+                            <Lang value="teacher.linkedIn" />
+                          </Option>
+                          <Option :value="ESocialMedia.FACEBOOK">
+                            <Lang value="teacher.facebook" />
+                          </Option>
+                          <Option :value="ESocialMedia.VK">
+                            <Lang value="teacher.vk" />
+                          </Option>
+                          <Option :value="ESocialMedia.OK">
+                            <Lang value="teacher.ok" />
+                          </Option>
+                          <Option :value="ESocialMedia.TELEGRAM">
+                            <Lang value="teacher.telegram" />
+                          </Option>
+                          <Option :value="ESocialMedia.WHATS_APP">
+                            <Lang value="teacher.whatsApp" />
+                          </Option>
+                          <Option :value="ESocialMedia.BEHANCE">
+                            <Lang value="teacher.behance" />
+                          </Option>
+                          <Option :value="ESocialMedia.DRIBBLE">
+                            <Lang value="teacher.dribble" />
+                          </Option>
+                          <Option :value="ESocialMedia.INSTAGRAM">
+                            <Lang value="teacher.instagram" />
+                          </Option>
+                          <Option :value="ESocialMedia.TWITTER">
+                            <Lang value="teacher.twitter" />
+                          </Option>
+                          <Option :value="ESocialMedia.DISCORD">
+                            <Lang value="teacher.discord" />
+                          </Option>
+                          <Option :value="ESocialMedia.YOU_TUBE">
+                            <Lang value="teacher.youTube" />
+                          </Option>
+                          <Option :value="ESocialMedia.TWITCH">
+                            <Lang value="teacher.twitch" />
+                          </Option>
+                          <Option :value="ESocialMedia.TIK_TOK">
+                            <Lang value="teacher.tikTok" />
+                          </Option>
+                          <Option :value="ESocialMedia.SITE">
+                            <Lang value="teacher.site" />
+                          </Option>
+                          <Option :value="ESocialMedia.VC">
+                            <Lang value="teacher.vc" />
+                          </Option>
+                          <Option :value="ESocialMedia.YANDEX_Q">
+                            <Lang value="teacher.yandex_q" />
+                          </Option>
+                          <Option :value="ESocialMedia.GITHUB">
+                            <Lang value="teacher.github" />
+                          </Option>
+                          <Option :value="ESocialMedia.GITLAB">
+                            <Lang value="teacher.gitlab" />
+                          </Option>
+                          <Option :value="ESocialMedia.SKYPE">
+                            <Lang value="teacher.skype" />
+                          </Option>
+                          <Option :value="ESocialMedia.YOUDO">
+                            <Lang value="teacher.youdo" />
+                          </Option>
+                          <Option :value="ESocialMedia.PINTEREST">
+                            <Lang value="teacher.pinterest" />
+                          </Option>
+                          <Option :value="ESocialMedia.YANDEX_DZEN">
+                            <Lang value="teacher.yandex_dzen" />
+                          </Option>
+                          <Option :value="ESocialMedia.HABR_CAREER">
+                            <Lang value="teacher.habr_career" />
+                          </Option>
+                        </Select>
                         <CheckOutlined
                           class="editable-cell-icon-check"
                           @click="socialMediaSave(record.id, 'name')"
@@ -610,6 +683,7 @@ import {
   socialMediaSave,
 } from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ESocialMedia from '@/enums/modules/teacher/socialMedia';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
@@ -632,6 +706,7 @@ const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
 const { create } = teacher();
+const { Option } = Select;
 experienceItems.value = [];
 socialMediaItems.value = [];
 
