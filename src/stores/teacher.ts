@@ -137,6 +137,10 @@ export default defineStore('teacher', {
             weight: item.weight,
           };
         }),
+        socialMedias: data.socialMedias?.map((item) => ({
+          name: item.name,
+          value: item.value,
+        })),
       }, {
         headers: {
           Authorization: access().accessToken || '',

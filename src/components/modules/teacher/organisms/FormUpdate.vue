@@ -321,6 +321,249 @@
               </Table>
             </TabPane>
             <TabPane
+              key="social_medias"
+              :tab="lang('teacher.socialMedias')"
+            >
+              <Button
+                class="mb-10"
+                @click="onClickAddSocialMedia"
+              >
+                <template #icon>
+                  <PlusOutlined />
+                </template>
+                <span>
+                  <Lang value="dashboard.add" />
+                </span>
+              </Button>
+              <Table
+                bordered
+                class="mb-25"
+                row-key="id"
+                :pagination="false"
+                :data-source="socialMediaItems"
+                :columns="socialMediaColumns"
+                sticky
+              >
+                <template #bodyCell="{ column, text, record }">
+                  <template v-if="column.dataIndex === 'name'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="socialMediaEditableData[record.id]?.name !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Select
+                          v-model:value="socialMediaEditableData[record.id].name"
+                          class="width--wide"
+                        >
+                          <Option :value="ESocialMedia.LINKED_ID">
+                            <Lang value="teacher.linkedIn" />
+                          </Option>
+                          <Option :value="ESocialMedia.FACEBOOK">
+                            <Lang value="teacher.facebook" />
+                          </Option>
+                          <Option :value="ESocialMedia.VK">
+                            <Lang value="teacher.vk" />
+                          </Option>
+                          <Option :value="ESocialMedia.OK">
+                            <Lang value="teacher.ok" />
+                          </Option>
+                          <Option :value="ESocialMedia.TELEGRAM">
+                            <Lang value="teacher.telegram" />
+                          </Option>
+                          <Option :value="ESocialMedia.WHATS_APP">
+                            <Lang value="teacher.whatsApp" />
+                          </Option>
+                          <Option :value="ESocialMedia.BEHANCE">
+                            <Lang value="teacher.behance" />
+                          </Option>
+                          <Option :value="ESocialMedia.DRIBBLE">
+                            <Lang value="teacher.dribble" />
+                          </Option>
+                          <Option :value="ESocialMedia.INSTAGRAM">
+                            <Lang value="teacher.instagram" />
+                          </Option>
+                          <Option :value="ESocialMedia.TWITTER">
+                            <Lang value="teacher.twitter" />
+                          </Option>
+                          <Option :value="ESocialMedia.DISCORD">
+                            <Lang value="teacher.discord" />
+                          </Option>
+                          <Option :value="ESocialMedia.YOU_TUBE">
+                            <Lang value="teacher.youTube" />
+                          </Option>
+                          <Option :value="ESocialMedia.TWITCH">
+                            <Lang value="teacher.twitch" />
+                          </Option>
+                          <Option :value="ESocialMedia.TIK_TOK">
+                            <Lang value="teacher.tikTok" />
+                          </Option>
+                          <Option :value="ESocialMedia.SITE">
+                            <Lang value="teacher.site" />
+                          </Option>
+                          <Option :value="ESocialMedia.VC">
+                            <Lang value="teacher.vc" />
+                          </Option>
+                          <Option :value="ESocialMedia.YANDEX_Q">
+                            <Lang value="teacher.yandex_q" />
+                          </Option>
+                          <Option :value="ESocialMedia.GITHUB">
+                            <Lang value="teacher.github" />
+                          </Option>
+                          <Option :value="ESocialMedia.GITLAB">
+                            <Lang value="teacher.gitlab" />
+                          </Option>
+                          <Option :value="ESocialMedia.SKYPE">
+                            <Lang value="teacher.skype" />
+                          </Option>
+                          <Option :value="ESocialMedia.YOUDO">
+                            <Lang value="teacher.youdo" />
+                          </Option>
+                          <Option :value="ESocialMedia.PINTEREST">
+                            <Lang value="teacher.pinterest" />
+                          </Option>
+                          <Option :value="ESocialMedia.YANDEX_DZEN">
+                            <Lang value="teacher.yandex_dzen" />
+                          </Option>
+                          <Option :value="ESocialMedia.HABR_CAREER">
+                            <Lang value="teacher.habr_career" />
+                          </Option>
+                        </Select>
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="socialMediaSave(record.id, 'name')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="socialMediaEdit(record.id, 'name')"
+                        @keydown.enter="socialMediaEdit(record.id, 'name')"
+                      >
+                        <template v-if="text === ESocialMedia.LINKED_ID">
+                          <Lang value="teacher.linkedIn" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.FACEBOOK">
+                          <Lang value="teacher.facebook" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.VK">
+                          <Lang value="teacher.vk" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.OK">
+                          <Lang value="teacher.ok" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TELEGRAM">
+                          <Lang value="teacher.telegram" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.WHATS_APP">
+                          <Lang value="teacher.whatsApp" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.BEHANCE">
+                          <Lang value="teacher.behance" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.DRIBBLE">
+                          <Lang value="teacher.dribble" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.INSTAGRAM">
+                          <Lang value="teacher.instagram" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TWITTER">
+                          <Lang value="teacher.twitter" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.DISCORD">
+                          <Lang value="teacher.discord" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YOU_TUBE">
+                          <Lang value="teacher.youTube" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TWITCH">
+                          <Lang value="teacher.twitch" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.TIK_TOK">
+                          <Lang value="teacher.tikTok" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.SITE">
+                          <Lang value="teacher.site" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.VC">
+                          <Lang value="teacher.vc" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YANDEX_Q">
+                          <Lang value="teacher.yandex_q" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.GITHUB">
+                          <Lang value="teacher.github" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.GITLAB">
+                          <Lang value="teacher.gitlab" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.SKYPE">
+                          <Lang value="teacher.skype" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YOUDO">
+                          <Lang value="teacher.youdo" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.PINTEREST">
+                          <Lang value="teacher.pinterest" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.YANDEX_DZEN">
+                          <Lang value="teacher.yandex_dzen" />
+                        </template>
+                        <template v-else-if="text === ESocialMedia.HABR_CAREER">
+                          <Lang value="teacher.habr_career" />
+                        </template>
+                        <template v-else>
+                          &nbsp;
+                        </template>
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-if="column.dataIndex === 'value'">
+                    <div class="editable-cell">
+                      <div
+                        v-if="socialMediaEditableData[record.id]?.value !== undefined"
+                        class="editable-cell-input-wrapper"
+                      >
+                        <Input
+                          v-model:value="socialMediaEditableData[record.id].value"
+                          @press-enter="socialMediaSave(record.id, 'value')"
+                        />
+                        <CheckOutlined
+                          class="editable-cell-icon-check"
+                          @click="socialMediaSave(record.id, 'value')"
+                        />
+                      </div>
+                      <div
+                        v-else
+                        class="editable-cell-text-wrapper"
+                        @click="socialMediaEdit(record.id, 'value')"
+                        @keydown.enter="socialMediaEdit(record.id, 'value')"
+                      >
+                        {{ text ? text : '&nbsp;' }}
+                        <EditOutlined class="editable-cell-icon" />
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else-if="column.dataIndex === 'actions'">
+                    <Popconfirm
+                      v-if="socialMediaItems.length"
+                      :title="lang('dashboard.askDestroyRecord')"
+                      @confirm="onClickDeleteSocialMedia(record.id)"
+                    >
+                      <Button danger>
+                        <template #icon>
+                          <DeleteOutlined />
+                        </template>
+                        <span>
+                          <Lang value="dashboard.destroy" />
+                        </span>
+                      </Button>
+                    </Popconfirm>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
+            <TabPane
               key="meta"
               :tab="lang('dashboard.meta')"
             >
@@ -471,7 +714,8 @@
 <script lang="ts" setup>
 import {
   CheckOutlined,
-  DeleteOutlined, EditOutlined,
+  DeleteOutlined,
+  EditOutlined,
   ExclamationCircleOutlined,
   LoadingOutlined,
   MehOutlined,
@@ -516,13 +760,22 @@ import {
   experienceItems,
   experienceSave,
   onClickAddExperience,
+  onClickAddSocialMedia,
   onClickDeleteExperience,
+  onClickDeleteSocialMedia,
+  socialMediaColumns,
+  socialMediaEdit,
+  socialMediaEditableData,
+  socialMediaItems,
+  socialMediaSave,
 } from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ESocialMedia from '@/enums/modules/teacher/socialMedia';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ITeacherExperience from '@/interfaces/modules/teacher/experience';
+import ITeacherSocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
@@ -546,6 +799,7 @@ const { Item } = Form;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
+const { Option } = Select;
 const {
   update,
   get,
@@ -625,6 +879,11 @@ const getDefaultFormValue = (): ITeacherForm => ({
     finished: itm.finished ? dayjs.utc(itm.finished) : null,
     weight: itm.weight,
   })) || [],
+  socialMedias: item.value?.social_medias?.map((itm: ITeacherSocialMedia) => ({
+    id: itm.id,
+    name: itm.name,
+    value: itm.value,
+  })) || [],
 });
 
 experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) => ({
@@ -634,6 +893,12 @@ experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) =
   started: itm.started ? dayjs.utc(itm.started) : null,
   finished: itm.finished ? dayjs.utc(itm.finished) : null,
   weight: itm.weight,
+})) || [];
+
+socialMediaItems.value = item.value?.social_medias?.map((itm: ITeacherSocialMedia) => ({
+  id: itm.id,
+  name: itm.name,
+  value: itm.value,
 })) || [];
 
 const form = ref<ITeacherForm>(getDefaultFormValue());
@@ -648,6 +913,7 @@ const onSubmit = async (): Promise<void> => {
 
   try {
     form.value.experiences = [];
+    form.value.socialMedias = [];
 
     Object.values(experienceItems.value).forEach((itm) => {
       if (
@@ -665,6 +931,19 @@ const onSubmit = async (): Promise<void> => {
       }
     });
 
+    Object.values(socialMediaItems.value).forEach((itm) => {
+      if (
+        form.value.socialMedias
+        && itm.name
+        && itm.value
+      ) {
+        form.value.socialMedias[form.value.socialMedias.length] = {
+          name: itm.name,
+          value: itm.value,
+        };
+      }
+    });
+
     await update(form.value);
 
     alert.value.message = lang('dashboard.successUpdateText');
@@ -672,6 +951,7 @@ const onSubmit = async (): Promise<void> => {
 
     await get(id as TId);
     form.value = getDefaultFormValue();
+
     experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) => ({
       id: itm.id,
       place: itm.place,
@@ -679,6 +959,12 @@ const onSubmit = async (): Promise<void> => {
       started: itm.started ? dayjs.utc(itm.started) : null,
       finished: itm.finished ? dayjs.utc(itm.finished) : null,
       weight: itm.weight,
+    })) || [];
+
+    socialMediaItems.value = item.value?.social_medias?.map((itm: ITeacherSocialMedia) => ({
+      id: itm.id,
+      name: itm.name,
+      value: itm.value,
     })) || [];
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
