@@ -1132,43 +1132,33 @@ const coursesColumns = computed<ITableColumnType<ICourse>[]>(() => [
     title: lang('dashboard.id'),
     dataIndex: 'id',
     key: 'id',
-    sorter: {
-      multiple: 1,
-    },
+    sorter: (a: ICourse, b: ICourse) => Number(a.id) - Number(b.id),
     width: 100,
   },
   {
     title: lang('course.school'),
     dataIndex: 'school-name',
     key: 'school-name',
-    sorter: {
-      multiple: 1,
-    },
+    sorter: (a: ICourse, b: ICourse) => (((a.school?.name || '') > (b.school?.name || '')) ? -1 : 1),
   },
   {
     title: lang('course.name'),
     dataIndex: 'name',
     key: 'name',
-    sorter: {
-      multiple: 1,
-    },
+    sorter: (a: ICourse, b: ICourse) => (a.name > b.name ? -1 : 1),
   },
   {
     title: lang('course.price'),
     dataIndex: 'price',
     key: 'price',
-    sorter: {
-      multiple: 1,
-    },
+    sorter: (a: ICourse, b: ICourse) => Number(a.price) - Number(b.price),
   },
   {
     title: lang('dashboard.status'),
     dataIndex: 'status',
     key: 'status',
-    sorter: {
-      multiple: 1,
-    },
     width: 150,
+    sorter: (a: ICourse, b: ICourse) => (a.status > b.status ? -1 : 1),
   },
   {
     key: 'actions',
