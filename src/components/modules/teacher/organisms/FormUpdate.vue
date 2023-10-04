@@ -617,6 +617,78 @@
                 </Checkbox>
               </Item>
             </TabPane>
+            <TabPane
+              key="courses"
+              :tab="lang('course.name')"
+            >
+              <Table
+                :columns="coursesColumns"
+                :data-source="courses || undefined"
+                :loading="coursesLoading"
+                row-key="id"
+                class="table--responsive mb-20"
+                sticky
+                :pagination="false"
+              >
+                <template #bodyCell="{ column, record }">
+                  <template v-if="column.key === 'actions'">
+                    <Space>
+                      <Button
+                        :title="lang('dashboard.go')"
+                        shape="circle"
+                        @click="onClickGo(record.id)"
+                      >
+                        <template #icon>
+                          <ArrowRightOutlined />
+                        </template>
+                      </Button>
+                      <Button
+                        :title="lang('dashboard.detach')"
+                        :loading="detachLoading[record.id]"
+                        type="primary"
+                        shape="circle"
+                        danger
+                        @click="onClickDetach(record.id)"
+                      >
+                        <template #icon>
+                          <ApiOutlined />
+                        </template>
+                      </Button>
+                    </Space>
+                  </template>
+                  <template v-if="column.key === 'school-name'">
+                    {{ record?.school?.name }}
+                  </template>
+                  <template v-if="column.key === 'price'">
+                    <template v-if="record.price">
+                      {{ money(record.price, 0, getCurrencyLabel(record.currency)) }}
+                    </template>
+                    <template v-else>
+                      <Tag>
+                        {{ lang('dashboard.free') }}
+                      </Tag>
+                    </template>
+                  </template>
+                  <template v-if="column.key === 'status'">
+                    <template v-if="record.status === EStatus.ACTIVE">
+                      <Tag color="green">
+                        {{ lang('dashboard.active') }}
+                      </Tag>
+                    </template>
+                    <template v-else-if="record.status === EStatus.DISABLED">
+                      <Tag color="red">
+                        {{ lang('dashboard.disabled') }}
+                      </Tag>
+                    </template>
+                    <template v-else-if="record.status === EStatus.DRAFT">
+                      <Tag color="yellow">
+                        {{ lang('dashboard.draft') }}
+                      </Tag>
+                    </template>
+                  </template>
+                </template>
+              </Table>
+            </TabPane>
           </Tabs>
           <Item
             :wrapper-col="{ offset: 0 }"
@@ -713,6 +785,8 @@
 
 <script lang="ts" setup>
 import {
+  ApiOutlined,
+  ArrowRightOutlined,
   CheckOutlined,
   DeleteOutlined,
   EditOutlined,
@@ -740,17 +814,19 @@ import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import Tabs from 'ant-design-vue/lib/tabs';
+import Tag from 'ant-design-vue/lib/tag';
 import Upload from 'ant-design-vue/lib/upload';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import {
+  computed,
   createVNode,
   h,
   onMounted,
   ref,
 } from 'vue';
 import { useMeta } from 'vue-meta';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
 import {
@@ -770,15 +846,20 @@ import {
   socialMediaSave,
 } from '@/components/modules/teacher/organisms/common';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ECurrency from '@/enums/modules/course/currency';
+import EStatus from '@/enums/modules/course/status';
 import ESocialMedia from '@/enums/modules/teacher/socialMedia';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
+import { money } from '@/helpers/number';
+import ICourse from '@/interfaces/modules/course/course';
 import ITeacherExperience from '@/interfaces/modules/teacher/experience';
 import ITeacherSocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
+import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
 import direction from '@/stores/direction';
 import school from '@/stores/school';
 import teacher from '@/stores/teacher';
@@ -788,6 +869,7 @@ useMeta({
   title: lang('teacher.updateTeacher'),
 });
 
+const router = useRouter();
 const loadingSelects = ref(true);
 const readDirections = direction().read;
 const readSchools = school().read;
@@ -1033,6 +1115,136 @@ const filterOption = (input: string, option: any) => option
   ?.label
   ?.toLowerCase()
   ?.indexOf(input.toLowerCase()) >= 0;
+
+const {
+  courses,
+} = storeToRefs(teacher());
+
+const {
+  readCourses,
+  detachCourses,
+} = teacher();
+
+const coursesLoading = ref(false);
+const detachLoading = ref<Record<TId, boolean>>({});
+const coursesColumns = computed<ITableColumnType<ICourse>[]>(() => [
+  {
+    title: lang('dashboard.id'),
+    dataIndex: 'id',
+    key: 'id',
+    sorter: {
+      multiple: 1,
+    },
+    width: 100,
+  },
+  {
+    title: lang('course.school'),
+    dataIndex: 'school-name',
+    key: 'school-name',
+    sorter: {
+      multiple: 1,
+    },
+  },
+  {
+    title: lang('course.name'),
+    dataIndex: 'name',
+    key: 'name',
+    sorter: {
+      multiple: 1,
+    },
+  },
+  {
+    title: lang('course.price'),
+    dataIndex: 'price',
+    key: 'price',
+    sorter: {
+      multiple: 1,
+    },
+  },
+  {
+    title: lang('dashboard.status'),
+    dataIndex: 'status',
+    key: 'status',
+    sorter: {
+      multiple: 1,
+    },
+    width: 150,
+  },
+  {
+    key: 'actions',
+    width: 140,
+  },
+]);
+
+const loadCourses = async (): Promise<void> => {
+  coursesLoading.value = true;
+
+  try {
+    await readCourses(id as string);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  coursesLoading.value = false;
+};
+
+loadCourses();
+
+const getCurrencyLabel = (currency: ECurrency): string | null => {
+  if (currency === ECurrency.RUB) {
+    return 'руб.';
+  }
+
+  if (currency === ECurrency.USD) {
+    return '$';
+  }
+
+  if (currency === ECurrency.EUR) {
+    return '€';
+  }
+
+  return null;
+};
+
+const onClickGo = (idCourse: TId) => {
+  router.push(`/dashboard/courses/${idCourse}`);
+};
+
+const detachIds = async (ids: Array<TId>): Promise<void> => {
+  try {
+    await detachCourses(id as TId, ids);
+    await loadCourses();
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.response.data.message ? error.response.data.message : error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+};
+
+const onClickDetach = async (idCourse: TId): Promise<void> => {
+  Modal.confirm({
+    title: lang('dashboard.alert'),
+    icon: createVNode(ExclamationCircleOutlined),
+    content: lang('dashboard.askDetachRecord'),
+    async onOk() {
+      detachLoading.value[idCourse] = true;
+      await detachIds([idCourse]);
+      detachLoading.value[idCourse] = false;
+    },
+  });
+};
 </script>
 
 <style lang="scss">

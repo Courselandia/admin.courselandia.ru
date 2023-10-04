@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
+import ICourse from '@/interfaces/modules/course/course';
 import ITeacher from '@/interfaces/modules/teacher/teacher';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IFilters from '@/interfaces/molecules/table/filters';
@@ -16,6 +17,7 @@ export default defineStore('teacher', {
     items: null as ITeacher[] | null,
     item: null as ITeacher | null,
     total: null as number | null,
+    courses: null as ICourse[] | null,
   }),
   actions: {
     async get(id: TId): Promise<IResponseItem<ITeacher>> {
@@ -59,6 +61,35 @@ export default defineStore('teacher', {
 
         throw error;
       }
+    },
+    async readCourses(id: TId): Promise<IResponseItems<ITeacher>> {
+      try {
+        const response = await axios.get<IResponseItems<ITeacher>>(`/api/private/admin/teacher/read/courses/${id}`, {
+          headers: {
+            Authorization: access().accessToken || '',
+          },
+        });
+
+        this.courses = response.data.data;
+
+        return response.data;
+      } catch (error) {
+        this.courses = null;
+
+        throw error;
+      }
+    },
+    async detachCourses(id: TId, ids: Array<TId>): Promise<IResponseItem<null>> {
+      const response = await axios.delete<IResponseItem<null>>(`/api/private/admin/teacher/detach/courses/${id}`, {
+        params: {
+          ids,
+        },
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
     },
     async create(data: ITeacherForm): Promise<IResponseItem<ITeacher>> {
       const formData = new FormData();
@@ -160,8 +191,8 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<ITeacherForm>> {
-      const response = await axios.delete<IResponseItem<ITeacherForm>>('/api/private/admin/teacher/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<null>> {
+      const response = await axios.delete<IResponseItem<null>>('/api/private/admin/teacher/destroy', {
         params: {
           ids,
         },

@@ -44,6 +44,7 @@ export default {
   alert: 'Alert',
   ok: 'OK',
   askDestroyRecord: 'Do you really want to destroy the record?',
+  askDetachRecord: 'Do you really want to detach the record?',
   askDestroyRecords: 'Do you really want to destroy the records?',
   nodePositionChanged: 'The position of node has been changed.',
   create: 'Create',
@@ -97,4 +98,5 @@ export default {
   draft: 'Draft',
   warning: 'Warning',
   notEmpty: 'The value cannot be empty.',
+  detach: 'Detach',
 };

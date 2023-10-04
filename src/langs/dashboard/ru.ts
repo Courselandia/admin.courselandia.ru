@@ -44,6 +44,7 @@ export default {
   alert: 'Внимание',
   ok: 'OK',
   askDestroyRecord: 'Вы точно хотите удалить эту запись?',
+  askDetachRecord: 'Вы точно хотите отсоеденить эту запись?',
   askDestroyRecords: 'Вы точно хотите удалить эти записи?',
   nodePositionChanged: 'Позиции записи была изменена.',
   create: 'Создать',
@@ -97,4 +98,5 @@ export default {
   draft: 'Набросок',
   warning: 'Внимание',
   notEmpty: 'Значение не может быть пустым.',
+  detach: 'Отсоеденить',
 };
