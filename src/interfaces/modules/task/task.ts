@@ -1,10 +1,12 @@
 import EStatus from '@/enums/modules/task/status';
+import IUser from '@/interfaces/modules/user/user';
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
 
 export default interface ITask extends IColumn {
   id: TId;
-  user_id: TId;
+  user_id: TId | null;
+  user: IUser | null;
   name: string;
   reason: string | null;
   status: EStatus;

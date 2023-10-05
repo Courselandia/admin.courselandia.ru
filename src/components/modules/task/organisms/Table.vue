@@ -25,13 +25,13 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'user-id'">
           <router-link
-            v-if="hasRole([ERole.ADMIN])"
-            :to="`/dashboard/users/${record?.user.id}`"
+            v-if="record?.user?.id && hasRole([ERole.ADMIN])"
+            :to="`/dashboard/users/${record.user.id}`"
           >
             {{ record?.user?.login }}
           </router-link>
           <template
-            v-else
+            v-else-if="record?.user?.login"
           >
             {{ record?.user?.login }}
           </template>
