@@ -26,7 +26,7 @@
         <template v-if="column.key === 'user-id'">
           <router-link
             v-if="record?.user?.id && hasRole([ERole.ADMIN])"
-            :to="`/dashboard/users/${record.user.id}`"
+            :to="`/dashboard/users/${record.user?.id}`"
           >
             {{ record?.user?.login }}
           </router-link>
