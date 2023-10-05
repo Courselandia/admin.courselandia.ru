@@ -9,7 +9,7 @@
       <template v-if="type === 'text'">
         <Input
           :value="selectedKeys[0]"
-          :placeholder="lang('dashboard.search')"
+          :placeholder="lang('dashboard.search') || ''"
           class="width--wide"
           @change="e => setSelectedKeys(e.target.value ? [e.target.value] : [])"
           @press-enter="onFilterSearch(selectedKeys, column.key)"
@@ -18,7 +18,7 @@
       <template v-else-if="type === 'number'">
         <InputNumber
           :value="selectedKeys[0]"
-          :placeholder="lang('dashboard.search')"
+          :placeholder="lang('dashboard.search') || ''"
           class="width--wide"
           @change="value => setSelectedKeys(value ? [value] : [])"
           @press-enter="onFilterSearch(selectedKeys, column.key)"
@@ -30,7 +30,7 @@
           :size="12"
         >
           <RangePicker
-            :value="selectedKeys"
+            :value="selectedKeys as [string, string]"
             format="DD.MM.YYYY"
             @change="value => setSelectedKeys(value ? value : [])"
             @press-enter="onFilterSearch(selectedKeys, column.key, true)"
@@ -44,7 +44,7 @@
           class="width--80"
           show-search
           :filter-option="filterOption"
-          :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text }))"
+          :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text })) || {}"
           @change="value => setSelectedKeys(value ? value : [])"
         />
       </template>
