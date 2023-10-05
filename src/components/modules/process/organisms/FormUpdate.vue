@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -47,7 +47,7 @@ const loading = ref(false);
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const getDefaultFormValue = (): IProcessForm => ({

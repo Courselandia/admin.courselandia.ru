@@ -3,8 +3,8 @@ import TId from '@/types/id';
 
 export default interface IFaqForm {
   id?: TId;
-  school_id: IOption | null;
+  school_id: IOption | undefined;
   question: string;
-  answer: string | null;
+  answer: string | undefined;
   status: boolean;
 }

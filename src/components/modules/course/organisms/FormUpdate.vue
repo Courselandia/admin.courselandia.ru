@@ -485,7 +485,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="learnItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteLearn(record.id)"
                     >
                       <Button danger>
@@ -611,7 +611,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="featureItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteFeature(record.id)"
                     >
                       <Button danger>
@@ -717,7 +717,7 @@
                       </Button>
                       <Popconfirm
                         v-if="programItems.length"
-                        :title="lang('dashboard.askDestroyRecord')"
+                        :title="lang('dashboard.askDestroyRecord') || ''"
                         @confirm="onClickDeleteProgram(record.id)"
                       >
                         <Button danger>
@@ -1038,18 +1038,18 @@ const { item } = storeToRefs(course());
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+const image = ref<string>(item.value?.image_middle_id?.path || '');
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const imageAlert = ref<IAlert>(
   {
     message: null,
-    type: null,
+    type: undefined,
   },
 );
 
@@ -1057,7 +1057,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   id: id as TId,
   school_id: item.value?.school
     ? { key: item.value?.school?.id as string, value: item.value?.school?.name }
-    : null,
+    : undefined,
   image: null,
   name: item.value?.name || '',
   header_template: item.value?.header_template || '',
@@ -1065,25 +1065,25 @@ const getDefaultFormValue = (): ICourseForm => ({
   text: item.value?.text || '',
   link: item.value?.link || '',
   url: item.value?.url || '',
-  language: item.value?.language || null,
+  language: item.value?.language || undefined,
   rating: item.value?.rating || '',
   price: item.value?.price || '',
   price_old: item.value?.price_old || '',
   price_recurrent: item.value?.price_recurrent || '',
-  currency: item.value?.currency || null,
-  online: item.value?.online || null,
-  employment: item.value?.employment || null,
+  currency: item.value?.currency || undefined,
+  online: item.value?.online || false,
+  employment: item.value?.employment || false,
   duration: item.value?.duration || '',
-  duration_unit: item.value?.duration_unit || null,
+  duration_unit: item.value?.duration_unit || undefined,
   lessons_amount: item.value?.lessons_amount || '',
   modules_amount: item.value?.modules_amount || '',
   status: item.value?.status || EStatus.ACTIVE,
 
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
+  title_template: item.value?.metatag?.title_template || undefined,
+  description_template: item.value?.metatag?.description_template || undefined,
   title: item.value?.metatag?.title || null,
   description: item.value?.metatag?.description || null,
-  keywords: item.value?.metatag?.keywords || null,
+  keywords: item.value?.metatag?.keywords || undefined,
 
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   professions: item.value?.professions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -1225,7 +1225,7 @@ const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, file);
 
-    image.value = await base64(file);
+    image.value = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.message = error.response.data.message
       ? error.response.data.message
@@ -1250,7 +1250,7 @@ const onClickImageDestroy = async (): Promise<void> => {
       try {
         await imageDestroy(id as TId);
 
-        image.value = null;
+        image.value = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message

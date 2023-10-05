@@ -2,7 +2,7 @@ import IColumn from '@/interfaces/molecules/table/column';
 
 export default interface IProgram extends IColumn {
   id?: number;
-  name?: string | null;
-  text?: string | null;
+  name?: string;
+  text?: string;
   children?: IProgram[];
 }

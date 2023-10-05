@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -41,7 +41,7 @@ const loading = ref(false);
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const form = ref<IProfessionForm>({

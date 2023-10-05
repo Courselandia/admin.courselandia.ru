@@ -45,7 +45,7 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              :title="lang('log.showLog')"
+              :title="lang('log.showLog') || ''"
               type="primary"
               shape="circle"
               @click="onClickShow(record.id)"
@@ -55,7 +55,7 @@
               </template>
             </Button>
             <Button
-              :title="lang('dashboard.destroy')"
+              :title="lang('dashboard.destroy') || ''"
               :loading="destroysLoading[record.id]"
               type="primary"
               shape="circle"
@@ -161,10 +161,10 @@
         <SearchOutlined
           :style="{
             color: filtered ? '#0c80d7' : undefined,
-            fontSize: filtered ? '18px' : '14px'
+            fontSize: filtered ? '18px' : '14px',
+            width: '50px',
+            height: '50px',
           }"
-          width="50"
-          height="50"
         />
       </template>
     </Table>

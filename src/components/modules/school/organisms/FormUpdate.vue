@@ -373,7 +373,7 @@ const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const imageAlert = ref<Record<string, IAlert>>(

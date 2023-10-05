@@ -281,17 +281,17 @@ const phoneMask = '+7-###-###-####';
 
 const profileAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const imageAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const passwordAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const profileForm = ref<IProfileForm>({
@@ -304,7 +304,7 @@ const passwordForm = ref<IPasswordForm>({
   password: '',
 });
 
-const image = ref<string | ArrayBuffer | null>(user.value?.image_middle_id?.path || null);
+const image = ref<string>(user.value?.image_middle_id?.path || '');
 
 const onProfileSubmit = async (): Promise<void> => {
   profileAlert.value.message = '';
@@ -369,7 +369,7 @@ const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(file);
 
-    image.value = await base64(file);
+    image.value = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.message = error.response.data.message
       ? error.response.data.message
@@ -394,7 +394,7 @@ const onClickImageDestroy = async (): Promise<void> => {
       try {
         await imageDestroy();
 
-        image.value = null;
+        image.value = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message

@@ -5,13 +5,13 @@ import TId from '@/types/id';
 export default interface IPublicationForm {
   id?: TId;
   published_at: dayjs.Dayjs | string;
-  header: string;
-  link: string;
-  anons: string | null;
-  article: string;
-  image: File | null;
-  title: string | null;
-  description: string | null;
-  keywords: string | null;
+  header: string | undefined;
+  link: string | undefined;
+  anons: string | undefined;
+  article: string | undefined;
+  image: File | undefined;
+  title: string | undefined;
+  description: string | undefined;
+  keywords: string | undefined;
   status: boolean;
 }

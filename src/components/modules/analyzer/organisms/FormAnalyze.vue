@@ -46,7 +46,7 @@ const loading = ref(false);
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const getDefaultFormValue = (): IAnalyzerAnalyzeForm => ({
@@ -86,7 +86,7 @@ const onSubmit = async (): Promise<void> => {
   loading.value = true;
 
   try {
-    form.value.result = '';
+    form.value.result = undefined;
     const response = await request(form.value.text);
 
     alert.value.message = lang('analyzer.successAnalyzeText');

@@ -9,7 +9,7 @@ export default interface ILog extends IColumn {
   updated_at: string;
   context: string;
   datetime: number;
-  level_name: number;
+  level_name: string;
   message: number;
   unix_time: number;
 }

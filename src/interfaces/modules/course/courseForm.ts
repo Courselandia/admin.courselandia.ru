@@ -10,46 +10,46 @@ import TId from '@/types/id';
 
 export default interface ICourseForm {
   id?: TId;
-  school_id: IOption | null;
+  school_id: IOption | undefined;
   image: File | null;
   name: string;
-  header_template: string | null;
+  header_template: string | undefined;
   header: string | null;
   text: string;
   link: string;
   url: string;
-  language: ELanguage | null;
+  language: ELanguage | undefined;
   rating: number | string;
   price: number | string;
   price_old: number | string;
   price_recurrent: number | string;
-  currency: ECurrency | null;
-  online: boolean | null;
-  employment: boolean | null;
+  currency: ECurrency | undefined;
+  online: boolean | undefined;
+  employment: boolean;
   duration: number | string;
-  duration_unit: EDuration | null;
+  duration_unit: EDuration | undefined;
   lessons_amount: number | string;
   modules_amount: number | string
   status: EStatus;
 
-  title_template: string | null;
-  description_template: string | null;
+  title_template: string | undefined;
+  description_template: string | undefined;
   title: string | null;
   description: string | null;
-  keywords: string | null;
+  keywords: string | undefined;
 
-  directions: Array<IOption> | null;
-  professions: Array<IOption> | null;
-  categories: Array<IOption> | null;
-  skills: Array<IOption> | null;
-  teachers: Array<IOption> | null;
-  tools: Array<IOption> | null;
-  levels: Array<string> | null;
-  learns: Array<string> | null;
-  employments: Array<IOption> | null;
-  processes: Array<IOption> | null;
-  features: Array<IFeature> | null;
-  program: Array<IProgram> | null;
+  directions: Array<IOption>;
+  professions: Array<IOption>;
+  categories: Array<IOption>;
+  skills: Array<IOption>;
+  teachers: Array<IOption>;
+  tools: Array<IOption>;
+  levels: Array<string>;
+  learns: Array<string>;
+  employments: Array<IOption>;
+  processes: Array<IOption>;
+  features: Array<IFeature>;
+  program: Array<IProgram>;
 
   analyzers?: Array<IAnalyzer> | null;
 }

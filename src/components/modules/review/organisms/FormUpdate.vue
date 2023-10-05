@@ -50,7 +50,7 @@ const loading = ref(false);
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const courseId: IOption | null = item.value?.course ? {

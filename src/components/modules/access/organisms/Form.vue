@@ -106,13 +106,13 @@ const formRef = ref<FormInstance>();
 
 const loading = ref(false);
 const form = ref<IForm>({
-  login: '',
-  password: '',
+  login: undefined,
+  password: undefined,
   remember: false,
 });
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const onSubmit = async () => {
@@ -120,7 +120,7 @@ const onSubmit = async () => {
   loading.value = true;
 
   try {
-    const result = await signIn(form.value.login, form.value.password, form.value.remember);
+    const result = await signIn(form.value.login || '', form.value.password || '', form.value.remember);
     const nameRole = result.data.user.role.name;
 
     if (nameRole === ERole.ADMIN || nameRole === ERole.MANAGER) {

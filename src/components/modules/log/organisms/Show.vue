@@ -73,7 +73,7 @@
               <Lang value="log.notice" />
             </Tag>
             <Tag
-              v-else-if="item.level === 'WARNING'"
+              v-else-if="item.level_name === 'WARNING'"
               color="purple"
             >
               <template #icon>
@@ -116,7 +116,9 @@
           </Item>
         </Descriptions>
 
-        <div v-if="item.context">
+        <div
+          v-if="item?.context"
+        >
           <codemirror
             v-model="code"
             :style="{ height: '400px' }"
@@ -170,6 +172,6 @@ const { item } = storeToRefs(log());
 
 const extensions = [json()];
 const context: any = item.value?.context;
-const code = ref(beautify.js_beautify(JSON.stringify(context)) || null);
+const code = ref(beautify.js_beautify(JSON.stringify(context)) || undefined);
 const trace = ref(rnToBr(context?.exception?.trace) || null);
 </script>

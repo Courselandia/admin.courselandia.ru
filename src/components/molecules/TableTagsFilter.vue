@@ -25,12 +25,11 @@ import Tag from 'ant-design-vue/lib/tag';
 import dayjs from 'dayjs';
 import { PropType, toRefs } from 'vue';
 
-import IColumn from '@/interfaces/molecules/table/column';
 import ITableColumnType from '@/interfaces/molecules/table/tableColumnType';
 
 const props = defineProps({
   columns: {
-    type: Array as PropType<Array<ITableColumnType<IColumn>>>,
+    type: Array as PropType<Array<ITableColumnType<any>>>,
     required: true,
   },
   filters: {

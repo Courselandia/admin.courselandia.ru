@@ -275,7 +275,7 @@ const image = ref<string | ArrayBuffer | null>();
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const form = ref<IUserForm>({

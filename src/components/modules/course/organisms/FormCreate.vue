@@ -484,7 +484,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="learnItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteLearn(record.id)"
                     >
                       <Button danger>
@@ -610,7 +610,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="featureItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteFeature(record.id)"
                     >
                       <Button danger>
@@ -716,7 +716,7 @@
                       </Button>
                       <Popconfirm
                         v-if="programItems.length"
-                        :title="lang('dashboard.askDestroyRecord')"
+                        :title="lang('dashboard.askDestroyRecord') || ''"
                         @confirm="onClickDeleteProgram(record.id)"
                       >
                         <Button danger>
@@ -998,16 +998,16 @@ const processItems = processData.items;
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const form = ref<ICourseForm>({
-  school_id: null,
+  school_id: undefined,
   image: null,
   name: '',
   header_template: '{course} от {school:genitive}',
@@ -1015,16 +1015,16 @@ const form = ref<ICourseForm>({
   text: '',
   link: '',
   url: '',
-  language: null,
+  language: undefined,
   rating: '',
   price: '',
   price_old: '',
   price_recurrent: '',
-  currency: null,
-  online: null,
-  employment: null,
+  currency: undefined,
+  online: undefined,
+  employment: false,
   duration: '',
-  duration_unit: null,
+  duration_unit: undefined,
   lessons_amount: '',
   modules_amount: '',
   status: EStatus.ACTIVE,
@@ -1034,7 +1034,7 @@ const form = ref<ICourseForm>({
   title: '',
   description: '',
 
-  keywords: null,
+  keywords: undefined,
 
   directions: [],
   professions: [],
@@ -1081,7 +1081,7 @@ const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.image = null;
   form.value.text = '';
-  image.value = null;
+  image.value = undefined;
 
   form.value.learns = [];
   learnItems.value = [];
@@ -1133,7 +1133,7 @@ const onSubmit = async (): Promise<void> => {
     alert.value.type = 'success';
     form.value.image = null;
     form.value.text = '';
-    image.value = null;
+    image.value = undefined;
 
     form.value.learns = [];
     learnItems.value = [];
@@ -1164,7 +1164,7 @@ const onSubmit = async (): Promise<void> => {
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   form.value.image = file;
-  image.value = await base64(file);
+  image.value = await base64(file) as string || '';
 
   return false;
 };
@@ -1176,7 +1176,7 @@ const onClickImageDestroy = async (): Promise<void> => {
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
       form.value.image = null;
-      image.value = null;
+      image.value = undefined;
     },
   });
 };

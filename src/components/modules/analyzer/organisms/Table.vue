@@ -46,7 +46,7 @@
                 record.status === EStatus.READY
                   || record.status === EStatus.FAILED
               "
-              :title="lang('analyzer.reanalyze')"
+              :title="lang('analyzer.reanalyze') || ''"
               shape="circle"
               :loading="reanalyzeLoading[record.id]"
               @click="onClickReanalyze(record.id)"
@@ -59,7 +59,7 @@
         </template>
         <template v-if="column.key === 'analyzerable_id'">
           <router-link
-            :to="getLink(record.analyzerable_id, record.category)"
+            :to="getLink(record.analyzerable_id, record.category) || ''"
           >
             {{ record.analyzerable_id }}
           </router-link>
@@ -154,10 +154,10 @@
         <SearchOutlined
           :style="{
             color: filtered ? '#0c80d7' : undefined,
-            fontSize: filtered ? '18px' : '14px'
+            fontSize: filtered ? '18px' : '14px',
+            width: '50px',
+            height: '50px',
           }"
-          width="50"
-          height="50"
         />
       </template>
     </Table>

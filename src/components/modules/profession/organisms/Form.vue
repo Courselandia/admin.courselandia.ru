@@ -156,6 +156,7 @@ import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IProfessionForm from '@/interfaces/modules/profession/professionForm';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -170,7 +171,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {
