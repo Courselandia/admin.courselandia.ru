@@ -364,9 +364,9 @@ const { item } = storeToRefs(school());
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<Record<string, string | ArrayBuffer | null>>({
-  logo: item.value?.image_logo_id?.path || null,
-  site: item.value?.image_site_id?.path || null,
+const image = ref<Record<string, string>>({
+  logo: item.value?.image_logo_id?.path || '',
+  site: item.value?.image_site_id?.path || '',
 });
 
 const alphaDash = /^[A-Za-z0-9_-]*$/;
@@ -380,31 +380,31 @@ const imageAlert = ref<Record<string, IAlert>>(
   {
     logo: {
       message: null,
-      type: null,
+      type: undefined,
     },
     site: {
       message: null,
-      type: null,
+      type: undefined,
     },
   },
 );
 
 const getDefaultFormValue = (): ISchoolForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  header: item.value?.header || '',
-  header_template: item.value?.header_template || '',
-  link: item.value?.link || '',
-  text: item.value?.text || '',
-  rating: item.value?.rating || '',
-  site: item.value?.site || null,
-  imageLogo: null,
-  imageSite: null,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
-  keywords: item.value?.metatag?.keywords || null,
+  name: item.value?.name || undefined,
+  header: item.value?.header || undefined,
+  header_template: item.value?.header_template || undefined,
+  link: item.value?.link || undefined,
+  text: item.value?.text || undefined,
+  rating: item.value?.rating || undefined,
+  site: item.value?.site || undefined,
+  imageLogo: undefined,
+  imageSite: undefined,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
+  title_template: item.value?.metatag?.title_template || undefined,
+  description_template: item.value?.metatag?.description_template || undefined,
+  keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
@@ -447,7 +447,7 @@ const onBeforeUploadFileLogo = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, 'logo', file);
 
-    image.value.logo = await base64(file);
+    image.value.logo = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.logo.message = error.response.data.message
       ? error.response.data.message
@@ -467,7 +467,7 @@ const onBeforeUploadFileSite = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, 'site', file);
 
-    image.value.site = await base64(file);
+    image.value.site = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.site.message = error.response.data.message
       ? error.response.data.message
@@ -492,7 +492,7 @@ const onClickImageDestroy = async (type: string): Promise<void> => {
       try {
         await imageDestroy(id as TId, type);
 
-        image.value[type] = null;
+        image.value[type] = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message
@@ -506,7 +506,7 @@ const onClickImageDestroy = async (type: string): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 </script>
 

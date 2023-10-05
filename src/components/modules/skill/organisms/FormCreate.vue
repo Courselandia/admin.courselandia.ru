@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -47,16 +47,16 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ISkillForm>({
-  name: '',
-  header: null,
+  name: undefined,
+  header: undefined,
   header_template: 'Онлайн курсы по {skill:dative}',
-  link: '',
-  text: '',
-  title: null,
-  description: null,
+  link: undefined,
+  text: undefined,
+  title: undefined,
+  description: undefined,
   title_template: 'Каталог онлайн-курсов по {skill:dative}[countSkillCourses:: {countSkillCourses:курс|nominative} для обучения] — Courselandia',
   description_template: 'Подберите обучающий онлайн-курс для получения навыка {skill:nominative} из каталога Courselandia [countSkillCourses:— {countSkillCourses:курс|nominative} для вас]. Сравнение цен, рейтинг онлайн-школ, сравнение курсов.',
-  keywords: null,
+  keywords: undefined,
   status: true,
 });
 

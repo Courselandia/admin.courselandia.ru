@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -52,8 +52,8 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IEmploymentForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  text: item.value?.text || '',
+  name: item.value?.name || undefined,
+  text: item.value?.text || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

@@ -27,7 +27,7 @@
         :label="lang('article.ownId')"
       >
         <router-link
-          :to="getLink(form.articleable.id, form.category)"
+          :to="getLink(form.articleable.id, form.category) || ''"
         >
           {{ form.articleable?.id }}
         </router-link>
@@ -139,6 +139,7 @@ import countLength from '@/helpers/countLength';
 import { stripTags } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IArticleForm from '@/interfaces/modules/article/articleForm';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -153,7 +154,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {

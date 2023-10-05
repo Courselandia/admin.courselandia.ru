@@ -57,7 +57,7 @@
           <Space>
             <Button
               v-if="record?.image_small_id?.path"
-              :title="lang('dashboard.destroyImage')"
+              :title="lang('dashboard.destroyImage') || ''"
               :loading="destroysImageLoading[record.id]"
               shape="circle"
               danger
@@ -68,7 +68,7 @@
               </template>
             </Button>
             <Button
-              :title="lang('dashboard.edit')"
+              :title="lang('dashboard.edit') || ''"
               type="primary"
               shape="circle"
               @click="onClickUpdate(record.id)"
@@ -79,7 +79,7 @@
             </Button>
             <Button
               v-if="record.id !== 1"
-              :title="lang('dashboard.destroy')"
+              :title="lang('dashboard.destroy') || ''"
               :loading="destroysLoading[record.id]"
               type="primary"
               shape="circle"

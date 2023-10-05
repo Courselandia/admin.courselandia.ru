@@ -217,6 +217,7 @@ import IFilter from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import course from '@/stores/course';
 import school from '@/stores/school';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -231,7 +232,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {

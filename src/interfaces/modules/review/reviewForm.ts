@@ -6,15 +6,15 @@ import TId from '@/types/id';
 
 export default interface IReviewForm {
   id?: TId;
-  school_id: IOption | null;
-  course_id: IOption | null;
-  source: number | null;
-  name: string | null;
-  title: string | null;
-  review: string | null;
-  advantages: string | null;
-  disadvantages: string | null;
-  rating: number | string;
+  school_id: IOption | undefined;
+  course_id: IOption | undefined;
+  source: number | undefined;
+  name: string | undefined;
+  title: string | undefined;
+  review: string | undefined;
+  advantages: string | undefined;
+  disadvantages: string | undefined;
+  rating: number | string | undefined;
   status: EStatus;
-  created_at: dayjs.Dayjs | string;
+  created_at: dayjs.Dayjs | string | undefined;
 }

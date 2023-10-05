@@ -3,17 +3,17 @@ import TId from '@/types/id';
 
 export default interface ITeacherForm {
   id?: TId;
-  name: string;
-  link: string;
-  text: string;
-  rating: number | string;
-  image: File | null;
-  directions: Array<IOption>;
-  schools: Array<IOption>;
-  title: string | null;
-  description: string | null;
-  title_template: string | null;
-  description_template: string | null;
-  keywords: string | null;
+  name: string | undefined;
+  link: string | undefined;
+  text: string | undefined;
+  rating: number | string | undefined;
+  image: File | undefined;
+  directions: Array<IOption> | undefined;
+  schools: Array<IOption> | undefined;
+  title: string | undefined;
+  description: string | undefined;
+  title_template: string | undefined;
+  description_template: string | undefined;
+  keywords: string | undefined;
   status: boolean;
 }

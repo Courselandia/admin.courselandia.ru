@@ -87,7 +87,7 @@ const onSubmit = async (): Promise<void> => {
 
   try {
     form.value.result = '';
-    const response = await request(form.value.request);
+    const response = await request(form.value.request || '');
 
     alert.value.message = lang('article.successWriteText');
     alert.value.type = 'success';

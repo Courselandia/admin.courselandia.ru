@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -47,15 +47,15 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IReviewForm>({
-  school_id: null,
-  course_id: null,
-  source: null,
-  name: null,
-  title: null,
-  review: null,
-  advantages: null,
-  disadvantages: null,
-  rating: '',
+  school_id: undefined,
+  course_id: undefined,
+  source: undefined,
+  name: undefined,
+  title: undefined,
+  review: undefined,
+  advantages: undefined,
+  disadvantages: undefined,
+  rating: undefined,
   status: EStatus.ACTIVE,
   created_at: dayjs.utc().tz(dayjs.tz.guess()),
 });

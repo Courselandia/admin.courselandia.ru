@@ -334,7 +334,7 @@ const schoolItems = schoolData.items;
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+const image = ref<string>(item.value?.image_middle_id?.path || '');
 
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
@@ -346,7 +346,7 @@ const alert = ref<IAlert>({
 const imageAlert = ref<IAlert>(
   {
     message: null,
-    type: null,
+    type: undefined,
   },
 );
 
@@ -372,16 +372,16 @@ onMounted(async (): Promise<void> => {
 
 const getDefaultFormValue = (): ITeacherForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  link: item.value?.link || '',
-  text: item.value?.text || '',
-  rating: item.value?.rating || '',
-  image: null,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
-  keywords: item.value?.metatag?.keywords || null,
+  name: item.value?.name || undefined,
+  link: item.value?.link || undefined,
+  text: item.value?.text || undefined,
+  rating: item.value?.rating || undefined,
+  image: undefined,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
+  title_template: item.value?.metatag?.title_template || undefined,
+  description_template: item.value?.metatag?.description_template || undefined,
+  keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   schools: item.value?.schools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -426,7 +426,7 @@ const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, file);
 
-    image.value = await base64(file);
+    image.value = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.message = error.response.data.message
       ? error.response.data.message
@@ -451,7 +451,7 @@ const onClickImageDestroy = async (): Promise<void> => {
       try {
         await imageDestroy(id as TId);
 
-        image.value = null;
+        image.value = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message
@@ -465,7 +465,7 @@ const onClickImageDestroy = async (): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 
 const filterOption = (input: string, option: any) => option

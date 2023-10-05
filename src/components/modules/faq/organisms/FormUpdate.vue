@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -54,9 +54,9 @@ const getDefaultFormValue = (): IFaqForm => ({
   id: id as TId,
   school_id: item.value?.school_id
     ? { key: item.value?.school.id as string, value: item.value?.school.name }
-    : null,
-  question: item.value?.question || '',
-  answer: item.value?.answer || null,
+    : undefined,
+  question: item.value?.question || undefined,
+  answer: item.value?.answer || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

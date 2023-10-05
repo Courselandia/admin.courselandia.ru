@@ -4,8 +4,8 @@ import TId from '@/types/id';
 
 export default interface ISalaryForm {
   id?: TId;
-  profession_id: IOption | null;
-  level: ELevel | null;
-  salary: number | string;
+  profession_id: IOption | undefined;
+  level: ELevel | undefined;
+  salary: number | string | undefined;
   status: boolean;
 }

@@ -295,7 +295,7 @@ const { item } = storeToRefs(publication());
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+const image = ref<string>(item.value?.image_middle_id?.path || '');
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -305,21 +305,21 @@ const alert = ref<IAlert>({
 
 const imageAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const getDefaultFormValue = (): IPublicationForm => ({
   id: id as TId,
   published_at: dayjs.utc(item.value?.published_at)
-    .tz(dayjs.tz.guess()) || null,
-  header: item.value?.header || '',
-  link: item.value?.link || '',
-  anons: item.value?.anons || null,
-  article: item.value?.article || '',
-  image: null,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  keywords: item.value?.metatag?.keywords || null,
+    .tz(dayjs.tz.guess()) || undefined,
+  header: item.value?.header || undefined,
+  link: item.value?.link || undefined,
+  anons: item.value?.anons || undefined,
+  article: item.value?.article || undefined,
+  image: undefined,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
+  keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 
@@ -359,7 +359,7 @@ const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, file);
 
-    image.value = await base64(file);
+    image.value = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.message = error.response.data.message
       ? error.response.data.message
@@ -384,7 +384,7 @@ const onClickImageDestroy = async (): Promise<void> => {
       try {
         await imageDestroy(id as TId);
 
-        image.value = null;
+        image.value = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message
@@ -398,7 +398,7 @@ const onClickImageDestroy = async (): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header);
+  form.value.link = latin(form.value.header || '');
 };
 </script>
 

@@ -37,7 +37,6 @@ useMeta({
   title: lang('analyzer.analyze'),
 });
 
-const route = useRoute();
 const { request, result } = plagiarism();
 const writing = ref(false);
 const waitResult = 10; // секунды
@@ -50,7 +49,7 @@ const alert = ref<IAlert>({
 });
 
 const getDefaultFormValue = (): IAnalyzerAnalyzeForm => ({
-  text: '',
+  text: undefined,
 });
 
 const form = ref<IAnalyzerAnalyzeForm>(getDefaultFormValue());
@@ -87,7 +86,7 @@ const onSubmit = async (): Promise<void> => {
 
   try {
     form.value.result = undefined;
-    const response = await request(form.value.text);
+    const response = await request(form.value.text || '');
 
     alert.value.message = lang('analyzer.successAnalyzeText');
     alert.value.type = 'success';

@@ -52,11 +52,11 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IProfessionForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  header: item.value?.header || null,
-  header_template: item.value?.header_template || null,
-  link: item.value?.link || '',
-  text: item.value?.text || '',
+  name: item.value?.name || undefined,
+  header: item.value?.header || undefined,
+  header_template: item.value?.header_template || undefined,
+  link: item.value?.link || undefined,
+  text: item.value?.text || undefined,
   title: item.value?.metatag?.title || undefined,
   description: item.value?.metatag?.description || undefined,
   title_template: item.value?.metatag?.title_template || undefined,

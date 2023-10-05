@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -57,11 +57,11 @@ const getDefaultFormValue = (): IArticleForm => ({
   text: item.value?.text || undefined,
   text_current: item.value?.text_current || undefined,
   apply: false,
-  analyzers: item.value?.analyzers || null,
-  articleable: item.value?.articleable || null,
-  category: item.value?.category || null,
-  category_label: item.value?.category_label || null,
-  category_name: item.value?.category_name || null,
+  analyzers: item.value?.analyzers || undefined,
+  articleable: item.value?.articleable || undefined,
+  category: item.value?.category || undefined,
+  category_label: item.value?.category_label || undefined,
+  category_name: item.value?.category_name || undefined,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());

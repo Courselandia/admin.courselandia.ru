@@ -271,7 +271,7 @@ const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 const phoneMask = '+7-###-###-####';
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string>();
 
 const alert = ref<IAlert>({
   message: null,
@@ -279,17 +279,17 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IUserForm>({
-  login: '',
-  password: '',
-  first_name: null,
-  second_name: null,
-  phone: null,
+  login: undefined,
+  password: undefined,
+  first_name: undefined,
+  second_name: undefined,
+  phone: undefined,
   two_factor: false,
   invitation: false,
   verified: false,
   status: true,
-  role: null,
-  image: null,
+  role: undefined,
+  image: undefined,
 });
 
 const onClickReset = (): void => {
@@ -308,8 +308,8 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-    form.value.image = null;
-    image.value = null;
+    form.value.image = undefined;
+    image.value = '';
     onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
@@ -327,7 +327,7 @@ const onSubmit = async (): Promise<void> => {
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   form.value.image = file;
-  image.value = await base64(file);
+  image.value = await base64(file) as string || '';
 
   return false;
 };
@@ -338,8 +338,8 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
-      image.value = null;
+      form.value.image = undefined;
+      image.value = '';
     },
   });
 };

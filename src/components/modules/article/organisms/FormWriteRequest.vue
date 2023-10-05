@@ -89,6 +89,7 @@ import {
 import Lang from '@/components/atoms/Lang.vue';
 import lang from '@/helpers/lang';
 import IArticleWriteForm from '@/interfaces/modules/article/articleWriteForm';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -103,7 +104,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {

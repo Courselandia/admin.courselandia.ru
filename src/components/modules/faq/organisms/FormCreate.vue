@@ -46,8 +46,8 @@ const alert = ref<IAlert>({
 
 const form = ref<IFaqForm>({
   school_id: undefined,
-  question: '',
-  answer: '',
+  question: undefined,
+  answer: undefined,
   status: true,
 });
 

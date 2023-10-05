@@ -1,4 +1,4 @@
 export default interface IArticleWriteForm {
-  request: string;
-  result?: string;
+  request: string | undefined;
+  result?: string | undefined;
 }

@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -62,15 +62,15 @@ const getDefaultFormValue = (): IReviewForm => ({
   id: id as TId,
   school_id: item.value?.school_id
     ? { key: item.value?.school.id as string, value: item.value?.school.name }
-    : null,
-  source: item.value?.source || null,
-  course_id: courseId,
-  name: item.value?.name || null,
-  title: item.value?.title || null,
-  review: item.value?.review || null,
-  advantages: item.value?.advantages || null,
-  disadvantages: item.value?.disadvantages || null,
-  rating: item.value?.rating || '',
+    : undefined,
+  source: item.value?.source || undefined,
+  course_id: courseId || undefined,
+  name: item.value?.name || undefined,
+  title: item.value?.title || undefined,
+  review: item.value?.review || undefined,
+  advantages: item.value?.advantages || undefined,
+  disadvantages: item.value?.disadvantages || undefined,
+  rating: item.value?.rating || undefined,
   status: item.value?.status || EStatus.ACTIVE,
   created_at: dayjs.utc(item.value?.created_at)
     .tz(dayjs.tz.guess()) || null,

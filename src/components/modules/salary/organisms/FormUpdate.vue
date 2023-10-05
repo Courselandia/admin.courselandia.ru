@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -52,11 +52,11 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): ISalaryForm => ({
   id: id as TId,
-  level: item.value?.level || null,
-  salary: item.value?.salary || '',
+  level: item.value?.level || undefined,
+  salary: item.value?.salary || undefined,
   profession_id: item.value?.profession
     ? { key: item.value?.profession.id as string, value: item.value?.profession.name }
-    : null,
+    : undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

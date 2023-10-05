@@ -5,11 +5,11 @@ import TId from '@/types/id';
 export default interface IArticleRewriteForm {
   id: TId;
   request: string;
-  text: string | null;
-  text_current: string | null;
-  analyzers: Array<IAnalyzer> | null;
-  articleable: ICourse | null;
-  category: string | null;
-  category_name: string | null;
-  category_label: string | null;
+  text: string | undefined;
+  text_current: string | undefined;
+  analyzers: Array<IAnalyzer> | undefined;
+  articleable: ICourse | undefined;
+  category: string | undefined;
+  category_name: string | undefined;
+  category_label: string | undefined;
 }

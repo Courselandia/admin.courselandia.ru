@@ -2,7 +2,7 @@ import TId from '@/types/id';
 
 export default interface IEmploymentForm {
   id?: TId;
-  name: string;
-  text: string;
+  name: string | undefined;
+  text: string | undefined;
   status: boolean;
 }

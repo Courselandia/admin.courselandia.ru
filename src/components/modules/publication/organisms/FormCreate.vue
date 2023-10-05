@@ -271,7 +271,7 @@ const { create } = publication();
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -280,23 +280,23 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IPublicationForm>({
-  published_at: '',
-  header: '',
-  link: '',
-  anons: null,
-  article: '',
-  image: null,
-  title: null,
-  description: null,
-  keywords: null,
+  published_at: undefined,
+  header: undefined,
+  link: undefined,
+  anons: undefined,
+  article: undefined,
+  image: undefined,
+  title: undefined,
+  description: undefined,
+  keywords: undefined,
   status: true,
 });
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
-  form.value.image = null;
+  form.value.image = undefined;
   form.value.article = '';
-  image.value = null;
+  image.value = '';
 };
 
 const onSubmit = async (): Promise<void> => {
@@ -308,9 +308,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-    form.value.image = null;
+    form.value.image = undefined;
     form.value.article = '';
-    image.value = null;
+    image.value = '';
     onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
@@ -328,7 +328,7 @@ const onSubmit = async (): Promise<void> => {
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   form.value.image = file;
-  image.value = await base64(file);
+  image.value = await base64(file) as string || '';
 
   return false;
 };
@@ -339,14 +339,14 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
-      image.value = null;
+      form.value.image = undefined;
+      image.value = '';
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header);
+  form.value.link = latin(form.value.header || '');
 };
 </script>
 

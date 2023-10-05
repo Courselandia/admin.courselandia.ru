@@ -4,7 +4,7 @@ import TId from '@/types/id';
 export default interface IFaqForm {
   id?: TId;
   school_id: IOption | undefined;
-  question: string;
+  question: string | undefined;
   answer: string | undefined;
   status: boolean;
 }

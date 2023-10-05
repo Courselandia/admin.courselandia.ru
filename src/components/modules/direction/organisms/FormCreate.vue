@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -45,18 +45,18 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IDirectionForm>({
-  name: '',
+  name: undefined,
   header_template: 'Онлайн курсы по {direction:dative}',
-  header: '',
-  link: '',
-  text: '',
-  weight: '',
+  header: undefined,
+  link: undefined,
+  text: undefined,
+  weight: undefined,
   title_template: 'Каталог онлайн-курсов по {direction:dative}[countDirectionCourses:: {countDirectionCourses:курс|nominative} для обучения] — Courselandia',
   description_template: 'В каталоге Courselandia вы можете найти интересные курсы по направлению {direction:nominative} [countDirectionCourses:из {countDirectionCourses:вариант|genitive}]. Здесь полное описание курсов, удобный поиск, рейтинги, обучающие программы.',
-  title: '',
-  description: '',
-  keywords: null,
-  status: true,
+  title: undefined,
+  description: undefined,
+  keywords: undefined,
+  status: false,
 });
 
 const onReset = (formRef?: FormInstance) => {

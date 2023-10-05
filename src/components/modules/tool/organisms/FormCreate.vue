@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -47,16 +47,16 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IToolForm>({
-  name: '',
-  header: null,
+  name: undefined,
+  header: undefined,
   header_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}',
-  link: '',
-  text: '',
-  title: null,
-  description: null,
+  link: undefined,
+  text: undefined,
+  title: undefined,
+  description: undefined,
   title_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}[countToolCourses:: {countToolCourses:курс|nominative} для обучения с нуля] — Courselandia',
   description_template: 'Выбирайте обучающий онлайн-курс по изучению инструмента {tool:nominative} из каталога Courselandia [countToolCourses:— {countToolCourses:курс|nominative} на ваш выбор]. Рейтинг онлайн-школ, сравнение цен, легкий поиск онлайн-курсов.',
-  keywords: null,
+  keywords: undefined,
   status: true,
 });
 

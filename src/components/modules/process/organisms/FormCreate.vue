@@ -45,8 +45,8 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<IProcessForm>({
-  name: '',
-  text: '',
+  name: undefined,
+  text: undefined,
   status: true,
 });
 

@@ -1059,30 +1059,30 @@ const getDefaultFormValue = (): ICourseForm => ({
     ? { key: item.value?.school?.id as string, value: item.value?.school?.name }
     : undefined,
   image: null,
-  name: item.value?.name || '',
-  header_template: item.value?.header_template || '',
-  header: item.value?.header || '',
-  text: item.value?.text || '',
-  link: item.value?.link || '',
-  url: item.value?.url || '',
+  name: item.value?.name || undefined,
+  header_template: item.value?.header_template || undefined,
+  header: item.value?.header || undefined,
+  text: item.value?.text || undefined,
+  link: item.value?.link || undefined,
+  url: item.value?.url || undefined,
   language: item.value?.language || undefined,
-  rating: item.value?.rating || '',
-  price: item.value?.price || '',
-  price_old: item.value?.price_old || '',
-  price_recurrent: item.value?.price_recurrent || '',
+  rating: item.value?.rating || undefined,
+  price: item.value?.price || undefined,
+  price_old: item.value?.price_old || undefined,
+  price_recurrent: item.value?.price_recurrent || undefined,
   currency: item.value?.currency || undefined,
   online: item.value?.online || false,
   employment: item.value?.employment || false,
-  duration: item.value?.duration || '',
+  duration: item.value?.duration || undefined,
   duration_unit: item.value?.duration_unit || undefined,
-  lessons_amount: item.value?.lessons_amount || '',
-  modules_amount: item.value?.modules_amount || '',
+  lessons_amount: item.value?.lessons_amount || undefined,
+  modules_amount: item.value?.modules_amount || undefined,
   status: item.value?.status || EStatus.ACTIVE,
 
   title_template: item.value?.metatag?.title_template || undefined,
   description_template: item.value?.metatag?.description_template || undefined,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
 
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
@@ -1100,7 +1100,7 @@ const getDefaultFormValue = (): ICourseForm => ({
     (itm) => ({ icon: itm.icon, text: itm.text }),
   ) as Array<IFeature> || [],
   program: item.value?.program,
-  analyzers: item.value?.analyzers,
+  analyzers: item.value?.analyzers || undefined,
 });
 
 learnItems.value = item.value?.learns?.map((itm) => ({
@@ -1264,7 +1264,7 @@ const onClickImageDestroy = async (): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 
 const filterOption = (input: string, option: any) => option

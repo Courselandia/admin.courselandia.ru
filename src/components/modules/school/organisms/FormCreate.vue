@@ -323,9 +323,9 @@ const { create } = school();
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<Record<string, string | ArrayBuffer | null>>({
-  logo: null,
-  site: null,
+const image = ref<Record<string, string>>({
+  logo: '',
+  site: '',
 });
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
@@ -335,30 +335,30 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ISchoolForm>({
-  name: '',
-  header: '',
+  name: undefined,
+  header: undefined,
   header_template: 'Онлайн-курсы школы {school}',
-  link: '',
-  text: '',
-  rating: '',
-  site: null,
-  imageLogo: null,
-  imageSite: null,
-  title: null,
-  description: null,
+  link: undefined,
+  text: undefined,
+  rating: undefined,
+  site: undefined,
+  imageLogo: undefined,
+  imageSite: undefined,
+  title: undefined,
+  description: undefined,
   title_template: '{school}:[countSchoolCourses: {countSchoolCourses:онлайн-курс|nominative} — ] цены, сравнения, описание программ и курсов — Courselandia',
   description_template: 'Начни учиться в онлайн-школе {school} [countSchoolCourses: — {countSchoolCourses:профессиональный онлайн-курс|nominative} от ведущих преподавателей], подробное описание курсов в каталоге Courselandia.',
-  keywords: null,
+  keywords: undefined,
   status: true,
 });
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.text = '';
-  form.value.imageLogo = null;
-  form.value.imageSite = null;
-  image.value.site = null;
-  image.value.logo = null;
+  form.value.imageLogo = undefined;
+  form.value.imageSite = undefined;
+  image.value.site = '';
+  image.value.logo = '';
 };
 
 const onSubmit = async (): Promise<void> => {
@@ -370,11 +370,11 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-    form.value.imageLogo = null;
-    form.value.imageSite = null;
+    form.value.imageLogo = undefined;
+    form.value.imageSite = undefined;
     form.value.text = '';
-    image.value.site = null;
-    image.value.logo = null;
+    image.value.site = '';
+    image.value.logo = '';
     onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
@@ -392,14 +392,14 @@ const onSubmit = async (): Promise<void> => {
 
 const onBeforeUploadFileLogo = async (file: File): Promise<boolean> => {
   form.value.imageLogo = file;
-  image.value.logo = await base64(file);
+  image.value.logo = await base64(file) as string || '';
 
   return false;
 };
 
 const onBeforeUploadFileSite = async (file: File): Promise<boolean> => {
   form.value.imageSite = file;
-  image.value.site = await base64(file);
+  image.value.site = await base64(file) as string || '';
 
   return false;
 };
@@ -411,18 +411,18 @@ const onClickImageDestroy = async (type: string): Promise<void> => {
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
       if (type === 'logo') {
-        form.value.imageLogo = null;
-        image.value.logo = null;
+        form.value.imageLogo = undefined;
+        image.value.logo = '';
       } else if (type === 'site') {
-        form.value.imageSite = null;
-        image.value.site = null;
+        form.value.imageSite = undefined;
+        image.value.site = '';
       }
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 </script>
 

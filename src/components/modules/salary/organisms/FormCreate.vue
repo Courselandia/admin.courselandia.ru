@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       @submit="onSubmit"
       @reset="onReset"
@@ -45,15 +45,15 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ISalaryForm>({
-  level: null,
-  salary: '',
-  profession_id: null,
+  level: undefined,
+  salary: undefined,
+  profession_id: undefined,
   status: true,
 });
 
 const onReset = (formRef?: FormInstance) => {
   formRef?.resetFields();
-  form.value.profession_id = null;
+  form.value.profession_id = undefined;
 };
 
 const onSubmit = async (data: ISalaryForm, formRef?: FormInstance): Promise<void> => {

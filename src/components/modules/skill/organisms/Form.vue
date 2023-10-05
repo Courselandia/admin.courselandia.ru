@@ -167,6 +167,7 @@ import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ISkillForm from '@/interfaces/modules/skill/skillForm';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -181,7 +182,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {
@@ -232,6 +233,6 @@ const onReset = () => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 </script>

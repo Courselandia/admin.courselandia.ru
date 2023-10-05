@@ -56,7 +56,7 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              :title="lang('dashboard.edit')"
+              :title="lang('dashboard.edit') || ''"
               type="primary"
               shape="circle"
               @click="onClickUpdate(record.id)"
@@ -66,7 +66,7 @@
               </template>
             </Button>
             <Button
-              :title="lang('dashboard.destroy')"
+              :title="lang('dashboard.destroy') || ''"
               :loading="destroysLoading[record.id]"
               type="primary"
               shape="circle"

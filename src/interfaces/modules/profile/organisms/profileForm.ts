@@ -1,5 +1,5 @@
 export default interface IProfileForm {
-  firstName: string;
-  secondName: string;
-  phone: string;
+  firstName: string | undefined;
+  secondName: string | undefined;
+  phone: string | undefined;
 }

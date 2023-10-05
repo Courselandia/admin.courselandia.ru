@@ -199,6 +199,7 @@ import ICategoryForm from '@/interfaces/modules/category/categoryForm';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import direction from '@/stores/direction';
 import profession from '@/stores/profession';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -213,7 +214,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {

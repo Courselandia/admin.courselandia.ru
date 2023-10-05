@@ -222,6 +222,6 @@ const onReset = () => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 </script>

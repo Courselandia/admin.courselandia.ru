@@ -4,7 +4,7 @@ import TId from '@/types/id';
 
 export default interface IPublicationForm {
   id?: TId;
-  published_at: dayjs.Dayjs | string;
+  published_at: dayjs.Dayjs | string | undefined;
   header: string | undefined;
   link: string | undefined;
   anons: string | undefined;

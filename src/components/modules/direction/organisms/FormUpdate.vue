@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -52,17 +52,17 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IDirectionForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  header_template: item.value?.header_template || null,
-  header: item.value?.header || null,
-  link: item.value?.link || '',
-  text: item.value?.text || '',
-  weight: item.value?.weight || '',
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  keywords: item.value?.metatag?.keywords || null,
+  name: item.value?.name || undefined,
+  header_template: item.value?.header_template || undefined,
+  header: item.value?.header || undefined,
+  link: item.value?.link || undefined,
+  text: item.value?.text || undefined,
+  weight: item.value?.weight || undefined,
+  title_template: item.value?.metatag?.title_template || undefined,
+  description_template: item.value?.metatag?.description_template || undefined,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
+  keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

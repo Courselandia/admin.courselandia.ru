@@ -310,7 +310,7 @@ const schoolItems = schoolData.items;
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string | ArrayBuffer | null>();
+const image = ref<string>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 const alert = ref<IAlert>({
@@ -319,26 +319,26 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ITeacherForm>({
-  name: '',
-  link: '',
-  text: '',
-  rating: '',
-  image: null,
+  name: undefined,
+  link: undefined,
+  text: undefined,
+  rating: undefined,
+  image: undefined,
   directions: [],
   schools: [],
-  title: null,
-  description: null,
+  title: undefined,
+  description: undefined,
   title_template: 'Преподаватель {teacher} — отзывы, рейтинг[countTeacherCourses:, список из {countTeacherCourses:курс|genitive}] — Courselandia',
   description_template: 'Все курсы преподавателя {teacher} — полный список обучающих онлайн-курсов в каталоге Courselandia.',
-  keywords: null,
+  keywords: undefined,
   status: true,
 });
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.text = '';
-  form.value.image = null;
-  image.value = null;
+  form.value.image = undefined;
+  image.value = undefined;
 };
 
 onMounted(async (): Promise<void> => {
@@ -370,9 +370,9 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-    form.value.image = null;
+    form.value.image = undefined;
     form.value.text = '';
-    image.value = null;
+    image.value = '';
     onClickReset();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
@@ -390,7 +390,7 @@ const onSubmit = async (): Promise<void> => {
 
 const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   form.value.image = file;
-  image.value = await base64(file);
+  image.value = await base64(file) as string || '';
 
   return false;
 };
@@ -401,14 +401,14 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
-      image.value = null;
+      form.value.image = undefined;
+      image.value = '';
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 
 const filterOption = (input: string, option: any) => option

@@ -52,8 +52,8 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IProcessForm => ({
   id: id as TId,
-  name: item.value?.name || '',
-  text: item.value?.text || '',
+  name: item.value?.name || undefined,
+  text: item.value?.text || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

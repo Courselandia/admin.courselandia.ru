@@ -1,3 +1,3 @@
 export default interface IPasswordForm {
-  password: string;
+  password: string | undefined;
 }

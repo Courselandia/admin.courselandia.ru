@@ -9,7 +9,7 @@
     <Form
       v-model:value="form"
       :alert-message="alert.message as string"
-      :alert-type="alert.type as string"
+      :alert-type="alert.type"
       :loading="loading"
       :button-text="lang('dashboard.edit') || undefined"
       @submit="onSubmit"
@@ -53,15 +53,15 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): ICategoryForm => ({
   id: id as TId,
   name: item.value?.name || '',
-  header: item.value?.header || null,
+  header: item.value?.header || undefined,
   header_template: item.value?.header_template || null,
   link: item.value?.link || '',
   text: item.value?.text || undefined,
-  title: item.value?.metatag?.title || null,
-  description: item.value?.metatag?.description || null,
-  title_template: item.value?.metatag?.title_template || null,
-  description_template: item.value?.metatag?.description_template || null,
-  keywords: item.value?.metatag?.keywords || null,
+  title: item.value?.metatag?.title || undefined,
+  description: item.value?.metatag?.description || undefined,
+  title_template: item.value?.metatag?.title_template || undefined,
+  description_template: item.value?.metatag?.description_template || undefined,
+  keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   professions: item.value?.professions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],

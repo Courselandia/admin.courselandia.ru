@@ -358,38 +358,38 @@ const phoneMask = '+7-###-###-####';
 
 const userAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const imageAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const passwordAlert = ref<IAlert>({
   message: null,
-  type: null,
+  type: undefined,
 });
 
 const userForm = ref<IUserForm>({
   id: id as TId,
-  login: item.value?.login || '',
-  password: item.value?.password || '',
-  first_name: item.value?.first_name || null,
-  second_name: item.value?.second_name || null,
-  phone: item.value?.phone || null,
+  login: item.value?.login || undefined,
+  password: item.value?.password || undefined,
+  first_name: item.value?.first_name || undefined,
+  second_name: item.value?.second_name || undefined,
+  phone: item.value?.phone || undefined,
   two_factor: item.value?.two_factor !== undefined ? item.value?.two_factor : false,
   verified: item.value?.verification.status !== undefined ? item.value?.verification.status : false,
   status: item.value?.status !== undefined ? item.value?.status : true,
-  role: item.value?.role?.name || null,
-  image: null,
+  role: item.value?.role?.name || undefined,
+  image: undefined,
 });
 
 const passwordForm = ref<IPasswordForm>({
-  password: '',
+  password: undefined,
 });
 
-const image = ref<string | ArrayBuffer | null>(item.value?.image_middle_id?.path || null);
+const image = ref<string>(item.value?.image_middle_id?.path || '');
 
 const onUserSubmit = async (): Promise<void> => {
   userAlert.value.message = '';
@@ -427,7 +427,7 @@ const onPasswordSubmit = async (): Promise<void> => {
   passwordLoading.value = true;
 
   try {
-    await password(id as TId, passwordForm.value.password);
+    await password(id as TId, passwordForm.value.password || '');
 
     passwordAlert.value.message = lang('dashboard.successUpdateText');
     passwordAlert.value.type = 'success';
@@ -453,7 +453,7 @@ const onBeforeUploadFile = async (file: File): Promise<boolean> => {
   try {
     await imageUpdate(id as TId, file);
 
-    image.value = await base64(file);
+    image.value = await base64(file) as string || '';
   } catch (error: Error | any) {
     imageAlert.value.message = error.response.data.message
       ? error.response.data.message
@@ -478,7 +478,7 @@ const onClickImageDestroy = async (): Promise<void> => {
       try {
         await imageDestroy(id as TId);
 
-        image.value = null;
+        image.value = '';
       } catch (error: Error | any) {
         imageAlert.value.message = error.response.data.message
           ? error.response.data.message

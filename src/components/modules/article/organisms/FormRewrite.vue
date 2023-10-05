@@ -55,13 +55,13 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): IArticleRewriteForm => ({
   id: id as TId,
   request: item.value?.request_template || '',
-  text: item.value?.text || null,
-  text_current: item.value?.text_current || null,
-  analyzers: item.value?.analyzers || null,
-  articleable: item.value?.articleable || null,
-  category: item.value?.category || null,
-  category_label: item.value?.category_label || null,
-  category_name: item.value?.category_name || null,
+  text: item.value?.text || undefined,
+  text_current: item.value?.text_current || undefined,
+  analyzers: item.value?.analyzers || undefined,
+  articleable: item.value?.articleable || undefined,
+  category: item.value?.category || undefined,
+  category_label: item.value?.category_label || undefined,
+  category_name: item.value?.category_name || undefined,
 });
 
 const form = ref<IArticleRewriteForm>(getDefaultFormValue());

@@ -12,30 +12,30 @@ export default interface ICourseForm {
   id?: TId;
   school_id: IOption | undefined;
   image: File | null;
-  name: string;
+  name: string | undefined;
   header_template: string | undefined;
-  header: string | null;
-  text: string;
-  link: string;
-  url: string;
+  header: string | undefined;
+  text: string | undefined;
+  link: string | undefined;
+  url: string | undefined;
   language: ELanguage | undefined;
-  rating: number | string;
-  price: number | string;
-  price_old: number | string;
-  price_recurrent: number | string;
+  rating: number | string | undefined;
+  price: number | string | undefined;
+  price_old: number | string | undefined;
+  price_recurrent: number | string | undefined;
   currency: ECurrency | undefined;
   online: boolean | undefined;
   employment: boolean;
-  duration: number | string;
+  duration: number | string | undefined;
   duration_unit: EDuration | undefined;
-  lessons_amount: number | string;
-  modules_amount: number | string
+  lessons_amount: number | string | undefined;
+  modules_amount: number | string | undefined
   status: EStatus;
 
   title_template: string | undefined;
   description_template: string | undefined;
-  title: string | null;
-  description: string | null;
+  title: string | undefined;
+  description: string | undefined;
   keywords: string | undefined;
 
   directions: Array<IOption>;
@@ -51,5 +51,5 @@ export default interface ICourseForm {
   features: Array<IFeature>;
   program: Array<IProgram>;
 
-  analyzers?: Array<IAnalyzer> | null;
+  analyzers?: Array<IAnalyzer> | undefined;
 }

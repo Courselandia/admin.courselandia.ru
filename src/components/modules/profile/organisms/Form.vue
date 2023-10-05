@@ -295,9 +295,9 @@ const passwordAlert = ref<IAlert>({
 });
 
 const profileForm = ref<IProfileForm>({
-  firstName: user.value?.first_name || '',
-  secondName: user.value?.second_name || '',
-  phone: user.value?.phone || '',
+  firstName: user.value?.first_name || undefined,
+  secondName: user.value?.second_name || undefined,
+  phone: user.value?.phone || undefined,
 });
 
 const passwordForm = ref<IPasswordForm>({
@@ -312,9 +312,9 @@ const onProfileSubmit = async (): Promise<void> => {
 
   try {
     await update(
-      profileForm.value.firstName,
-      profileForm.value.secondName,
-      profileForm.value.phone,
+      profileForm.value.firstName || '',
+      profileForm.value.secondName || '',
+      profileForm.value.phone || '',
     );
 
     profileAlert.value.message = lang('dashboard.successUpdateText');

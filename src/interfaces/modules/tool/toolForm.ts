@@ -3,16 +3,16 @@ import TId from '@/types/id';
 
 export default interface IToolForm {
   id?: TId;
-  name: string;
-  header: string | null;
-  header_template: string | null;
-  link: string;
-  text: string;
-  title: string | null;
-  description: string | null;
-  title_template: string | null;
-  description_template: string | null;
-  keywords: string | null;
+  name: string | undefined;
+  header: string | undefined;
+  header_template: string | undefined;
+  link: string | undefined;
+  text: string | undefined;
+  title: string | undefined;
+  description: string | undefined;
+  title_template: string | undefined;
+  description_template: string | undefined;
+  keywords: string | undefined;
   status: boolean;
-  analyzers?: Array<IAnalyzer> | null;
+  analyzers?: Array<IAnalyzer> | undefined;
 }
