@@ -1,4 +1,3 @@
-@import 'ant-design-vue/dist/antd.css';
 @import '@/assets/modifiers/align.scss';
 @import '@/assets/modifiers/clear.scss';
 @import '@/assets/modifiers/cursor.scss';
@@ -20,6 +19,8 @@
 
 BODY {
   overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 #app {

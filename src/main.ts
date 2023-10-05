@@ -2,7 +2,7 @@ import '@/plugins/dayjs';
 
 // @ts-ignore
 import CKEditor from '@mayasabha/ckeditor4-vue3';
-import { maska } from 'maska';
+import { vMaska } from 'maska';
 import {
   createPinia,
 } from 'pinia';
@@ -29,7 +29,7 @@ app.use(pinia)
   .use(CKEditor)
   .directive('outside-click', outsideClickDirective);
 
-app.directive('maska', maska);
+app.directive('maska', vMaska);
 
 app.component('CenterLayout', CenterLayout);
 app.component('DefaultLayout', DefaultLayout);

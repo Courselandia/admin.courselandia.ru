@@ -4,7 +4,9 @@
     <Layout>
       <Sider />
       <Layout style="padding: 0 24px 24px; overflow: auto">
-        <slot />
+        <div>
+          <slot />
+        </div>
       </Layout>
     </Layout>
   </Layout>
