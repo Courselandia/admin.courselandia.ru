@@ -44,7 +44,7 @@
           class="width--80"
           show-search
           :filter-option="filterOption"
-          :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text })) || {}"
+          :options="column.filters?.map((itm) => ({ value: itm.value, label: itm.text }))"
           @change="value => setSelectedKeys(value ? value : [])"
         />
       </template>
