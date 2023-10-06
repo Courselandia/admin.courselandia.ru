@@ -124,8 +124,6 @@
           :style="{
             color: filtered ? '#0c80d7' : undefined,
             fontSize: filtered ? '18px' : '14px',
-            width: '50px',
-            height: '50px',
           }"
         />
       </template>
