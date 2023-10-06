@@ -1,7 +1,9 @@
+import dayjs from 'dayjs';
 import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
+import ICourse from '@/interfaces/modules/course/course';
 import ITeacher from '@/interfaces/modules/teacher/teacher';
 import ITeacherForm from '@/interfaces/modules/teacher/teacherForm';
 import IFilters from '@/interfaces/molecules/table/filters';
@@ -15,6 +17,7 @@ export default defineStore('teacher', {
     items: null as ITeacher[] | null,
     item: null as ITeacher | null,
     total: null as number | null,
+    courses: null as ICourse[] | null,
   }),
   actions: {
     async get(id: TId): Promise<IResponseItem<ITeacher>> {
@@ -59,11 +62,42 @@ export default defineStore('teacher', {
         throw error;
       }
     },
+    async readCourses(id: TId): Promise<IResponseItems<ITeacher>> {
+      try {
+        const response = await axios.get<IResponseItems<ITeacher>>(`/api/private/admin/teacher/read/courses/${id}`, {
+          headers: {
+            Authorization: access().accessToken || '',
+          },
+        });
+
+        this.courses = response.data.data;
+
+        return response.data;
+      } catch (error) {
+        this.courses = null;
+
+        throw error;
+      }
+    },
+    async detachCourses(id: TId, ids: Array<TId>): Promise<IResponseItem<null>> {
+      const response = await axios.delete<IResponseItem<null>>(`/api/private/admin/teacher/detach/courses/${id}`, {
+        params: {
+          ids,
+        },
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
+    },
     async create(data: ITeacherForm): Promise<IResponseItem<ITeacher>> {
       const formData = new FormData();
       formData.append('name', data.name || '');
       formData.append('link', data.link || '');
       formData.append('text', data.text || '');
+      formData.append('city', data.city || '');
+      formData.append('comment', data.comment || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
@@ -71,6 +105,7 @@ export default defineStore('teacher', {
       formData.append('description_template', data.description_template || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
+      formData.append('copied', data.copied ? '1' : '0');
       formData.append('image', data.image || '');
 
       if (data.directions) {
@@ -82,6 +117,32 @@ export default defineStore('teacher', {
       if (data.schools) {
         for (let i = 0; i < data.schools.length; i++) {
           formData.append(`schools[${i}]`, String(data.schools[i].key));
+        }
+      }
+
+      if (data.experiences) {
+        for (let i = 0, z = 0; i < data.experiences.length; i++) {
+          if (data.experiences[i].place && data.experiences[i].position) {
+            const started = data.experiences[i].started as unknown as dayjs.Dayjs;
+            const finished = data.experiences[i].finished as unknown as dayjs.Dayjs;
+
+            formData.append(`experiences[${z}][place]`, data.experiences[i].place || '');
+            formData.append(`experiences[${z}][position]`, data.experiences[i].position || '');
+            formData.append(`experiences[${z}][started]`, started?.format('YYYY-MM-DD') || '');
+            formData.append(`experiences[${z}][finished]`, finished?.format('YYYY-MM-DD') || '');
+            formData.append(`experiences[${z}][weight]`, String(data.experiences[i].weight || 0));
+            z++;
+          }
+        }
+      }
+
+      if (data.socialMedias) {
+        for (let i = 0, z = 0; i < data.socialMedias.length; i++) {
+          if (data.socialMedias[i].name && data.socialMedias[i].value) {
+            formData.append(`socialMedias[${z}][name]`, data.socialMedias[i].name || '');
+            formData.append(`socialMedias[${z}][value]`, data.socialMedias[i].value || '');
+            z++;
+          }
         }
       }
 
@@ -99,6 +160,22 @@ export default defineStore('teacher', {
         rating: data.rating ? String(data.rating) : '0',
         directions: data.directions?.map((item) => item.key),
         schools: data.schools?.map((item) => item.key),
+        experiences: data.experiences?.map((item) => {
+          const started = item.started ? dayjs.utc(item.started) : null;
+          const finished = item.finished ? dayjs.utc(item.finished) : null;
+
+          return {
+            place: item.place,
+            position: item.position,
+            started: started?.format('YYYY-MM-DD') || '',
+            finished: finished?.format('YYYY-MM-DD') || '',
+            weight: item.weight,
+          };
+        }),
+        socialMedias: data.socialMedias?.map((item) => ({
+          name: item.name,
+          value: item.value,
+        })),
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -118,8 +195,8 @@ export default defineStore('teacher', {
 
       return response.data;
     },
-    async destroy(ids: Array<TId>): Promise<IResponseItem<ITeacherForm>> {
-      const response = await axios.delete<IResponseItem<ITeacherForm>>('/api/private/admin/teacher/destroy', {
+    async destroy(ids: Array<TId>): Promise<IResponseItem<null>> {
+      const response = await axios.delete<IResponseItem<null>>('/api/private/admin/teacher/destroy', {
         params: {
           ids,
         },

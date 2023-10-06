@@ -1,0 +1,28 @@
+enum ESocialMedia {
+  LINKED_ID = 'linkedIn',
+  FACEBOOK = 'facebook',
+  VK = 'vk',
+  OK = 'ok',
+  TELEGRAM = 'telegram',
+  WHATS_APP = 'whatsApp',
+  BEHANCE = 'behance',
+  DRIBBLE = 'dribble',
+  INSTAGRAM = 'instagram',
+  TWITTER = 'twitter',
+  DISCORD = 'discord',
+  YOU_TUBE = 'youTube',
+  TWITCH = 'twitch',
+  TIK_TOK = 'tikTok',
+  SITE = 'site',
+  VC = 'vc',
+  YANDEX_Q = 'yandex_q',
+  GITHUB = 'github',
+  GITLAB = 'gitlab',
+  SKYPE = 'skype',
+  YOUDO = 'youdo',
+  PINTEREST = 'pinterest',
+  YANDEX_DZEN = 'yandex_dzen',
+  HABR_CAREER = 'habr_career',
+}
+
+export default ESocialMedia;

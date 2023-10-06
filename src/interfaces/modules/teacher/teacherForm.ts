@@ -1,3 +1,5 @@
+import ITeacherExperience from '@/interfaces/modules/teacher/experience';
+import ISocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -6,6 +8,7 @@ export default interface ITeacherForm {
   name: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  city: string | undefined;
   rating: number | string | undefined;
   image: File | undefined;
   directions: Array<IOption> | undefined;
@@ -16,4 +19,8 @@ export default interface ITeacherForm {
   description_template: string | undefined;
   keywords: string | undefined;
   status: boolean;
+  copied: boolean;
+  comment: string | undefined;
+  experiences: ITeacherExperience[];
+  socialMedias: ISocialMedia[];
 }
