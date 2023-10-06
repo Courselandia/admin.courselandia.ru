@@ -61,8 +61,8 @@ export default defineStore('user', {
     },
     async create(data: IUserForm): Promise<IResponseItem<IUser>> {
       const formData = new FormData();
-      formData.append('login', data.login);
-      formData.append('password', data.password);
+      formData.append('login', data.login || '');
+      formData.append('password', data.password || '');
       formData.append('first_name', data.first_name || '');
       formData.append('second_name', data.second_name || '');
       formData.append('phone', data.phone || '');

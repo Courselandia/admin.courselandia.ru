@@ -61,12 +61,12 @@ export default defineStore('course', {
     },
     async create(data: ICourseForm): Promise<IResponseItem<ICourse>> {
       const formData = new FormData();
-      formData.append('name', data.name);
+      formData.append('name', data.name || '');
       formData.append('header_template', data.header_template || '');
       formData.append('school_id', data.school_id?.key as string);
       formData.append('text', data.text || '');
-      formData.append('link', data.link);
-      formData.append('url', data.url);
+      formData.append('link', data.link || '');
+      formData.append('url', data.url || '');
       formData.append('language', data.language || '');
       formData.append('rating', data.rating ? String(data.rating) : '');
       formData.append('price', data.price ? String(data.price) : '');

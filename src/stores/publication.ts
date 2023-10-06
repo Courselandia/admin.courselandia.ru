@@ -64,8 +64,8 @@ export default defineStore('publication', {
       const formData = new FormData();
       const publishedAt = data.published_at as dayjs.Dayjs;
       formData.append('published_at', publishedAt?.format('YYYY-MM-DD HH:mm:ss ZZ') || '');
-      formData.append('header', data.header);
-      formData.append('link', data.link);
+      formData.append('header', data.header || '');
+      formData.append('link', data.link || '');
       formData.append('anons', data.anons || '');
       formData.append('article', data.article || '');
       formData.append('title', data.title || '');

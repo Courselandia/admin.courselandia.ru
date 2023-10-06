@@ -61,8 +61,8 @@ export default defineStore('teacher', {
     },
     async create(data: ITeacherForm): Promise<IResponseItem<ITeacher>> {
       const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('link', data.link);
+      formData.append('name', data.name || '');
+      formData.append('link', data.link || '');
       formData.append('text', data.text || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
@@ -73,12 +73,16 @@ export default defineStore('teacher', {
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
 
-      for (let i = 0; i < data.directions.length; i++) {
-        formData.append(`directions[${i}]`, String(data.directions[i].key));
+      if (data.directions) {
+        for (let i = 0; i < data.directions.length; i++) {
+          formData.append(`directions[${i}]`, String(data.directions[i].key));
+        }
       }
 
-      for (let i = 0; i < data.schools.length; i++) {
-        formData.append(`schools[${i}]`, String(data.schools[i].key));
+      if (data.schools) {
+        for (let i = 0; i < data.schools.length; i++) {
+          formData.append(`schools[${i}]`, String(data.schools[i].key));
+        }
       }
 
       const response = await axios.post<IResponseItem<ITeacher>>('/api/private/admin/teacher/create', formData, {

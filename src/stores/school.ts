@@ -61,10 +61,10 @@ export default defineStore('school', {
     },
     async create(data: ISchoolForm): Promise<IResponseItem<ISchool>> {
       const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('header', data.header);
-      formData.append('header_template', data.header_template);
-      formData.append('link', data.link);
+      formData.append('name', data.name || '');
+      formData.append('header', data.header || '');
+      formData.append('header_template', data.header_template || '');
+      formData.append('link', data.link || '');
       formData.append('text', data.text || '');
       formData.append('site', data.site || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
