@@ -304,7 +304,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="experienceItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteExperience(record.id)"
                     >
                       <Button danger>
@@ -547,7 +547,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="socialMediaItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteSocialMedia(record.id)"
                     >
                       <Button danger>

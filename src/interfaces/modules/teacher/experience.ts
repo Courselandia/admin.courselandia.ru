@@ -5,9 +5,9 @@ import TId from '@/types/id';
 
 export default interface ITeacherExperience extends IColumn {
   id?: TId;
-  place?: string | null;
-  position?: string | null;
-  started?: Dayjs | null;
-  finished?: Dayjs | null;
-  weight?: number | null | string;
+  place?: string | undefined;
+  position?: string | undefined;
+  started?: Dayjs | undefined;
+  finished?: Dayjs | undefined;
+  weight?: number | string | undefined;
 }

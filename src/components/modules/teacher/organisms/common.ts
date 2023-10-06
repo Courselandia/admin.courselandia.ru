@@ -81,11 +81,11 @@ export const experienceEdit = (id: TId, field: string): void => {
 export const onClickAddExperience = (): void => {
   const newData: ITeacherExperience = {
     id: Date.now(),
-    place: null,
-    position: null,
-    started: null,
-    finished: null,
-    weight: null,
+    place: undefined,
+    position: undefined,
+    started: undefined,
+    finished: undefined,
+    weight: undefined,
   };
 
   experienceItems.value.push(newData);
@@ -149,8 +149,8 @@ export const socialMediaEdit = (id: TId, field: string): void => {
 export const onClickAddSocialMedia = (): void => {
   const newData: ITeacherSocialMedia = {
     id: Date.now(),
-    name: null,
-    value: null,
+    name: undefined,
+    value: undefined,
   };
 
   socialMediaItems.value.push(newData);

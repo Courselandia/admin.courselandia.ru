@@ -4,6 +4,6 @@ import TId from '@/types/id';
 
 export default interface ISocialMedia extends IColumn {
   id?: TId;
-  name?: ESocialMedia | null;
-  value?: string | null;
+  name?: ESocialMedia | undefined;
+  value?: string | undefined;
 }

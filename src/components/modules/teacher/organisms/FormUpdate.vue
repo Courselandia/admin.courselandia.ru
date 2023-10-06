@@ -304,7 +304,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="experienceItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteExperience(record.id)"
                     >
                       <Button danger>
@@ -547,7 +547,7 @@
                   <template v-else-if="column.dataIndex === 'actions'">
                     <Popconfirm
                       v-if="socialMediaItems.length"
-                      :title="lang('dashboard.askDestroyRecord')"
+                      :title="lang('dashboard.askDestroyRecord') || ''"
                       @confirm="onClickDeleteSocialMedia(record.id)"
                     >
                       <Button danger>
@@ -634,7 +634,7 @@
                   <template v-if="column.key === 'actions'">
                     <Space>
                       <Button
-                        :title="lang('dashboard.go')"
+                        :title="lang('dashboard.go') || ''"
                         shape="circle"
                         @click="onClickGo(record.id)"
                       >
@@ -643,7 +643,7 @@
                         </template>
                       </Button>
                       <Button
-                        :title="lang('dashboard.detach')"
+                        :title="lang('dashboard.detach') || ''"
                         :loading="detachLoading[record.id]"
                         type="primary"
                         shape="circle"
@@ -661,7 +661,7 @@
                   </template>
                   <template v-if="column.key === 'price'">
                     <template v-if="record.price">
-                      {{ money(record.price, 0, getCurrencyLabel(record.currency)) }}
+                      {{ money(record.price, 0, getCurrencyLabel(record.currency) || 'руб.') }}
                     </template>
                     <template v-else>
                       <Tag>
@@ -957,8 +957,8 @@ const getDefaultFormValue = (): ITeacherForm => ({
     id: itm.id,
     place: itm.place,
     position: itm.position,
-    started: itm.started ? dayjs.utc(itm.started) : null,
-    finished: itm.finished ? dayjs.utc(itm.finished) : null,
+    started: itm.started ? dayjs.utc(itm.started) : undefined,
+    finished: itm.finished ? dayjs.utc(itm.finished) : undefined,
     weight: itm.weight,
   })) || [],
   socialMedias: item.value?.social_medias?.map((itm: ITeacherSocialMedia) => ({
@@ -972,8 +972,8 @@ experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) =
   id: itm.id,
   place: itm.place,
   position: itm.position,
-  started: itm.started ? dayjs.utc(itm.started) : null,
-  finished: itm.finished ? dayjs.utc(itm.finished) : null,
+  started: itm.started ? dayjs.utc(itm.started) : undefined,
+  finished: itm.finished ? dayjs.utc(itm.finished) : undefined,
   weight: itm.weight,
 })) || [];
 
@@ -1038,8 +1038,8 @@ const onSubmit = async (): Promise<void> => {
       id: itm.id,
       place: itm.place,
       position: itm.position,
-      started: itm.started ? dayjs.utc(itm.started) : null,
-      finished: itm.finished ? dayjs.utc(itm.finished) : null,
+      started: itm.started ? dayjs.utc(itm.started) : undefined,
+      finished: itm.finished ? dayjs.utc(itm.finished) : undefined,
       weight: itm.weight,
     })) || [];
 
