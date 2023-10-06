@@ -4,7 +4,7 @@ import TId from '@/types/id';
 
 export default interface IArticleRewriteForm {
   id: TId;
-  request: string;
+  request: string | undefined;
   text: string | undefined;
   text_current: string | undefined;
   analyzers: Array<IAnalyzer> | undefined;

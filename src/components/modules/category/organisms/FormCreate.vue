@@ -45,16 +45,16 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ICategoryForm>({
-  name: '',
-  header: null,
+  name: undefined,
+  header: undefined,
   header_template: 'Онлайн курсы по {category:dative}',
-  link: '',
-  text: '',
-  title: null,
-  description: null,
+  link: undefined,
+  text: undefined,
+  title: undefined,
+  description: undefined,
   title_template: 'Каталог онлайн-курсов по {category:dative}[countCategoryCourses:: {countCategoryCourses:курс|nominative} для обучения с нуля] — Courselandia',
   description_template: 'Выберите обучающий онлайн-курс в категории {category:nominative} в каталоге Courselandia [countCategoryCourses:— {countCategoryCourses:курс|nominative} для вас]. Рейтинги онлайн-школ, сравнение цен, быстрый поиск, сравнение курсов, обучающие программы.',
-  keywords: null,
+  keywords: undefined,
   status: true,
   directions: [],
   professions: [],

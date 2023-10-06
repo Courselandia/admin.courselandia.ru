@@ -54,7 +54,7 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): IArticleRewriteForm => ({
   id: id as TId,
-  request: item.value?.request_template || '',
+  request: item.value?.request_template || undefined,
   text: item.value?.text || undefined,
   text_current: item.value?.text_current || undefined,
   analyzers: item.value?.analyzers || undefined,

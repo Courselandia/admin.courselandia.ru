@@ -3,10 +3,10 @@ import TId from '@/types/id';
 
 export default interface ICategoryForm {
   id?: TId;
-  name: string;
+  name: string | undefined;
   header: string | undefined;
   header_template: string | undefined;
-  link: string;
+  link: string | undefined;
   text: string | undefined;
   title: string | undefined;
   title_template: string | undefined;

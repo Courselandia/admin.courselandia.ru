@@ -343,7 +343,7 @@ const onPasswordSubmit = async (): Promise<void> => {
   passwordLoading.value = true;
 
   try {
-    await password(passwordForm.value.password);
+    await password(passwordForm.value.password || '');
 
     passwordAlert.value.message = lang('dashboard.successUpdateText');
     passwordAlert.value.type = 'success';

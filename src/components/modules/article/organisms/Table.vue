@@ -43,7 +43,7 @@
           <Space>
             <Button
               v-if="record.status === EStatus.READY"
-              :title="lang('article.apply')"
+              :title="lang('article.apply') || ''"
               :loading="appliesLoading[record.id]"
               type="primary"
               shape="circle"
@@ -54,7 +54,7 @@
               </template>
             </Button>
             <Button
-              :title="lang('dashboard.edit')"
+              :title="lang('dashboard.edit') || ''"
               shape="circle"
               @click="onClickUpdate(record.id)"
             >
@@ -69,7 +69,7 @@
                   || record.status === EStatus.DISABLED
                   || record.status === EStatus.APPLIED
               "
-              :title="lang('article.rewrite')"
+              :title="lang('article.rewrite') || ''"
               shape="circle"
               @click="onClickRewrite(record.id)"
             >
@@ -79,7 +79,7 @@
             </Button>
             <Button
               v-if="record.status === EStatus.READY"
-              :title="lang('article.disable')"
+              :title="lang('article.disable') || ''"
               :loading="disablesLoading[record.id]"
               danger
               shape="circle"
@@ -93,7 +93,7 @@
         </template>
         <template v-if="column.key === 'articleable_id'">
           <router-link
-            :to="getLink(record.articleable_id, record.category)"
+            :to="getLink(record.articleable_id, record.category) || ''"
           >
             {{ record.articleable_id }}
           </router-link>

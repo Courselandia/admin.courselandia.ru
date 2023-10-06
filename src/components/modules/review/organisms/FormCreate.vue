@@ -62,8 +62,8 @@ const form = ref<IReviewForm>({
 
 const onReset = (formRef?: FormInstance) => {
   formRef?.resetFields();
-  form.value.school_id = null;
-  form.value.course_id = null;
+  form.value.school_id = undefined;
+  form.value.course_id = undefined;
 };
 
 const onSubmit = async (data: IReviewForm, formRef?: FormInstance): Promise<void> => {

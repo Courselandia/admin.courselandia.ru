@@ -1058,7 +1058,7 @@ const getDefaultFormValue = (): ICourseForm => ({
   school_id: item.value?.school
     ? { key: item.value?.school?.id as string, value: item.value?.school?.name }
     : undefined,
-  image: null,
+  image: undefined,
   name: item.value?.name || undefined,
   header_template: item.value?.header_template || undefined,
   header: item.value?.header || undefined,

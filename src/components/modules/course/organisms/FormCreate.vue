@@ -1008,7 +1008,7 @@ const alert = ref<IAlert>({
 
 const form = ref<ICourseForm>({
   school_id: undefined,
-  image: null,
+  image: undefined,
   name: undefined,
   header_template: '{course} от {school:genitive}',
   header: undefined,
@@ -1079,7 +1079,7 @@ onMounted(async (): Promise<void> => {
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
-  form.value.image = null;
+  form.value.image = undefined;
   form.value.text = '';
   image.value = undefined;
 
@@ -1131,7 +1131,7 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-    form.value.image = null;
+    form.value.image = undefined;
     form.value.text = '';
     image.value = undefined;
 
@@ -1175,14 +1175,14 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
-      form.value.image = null;
+      form.value.image = undefined;
       image.value = undefined;
     },
   });
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.name);
+  form.value.link = latin(form.value.name || '');
 };
 
 const filterOption = (input: string, option: any) => option

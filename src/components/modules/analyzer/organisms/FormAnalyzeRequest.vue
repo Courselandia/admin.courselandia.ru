@@ -117,6 +117,7 @@ import Lang from '@/components/atoms/Lang.vue';
 import EQuality from '@/enums/modules/analyzer/quality';
 import lang from '@/helpers/lang';
 import IAnalyzerAnalyzeForm from '@/interfaces/modules/analyzer/analyzerAnalyzeForm';
+import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
 
@@ -131,7 +132,7 @@ const props = defineProps({
     default: null,
   },
   alertType: {
-    type: String,
+    type: String as PropType<TAlert>,
     default: 'success',
   },
   loading: {

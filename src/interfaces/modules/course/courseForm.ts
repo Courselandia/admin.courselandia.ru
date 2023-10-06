@@ -11,7 +11,7 @@ import TId from '@/types/id';
 export default interface ICourseForm {
   id?: TId;
   school_id: IOption | undefined;
-  image: File | null;
+  image: File | undefined;
   name: string | undefined;
   header_template: string | undefined;
   header: string | undefined;

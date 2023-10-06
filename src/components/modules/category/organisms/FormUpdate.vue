@@ -52,10 +52,10 @@ const alert = ref<IAlert>({
 
 const getDefaultFormValue = (): ICategoryForm => ({
   id: id as TId,
-  name: item.value?.name || '',
+  name: item.value?.name || undefined,
   header: item.value?.header || undefined,
-  header_template: item.value?.header_template || null,
-  link: item.value?.link || '',
+  header_template: item.value?.header_template || undefined,
+  link: item.value?.link || undefined,
   text: item.value?.text || undefined,
   title: item.value?.metatag?.title || undefined,
   description: item.value?.metatag?.description || undefined,

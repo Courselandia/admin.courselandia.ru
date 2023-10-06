@@ -73,7 +73,7 @@ const getDefaultFormValue = (): IReviewForm => ({
   rating: item.value?.rating || undefined,
   status: item.value?.status || EStatus.ACTIVE,
   created_at: dayjs.utc(item.value?.created_at)
-    .tz(dayjs.tz.guess()) || null,
+    .tz(dayjs.tz.guess()) || undefined,
 });
 
 const form = ref<IReviewForm>(getDefaultFormValue());
