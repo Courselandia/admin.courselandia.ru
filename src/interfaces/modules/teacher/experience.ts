@@ -7,7 +7,7 @@ export default interface ITeacherExperience extends IColumn {
   id?: TId;
   place?: string | undefined;
   position?: string | undefined;
-  started?: Dayjs | undefined;
-  finished?: Dayjs | undefined;
+  started?: Dayjs | string | undefined;
+  finished?: Dayjs | string | undefined;
   weight?: number | string | undefined;
 }
