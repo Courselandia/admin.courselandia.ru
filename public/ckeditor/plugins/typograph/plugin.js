@@ -23,7 +23,7 @@
                 }
 
                 try {
-                  CKEDITOR.ajax.load(url + '?text=' + encodeURIComponent(html), function (response) {
+                  CKEDITOR.ajax.post(url, JSON.stringify({ text: html }), 'application/json', function (response) {
                     if (response) {
                       response = JSON.parse(response);
 
