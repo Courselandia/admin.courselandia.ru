@@ -558,7 +558,7 @@
         >
           <div class="mb-20">
             <template
-              v-if="image"
+              v-if="imageTemp"
             >
               <Button
                 danger
@@ -768,9 +768,7 @@ const schoolItems = schoolData.items;
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
-const image = ref<string>();
-const imageTemp = ref<File>();
-const imageCropped = ref<string>();
+const imageTemp = ref<File | null>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
 const croppieOptions: Object = {
   viewport: {
@@ -803,6 +801,7 @@ const form = ref<ITeacherForm>({
   city: undefined,
   image: undefined,
   imageCropped: undefined,
+  imageCroppedOptions: undefined,
   directions: [],
   schools: [],
   title: undefined,
@@ -821,7 +820,6 @@ const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.text = '';
   form.value.image = undefined;
-  image.value = undefined;
 
   form.value.experiences = [];
   experienceItems.value = [];
@@ -897,8 +895,9 @@ const onSubmit = async (): Promise<void> => {
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
     form.value.image = undefined;
+    form.value.imageCropped = undefined;
+    form.value.imageCroppedOptions = undefined;
     form.value.text = '';
-    image.value = '';
 
     form.value.experiences = [];
     experienceItems.value = [];
@@ -933,8 +932,10 @@ const onClickImageDestroy = async (): Promise<void> => {
     icon: createVNode(ExclamationCircleOutlined),
     content: lang('dashboard.confirmDestroyImage'),
     async onOk() {
+      imageTemp.value = null;
       form.value.image = undefined;
-      image.value = '';
+      form.value.imageCropped = undefined;
+      form.value.imageCroppedOptions = undefined;
     },
   });
 };
@@ -949,9 +950,9 @@ const filterOption = (input: string, option: any) => option
   ?.indexOf(input.toLowerCase()) >= 0;
 
 const onImageCropUpdate = (imageBase64: string, options: IOptions): void => {
-  imageCropped.value = imageBase64;
   form.value.imageCropped = imageBase64;
-  form.value.image = imageTemp.value;
+  form.value.image = imageTemp.value || undefined;
+  form.value.imageCroppedOptions = options;
 };
 </script>
 

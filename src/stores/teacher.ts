@@ -107,6 +107,16 @@ export default defineStore('teacher', {
       formData.append('status', data.status ? '1' : '0');
       formData.append('copied', data.copied ? '1' : '0');
       formData.append('image', data.image || '');
+      formData.append('imageCropped', data.imageCropped || '');
+
+      if (data.imageCroppedOptions) {
+        formData.append('imageCroppedOptions[orientation]', String(data.imageCroppedOptions.orientation));
+        formData.append('imageCroppedOptions[points][0]', String(data.imageCroppedOptions.points[0]));
+        formData.append('imageCroppedOptions[points][1]', String(data.imageCroppedOptions.points[1]));
+        formData.append('imageCroppedOptions[points][2]', String(data.imageCroppedOptions.points[2]));
+        formData.append('imageCroppedOptions[points][3]', String(data.imageCroppedOptions.points[3]));
+        formData.append('imageCroppedOptions[zoom]', String(data.imageCroppedOptions.zoom));
+      }
 
       if (data.directions) {
         for (let i = 0; i < data.directions.length; i++) {
