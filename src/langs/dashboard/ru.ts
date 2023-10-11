@@ -99,4 +99,5 @@ export default {
   warning: 'Внимание',
   notEmpty: 'Значение не может быть пустым.',
   detach: 'Отсоеденить',
+  imageCrop: 'Порезка изображения',
 };

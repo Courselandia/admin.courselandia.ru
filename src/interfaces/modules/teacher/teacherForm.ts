@@ -11,6 +11,7 @@ export default interface ITeacherForm {
   city: string | undefined;
   rating: number | string | undefined;
   image: File | undefined;
+  imageCropped: File | string | undefined;
   directions: Array<IOption> | undefined;
   schools: Array<IOption> | undefined;
   title: string | undefined;

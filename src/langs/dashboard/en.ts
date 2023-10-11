@@ -99,4 +99,5 @@ export default {
   warning: 'Warning',
   notEmpty: 'The value cannot be empty.',
   detach: 'Detach',
+  imageCrop: 'Image Crop',
 };
