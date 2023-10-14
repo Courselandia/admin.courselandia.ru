@@ -6,17 +6,22 @@
 
 <script lang="ts" setup>
 import Croppie from 'croppie';
-import { onMounted, toRefs } from 'vue';
+import { onMounted, PropType, toRefs } from 'vue';
 
 import IOptions from '@/interfaces/molecules/croppie/options';
 
 const props = defineProps({
   image: {
-    type: File,
+    type: [File, String],
     required: false,
     default: null,
   },
   options: {
+    type: Object as PropType<IOptions>,
+    required: false,
+    default: null,
+  },
+  settings: {
     type: Object,
     required: false,
     default: () => {},
@@ -44,15 +49,27 @@ const onUpdate = async (): Promise<void> => {
   emit('update', await croppie.result('base64', 'viewport', props.format, props.circle), croppie.get());
 };
 
-const setUpCroppie = (): void => {
+const setUpCroppie = async (): Promise<void> => {
   const element = document.getElementById('crop');
-  croppie = new Croppie(element, props.options);
+  croppie = new Croppie(element, props.settings);
 
-  if (image.value) {
+  if (typeof image.value === 'string') {
+    croppie.bind({
+      url: image.value,
+      points: props.options?.points || [],
+      orientation: props.options?.orientation || undefined,
+      zoom: props.options?.zoom || undefined,
+    });
+  } else {
     const reader = new FileReader();
     reader.readAsDataURL(image.value);
     reader.onload = () => {
-      croppie.bind({ url: reader.result });
+      croppie.bind({
+        url: reader.result,
+        points: props.options?.points || [],
+        orientation: props.options?.orientation || undefined,
+        zoom: props.options?.zoom || undefined,
+      });
     };
   }
 

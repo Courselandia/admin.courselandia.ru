@@ -591,7 +591,7 @@
             <Croppie
               v-if="imageTemp"
               :image="imageTemp"
-              :options="croppieOptions"
+              :settings="croppieSettings"
               @update="onImageCropUpdate"
             />
           </div>
@@ -770,7 +770,7 @@ const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
 const imageTemp = ref<File | null>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
-const croppieOptions: Object = {
+const croppieSettings: Object = {
   viewport: {
     width: 300,
     height: 300,
@@ -820,6 +820,9 @@ const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.text = '';
   form.value.image = undefined;
+  form.value.imageCropped = undefined;
+  form.value.imageCroppedOptions = undefined;
+  imageTemp.value = null;
 
   form.value.experiences = [];
   experienceItems.value = [];
@@ -898,6 +901,7 @@ const onSubmit = async (): Promise<void> => {
     form.value.imageCropped = undefined;
     form.value.imageCroppedOptions = undefined;
     form.value.text = '';
+    imageTemp.value = null;
 
     form.value.experiences = [];
     experienceItems.value = [];
@@ -920,10 +924,9 @@ const onSubmit = async (): Promise<void> => {
   loading.value = false;
 };
 
-const onBeforeUploadFile = async (file: File): Promise<boolean> => {
+const onBeforeUploadFile = (file: File): void => {
+  form.value.imageCroppedOptions = undefined;
   imageTemp.value = file;
-
-  return false;
 };
 
 const onClickImageDestroy = async (): Promise<void> => {

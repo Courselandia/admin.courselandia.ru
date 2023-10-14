@@ -56,7 +56,7 @@
         <template v-if="column.key === 'actions'">
           <Space>
             <Button
-              v-if="record?.image_small_id?.path"
+              v-if="record?.image_middle_id?.path"
               :title="lang('dashboard.destroyImage') || ''"
               :loading="destroysImageLoading[record.id]"
               shape="circle"
@@ -91,11 +91,13 @@
             </Button>
           </Space>
         </template>
-        <template v-if="column.key === 'image_small_id'">
+        <template v-if="column.key === 'image_middle_id'">
           <Image
-            v-if="record?.image_small_id?.path"
-            :src="record?.image_small_id?.path"
-            :preview="false"
+            v-if="record?.image_middle_id?.path"
+            :src="record?.image_middle_id?.path"
+            :preview="{
+              src: record?.image_big_id?.path,
+            }"
             placeholder
             :width="130"
           />
@@ -252,8 +254,8 @@ const columns = computed<ITableColumnType<ITeacher>[]>(() => [
   },
   {
     title: lang('teacher.image'),
-    dataIndex: 'image_small_id',
-    key: 'image_small_id',
+    dataIndex: 'image_middle_id',
+    key: 'image_middle_id',
     sorter: false,
     width: 170,
   },

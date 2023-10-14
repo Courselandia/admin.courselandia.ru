@@ -13,7 +13,7 @@
       <Card>
         <template #title>
           <div ref="titleRef">
-            <Lang value="school.addSchool" />
+            <Lang value="school.updateSchool" />
           </div>
         </template>
 
