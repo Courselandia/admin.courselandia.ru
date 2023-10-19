@@ -62,6 +62,48 @@
           />
         </div>
       </Item>
+      <Item
+        v-if="form.status"
+        :span="3"
+        :label="lang('dashboard.status')"
+      >
+        <Tag
+          v-if="form.status === EStatus.PENDING"
+          color="cyan"
+        >
+          <Lang value="article.pending" />
+        </Tag>
+        <Tag
+          v-else-if="form.status === EStatus.READY"
+          color="blue"
+        >
+          <Lang value="article.ready" />
+        </Tag>
+        <Tag
+          v-else-if="form.status === EStatus.PROCESSING"
+          color="orange"
+        >
+          <Lang value="article.processing" />
+        </Tag>
+        <Tag
+          v-else-if="form.status === EStatus.FAILED"
+          color="red"
+        >
+          <Lang value="article.failed" />
+        </Tag>
+        <Tag
+          v-else-if="form.status === EStatus.DISABLED"
+          color="pink"
+        >
+          <Lang value="article.disabled" />
+        </Tag>
+        <Tag
+          v-else-if="form.status === EStatus.APPLIED"
+          color="green"
+        >
+          <Lang value="article.applied" />
+        </Tag>
+      </Item>
     </Descriptions>
     <Ckeditor
       v-model:value="form.text"
@@ -135,6 +177,7 @@ import Lang from '@/components/atoms/Lang.vue';
 import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import getLink from '@/components/modules/article/getLink';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import EStatus from '@/enums/modules/article/status';
 import countLength from '@/helpers/countLength';
 import { stripTags } from '@/helpers/format';
 import lang from '@/helpers/lang';

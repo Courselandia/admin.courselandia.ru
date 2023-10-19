@@ -1,3 +1,4 @@
+import EStatus from '@/enums/modules/article/status';
 import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import ICourse from '@/interfaces/modules/course/course';
 import TId from '@/types/id';
@@ -12,4 +13,5 @@ export default interface IArticleForm {
   category: string | undefined;
   category_name: string | undefined;
   category_label: string | undefined;
+  status: EStatus | undefined,
 }

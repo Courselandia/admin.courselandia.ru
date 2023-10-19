@@ -62,6 +62,7 @@ const getDefaultFormValue = (): IArticleForm => ({
   category: item.value?.category || undefined,
   category_label: item.value?.category_label || undefined,
   category_name: item.value?.category_name || undefined,
+  status: item.value?.status || undefined,
 });
 
 const form = ref<IArticleForm>(getDefaultFormValue());
