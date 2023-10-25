@@ -340,6 +340,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     step: 1,
     width: 170,
   },
+  /*
   {
     title: lang('analyzer.spam'),
     dataIndex: 'spam',
@@ -374,6 +375,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     step: 1,
     width: 170,
   },
+   */
   {
     title: lang('dashboard.status'),
     dataIndex: 'status',
