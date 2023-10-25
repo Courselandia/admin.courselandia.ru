@@ -45,6 +45,7 @@
               v-if="
                 record.status === EStatus.READY
                   || record.status === EStatus.FAILED
+                  || record.status === EStatus.SKIPPED
               "
               :title="lang('analyzer.reanalyze') || ''"
               shape="circle"
