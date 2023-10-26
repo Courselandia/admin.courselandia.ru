@@ -105,9 +105,9 @@ export default defineStore('access', {
 
       this.user = null;
 
-      cookies.set('accessToken', '');
-      cookies.set('refreshToken', '');
-      cookies.set('remember', '');
+      cookies.remove('accessToken');
+      cookies.remove('refreshToken');
+      cookies.remove('remember');
 
       if (this.intervalTokenRefresh) {
         window.clearInterval(this.intervalTokenRefresh);
@@ -121,7 +121,7 @@ export default defineStore('access', {
       refreshToken: string | null = null,
       remember: boolean | null = null,
     ): void {
-      const expires = 365 * 20;
+      const expires = remember ? 365 * 20 : 1 / 24;
 
       if (accessToken !== null) {
         cookies.set(

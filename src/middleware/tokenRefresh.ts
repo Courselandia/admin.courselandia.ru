@@ -19,7 +19,7 @@ export default async (): Promise<boolean | string> => {
   };
 
   if (!intervalTokenRefresh.value) {
-    intervalTokenRefresh.value = window.setInterval(toRefresh, 1000 * 10);
+    intervalTokenRefresh.value = window.setInterval(toRefresh, 1000 * 60 * 5);
   }
 
   return true;
