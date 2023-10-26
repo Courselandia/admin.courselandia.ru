@@ -12,6 +12,7 @@ export default defineStore('access', {
     accessToken: null as string | null,
     refreshToken: null as string | null,
     remember: null as boolean | null,
+    intervalTokenRefresh: null as number | null,
   }),
   getters: {
     role: (state) => state.user?.role.name,
@@ -107,6 +108,11 @@ export default defineStore('access', {
       cookies.set('accessToken', '');
       cookies.set('refreshToken', '');
       cookies.set('remember', '');
+
+      if (this.intervalTokenRefresh) {
+        window.clearInterval(this.intervalTokenRefresh);
+        this.intervalTokenRefresh = null;
+      }
 
       return response.data;
     },
