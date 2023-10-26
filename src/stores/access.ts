@@ -2,7 +2,6 @@ import cookies from 'js-cookie';
 import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
-import IClient from '@/interfaces/modules/access/client';
 import IToken from '@/interfaces/modules/access/token';
 import IUser from '@/interfaces/modules/user/user';
 import { IResponseItem } from '@/interfaces/response';
@@ -10,7 +9,6 @@ import { IResponseItem } from '@/interfaces/response';
 export default defineStore('access', {
   state: () => ({
     user: null as IUser | null,
-    secret: null as string | null,
     accessToken: null as string | null,
     refreshToken: null as string | null,
     remember: null as boolean | null,
@@ -20,44 +18,22 @@ export default defineStore('access', {
     verified: (state) => state.user?.verification.status,
   },
   actions: {
-    async getClient(
+    async getToken(
       login: string,
       password: string,
       remember: boolean,
-    ): Promise<IResponseItem<IClient>> {
-      try {
-        const response = await axios.post<IResponseItem<IClient>>(
-          '/api/client',
-          {
-            login,
-            password,
-            remember,
-          },
-        );
-
-        const client = response.data.data;
-        this.user = client.user;
-
-        this.setCookies(client.secret, null, null, remember);
-
-        return response.data;
-      } catch (error) {
-        this.user = null;
-
-        throw error;
-      }
-    },
-    async getToken(secret: string, remember: boolean): Promise<IResponseItem<IToken>> {
+    ): Promise<IResponseItem<IToken>> {
       const response = await axios.post<IResponseItem<IToken>>(
         '/api/token',
         {
-          secret,
+          login,
+          password,
           remember,
         },
       );
 
       const token = response.data.data;
-      this.setCookies(secret, token.accessToken, token.refreshToken, remember);
+      this.setCookies(token.accessToken, token.refreshToken, remember);
 
       return response.data;
     },
@@ -71,7 +47,7 @@ export default defineStore('access', {
       );
 
       const token = response.data.data;
-      this.setCookies(null, token.accessToken, token.refreshToken, remember);
+      this.setCookies(token.accessToken, token.refreshToken, remember);
 
       return response.data;
     },
@@ -110,7 +86,7 @@ export default defineStore('access', {
         const token = response.data.data;
         this.user = token.user;
 
-        this.setCookies(token.secret, token.accessToken, token.refreshToken, remember);
+        this.setCookies(token.accessToken, token.refreshToken, remember);
 
         return response.data;
       } catch (error) {
@@ -128,7 +104,6 @@ export default defineStore('access', {
 
       this.user = null;
 
-      cookies.set('secret', '');
       cookies.set('accessToken', '');
       cookies.set('refreshToken', '');
       cookies.set('remember', '');
@@ -136,24 +111,11 @@ export default defineStore('access', {
       return response.data;
     },
     setCookies(
-      secret: string | null = null,
       accessToken: string | null = null,
       refreshToken: string | null = null,
       remember: boolean | null = null,
     ): void {
       const expires = 365 * 20;
-
-      if (secret !== null) {
-        cookies.set(
-          'secret',
-          secret,
-          {
-            expires,
-          },
-        );
-
-        this.secret = secret;
-      }
 
       if (accessToken !== null) {
         cookies.set(

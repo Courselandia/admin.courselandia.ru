@@ -1,6 +1,7 @@
-import IClient from '@/interfaces/modules/access/client';
+import IUser from '@/interfaces/modules/user/user';
 
-export default interface IToken extends IClient {
+export default interface IToken {
   accessToken: string;
   refreshToken: string;
+  user: IUser;
 }

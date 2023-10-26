@@ -8,9 +8,6 @@ import access from '@/stores/access';
 export default async (to: RouteLocationNormalized): Promise<boolean | string> => {
   const store = access();
 
-  const secret = cookies.get('secret');
-  store.secret = secret !== undefined ? secret : null;
-
   const accessToken = cookies.get('accessToken');
   store.accessToken = accessToken !== undefined ? accessToken : null;
 
