@@ -60,8 +60,8 @@ const toFormData = (data: ITeacherForm, method: string = 'post'): FormData => {
 
         formData.append(`experiences[${z}][place]`, data.experiences[i].place || '');
         formData.append(`experiences[${z}][position]`, data.experiences[i].position || '');
-        formData.append(`experiences[${z}][started]`, started?.format('YYYY-MM-DD') || '');
-        formData.append(`experiences[${z}][finished]`, finished?.format('YYYY-MM-DD') || '');
+        formData.append(`experiences[${z}][started]`, started ? started.format('YYYY-MM-DD') : '');
+        formData.append(`experiences[${z}][finished]`, finished ? finished.format('YYYY-MM-DD') : '');
         formData.append(`experiences[${z}][weight]`, String(data.experiences[i].weight || 0));
         z++;
       }

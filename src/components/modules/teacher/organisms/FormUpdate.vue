@@ -955,8 +955,8 @@ experienceItems.value = item.value?.experiences?.map((itm: ITeacherExperience) =
   id: itm.id,
   place: itm.place,
   position: itm.position,
-  started: itm.started ? dayjs.utc(itm.started) : undefined,
-  finished: itm.finished ? dayjs.utc(itm.finished) : undefined,
+  started: itm.started ? dayjs.utc(itm.started) : '',
+  finished: itm.finished ? dayjs.utc(itm.finished) : '',
   weight: itm.weight,
 })) || [];
 
