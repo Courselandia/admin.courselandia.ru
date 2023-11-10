@@ -130,6 +130,7 @@ import {
   computed,
   h,
   onMounted,
+  onUnmounted,
   ref,
   watch,
 } from 'vue';
@@ -470,9 +471,13 @@ const hasRole = (roles: Array<ERole>) => {
   return false;
 };
 
-window.setInterval(async () => {
+const reloadInterval = window.setInterval(async () => {
   await reload();
 }, 10000);
+
+onUnmounted(() => {
+  window.clearInterval(reloadInterval);
+});
 </script>
 
 <style lang="scss">
