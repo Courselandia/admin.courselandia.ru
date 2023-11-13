@@ -36,6 +36,7 @@
       row-key="id"
       class="table--responsive table--vertical-top"
       sticky
+      :scroll="{ x: 2000 }"
       @change="onChange"
     >
       <template #bodyCell="{ column, record }">
@@ -130,6 +131,25 @@
             <Lang value="analyzer.skipped" />
           </Tag>
         </template>
+        <template v-if="column.key === 'analyzerable-status'">
+          <Tag
+            v-if="
+              record?.analyzerable_status === ECourseStatus.ACTIVE
+                || record?.analyzerable_status === '1'
+                || record?.analyzerable_status === EArticleStatus.READY
+                || record?.analyzerable_status === EArticleStatus.APPLIED
+            "
+            color="green"
+          >
+            <Lang value="dashboard.active" />
+          </Tag>
+          <Tag
+            v-else
+            color="red"
+          >
+            <Lang value="dashboard.deactivated" />
+          </Tag>
+        </template>
       </template>
       <template
         #customFilterDropdown="{
@@ -201,6 +221,8 @@ import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import EQuality from '@/enums/modules/analyzer/quality';
 import EStatus from '@/enums/modules/analyzer/status';
+import EArticleStatus from '@/enums/modules/article/status';
+import ECourseStatus from '@/enums/modules/course/status';
 import filters from '@/helpers/filters';
 import lang from '@/helpers/lang';
 import sorts from '@/helpers/sorts';
@@ -278,7 +300,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     sortOrder: stateColumnSort('analyzerable_id', sortedInfo.value),
     filteredValue: stateColumnFilter('analyzerable_id', filteredInfo.value, 'number'),
     filterType: 'number',
-    width: 150,
+    width: 140,
   },
   {
     title: lang('analyzer.category'),
@@ -322,6 +344,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     customFilterDropdown: true,
     sortOrder: stateColumnSort('text', sortedInfo.value),
     filteredValue: stateColumnFilter('text', filteredInfo.value, 'string'),
+    width: 250,
   },
   {
     title: lang('analyzer.unique'),
@@ -340,7 +363,6 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     step: 1,
     width: 170,
   },
-  /*
   {
     title: lang('analyzer.spam'),
     dataIndex: 'spam',
@@ -375,7 +397,28 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     step: 1,
     width: 170,
   },
-   */
+  {
+    title: lang('analyzer.statusEntity'),
+    dataIndex: 'analyzerable-status',
+    key: 'analyzerable-status',
+    sorter: {
+      multiple: 1,
+    },
+    sortOrder: stateColumnSort('analyzerable-status', sortedInfo.value),
+    filteredValue: stateColumnFilter('analyzerable-status', filteredInfo.value, 'boolean'),
+    filterMultiple: false,
+    width: 200,
+    filters: [
+      {
+        text: lang('dashboard.active'),
+        value: true,
+      },
+      {
+        text: lang('dashboard.deactivated'),
+        value: false,
+      },
+    ],
+  },
   {
     title: lang('dashboard.status'),
     dataIndex: 'status',

@@ -7,7 +7,7 @@ export default {
   ready: 'Готово',
   processing: 'Идет анализ',
   failed: 'Неуспешно',
-  ownId: 'ID сущности',
+  ownId: 'Сущности',
   analyze: 'Анализировать',
   successAnalyzeText: 'Запрос на анализ текста был отправлен.',
   reanalyze: 'Переанализировать текст',
@@ -17,4 +17,5 @@ export default {
   analyzing: 'Идет процесс анализа текста, ждите...',
   askReanalyze: 'Вы точно хотите повторно анализировать этот текст?',
   skipped: 'Пропущен',
+  statusEntity: 'Статус сущности',
 };
