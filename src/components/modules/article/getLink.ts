@@ -13,6 +13,26 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/tools/${id}`;
   }
 
+  if (category === 'direction.text') {
+    return `/dashboard/directions/${id}`;
+  }
+
+  if (category === 'profession.text') {
+    return `/dashboard/professions/${id}`;
+  }
+
+  if (category === 'category.text') {
+    return `/dashboard/categories/${id}`;
+  }
+
+  if (category === 'school.text') {
+    return `/dashboard/schools/${id}`;
+  }
+
+  if (category === 'teacher.text') {
+    return `/dashboard/teachers/${id}`;
+  }
+
   return null;
 };
 

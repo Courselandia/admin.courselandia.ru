@@ -271,6 +271,26 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/articles/${id}`;
   }
 
+  if (category === 'direction.text') {
+    return `/dashboard/directions/${id}`;
+  }
+
+  if (category === 'profession.text') {
+    return `/dashboard/professions/${id}`;
+  }
+
+  if (category === 'category.text') {
+    return `/dashboard/categories/${id}`;
+  }
+
+  if (category === 'school.text') {
+    return `/dashboard/schools/${id}`;
+  }
+
+  if (category === 'teacher.text') {
+    return `/dashboard/teachers/${id}`;
+  }
+
   return null;
 };
 
@@ -316,6 +336,22 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     filterMultiple: true,
     filters: [
       {
+        text: 'Направление / Описание',
+        value: 'direction.text',
+      },
+      {
+        text: 'Профессия / Описание',
+        value: 'profession.text',
+      },
+      {
+        text: 'Категория / Описание',
+        value: 'category.text',
+      },
+      {
+        text: 'Школа / Описание',
+        value: 'school.text',
+      },
+      {
         text: 'Курс / Описание',
         value: 'course.text',
       },
@@ -326,6 +362,10 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
       {
         text: 'Инструмент / Описание',
         value: 'tool.text',
+      },
+      {
+        text: 'Учитель / Описание',
+        value: 'teacher.text',
       },
       {
         text: 'Статьи / Написанный текст',

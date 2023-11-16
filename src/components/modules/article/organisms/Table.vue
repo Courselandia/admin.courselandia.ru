@@ -333,12 +333,32 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
         value: 'course.text',
       },
       {
+        text: 'Направление / Описание',
+        value: 'direction.text',
+      },
+      {
+        text: 'Профессия / Описание',
+        value: 'profession.text',
+      },
+      {
+        text: 'Категория / Описание',
+        value: 'category.text',
+      },
+      {
+        text: 'Школа / Описание',
+        value: 'school.text',
+      },
+      {
         text: 'Навык / Описание',
         value: 'skill.text',
       },
       {
         text: 'Инструмент / Описание',
         value: 'tool.text',
+      },
+      {
+        text: 'Учитель / Описание',
+        value: 'teacher.text',
       },
     ],
   },
