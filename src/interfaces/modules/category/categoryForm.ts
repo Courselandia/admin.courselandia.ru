@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -16,4 +17,5 @@ export default interface ICategoryForm {
   directions: Array<IOption>;
   professions: Array<IOption>;
   status: boolean;
+  analyzers?: Array<IAnalyzer> | undefined;
 }

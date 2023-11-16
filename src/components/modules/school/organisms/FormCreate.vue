@@ -148,6 +148,16 @@
                 name="text"
                 class="mb-30"
               />
+
+              <div
+                v-if="form.analyzers?.length"
+                class="mb-30"
+              >
+                <Info
+                  :analyzers="form.analyzers"
+                  category="school.text"
+                />
+              </div>
             </TabPane>
           </Tabs>
           <Item
@@ -304,6 +314,7 @@ import { createVNode, h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';

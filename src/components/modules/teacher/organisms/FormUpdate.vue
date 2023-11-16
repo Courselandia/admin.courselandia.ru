@@ -639,6 +639,15 @@
             name="text"
             class="mb-30"
           />
+          <div
+            v-if="form.analyzers?.length"
+            class="mb-30"
+          >
+            <Info
+              :analyzers="form.analyzers"
+              category="teacher.text"
+            />
+          </div>
           <Item
             :wrapper-col="{offset: 0, span: 19}"
             name="remember"
@@ -758,7 +767,8 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
   MehOutlined,
-  PlusOutlined, SisternodeOutlined,
+  PlusOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
@@ -792,6 +802,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute, useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import {
   experienceColumns,
   experienceEdit,
@@ -936,6 +947,7 @@ const getDefaultFormValue = (): ITeacherForm => ({
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   schools: item.value?.schools?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   copied: item.value?.copied !== undefined ? item.value?.copied : true,
+  analyzers: item.value?.analyzers || undefined,
   experiences: item.value?.experiences?.map((itm: ITeacherExperience) => ({
     id: itm.id,
     place: itm.place,

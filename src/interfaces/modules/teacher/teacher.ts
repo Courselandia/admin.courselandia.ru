@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IDirection from '@/interfaces/modules/direction/direction';
 import IImage from '@/interfaces/modules/image';
 import IMetatag from '@/interfaces/modules/metatag';
@@ -29,4 +30,6 @@ export default interface ITeacher extends IColumn {
   experiences: ITeacherExperience[];
   social_medias: ITeacherSocialMedia[];
   image_cropped_options: IOptions | undefined;
+  analyzers: Array<IAnalyzer> | null;
+  copied: boolean;
 }

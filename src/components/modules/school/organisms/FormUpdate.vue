@@ -148,6 +148,16 @@
                 name="text"
                 class="mb-30"
               />
+
+              <div
+                v-if="form.analyzers?.length"
+                class="mb-30"
+              >
+                <Info
+                  :analyzers="form.analyzers"
+                  category="school.text"
+                />
+              </div>
             </TabPane>
           </Tabs>
           <Item
@@ -328,6 +338,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
@@ -408,6 +419,7 @@ const getDefaultFormValue = (): ISchoolForm => ({
   description_template: item.value?.metatag?.description_template || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
+  analyzers: item.value?.analyzers || undefined,
 });
 
 const form = ref<ISchoolForm>(getDefaultFormValue());

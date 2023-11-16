@@ -65,6 +65,7 @@ const getDefaultFormValue = (): IProfessionForm => ({
   description_template: item.value?.metatag?.description_template || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
+  analyzers: item.value?.analyzers || undefined,
 });
 
 const form = ref<IProfessionForm>(getDefaultFormValue());

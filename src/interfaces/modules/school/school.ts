@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IImage from '@/interfaces/modules/image';
 import IMetatag from '@/interfaces/modules/metatag';
 import IColumn from '@/interfaces/molecules/table/column';
@@ -19,4 +20,5 @@ export default interface ISchool extends IColumn {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+  analyzers: Array<IAnalyzer> | null;
 }

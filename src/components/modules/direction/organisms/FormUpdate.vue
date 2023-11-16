@@ -66,6 +66,7 @@ const getDefaultFormValue = (): IDirectionForm => ({
   description: item.value?.metatag?.description || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
+  analyzers: item.value?.analyzers || undefined,
 });
 
 const form = ref<IDirectionForm>(getDefaultFormValue());

@@ -637,6 +637,15 @@
             name="text"
             class="mb-30"
           />
+          <div
+            v-if="form.analyzers?.length"
+            class="mb-30"
+          >
+            <Info
+              :analyzers="form.analyzers"
+              category="teacher.text"
+            />
+          </div>
           <Item
             :wrapper-col="{offset: 0, span: 19}"
             name="remember"
@@ -715,6 +724,7 @@ import {
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import {
   experienceColumns,
   experienceEdit,

@@ -67,6 +67,7 @@ const getDefaultFormValue = (): ICategoryForm => ({
   status: item.value?.status !== undefined ? item.value?.status : true,
   directions: item.value?.directions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
   professions: item.value?.professions?.map((itm: any) => ({ key: itm.id, value: itm.name })) || [],
+  analyzers: item.value?.analyzers || undefined,
 });
 
 const form = ref<ICategoryForm>(getDefaultFormValue());

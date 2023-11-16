@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import TId from '@/types/id';
 
 export default interface IDirectionForm {
@@ -14,4 +15,5 @@ export default interface IDirectionForm {
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
+  analyzers?: Array<IAnalyzer> | undefined;
 }

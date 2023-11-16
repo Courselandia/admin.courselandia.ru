@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import ITeacherExperience from '@/interfaces/modules/teacher/experience';
 import ISocialMedia from '@/interfaces/modules/teacher/socialMedia';
 import IOptions from '@/interfaces/molecules/croppie/options';
@@ -26,4 +27,5 @@ export default interface ITeacherForm {
   comment: string | undefined;
   experiences: ITeacherExperience[];
   socialMedias: ISocialMedia[];
+  analyzers?: Array<IAnalyzer> | undefined;
 }

@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IDirection from '@/interfaces/modules/direction/direction';
 import IMetatag from '@/interfaces/modules/metatag';
 import IProfession from '@/interfaces/modules/profession/profession';
@@ -18,4 +19,5 @@ export default interface ICategory extends IColumn {
   created_at: string;
   updated_at: string;
   deleted_at: string;
+  analyzers: Array<IAnalyzer> | null;
 }

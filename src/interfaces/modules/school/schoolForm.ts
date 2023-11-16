@@ -1,3 +1,4 @@
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import TId from '@/types/id';
 
 export default interface ISchoolForm {
@@ -17,4 +18,5 @@ export default interface ISchoolForm {
   description_template: string | undefined;
   keywords: string | undefined;
   status: boolean;
+  analyzers?: Array<IAnalyzer> | undefined;
 }
