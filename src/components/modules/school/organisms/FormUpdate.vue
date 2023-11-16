@@ -305,6 +305,7 @@ import {
   ExclamationCircleOutlined,
   LoadingOutlined,
   PlusOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
@@ -315,13 +316,14 @@ import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
 import { storeToRefs } from 'pinia';
-import { createVNode, ref } from 'vue';
+import { createVNode, h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
@@ -423,6 +425,12 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
 
     await get(id as TId);
     form.value = getDefaultFormValue();

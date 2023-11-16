@@ -684,6 +684,7 @@ import {
   ExclamationCircleOutlined,
   MehOutlined,
   PlusOutlined,
+  SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
@@ -894,6 +895,14 @@ const onSubmit = async (): Promise<void> => {
     });
 
     await create(form.value);
+
+    if (!form.value.copied) {
+      notification.open({
+        icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+        message: lang('task.launchTitle'),
+        description: lang('task.launchText'),
+      });
+    }
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
