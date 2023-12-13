@@ -12,5 +12,5 @@ export default interface ISalary extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string | null;
 }

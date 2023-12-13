@@ -172,6 +172,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="crawls"
+        @click="onClickMenuItem('Crawls')"
+      >
+        <template #icon>
+          <BugOutlined />
+        </template>
+        <Lang value="crawl.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="feedbacks"
         @click="onClickMenuItem('Feedbacks')"
       >
@@ -229,6 +239,7 @@ import {
   AppstoreOutlined,
   AuditOutlined,
   BarsOutlined,
+  BugOutlined,
   ContactsOutlined,
   DollarCircleOutlined,
   FileTextOutlined,
@@ -290,6 +301,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     courses: '/dashboard/courses',
     publications: '/dashboard/publications',
     directions: '/dashboard/directions',
+    crawls: '/dashboard/crawls',
     articles: '/dashboard/articles',
     analyzers: '/dashboard/analyzers',
     professions: '/dashboard/professions',

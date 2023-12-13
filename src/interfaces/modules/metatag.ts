@@ -9,5 +9,5 @@ export default interface IMetatag {
   description_template: string,
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string | null;
 }

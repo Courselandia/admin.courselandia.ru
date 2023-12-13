@@ -26,7 +26,7 @@ export default interface ITeacher extends IColumn {
   image_big_id: IImage | null;
   created_at: string;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
   experiences: ITeacherExperience[];
   social_medias: ITeacherSocialMedia[];
   image_cropped_options: IOptions | undefined;

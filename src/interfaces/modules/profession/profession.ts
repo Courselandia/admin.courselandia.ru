@@ -14,6 +14,6 @@ export default interface IProfession extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
   analyzers: Array<IAnalyzer> | null;
 }

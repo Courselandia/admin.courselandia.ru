@@ -19,6 +19,6 @@ export default interface ISchool extends IColumn {
   image_site_id: IImage | null;
   created_at: string;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
   analyzers: Array<IAnalyzer> | null;
 }

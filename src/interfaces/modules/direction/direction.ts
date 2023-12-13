@@ -15,6 +15,6 @@ export default interface IDirection extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
-  deleted_at: string;
+  deleted_at: string | null;
   analyzers: Array<IAnalyzer> | null;
 }

@@ -11,5 +11,5 @@ export default interface IFaq extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string | null;
 }

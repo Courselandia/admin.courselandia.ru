@@ -23,5 +23,5 @@ export default interface IUser extends IColumn {
   role: IRole;
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string | null;
 }

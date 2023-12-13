@@ -1,11 +1,10 @@
 import IColumn from '@/interfaces/molecules/table/column';
 import TId from '@/types/id';
 
-export default interface IProcess extends IColumn {
+export default interface IDirection extends IColumn {
   id: TId;
-  name: string;
-  text: string | null;
-  status: boolean;
+  path: string;
+  lastmod: string | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;

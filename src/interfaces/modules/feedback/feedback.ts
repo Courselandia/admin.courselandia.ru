@@ -9,5 +9,5 @@ export default interface IFeedback extends IColumn {
   message: string;
   created_at: string;
   updated_at: string;
-  deleted_at: string
+  deleted_at: string | null;
 }
