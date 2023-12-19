@@ -124,7 +124,7 @@
             <Lang value="log.notice" />
           </Tag>
           <Tag
-            v-else-if="record.level === 'WARNING'"
+            v-else-if="record.level_name === 'WARNING'"
             color="purple"
           >
             <template #icon>
