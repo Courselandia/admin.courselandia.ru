@@ -303,7 +303,7 @@ const columns = computed<ITableColumnType<IReview>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
-    filterMultiple: false,
+    filterMultiple: true,
     filters: [
       {
         text: lang('dashboard.active'),

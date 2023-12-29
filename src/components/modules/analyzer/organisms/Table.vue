@@ -468,7 +468,7 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
-    filterMultiple: false,
+    filterMultiple: true,
     filters: [
       {
         text: lang('analyzer.pending'),

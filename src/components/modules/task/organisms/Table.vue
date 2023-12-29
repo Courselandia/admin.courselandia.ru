@@ -291,7 +291,7 @@ const columns = computed<ITableColumnType<ITask>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'boolean'),
-    filterMultiple: false,
+    filterMultiple: true,
     filters: [
       {
         text: lang('task.waiting'),

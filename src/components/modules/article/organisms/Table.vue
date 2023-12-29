@@ -389,7 +389,7 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
-    filterMultiple: false,
+    filterMultiple: true,
     filters: [
       {
         text: lang('article.pending'),
