@@ -375,7 +375,7 @@ const columns = computed<ITableColumnType<ICourse>[]>(() => [
     },
     sortOrder: stateColumnSort('status', sortedInfo.value),
     filteredValue: stateColumnFilter('status', filteredInfo.value, 'string'),
-    filterMultiple: false,
+    filterMultiple: true,
     filters: [
       {
         text: lang('dashboard.active'),
