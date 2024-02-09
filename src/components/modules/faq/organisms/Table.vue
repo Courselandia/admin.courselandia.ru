@@ -82,6 +82,11 @@
         <template v-if="column.key === 'school-name'">
           {{ record?.school?.name }}
         </template>
+        <template v-if="column.key === 'answer'">
+          <span
+            v-html="rnToBr(record.answer)"
+          />
+        </template>
         <template v-if="column.key === 'status'">
           <Tag
             :color="record.status === true ? 'green' : 'red'"
@@ -174,6 +179,7 @@ import Lang from '@/components/atoms/Lang.vue';
 import TableColumnFilter from '@/components/molecules/TableColumnFilter.vue';
 import TableTagsFilter from '@/components/molecules/TableTagsFilter.vue';
 import filters from '@/helpers/filters';
+import { rnToBr } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import sorts from '@/helpers/sorts';
 import {
