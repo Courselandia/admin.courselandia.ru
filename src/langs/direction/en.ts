@@ -11,4 +11,5 @@ export default {
   description: 'Description',
   keywords: 'Keywords',
   weight: 'Weight',
+  additional: 'Additional',
 };

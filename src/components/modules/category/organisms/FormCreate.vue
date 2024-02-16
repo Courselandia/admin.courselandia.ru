@@ -52,6 +52,7 @@ const form = ref<ICategoryForm>({
   header_template: 'Онлайн курсы по {category:dative}',
   link: undefined,
   text: undefined,
+  additional: undefined,
   title: undefined,
   description: undefined,
   title_template: 'Каталог онлайн-курсов по {category:dative}[countCategoryCourses:: {countCategoryCourses:курс|nominative} для обучения с нуля] — Courselandia',
@@ -64,6 +65,7 @@ const form = ref<ICategoryForm>({
 
 const onReset = (formRef?: FormInstance) => {
   form.value.text = '';
+  form.value.additional = '';
   formRef?.resetFields();
 };
 

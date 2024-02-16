@@ -6,6 +6,7 @@ export default {
   header: 'Заголовок',
   link: 'Ссылка',
   text: 'Текст',
+  additional: 'Дополнительное описание',
   rating: 'Рейтинг',
   site: 'Сайт',
   title: 'Тайтл',

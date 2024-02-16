@@ -661,6 +661,16 @@
           </Item>
         </TabPane>
         <TabPane
+          key="additional"
+          :tab="lang('teacher.additional')"
+        >
+          <Ckeditor
+            v-model:value="form.additional"
+            name="additional"
+            class="mb-30"
+          />
+        </TabPane>
+        <TabPane
           key="courses"
           :tab="lang('course.name')"
         >
@@ -932,6 +942,7 @@ const getDefaultFormValue = (): ITeacherForm => ({
   name: item.value?.name || undefined,
   link: item.value?.link || undefined,
   text: item.value?.text || undefined,
+  additional: item.value?.additional || undefined,
   city: item.value?.city || undefined,
   comment: item.value?.comment || undefined,
   rating: item.value?.rating || undefined,

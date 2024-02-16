@@ -52,6 +52,7 @@ const form = ref<IProfessionForm>({
   header_template: 'Онлайн-курсы по профессии {profession:nominative}',
   link: undefined,
   text: undefined,
+  additional: undefined,
   title: undefined,
   title_template: 'Каталог онлайн-курсов по профессии {profession:nominative} [countProfessionCourses:— {countProfessionCourses:курс|nominative} для обучения] — Courselandia',
   description: undefined,
@@ -62,6 +63,7 @@ const form = ref<IProfessionForm>({
 
 const onReset = (formRef?: FormInstance) => {
   form.value.text = '';
+  form.value.additional = '';
   formRef?.resetFields();
 };
 

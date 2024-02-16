@@ -12,6 +12,7 @@ export default interface ICategory extends IColumn {
   header: string | null;
   link: string;
   text: string | null;
+  additional: string | null;
   metatag: IMetatag;
   directions?: Array<IDirection>;
   professions?: Array<IProfession>;

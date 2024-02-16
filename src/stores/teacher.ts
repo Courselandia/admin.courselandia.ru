@@ -18,6 +18,7 @@ const toFormData = (data: ITeacherForm, method: string = 'post'): FormData => {
   formData.append('name', data.name || '');
   formData.append('link', data.link || '');
   formData.append('text', data.text || '');
+  formData.append('additional', data.additional || '');
   formData.append('city', data.city || '');
   formData.append('comment', data.comment || '');
   formData.append('rating', data.rating ? String(data.rating) : '0');

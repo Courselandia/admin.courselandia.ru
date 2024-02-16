@@ -5,6 +5,7 @@ export default {
   nameField: 'ФИО',
   link: 'Ссылка',
   text: 'Текст',
+  additional: 'Дополнительное описание',
   rating: 'Рейтинг',
   title: 'Тайтл',
   description: 'Описание',

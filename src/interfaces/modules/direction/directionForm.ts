@@ -8,6 +8,7 @@ export default interface IDirectionForm {
   header: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  additional: string | undefined;
   weight: number | string | undefined;
   title_template: string | undefined;
   description_template: string | undefined;

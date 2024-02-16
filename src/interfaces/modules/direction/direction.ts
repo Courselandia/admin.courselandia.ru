@@ -10,6 +10,7 @@ export default interface IDirection extends IColumn {
   header: string | null;
   link: string;
   text: string | null;
+  additional: string | null;
   metatag: IMetatag;
   weight: number | null;
   status: boolean;

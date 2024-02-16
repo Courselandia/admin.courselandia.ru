@@ -120,6 +120,16 @@
           />
         </div>
       </TabPane>
+      <TabPane
+        key="additional"
+        :tab="lang('skill.additional')"
+      >
+        <Ckeditor
+          v-model:value="form.additional"
+          name="additional"
+          class="mb-30"
+        />
+      </TabPane>
     </Tabs>
     <Item
       :wrapper-col="{ offset: 0 }"

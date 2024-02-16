@@ -5,6 +5,7 @@ export default {
   nameField: 'Name',
   link: 'Link',
   text: 'Text',
+  additional: 'Additional',
   rating: 'Rating',
   title: 'Title',
   description: 'Description',

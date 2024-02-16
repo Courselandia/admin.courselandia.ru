@@ -52,6 +52,7 @@ const form = ref<IToolForm>({
   header_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}',
   link: undefined,
   text: undefined,
+  additional: undefined,
   title: undefined,
   description: undefined,
   title_template: 'Онлайн-курсы по изучению инструмента {tool:nominative}[countToolCourses:: {countToolCourses:курс|nominative} для обучения с нуля] — Courselandia',
@@ -62,6 +63,7 @@ const form = ref<IToolForm>({
 
 const onReset = (formRef?: FormInstance) => {
   form.value.text = '';
+  form.value.additional = '';
   formRef?.resetFields();
 };
 

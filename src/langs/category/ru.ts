@@ -7,6 +7,7 @@ export default {
   header: 'Заголовок',
   link: 'Ссылка',
   text: 'Текст',
+  additional: 'Дополнительное описание',
   title: 'Тайтл',
   description: 'Описание',
   keywords: 'Ключевые слова',

@@ -10,6 +10,7 @@ export default interface ITeacherForm {
   name: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  additional: string | undefined;
   city: string | undefined;
   rating: number | string | undefined;
   image: File | undefined;

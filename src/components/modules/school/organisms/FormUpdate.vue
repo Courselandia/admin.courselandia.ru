@@ -159,6 +159,16 @@
                 />
               </div>
             </TabPane>
+            <TabPane
+              key="additional"
+              :tab="lang('school.additional')"
+            >
+              <Ckeditor
+                v-model:value="form.additional"
+                name="additional"
+                class="mb-30"
+              />
+            </TabPane>
           </Tabs>
           <Item
             :wrapper-col="{ offset: 0 }"
@@ -409,6 +419,7 @@ const getDefaultFormValue = (): ISchoolForm => ({
   header_template: item.value?.header_template || undefined,
   link: item.value?.link || undefined,
   text: item.value?.text || undefined,
+  additional: item.value?.additional || undefined,
   rating: item.value?.rating || undefined,
   site: item.value?.site || undefined,
   imageLogo: undefined,

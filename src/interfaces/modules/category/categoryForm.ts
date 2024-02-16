@@ -9,6 +9,7 @@ export default interface ICategoryForm {
   header_template: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  additional: string | undefined;
   title: string | undefined;
   title_template: string | undefined;
   description: string | undefined;

@@ -658,6 +658,16 @@
             </Checkbox>
           </Item>
         </TabPane>
+        <TabPane
+          key="additional"
+          :tab="lang('teacher.additional')"
+        >
+          <Ckeditor
+            v-model:value="form.additional"
+            name="additional"
+            class="mb-30"
+          />
+        </TabPane>
       </Tabs>
       <Item
         :wrapper-col="{ offset: 0 }"
@@ -808,6 +818,7 @@ const form = ref<ITeacherForm>({
   name: undefined,
   link: undefined,
   text: undefined,
+  additional: undefined,
   rating: undefined,
   city: undefined,
   image: undefined,
@@ -830,6 +841,7 @@ const form = ref<ITeacherForm>({
 const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.text = '';
+  form.value.additional = '';
   form.value.image = undefined;
   form.value.imageCropped = undefined;
   form.value.imageCroppedOptions = undefined;

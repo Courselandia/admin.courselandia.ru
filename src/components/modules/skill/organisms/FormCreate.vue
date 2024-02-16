@@ -52,6 +52,7 @@ const form = ref<ISkillForm>({
   header_template: 'Онлайн курсы по {skill:dative}',
   link: undefined,
   text: undefined,
+  additional: undefined,
   title: undefined,
   description: undefined,
   title_template: 'Каталог онлайн-курсов по {skill:dative}[countSkillCourses:: {countSkillCourses:курс|nominative} для обучения] — Courselandia',
@@ -62,6 +63,7 @@ const form = ref<ISkillForm>({
 
 const onReset = (formRef?: FormInstance) => {
   form.value.text = '';
+  form.value.additional = '';
   formRef?.resetFields();
 };
 

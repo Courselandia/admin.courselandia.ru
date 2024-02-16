@@ -10,6 +10,7 @@ export default interface ISkill extends IColumn {
   header: string | null;
   link: string;
   text: string | null;
+  additional: string | null;
   metatag: IMetatag;
   status: boolean;
   created_at: string;

@@ -11,4 +11,5 @@ export default {
   description: 'Описание',
   keywords: 'Ключевые слова',
   weight: 'Вес',
+  additional: 'Дополнительное описание',
 };

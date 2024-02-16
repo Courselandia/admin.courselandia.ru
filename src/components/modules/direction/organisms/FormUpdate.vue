@@ -59,6 +59,7 @@ const getDefaultFormValue = (): IDirectionForm => ({
   header: item.value?.header || undefined,
   link: item.value?.link || undefined,
   text: item.value?.text || undefined,
+  additional: item.value?.additional || undefined,
   weight: item.value?.weight || undefined,
   title_template: item.value?.metatag?.title_template || undefined,
   description_template: item.value?.metatag?.description_template || undefined,

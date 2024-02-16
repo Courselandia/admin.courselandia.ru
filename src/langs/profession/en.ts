@@ -7,6 +7,7 @@ export default {
   header: 'Header',
   link: 'Link',
   text: 'Text',
+  additional: 'Additional',
   title: 'Title',
   description: 'Description',
   keywords: 'Keywords',

@@ -8,6 +8,7 @@ export default interface ISchoolForm {
   header_template: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  additional: string | undefined;
   rating: number | string | undefined;
   site: string | undefined;
   imageLogo: File | undefined;

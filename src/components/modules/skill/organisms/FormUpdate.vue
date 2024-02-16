@@ -59,6 +59,7 @@ const getDefaultFormValue = (): ISkillForm => ({
   header_template: item.value?.header_template || undefined,
   link: item.value?.link || undefined,
   text: item.value?.text || undefined,
+  additional: item.value?.additional || undefined,
   title: item.value?.metatag?.title || undefined,
   description: item.value?.metatag?.description || undefined,
   title_template: item.value?.metatag?.title_template || undefined,

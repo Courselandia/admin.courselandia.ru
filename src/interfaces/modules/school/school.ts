@@ -11,6 +11,7 @@ export default interface ISchool extends IColumn {
   header: string;
   link: string;
   text: string | null;
+  additional: string | null;
   rating: number;
   site: string | null;
   status: boolean;

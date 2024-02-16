@@ -8,6 +8,7 @@ export default interface IToolForm {
   header_template: string | undefined;
   link: string | undefined;
   text: string | undefined;
+  additional: string | undefined;
   title: string | undefined;
   description: string | undefined;
   title_template: string | undefined;

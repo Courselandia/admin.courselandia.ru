@@ -6,6 +6,7 @@ export default {
   header: 'Header',
   link: 'Link',
   text: 'Text',
+  additional: 'Additional',
   site: 'Site',
   rating: 'Rating',
   title: 'Title',

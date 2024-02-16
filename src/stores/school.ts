@@ -66,6 +66,7 @@ export default defineStore('school', {
       formData.append('header_template', data.header_template || '');
       formData.append('link', data.link || '');
       formData.append('text', data.text || '');
+      formData.append('additional', data.additional || '');
       formData.append('site', data.site || '');
       formData.append('rating', data.rating ? String(data.rating) : '0');
       formData.append('title', data.title || '');
