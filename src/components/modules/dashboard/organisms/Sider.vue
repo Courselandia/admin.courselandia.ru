@@ -32,6 +32,16 @@
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
+        key="sections"
+        @click="onClickMenuItem('Sections')"
+      >
+        <template #icon>
+          <FileTextOutlined />
+        </template>
+        <Lang value="sections.name" />
+      </Item>
+      <Item
+        v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
         key="directions"
         @click="onClickMenuItem('Directions')"
       >
@@ -300,6 +310,7 @@ const select = (rt: RouteLocationNormalizedLoaded) => {
     users: '/dashboard/users',
     courses: '/dashboard/courses',
     publications: '/dashboard/publications',
+    sections: '/dashboard/sections',
     directions: '/dashboard/directions',
     crawls: '/dashboard/crawls',
     articles: '/dashboard/articles',

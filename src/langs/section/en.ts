@@ -1,0 +1,16 @@
+export default {
+  name: 'Sections',
+  addSection: 'Add section',
+  updateSection: 'Edit section',
+  createSection: 'Create section',
+  nameField: 'Name',
+  header: 'Header',
+  link: 'Link',
+  text: 'Text',
+  additional: 'Additional',
+  title: 'Title',
+  description: 'Description',
+  keywords: 'Keywords',
+  level: 'Level',
+  free: 'Free',
+};
