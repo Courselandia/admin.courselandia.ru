@@ -47,6 +47,62 @@
               v-model:value="form.name"
             />
           </Item>
+          <Item
+            :label="lang('section.level')"
+            name="levels"
+            has-feedback
+            :rules="[{ required: false }]"
+          >
+            <Select
+              v-model:value="form.level"
+            >
+              <Option :value="ELevel.JUNIOR">
+                <Lang value="salary.junior" />
+              </Option>
+              <Option :value="ELevel.MIDDLE">
+                <Lang value="salary.middle" />
+              </Option>
+              <Option :value="ELevel.SENIOR">
+                <Lang value="salary.senior" />
+              </Option>
+            </Select>
+          </Item>
+          <Item
+            :label="lang('section.free')"
+            name="free"
+            has-feedback
+          >
+            <Switch v-model:checked="form.free" />
+          </Item>
+          <Divider />
+          <Item
+            :label="lang('section.type')"
+            name="item_type_1"
+            has-feedback
+            :rules="[{ required: true }]"
+          >
+            <Select
+              v-model:value="form.item_type_1"
+              :options="types"
+              allow-clear
+              @change="onChangeType(0)"
+            />
+          </Item>
+          <Item
+            :label="lang('section.nameType')"
+            name="item_id_1"
+            has-feedback
+            :rules="[{ required: true }]"
+          >
+            <Select
+              v-model:value="form.item_id_1"
+              :options="typeIds[0]"
+              allow-clear
+              show-search
+              :filter-option="filterOption"
+              :loading="loadingSelectItemId[0]"
+            />
+          </Item>
         </div>
       </TabPane>
       <TabPane
@@ -127,15 +183,21 @@
 </template>
 
 <script lang="ts" setup>
-import type { FormInstance } from 'ant-design-vue';
+import { MehOutlined } from '@ant-design/icons-vue';
+import type { FormInstance, SelectProps } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
+import Divider from 'ant-design-vue/lib/divider';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
+import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import {
+  h,
   PropType,
   ref,
   toRefs,
@@ -144,8 +206,17 @@ import {
 
 import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ELevel from '@/enums/modules/salary/level';
 import lang from '@/helpers/lang';
 import ISectionForm from '@/interfaces/modules/section/sectionForm';
+import ISorts from '@/interfaces/molecules/table/sorts';
+import category from '@/stores/category';
+import direction from '@/stores/direction';
+import profession from '@/stores/profession';
+import school from '@/stores/school';
+import skill from '@/stores/skill';
+import teacher from '@/stores/teacher';
+import tool from '@/stores/tool';
 import TAlert from '@/types/alert';
 
 const formRef = ref<FormInstance>();
@@ -181,6 +252,7 @@ const { Item } = Form;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
+const { Option } = Select;
 
 const emit = defineEmits({
   'update:value': (_: ISectionForm) => true,
@@ -188,7 +260,40 @@ const emit = defineEmits({
   reset: (_?: FormInstance) => true,
 });
 
+const types = ref<SelectProps['options']>([
+  {
+    value: 'direction',
+    label: lang('section.direction'),
+  },
+  {
+    value: 'category',
+    label: lang('section.category'),
+  },
+  {
+    value: 'profession',
+    label: lang('section.profession'),
+  },
+  {
+    value: 'school',
+    label: lang('section.school'),
+  },
+  {
+    value: 'skill',
+    label: lang('section.skill'),
+  },
+  {
+    value: 'teacher',
+    label: lang('section.teacher'),
+  },
+  {
+    value: 'tool',
+    label: lang('section.tool'),
+  },
+]);
+
 const form = ref<ISectionForm>(value.value);
+const typeIds = ref<Array<SelectProps['options']>>([[], []]);
+const loadingSelectItemId = ref<Array<boolean>>([false, false]);
 
 watch(form, () => {
   emit('update:value', form.value);
@@ -209,4 +314,103 @@ const onSubmit = () => {
 const onReset = () => {
   emit('reset', formRef.value);
 };
+
+const onChangeType = async (index: number): Promise<void> => {
+  try {
+    if (form.value.item_type_1 === 'direction') {
+      const readDirections = direction().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readDirections(null, null, { weight: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'category') {
+      const readCategories = category().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readCategories(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'profession') {
+      const readProfessions = profession().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readProfessions(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'school') {
+      const readSchools = school().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readSchools(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'skill') {
+      const readSkills = skill().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readSkills(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'teacher') {
+      const readTeachers = teacher().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readTeachers(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    } else if (form.value.item_type_1 === 'tool') {
+      const readTools = tool().read;
+
+      typeIds.value[index] = [];
+      loadingSelectItemId.value[index] = true;
+      const response = await readTools(null, null, { name: 'ASC' } as ISorts);
+      typeIds.value[index] = response.data.map((itm) => ({
+        value: itm.id,
+        label: itm.name,
+      }));
+      loadingSelectItemId.value[index] = false;
+    }
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+
+    throw error;
+  }
+};
+
+const filterOption = (input: string, option: any) => option
+  ?.label
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
 </script>

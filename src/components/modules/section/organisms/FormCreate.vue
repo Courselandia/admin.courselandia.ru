@@ -57,7 +57,10 @@ const form = ref<ISectionForm>({
   description: undefined,
   keywords: undefined,
   status: true,
-  items: [],
+  item_id_1: undefined,
+  item_type_1: undefined,
+  item_id_2: undefined,
+  item_type_2: undefined,
 });
 
 const onReset = (formRef?: FormInstance) => {

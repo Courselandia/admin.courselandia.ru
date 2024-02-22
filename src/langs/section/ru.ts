@@ -12,4 +12,13 @@ export default {
   keywords: 'Ключевые слова',
   level: 'Уровень',
   free: 'Бесплатный',
+  type: 'Тип раздела',
+  nameType: 'Название раздела',
+  category: 'Категория',
+  direction: 'Направления',
+  profession: 'Профессия',
+  school: 'Школа',
+  skill: 'Навык',
+  teacher: 'Учитель',
+  tool: 'Инструмент',
 };

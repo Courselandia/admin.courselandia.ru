@@ -36,9 +36,9 @@
         @click="onClickMenuItem('Sections')"
       >
         <template #icon>
-          <FileTextOutlined />
+          <BuildOutlined />
         </template>
-        <Lang value="sections.name" />
+        <Lang value="section.name" />
       </Item>
       <Item
         v-if="hasRole([ERole.ADMIN, ERole.MANAGER])"
@@ -250,6 +250,7 @@ import {
   AuditOutlined,
   BarsOutlined,
   BugOutlined,
+  BuildOutlined,
   ContactsOutlined,
   DollarCircleOutlined,
   FileTextOutlined,

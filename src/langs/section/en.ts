@@ -13,4 +13,13 @@ export default {
   keywords: 'Keywords',
   level: 'Level',
   free: 'Free',
+  type: 'Type',
+  nameType: 'Type name',
+  category: 'Category',
+  direction: 'Direction',
+  profession: 'Profession',
+  school: 'School',
+  skill: 'Skill',
+  teacher: 'Teacher',
+  tool: 'Tool',
 };

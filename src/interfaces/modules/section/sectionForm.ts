@@ -1,5 +1,3 @@
-import ILevel from '@/interfaces/modules/course/level';
-import ISectionItemForm from '@/interfaces/modules/section/sectionItemForm';
 import TId from '@/types/id';
 
 export default interface ISectionForm {
@@ -8,11 +6,14 @@ export default interface ISectionForm {
   header: string | undefined;
   text: string | undefined;
   additional: string | undefined;
-  level: ILevel | undefined;
+  level: string | undefined;
   free: boolean;
   title: string | undefined;
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
-  items: Array<ISectionItemForm>;
+  item_id_1?: TId;
+  item_type_1?: string;
+  item_id_2?: TId;
+  item_type_2?: string;
 }
