@@ -60,7 +60,26 @@ export default defineStore('section', {
       }
     },
     async create(data: ISectionForm): Promise<IResponseItem<ISection>> {
-      const response = await axios.post<IResponseItem<ISection>>('/api/private/admin/section/create', data, {
+      const dataSend = {
+        ...data,
+        items: [] as any,
+      };
+
+      if (data.item_id_0 && data.item_type_0) {
+        dataSend.items[0] = {
+          id: data.item_id_0,
+          type: data.item_type_0,
+        };
+      }
+
+      if (data.item_id_1 && data.item_type_1) {
+        dataSend.items[1] = {
+          id: data.item_id_1,
+          type: data.item_type_1,
+        };
+      }
+
+      const response = await axios.post<IResponseItem<ISection>>('/api/private/admin/section/create', dataSend, {
         headers: {
           Authorization: access().accessToken || '',
         },
@@ -69,7 +88,26 @@ export default defineStore('section', {
       return response.data;
     },
     async update(data: ISectionForm): Promise<IResponseItem<ISection>> {
-      const response = await axios.put<IResponseItem<ISection>>(`/api/private/admin/section/update/${data.id}`, data, {
+      const dataSend = {
+        ...data,
+        items: [] as any,
+      };
+
+      if (data.item_id_0 && data.item_type_0) {
+        dataSend.items[0] = {
+          id: data.item_id_0,
+          type: data.item_type_0,
+        };
+      }
+
+      if (data.item_id_1 && data.item_type_1) {
+        dataSend.items[1] = {
+          id: data.item_id_1,
+          type: data.item_type_1,
+        };
+      }
+
+      const response = await axios.put<IResponseItem<ISection>>(`/api/private/admin/section/update/${data.id}`, dataSend, {
         headers: {
           Authorization: access().accessToken || '',
         },

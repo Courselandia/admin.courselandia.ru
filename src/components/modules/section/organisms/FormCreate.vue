@@ -18,10 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SisternodeOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Card from 'ant-design-vue/lib/card';
-import notification from 'ant-design-vue/lib/notification';
 import { h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
@@ -57,15 +55,18 @@ const form = ref<ISectionForm>({
   description: undefined,
   keywords: undefined,
   status: true,
+  item_id_0: undefined,
+  item_type_0: undefined,
   item_id_1: undefined,
   item_type_1: undefined,
-  item_id_2: undefined,
-  item_type_2: undefined,
 });
 
 const onReset = (formRef?: FormInstance) => {
-  form.value.text = '';
-  form.value.additional = '';
+  form.value.text = undefined;
+  form.value.additional = undefined;
+  form.value.title = undefined;
+  form.value.description = undefined;
+  form.value.level = undefined;
   formRef?.resetFields();
 };
 
@@ -78,12 +79,6 @@ const onSubmit = async (data: ISectionForm, formRef?: FormInstance): Promise<voi
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
-
-    notification.open({
-      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
-      message: lang('task.launchTitle'),
-      description: lang('task.launchText'),
-    });
 
     onReset(formRef);
   } catch (error: Error | any) {

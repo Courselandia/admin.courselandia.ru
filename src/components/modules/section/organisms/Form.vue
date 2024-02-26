@@ -48,6 +48,14 @@
             />
           </Item>
           <Item
+            :label="lang('section.header')"
+            name="header"
+            has-feedback
+            :rules="[{ required: true, type: 'string', max: 191 }]"
+          >
+            <Input v-model:value="form.header" />
+          </Item>
+          <Item
             :label="lang('section.level')"
             name="levels"
             has-feedback
@@ -55,6 +63,7 @@
           >
             <Select
               v-model:value="form.level"
+              allow-clear
             >
               <Option :value="ELevel.JUNIOR">
                 <Lang value="salary.junior" />
@@ -77,12 +86,12 @@
           <Divider />
           <Item
             :label="lang('section.type')"
-            name="item_type_1"
+            name="item_type_0"
             has-feedback
             :rules="[{ required: true }]"
           >
             <Select
-              v-model:value="form.item_type_1"
+              v-model:value="form.item_type_0"
               :options="types"
               allow-clear
               @change="onChangeType(0)"
@@ -90,17 +99,44 @@
           </Item>
           <Item
             :label="lang('section.nameType')"
-            name="item_id_1"
+            name="item_id_0"
             has-feedback
             :rules="[{ required: true }]"
           >
             <Select
-              v-model:value="form.item_id_1"
+              v-model:value="form.item_id_0"
               :options="typeIds[0]"
               allow-clear
               show-search
               :filter-option="filterOption"
               :loading="loadingSelectItemId[0]"
+            />
+          </Item>
+          <Divider />
+          <Item
+            :label="lang('section.type')"
+            name="item_type_1"
+            has-feedback
+          >
+            <Select
+              v-model:value="form.item_type_1"
+              :options="types"
+              allow-clear
+              @change="onChangeType(1)"
+            />
+          </Item>
+          <Item
+            :label="lang('section.nameType')"
+            name="item_id_1"
+            has-feedback
+          >
+            <Select
+              v-model:value="form.item_id_1"
+              :options="typeIds[1]"
+              allow-clear
+              show-search
+              :filter-option="filterOption"
+              :loading="loadingSelectItemId[1]"
             />
           </Item>
         </div>
@@ -123,7 +159,6 @@
             name="description_template"
             has-feedback
             :rules="[{ type: 'string', max: 1000 }]"
-            :extra="form.description"
           >
             <Input v-model:value="form.description" />
           </Item>
@@ -317,7 +352,15 @@ const onReset = () => {
 
 const onChangeType = async (index: number): Promise<void> => {
   try {
-    if (form.value.item_type_1 === 'direction') {
+    const typeName = index === 0 ? form.value.item_type_0 : form.value.item_type_1;
+
+    if (index === 0) {
+      form.value.item_id_0 = undefined;
+    } else {
+      form.value.item_id_1 = undefined;
+    }
+
+    if (typeName === 'direction') {
       const readDirections = direction().read;
 
       typeIds.value[index] = [];
@@ -328,7 +371,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'category') {
+    } else if (typeName === 'category') {
       const readCategories = category().read;
 
       typeIds.value[index] = [];
@@ -339,7 +382,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'profession') {
+    } else if (typeName === 'profession') {
       const readProfessions = profession().read;
 
       typeIds.value[index] = [];
@@ -350,7 +393,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'school') {
+    } else if (typeName === 'school') {
       const readSchools = school().read;
 
       typeIds.value[index] = [];
@@ -361,7 +404,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'skill') {
+    } else if (typeName === 'skill') {
       const readSkills = skill().read;
 
       typeIds.value[index] = [];
@@ -372,7 +415,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'teacher') {
+    } else if (typeName === 'teacher') {
       const readTeachers = teacher().read;
 
       typeIds.value[index] = [];
@@ -383,7 +426,7 @@ const onChangeType = async (index: number): Promise<void> => {
         label: itm.name,
       }));
       loadingSelectItemId.value[index] = false;
-    } else if (form.value.item_type_1 === 'tool') {
+    } else if (typeName === 'tool') {
       const readTools = tool().read;
 
       typeIds.value[index] = [];

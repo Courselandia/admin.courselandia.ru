@@ -12,8 +12,8 @@ export default interface ISectionForm {
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
+  item_id_0?: TId;
+  item_type_0?: string;
   item_id_1?: TId;
   item_type_1?: string;
-  item_id_2?: TId;
-  item_type_2?: string;
 }
