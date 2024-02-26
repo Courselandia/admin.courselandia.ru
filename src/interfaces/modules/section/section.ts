@@ -1,4 +1,4 @@
-import ILevel from '@/interfaces/modules/course/level';
+import ELevel from '@/enums/modules/salary/level';
 import IMetatag from '@/interfaces/modules/metatag';
 import ISectionItem from '@/interfaces/modules/section/sectionItem';
 import IColumn from '@/interfaces/molecules/table/column';
@@ -12,7 +12,7 @@ export default interface ISection extends IColumn {
   text: string | null;
   additional: string | null;
   metatag: IMetatag;
-  level: ILevel | null;
+  level: ELevel | null;
   free: boolean;
   status: boolean;
   created_at: string;

@@ -110,6 +110,7 @@
               show-search
               :filter-option="filterOption"
               :loading="loadingSelectItemId[0]"
+              label-in-value
             />
           </Item>
           <Divider />
@@ -137,6 +138,7 @@
               show-search
               :filter-option="filterOption"
               :loading="loadingSelectItemId[1]"
+              label-in-value
             />
           </Item>
         </div>
@@ -233,6 +235,7 @@ import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import {
   h,
+  onMounted,
   PropType,
   ref,
   toRefs,
@@ -350,14 +353,16 @@ const onReset = () => {
   emit('reset', formRef.value);
 };
 
-const onChangeType = async (index: number): Promise<void> => {
+const onChangeType = async (index: number, reset: boolean = true): Promise<void> => {
   try {
     const typeName = index === 0 ? form.value.item_type_0 : form.value.item_type_1;
 
-    if (index === 0) {
-      form.value.item_id_0 = undefined;
-    } else {
-      form.value.item_id_1 = undefined;
+    if (reset) {
+      if (index === 0) {
+        form.value.item_id_0 = undefined;
+      } else {
+        form.value.item_id_1 = undefined;
+      }
     }
 
     if (typeName === 'direction') {
@@ -456,4 +461,9 @@ const filterOption = (input: string, option: any) => option
   ?.label
   ?.toLowerCase()
   ?.indexOf(input.toLowerCase()) >= 0;
+
+onMounted(async (): Promise<void> => {
+  await onChangeType(0, false);
+  await onChangeType(1, false);
+});
 </script>

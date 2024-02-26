@@ -67,14 +67,14 @@ export default defineStore('section', {
 
       if (data.item_id_0 && data.item_type_0) {
         dataSend.items[0] = {
-          id: data.item_id_0,
+          id: data.item_id_0.key,
           type: data.item_type_0,
         };
       }
 
       if (data.item_id_1 && data.item_type_1) {
         dataSend.items[1] = {
-          id: data.item_id_1,
+          id: data.item_id_1.key,
           type: data.item_type_1,
         };
       }
@@ -95,14 +95,14 @@ export default defineStore('section', {
 
       if (data.item_id_0 && data.item_type_0) {
         dataSend.items[0] = {
-          id: data.item_id_0,
+          id: data.item_id_0.key,
           type: data.item_type_0,
         };
       }
 
       if (data.item_id_1 && data.item_type_1) {
         dataSend.items[1] = {
-          id: data.item_id_1,
+          id: data.item_id_1.key,
           type: data.item_type_1,
         };
       }

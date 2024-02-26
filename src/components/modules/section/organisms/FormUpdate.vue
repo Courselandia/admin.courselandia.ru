@@ -19,11 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-import { SisternodeOutlined } from '@ant-design/icons-vue';
 import Card from 'ant-design-vue/lib/card';
-import notification from 'ant-design-vue/lib/notification';
 import { storeToRefs } from 'pinia';
-import { h, ref } from 'vue';
+import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
@@ -64,7 +62,14 @@ const getDefaultFormValue = (): ISectionForm => ({
   description: item.value?.metatag?.description || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
-  items: item.value?.items || undefined,
+  item_id_0: item.value?.items[0]?.id
+    ? { key: item.value?.items[0].itemable_id as string, value: item.value?.items[0].itemable.name }
+    : undefined,
+  item_type_0: item.value?.items[0]?.type || undefined,
+  item_id_1: item.value?.items[1]?.id
+    ? { key: item.value?.items[1].itemable_id as string, value: item.value?.items[1].itemable.name }
+    : undefined,
+  item_type_1: item.value?.items[1]?.type || undefined,
 });
 
 const form = ref<ISectionForm>(getDefaultFormValue());
@@ -82,12 +87,6 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
-
-    notification.open({
-      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
-      message: lang('task.launchTitle'),
-      description: lang('task.launchText'),
-    });
 
     await get(id as TId);
     form.value = getDefaultFormValue();
