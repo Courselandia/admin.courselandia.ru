@@ -26,7 +26,7 @@
         layout="horizontal"
         class="mb-20"
       >
-        <Item
+        <ItemDescription
           v-if="form.result.unique"
           :span="3"
           :label="lang('analyzer.unique')"
@@ -36,8 +36,8 @@
           >
             {{ form.result?.unique }}%
           </Tag>
-        </Item>
-        <Item
+        </ItemDescription>
+        <ItemDescription
           v-if="form.result.spam"
           :span="3"
           :label="lang('analyzer.spam')"
@@ -47,8 +47,8 @@
           >
             {{ form.result?.spam }}%
           </Tag>
-        </Item>
-        <Item
+        </ItemDescription>
+        <ItemDescription
           v-if="form.result.water"
           :span="3"
           :label="lang('analyzer.water')"
@@ -58,7 +58,7 @@
           >
             {{ form.result?.water }}%
           </Tag>
-        </Item>
+        </ItemDescription>
       </Descriptions>
       <Item
         :label="lang('analyzer.text')"
@@ -119,6 +119,7 @@ import lang from '@/helpers/lang';
 import IAnalyzerAnalyzeForm from '@/interfaces/modules/analyzer/analyzerAnalyzeForm';
 import TAlert from '@/types/alert';
 
+const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();
 
 const props = defineProps({

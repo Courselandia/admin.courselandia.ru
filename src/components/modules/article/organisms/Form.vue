@@ -21,7 +21,7 @@
       layout="horizontal"
       class="mb-20"
     >
-      <Item
+      <ItemDescription
         v-if="form.articleable?.id && form.category"
         :span="3"
         :label="lang('article.ownId')"
@@ -31,8 +31,8 @@
         >
           {{ form.articleable?.id }}
         </router-link>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         :span="3"
         :label="lang('article.category')"
       >
@@ -40,8 +40,8 @@
         <template v-if="form.category_label">
           / {{ form.category_label }}
         </template>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         :span="3"
         :label="lang('article.textCurrent')"
       >
@@ -61,8 +61,8 @@
             :category="form.category"
           />
         </div>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         v-if="form.status"
         :span="3"
         :label="lang('dashboard.status')"
@@ -103,7 +103,7 @@
         >
           <Lang value="article.applied" />
         </Tag>
-      </Item>
+      </ItemDescription>
     </Descriptions>
     <Ckeditor
       v-model:value="form.text"
@@ -184,6 +184,7 @@ import lang from '@/helpers/lang';
 import IArticleForm from '@/interfaces/modules/article/articleForm';
 import TAlert from '@/types/alert';
 
+const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();
 
 const props = defineProps({

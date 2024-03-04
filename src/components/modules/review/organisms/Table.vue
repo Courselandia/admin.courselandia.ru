@@ -164,7 +164,9 @@ import Table from 'ant-design-vue/lib/table';
 import {
   ColumnFilterItem,
   FilterValue,
-  SorterResult, TablePaginationConfig, TableRowSelection,
+  SorterResult,
+  TablePaginationConfig,
+  TableRowSelection,
 } from 'ant-design-vue/lib/table/interface';
 import Tag from 'ant-design-vue/lib/tag';
 import dayjs from 'dayjs';

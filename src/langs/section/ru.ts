@@ -21,4 +21,5 @@ export default {
   skill: 'Навык',
   teacher: 'Учитель',
   tool: 'Инструмент',
+  url: 'URL',
 };

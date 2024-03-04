@@ -14,6 +14,7 @@ export default interface ISectionForm {
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
+  url: string | undefined;
   item_id_0?: IOption;
   item_type_0?: string;
   item_id_1?: IOption | undefined;

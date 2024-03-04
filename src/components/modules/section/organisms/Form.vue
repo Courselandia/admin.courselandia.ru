@@ -64,6 +64,7 @@
             <Select
               v-model:value="form.level"
               allow-clear
+              @change="setUrl"
             >
               <Option :value="ELevel.JUNIOR">
                 <Lang value="salary.junior" />
@@ -81,7 +82,10 @@
             name="free"
             has-feedback
           >
-            <Switch v-model:checked="form.free" />
+            <Switch
+              v-model:checked="form.free"
+              @change="setUrl"
+            />
           </Item>
           <Divider />
           <Item
@@ -111,6 +115,7 @@
               :filter-option="filterOption"
               :loading="loadingSelectItemId[0]"
               label-in-value
+              @change="setUrl"
             />
           </Item>
           <Divider />
@@ -139,8 +144,31 @@
               :filter-option="filterOption"
               :loading="loadingSelectItemId[1]"
               label-in-value
+              @change="setUrl"
             />
           </Item>
+          <Divider />
+          <Descriptions>
+            <ItemDescription
+              :label="lang('section.url')"
+            >
+              <div class="flex flex--align-items-center">
+                <a
+                  v-if="url"
+                  :href="url"
+                  target="_blank"
+                >
+                  {{ url }}
+                </a>
+                <Spin
+                  :spinning="urlLoading"
+                  style="line-height: 0"
+                  size="small"
+                  class="ml-7"
+                />
+              </div>
+            </ItemDescription>
+          </Descriptions>
         </div>
       </TabPane>
       <TabPane
@@ -224,6 +252,7 @@ import { MehOutlined } from '@ant-design/icons-vue';
 import type { FormInstance, SelectProps } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
+import Descriptions from 'ant-design-vue/lib/descriptions';
 import Divider from 'ant-design-vue/lib/divider';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
@@ -231,6 +260,7 @@ import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
+import Spin from 'ant-design-vue/lib/spin';
 import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import {
@@ -256,7 +286,9 @@ import skill from '@/stores/skill';
 import teacher from '@/stores/teacher';
 import tool from '@/stores/tool';
 import TAlert from '@/types/alert';
+import TId from '@/types/id';
 
+const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();
 
 const props = defineProps({
@@ -332,6 +364,8 @@ const types = ref<SelectProps['options']>([
 const form = ref<ISectionForm>(value.value);
 const typeIds = ref<Array<SelectProps['options']>>([[], []]);
 const loadingSelectItemId = ref<Array<boolean>>([false, false]);
+const url = ref(form.value.url);
+const urlLoading = ref(false);
 
 watch(form, () => {
   emit('update:value', form.value);
@@ -351,6 +385,103 @@ const onSubmit = () => {
 
 const onReset = () => {
   emit('reset', formRef.value);
+};
+
+const getSection = async (typeName: string, id: string | number): Promise<string | null> => {
+  try {
+    if (typeName === 'direction') {
+      const getDirection = direction().get;
+      const response = await getDirection(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'category') {
+      const getCategory = category().get;
+      const response = await getCategory(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'profession') {
+      const getProfession = profession().get;
+      const response = await getProfession(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'school') {
+      const getSchool = school().get;
+      const response = await getSchool(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'skill') {
+      const getSkill = skill().get;
+      const response = await getSkill(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'teacher') {
+      const getTeacher = teacher().get;
+      const response = await getTeacher(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+
+    if (typeName === 'tool') {
+      const getTool = tool().get;
+      const response = await getTool(id);
+
+      return `/${typeName}/${response.data.link}`;
+    }
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+
+    throw error;
+  }
+
+  return null;
+};
+
+const setUrl = async (): Promise<void> => {
+  urlLoading.value = true;
+  let result = process.env.VUE_APP_SITE_URL as string;
+
+  if (form.value.item_id_0?.key && form.value.item_type_0) {
+    let section = await getSection(form.value.item_type_0, form.value.item_id_0.key);
+    result += section;
+
+    if (
+      form.value.item_id_1?.key && form.value.item_type_1
+    ) {
+      section = await getSection(form.value.item_type_1, form.value.item_id_1.key);
+      result += section;
+    }
+
+    if (form.value.level) {
+      result += `/level/${form.value.level}`;
+    }
+
+    if (form.value.free) {
+      result += '/free';
+    }
+
+    url.value = result;
+  } else {
+    url.value = undefined;
+  }
+
+  urlLoading.value = false;
 };
 
 const onChangeType = async (index: number, reset: boolean = true): Promise<void> => {
@@ -443,6 +574,8 @@ const onChangeType = async (index: number, reset: boolean = true): Promise<void>
       }));
       loadingSelectItemId.value[index] = false;
     }
+
+    await setUrl();
   } catch (error: Error | any) {
     notification.open({
       icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
@@ -465,5 +598,6 @@ const filterOption = (input: string, option: any) => option
 onMounted(async (): Promise<void> => {
   await onChangeType(0, false);
   await onChangeType(1, false);
+  await setUrl();
 });
 </script>

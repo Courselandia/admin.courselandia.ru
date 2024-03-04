@@ -26,12 +26,12 @@
         layout="horizontal"
         class="mb-20"
       >
-        <Item
+        <ItemDescription
           :span="3"
           :label="lang('article.result')"
         >
           <div v-html="form.result" />
-        </Item>
+        </ItemDescription>
       </Descriptions>
       <Item
         :label="lang('article.request')"
@@ -91,6 +91,7 @@ import lang from '@/helpers/lang';
 import IArticleWriteForm from '@/interfaces/modules/article/articleWriteForm';
 import TAlert from '@/types/alert';
 
+const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();
 
 const props = defineProps({

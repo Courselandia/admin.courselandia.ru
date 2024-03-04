@@ -79,6 +79,14 @@
             </Button>
           </Space>
         </template>
+        <template v-if="column.key === 'url'">
+          <a
+            :href="getUrl(record as ISection)"
+            target="_blank"
+          >
+            {{ getUrl(record as ISection) }}
+          </a>
+        </template>
         <template v-if="column.key === 'status'">
           <Tag
             :color="record.status === true ? 'green' : 'red'"
@@ -226,6 +234,12 @@ const columns = computed<ITableColumnType<ISection>[]>(() => [
     customFilterDropdown: true,
     sortOrder: stateColumnSort('name', sortedInfo.value),
     filteredValue: stateColumnFilter('name', filteredInfo.value, 'string'),
+  },
+  {
+    title: lang('section.url'),
+    dataIndex: 'url',
+    key: 'url',
+    sorter: false,
   },
   {
     title: lang('dashboard.status'),
@@ -474,6 +488,28 @@ const onClickStatus = async (id: TId, active: boolean): Promise<void> => {
       loading.value = false;
     },
   });
+};
+
+const getUrl = (record: ISection): string => {
+  let url = process.env.VUE_APP_SITE_URL as string;
+
+  if (record.items[0]?.itemable?.link) {
+    url += `/${record.items[0].itemable.link}`;
+  }
+
+  if (record.items[1]?.itemable?.link) {
+    url += `/${record.items[1].itemable.link}`;
+  }
+
+  if (record.level) {
+    url += `/level/${record.level}`;
+  }
+
+  if (record.free) {
+    url += '/free';
+  }
+
+  return url;
 };
 </script>
 

@@ -62,6 +62,7 @@ const getDefaultFormValue = (): ISectionForm => ({
   description: item.value?.metatag?.description || undefined,
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
+  url: item.value?.url || undefined,
   item_id_0: item.value?.items[0]?.id
     ? { key: item.value?.items[0].itemable_id as string, value: item.value?.items[0].itemable.name }
     : undefined,

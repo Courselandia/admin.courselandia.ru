@@ -17,6 +17,7 @@ export default interface ISection extends IColumn {
   status: boolean;
   created_at: string;
   updated_at: string;
+  url: string | null;
   deleted_at: string | null;
   items: Array<ISectionItem>;
 }

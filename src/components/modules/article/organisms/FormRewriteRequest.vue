@@ -22,18 +22,18 @@
       layout="horizontal"
       class="mb-20"
     >
-      <Item
+      <ItemDescription
         v-if="form.articleable?.id && form.category"
         :span="3"
         :label="lang('article.ownId')"
       >
         <router-link
-          :to="getLink(form.articleable.id, form.category)"
+          :to="getLink(form.articleable.id, form.category) as string"
         >
           {{ form.articleable?.id }}
         </router-link>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         :span="3"
         :label="lang('article.category')"
       >
@@ -41,8 +41,8 @@
         <template v-if="form.category_label">
           / {{ form.category_label }}
         </template>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         :span="3"
         :label="lang('article.textCurrent')"
       >
@@ -63,8 +63,8 @@
             :category="form.category"
           />
         </div>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         :span="3"
         :label="lang('article.text')"
       >
@@ -84,8 +84,8 @@
             category="article.text"
           />
         </div>
-      </Item>
-      <Item
+      </ItemDescription>
+      <ItemDescription
         v-if="form.status"
         :span="3"
         :label="lang('dashboard.status')"
@@ -126,7 +126,7 @@
         >
           <Lang value="article.applied" />
         </Tag>
-      </Item>
+      </ItemDescription>
     </Descriptions>
     <Item
       :label="lang('article.request')"
@@ -190,6 +190,7 @@ import { stripTags } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IArticleRewriteForm from '@/interfaces/modules/article/articleRewriteForm';
 
+const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();
 
 const props = defineProps({

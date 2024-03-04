@@ -55,6 +55,7 @@ const form = ref<ISectionForm>({
   description: undefined,
   keywords: undefined,
   status: true,
+  url: undefined,
   item_id_0: undefined,
   item_type_0: undefined,
   item_id_1: undefined,
