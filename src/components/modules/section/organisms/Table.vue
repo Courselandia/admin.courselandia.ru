@@ -240,6 +240,7 @@ const columns = computed<ITableColumnType<ISection>[]>(() => [
     dataIndex: 'url',
     key: 'url',
     sorter: false,
+    width: 600,
   },
   {
     title: lang('dashboard.status'),
