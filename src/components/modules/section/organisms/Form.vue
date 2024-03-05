@@ -456,6 +456,7 @@ const getSection = async (typeName: string, id: string | number): Promise<string
 const setUrl = async (): Promise<void> => {
   urlLoading.value = true;
   let result = process.env.VUE_APP_SITE_URL as string;
+  result += '/courses';
 
   if (form.value.item_id_0?.key && form.value.item_type_0) {
     let section = await getSection(form.value.item_type_0, form.value.item_id_0.key);

@@ -493,6 +493,7 @@ const onClickStatus = async (id: TId, active: boolean): Promise<void> => {
 
 const getUrl = (record: ISection): string => {
   let url = process.env.VUE_APP_SITE_URL as string;
+  url += '/courses';
 
   if (record.items[0]?.itemable?.link) {
     url += `/${record.items[0].itemable.link}`;
