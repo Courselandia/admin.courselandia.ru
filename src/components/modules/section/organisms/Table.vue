@@ -240,7 +240,7 @@ const columns = computed<ITableColumnType<ISection>[]>(() => [
     dataIndex: 'url',
     key: 'url',
     sorter: false,
-    width: 600,
+    width: 700,
   },
   {
     title: lang('dashboard.status'),
@@ -496,11 +496,11 @@ const getUrl = (record: ISection): string => {
   url += '/courses';
 
   if (record.items[0]?.itemable?.link) {
-    url += `/${record.items[0].itemable.link}`;
+    url += `/${record.items[0].type}/${record.items[0].itemable.link}`;
   }
 
   if (record.items[1]?.itemable?.link) {
-    url += `/${record.items[1].itemable.link}`;
+    url += `/${record.items[1].type}/${record.items[1].itemable.link}`;
   }
 
   if (record.level) {

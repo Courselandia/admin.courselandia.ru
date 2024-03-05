@@ -8,6 +8,7 @@ export default interface ISectionItem extends IColumn {
   weight: number;
   itemable_id: TId;
   itemable_type: string;
+  type: string;
   itemable: ISectionItemable;
   created_at: string;
   updated_at: string;
