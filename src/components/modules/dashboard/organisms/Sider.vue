@@ -1,7 +1,7 @@
 <template>
   <Sider
     breakpoint="lg"
-    width="200"
+    width="230"
     style="background: #fff; overflow-y: auto; overflow-x: hidden"
   >
     <Menu
@@ -22,11 +22,14 @@ import {
   BarsOutlined,
   BugOutlined,
   BuildOutlined,
+  CodeOutlined,
   ContactsOutlined,
+  DatabaseOutlined,
   DollarCircleOutlined,
   FileTextOutlined,
   FormatPainterOutlined,
   IdcardOutlined,
+  LaptopOutlined,
   MailOutlined,
   MessageOutlined,
   NodeIndexOutlined,
@@ -38,6 +41,7 @@ import {
   RocketOutlined,
   ShopOutlined,
   SisternodeOutlined,
+  SolutionOutlined,
   TeamOutlined,
   ToolOutlined,
 } from '@ant-design/icons-vue';
@@ -86,225 +90,275 @@ const hasRole = (roles: Array<ERole>) => {
 const items = computed<ItemType[]>((): ItemType[] => {
   let result: ItemType[] = [
     {
-      key: 'Courses',
-      icon: () => h(AuditOutlined),
-      label: lang('course.name'),
-      title: lang('course.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/courses',
+      key: 'Catalog',
+      icon: () => h(DatabaseOutlined),
+      label: lang('dashboard.catalog'),
+      title: lang('dashboard.catalog') as string,
+      children: [
+        {
+          key: 'Courses',
+          icon: () => h(AuditOutlined),
+          label: lang('course.name'),
+          title: lang('course.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/courses',
+        },
+        {
+          key: 'Publications',
+          icon: () => h(FileTextOutlined),
+          label: lang('publication.name'),
+          title: lang('publication.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/publications',
+        },
+        {
+          key: 'Sections',
+          icon: () => h(BuildOutlined),
+          label: lang('section.name'),
+          title: lang('section.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/sections',
+        },
+        {
+          key: 'Directions',
+          icon: () => h(NodeIndexOutlined),
+          label: lang('direction.name'),
+          title: lang('direction.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/directions',
+        },
+        {
+          key: 'Professions',
+          icon: () => h(ContactsOutlined),
+          label: lang('profession.name'),
+          title: lang('profession.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/professions',
+        },
+        {
+          key: 'Categories',
+          icon: () => h(AppstoreOutlined),
+          label: lang('category.name'),
+          title: lang('category.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/categories',
+        },
+        {
+          key: 'Skills',
+          icon: () => h(FormatPainterOutlined),
+          label: lang('skill.name'),
+          title: lang('skill.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/skills',
+        },
+        {
+          key: 'Tools',
+          icon: () => h(ToolOutlined),
+          label: lang('tool.name'),
+          title: lang('tool.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/tools',
+        },
+        {
+          key: 'Schools',
+          icon: () => h(ShopOutlined),
+          label: lang('school.name'),
+          title: lang('school.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/schools',
+        },
+        {
+          key: 'Teachers',
+          icon: () => h(RobotOutlined),
+          label: lang('teacher.name'),
+          title: lang('teacher.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/teachers',
+        },
+        {
+          key: 'Employments',
+          icon: () => h(IdcardOutlined),
+          label: lang('employment.name'),
+          title: lang('employment.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/employments',
+        },
+        {
+          key: 'Processes',
+          icon: () => h(RocketOutlined),
+          label: lang('process.name'),
+          title: lang('process.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/processes',
+        },
+        {
+          key: 'Salaries',
+          icon: () => h(DollarCircleOutlined),
+          label: lang('salary.name'),
+          title: lang('salary.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/salaries',
+        },
+      ],
     },
     {
-      key: 'Publications',
-      icon: () => h(FileTextOutlined),
-      label: lang('publication.name'),
-      title: lang('publication.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/publications',
+      key: 'Content',
+      icon: () => h(SolutionOutlined),
+      label: lang('dashboard.content'),
+      title: lang('dashboard.content') as string,
+      children: [
+        {
+          key: 'Reviews',
+          icon: () => h(MessageOutlined),
+          label: lang('review.name'),
+          title: lang('review.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/reviews',
+        },
+        {
+          key: 'Faqs',
+          icon: () => h(QuestionOutlined),
+          label: lang('faq.name'),
+          title: lang('faq.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/faqs',
+        },
+      ],
     },
     {
-      key: 'Sections',
-      icon: () => h(BuildOutlined),
-      label: lang('section.name'),
-      title: lang('section.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/sections',
+      key: 'Services',
+      icon: () => h(CodeOutlined),
+      label: lang('dashboard.services'),
+      title: lang('dashboard.services') as string,
+      children: [
+        {
+          key: 'Articles',
+          icon: () => h(ReadOutlined),
+          label: lang('article.name'),
+          title: lang('article.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/articles',
+        },
+        {
+          key: 'Analyzers',
+          icon: () => h(ProjectOutlined),
+          label: lang('analyzer.name'),
+          title: lang('analyzer.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/analyzers',
+        },
+        {
+          key: 'Crawls',
+          icon: () => h(BugOutlined),
+          label: lang('crawl.name'),
+          title: lang('crawl.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/crawls',
+        },
+        {
+          key: 'Feedbacks',
+          icon: () => h(MailOutlined),
+          label: lang('feedback.name'),
+          title: lang('feedback.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/feedbacks',
+        },
+      ],
     },
     {
-      key: 'Directions',
-      icon: () => h(NodeIndexOutlined),
-      label: lang('direction.name'),
-      title: lang('direction.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/directions',
-    },
-    {
-      key: 'Professions',
-      icon: () => h(ContactsOutlined),
-      label: lang('profession.name'),
-      title: lang('profession.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/professions',
-    },
-    {
-      key: 'Categories',
-      icon: () => h(AppstoreOutlined),
-      label: lang('category.name'),
-      title: lang('category.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/categories',
-    },
-    {
-      key: 'Skills',
-      icon: () => h(FormatPainterOutlined),
-      label: lang('skill.name'),
-      title: lang('skill.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/skills',
-    },
-    {
-      key: 'Tools',
-      icon: () => h(ToolOutlined),
-      label: lang('tool.name'),
-      title: lang('tool.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/tools',
-    },
-    {
-      key: 'Schools',
-      icon: () => h(ShopOutlined),
-      label: lang('school.name'),
-      title: lang('school.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/schools',
-    },
-    {
-      key: 'Teachers',
-      icon: () => h(RobotOutlined),
-      label: lang('teacher.name'),
-      title: lang('teacher.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/teachers',
-    },
-    {
-      key: 'Employments',
-      icon: () => h(IdcardOutlined),
-      label: lang('employment.name'),
-      title: lang('employment.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/employments',
-    },
-    {
-      key: 'Processes',
-      icon: () => h(RocketOutlined),
-      label: lang('process.name'),
-      title: lang('process.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/processes',
-    },
-    {
-      key: 'Salaries',
-      icon: () => h(DollarCircleOutlined),
-      label: lang('salary.name'),
-      title: lang('salary.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/salaries',
-    },
-    {
-      key: 'Reviews',
-      icon: () => h(MessageOutlined),
-      label: lang('review.name'),
-      title: lang('review.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/reviews',
-    },
-    {
-      key: 'Faqs',
-      icon: () => h(QuestionOutlined),
-      label: lang('faq.name'),
-      title: lang('faq.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/faqs',
-    },
-    {
-      key: 'Articles',
-      icon: () => h(ReadOutlined),
-      label: lang('article.name'),
-      title: lang('article.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/articles',
-    },
-    {
-      key: 'Analyzers',
-      icon: () => h(ProjectOutlined),
-      label: lang('analyzer.name'),
-      title: lang('analyzer.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/analyzers',
-    },
-    {
-      key: 'Crawls',
-      icon: () => h(BugOutlined),
-      label: lang('crawl.name'),
-      title: lang('crawl.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/crawls',
-    },
-    {
-      key: 'Feedbacks',
-      icon: () => h(MailOutlined),
-      label: lang('feedback.name'),
-      title: lang('feedback.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/feedbacks',
-    },
-    {
-      key: 'Users',
-      icon: () => h(TeamOutlined),
-      label: lang('user.name'),
-      title: lang('user.name') as string,
-      visible: hasRole([ERole.ADMIN]),
-      path: '/dashboard/users',
-    },
-    {
-      key: 'Alerts',
-      icon: () => h(NotificationOutlined),
-      label: lang('dashboard.alerts'),
-      title: lang('dashboard.alerts') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/alerts',
-    },
-    {
-      key: 'Tasks',
-      icon: () => h(SisternodeOutlined),
-      label: lang('task.name'),
-      title: lang('task.name') as string,
-      visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-      path: '/dashboard/tasks',
-    },
-    {
-      key: 'Logs',
-      icon: () => h(BarsOutlined),
-      label: lang('log.name'),
-      title: lang('log.name') as string,
-      visible: hasRole([ERole.ADMIN]),
-      path: '/dashboard/logs',
+      key: 'System',
+      icon: () => h(LaptopOutlined),
+      label: lang('dashboard.system'),
+      title: lang('dashboard.system') as string,
+      children: [
+        {
+          key: 'Users',
+          icon: () => h(TeamOutlined),
+          label: lang('user.name'),
+          title: lang('user.name') as string,
+          visible: hasRole([ERole.ADMIN]),
+          path: '/dashboard/users',
+        },
+        {
+          key: 'Alerts',
+          icon: () => h(NotificationOutlined),
+          label: lang('dashboard.alerts'),
+          title: lang('dashboard.alerts') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/alerts',
+        },
+        {
+          key: 'Tasks',
+          icon: () => h(SisternodeOutlined),
+          label: lang('task.name'),
+          title: lang('task.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/tasks',
+        },
+        {
+          key: 'Logs',
+          icon: () => h(BarsOutlined),
+          label: lang('log.name'),
+          title: lang('log.name') as string,
+          visible: hasRole([ERole.ADMIN]),
+          path: '/dashboard/logs',
+        },
+      ],
     },
   ];
 
-  result = result.filter((itm: ItemType) => itm && 'visible' in itm && itm.visible);
+  result = result.filter((itm: ItemType) => (itm && 'visible' in itm && itm.visible) || (itm && !('path' in itm)));
 
   return result;
 });
 
-const select = (rt: RouteLocationNormalizedLoaded) => {
-  let found = false;
-  rt.matched.forEach(({ path }) => {
-    Object.values(items.value).some((item) => {
-      if (item && 'path' in item && path.indexOf(item.path) !== -1) {
-        selected.value[0] = item.key;
-        found = true;
+const getSelected = (menuItems: ItemType[], path: string): Key | null => {
+  let foundKey: Key | null = null;
+
+  Object.values(menuItems).forEach((item) => {
+    if (item) {
+      if ('path' in item && item.path && path.indexOf(item.path) !== -1) {
+        foundKey = item.key;
       }
 
-      return false;
-    });
+      if ('children' in item) {
+        const foundInsideKey = getSelected(item.children as ItemType[], path);
+
+        if (foundInsideKey) {
+          foundKey = foundInsideKey;
+        }
+      }
+    }
   });
 
-  if (!found) {
-    selected.value = [];
-  }
+  return foundKey;
+};
+
+const setSelected = (rt: RouteLocationNormalizedLoaded) => {
+  rt.matched.forEach(({ path }) => {
+    const key = getSelected(items.value, path);
+
+    if (key) {
+      selected.value[0] = key;
+    } else {
+      selected.value = [];
+    }
+  });
 };
 
 const onClickMenu = (item: any): void => {
-  router.push({
-    name: item.key,
-  });
+  if (item.item.path) {
+    router.push({
+      name: item.key,
+    });
+  }
 };
 
 watch(route, (): void => {
-  select(route);
+  setSelected(route);
 });
 
 onMounted(() => {
-  select(route);
+  setSelected(route);
 });
 </script>

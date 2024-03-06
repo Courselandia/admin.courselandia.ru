@@ -100,4 +100,7 @@ export default {
   notEmpty: 'Значение не может быть пустым.',
   detach: 'Отсоеденить',
   imageCrop: 'Порезка изображения',
+  catalog: 'Каталог',
+  system: 'Система',
+  services: 'Сервисы',
 };

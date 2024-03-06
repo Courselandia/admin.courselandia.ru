@@ -100,4 +100,7 @@ export default {
   notEmpty: 'The value cannot be empty.',
   detach: 'Detach',
   imageCrop: 'Image Crop',
+  catalog: 'Catalog',
+  system: 'System',
+  services: 'Services',
 };
