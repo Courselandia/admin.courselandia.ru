@@ -6,7 +6,7 @@
   >
     <Menu
       v-model:selectedKeys="selected"
-      v-model:openKeys="opens"
+      v-model:openKeys="opened"
       :items="items"
       mode="inline"
       :style="{ height: '100%', borderRight: 0 }"
@@ -77,7 +77,7 @@ const {
 const { role } = storeToRefs(access());
 
 const selected = ref<Array<Key>>([]);
-const opens = ref<Array<string>>([]);
+const opened = ref<Array<Key>>([]);
 
 const hasRole = (roles: Array<ERole>) => {
   if (role?.value) {
@@ -346,6 +346,26 @@ const setSelected = (rt: RouteLocationNormalizedLoaded) => {
   });
 };
 
+const setOpened = (rt: RouteLocationNormalizedLoaded) => {
+  rt.matched.forEach(({ path }) => {
+    const key = getSelected(items.value, path);
+
+    if (key) {
+      Object.values(items.value).forEach((item) => {
+        if (item && 'children' in item && item.children) {
+          Object.values(item.children).forEach((insideItem) => {
+            if (typeof insideItem === 'object' && insideItem && 'key' in insideItem && item.key && insideItem.key === key) {
+              opened.value[opened.value.length] = item.key;
+            }
+          });
+        }
+      });
+    } else {
+      opened.value = [];
+    }
+  });
+};
+
 const onClickMenu = (item: any): void => {
   if (item.item.path) {
     router.push({
@@ -360,5 +380,6 @@ watch(route, (): void => {
 
 onMounted(() => {
   setSelected(route);
+  setOpened(route);
 });
 </script>
