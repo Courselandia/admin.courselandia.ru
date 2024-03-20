@@ -127,8 +127,7 @@ const mainConfig = {
   disallowedContent: 'img{width,height}',
   allowedContent: true,
   templates_files: [
-    // `${process.env.VUE_APP_ADMIN_URL}/ckeditor/templates/default.js`,
-    'http://localhost:7500/ckeditor/templates/default.js',
+    `${process.env.VUE_APP_ADMIN_URL}/ckeditor/templates/default.js`,
   ],
 };
 const allConfigs = ref({ ...mainConfig, ...configs.value });
