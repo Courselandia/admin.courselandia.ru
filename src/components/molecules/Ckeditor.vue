@@ -47,7 +47,7 @@ let extraPlugins = '';
 extraPlugins += ',codemirror,selectHtml,xml,ajax,typograph';
 
 const mainConfig = {
-  bodyClass: 'main title--titles list--lists link--links padding--aside-4',
+  bodyClass: 'main article',
   contentsCss: `${process.env.VUE_APP_CSS_URL}?${timeStamp}`,
   baseHref: process.env.APP_API_URL,
   height: 400,
@@ -113,19 +113,23 @@ const mainConfig = {
     },
     {
       name: 'tools',
-      items: ['Maximize', 'ShowBlocks'],
+      items: ['Maximize', 'ShowBlocks', 'Templates'],
     },
   ],
   language: 'ru',
   forcePasteAsPlainText: false,
   templates_replaceContent: false,
-  format_tags: 'p;div;h1;h2;h3;h4;h5',
+  format_tags: 'p;div;h1;h2;h3',
   entities: false,
   toolbar: 'MyToolbarAll',
   fillEmptyBlocks: false,
   isableNativeSpellChecker: false,
   disallowedContent: 'img{width,height}',
   allowedContent: true,
+  templates_files: [
+    // `${process.env.VUE_APP_ADMIN_URL}/ckeditor/templates/default.js`,
+    'http://localhost:7500/ckeditor/templates/default.js',
+  ],
 };
 const allConfigs = ref({ ...mainConfig, ...configs.value });
 
