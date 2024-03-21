@@ -46,6 +46,8 @@ const timeStamp = dateNow.getTime();
 let extraPlugins = '';
 extraPlugins += ',codemirror,selectHtml,xml,ajax,typograph';
 
+console.log('HERE!');
+
 const mainConfig = {
   bodyClass: 'main article',
   contentsCss: `${process.env.VUE_APP_CSS_URL}?${timeStamp}`,
