@@ -829,7 +829,7 @@ const form = ref<ITeacherForm>({
   title: undefined,
   description: undefined,
   title_template: 'Преподаватель {teacher} — отзывы, рейтинг[countTeacherCourses:, список из {countTeacherCourses:курс|genitive}] — Courselandia',
-  description_template: 'Все курсы преподавателя {teacher} — полный список обучающих онлайн-курсов в каталоге Courselandia.',
+  description_template: 'Все курсы преподавателя {teacher} — полный список [countTeacherCourses:из {countTeacherCourses:курс|genitive}] преподавателя в каталоге Courselandia.',
   keywords: undefined,
   status: true,
   copied: true,
