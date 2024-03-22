@@ -104,14 +104,6 @@ const items = computed<ItemType[]>((): ItemType[] => {
           path: '/dashboard/courses',
         },
         {
-          key: 'Publications',
-          icon: () => h(FileTextOutlined),
-          label: lang('publication.name'),
-          title: lang('publication.name') as string,
-          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
-          path: '/dashboard/publications',
-        },
-        {
           key: 'Sections',
           icon: () => h(BuildOutlined),
           label: lang('section.name'),
@@ -207,6 +199,14 @@ const items = computed<ItemType[]>((): ItemType[] => {
       label: lang('dashboard.content'),
       title: lang('dashboard.content') as string,
       children: [
+        {
+          key: 'Publications',
+          icon: () => h(FileTextOutlined),
+          label: lang('publication.name'),
+          title: lang('publication.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/publications',
+        },
         {
           key: 'Reviews',
           icon: () => h(MessageOutlined),
