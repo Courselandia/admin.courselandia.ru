@@ -2,7 +2,7 @@ export default {
   name: 'Коллекции',
   addCollection: 'Добавить коллекцию',
   updateCollection: 'Редактировать коллекцию',
-  header: 'Заголовок',
+  nameField: 'Название',
   publishedAt: 'Дата публикации',
   link: 'Ссылка',
   anons: 'Анонс',
@@ -12,4 +12,9 @@ export default {
   article: 'Статья',
   createCollection: 'Создать коллекцию',
   direction: 'Направление',
+  text: 'Текст',
+  additional: 'Дополнительное описание',
+  filters: 'Фильтры',
+  amount: 'Количество',
+  schools: 'Школы',
 };

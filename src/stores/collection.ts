@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
@@ -62,17 +61,53 @@ export default defineStore('collection', {
     },
     async create(data: ICollectionForm): Promise<IResponseItem<ICollection>> {
       const formData = new FormData();
-      const publishedAt = data.published_at as dayjs.Dayjs;
-      formData.append('published_at', publishedAt?.format('YYYY-MM-DD HH:mm:ss ZZ') || '');
-      formData.append('header', data.header || '');
+      formData.append('direction_id', String(data.direction_id?.value) || '');
+      formData.append('name', data.name || '');
       formData.append('link', data.link || '');
-      formData.append('anons', data.anons || '');
-      formData.append('article', data.article || '');
+      formData.append('text', data.text || '');
+      formData.append('additional', data.additional || '');
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
+      formData.append('sort_field', data.sort_field || '');
+      formData.append('sort_direction', data.sort_direction || '');
+
+      const filters: Array<{name: string, value: string}> = [];
+
+      Object.keys(data.filters).forEach((key) => {
+        const item = data.filters[key];
+
+        if (Array.isArray(item)) {
+          const value: Array<string | number> = [];
+
+          Object.values(item || []).forEach((itmInside) => {
+            if (typeof itmInside === 'string' || typeof itmInside === 'number') {
+              value[value.length] = itmInside;
+            } else {
+              value[value.length] = itmInside.value;
+            }
+          });
+
+          filters[filters.length] = {
+            name: key,
+            value: JSON.stringify(value),
+          };
+        } else if (typeof item === 'string' || typeof item === 'number') {
+          filters[filters.length] = {
+            name: key,
+            value: JSON.stringify(item),
+          };
+        } else if (item) {
+          filters[filters.length] = {
+            name: key,
+            value: JSON.stringify(item.value),
+          };
+        }
+      });
+
+      formData.append('filters', JSON.stringify(filters));
 
       const response = await axios.post<IResponseItem<ICollection>>('/api/private/admin/collection/create', formData, {
         headers: {
@@ -83,12 +118,7 @@ export default defineStore('collection', {
       return response.data;
     },
     async update(data: ICollectionForm): Promise<IResponseItem<ICollection>> {
-      const publishedAt = data.published_at as dayjs.Dayjs;
-
-      const response = await axios.put<IResponseItem<ICollection>>(`/api/private/admin/collection/update/${data.id}`, {
-        ...data,
-        published_at: publishedAt?.format('YYYY-MM-DD HH:mm:ss ZZ'),
-      }, {
+      const response = await axios.put<IResponseItem<ICollection>>(`/api/private/admin/collection/update/${data.id}`, data, {
         headers: {
           Authorization: access().accessToken || '',
         },

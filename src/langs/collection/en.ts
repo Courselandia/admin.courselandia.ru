@@ -2,7 +2,7 @@ export default {
   name: 'Collection',
   addCollection: 'Add collection',
   updateCollection: 'Edit collection',
-  header: 'Header',
+  nameField: 'Name',
   publishedAt: 'Published At',
   link: 'Link',
   anons: 'Anons',
@@ -12,4 +12,9 @@ export default {
   article: 'Article',
   createCollection: 'Create collection',
   direction: 'Direction',
+  text: 'Text',
+  additional: 'Additional',
+  filters: 'Filters',
+  amount: 'Amount',
+  schools: 'Schools',
 };

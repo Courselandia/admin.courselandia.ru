@@ -40,6 +40,22 @@
             >
               <div class="width--wide max--width-600">
                 <Item
+                  :label="lang('collection.direction')"
+                  name="direction_id"
+                  has-feedback
+                  :rules="[{ required: true }]"
+                >
+                  <Select
+                    v-model:value="form.direction_id"
+                    label-in-value
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
                   :label="lang('dashboard.status')"
                   name="status"
                   :rules="[{ required: true }]"
@@ -56,26 +72,13 @@
                   </RadioGroup>
                 </Item>
                 <Item
-                  :label="lang('collection.publishedAt')"
-                  name="published_at"
-                  has-feedback
-                  :rules="[{ required: true }]"
-                >
-                  <DatePicker
-                    v-model:value="form.published_at"
-                    format="DD.MM.YYYY HH:mm:ss"
-                    show-time
-                    style="width: 100%"
-                  />
-                </Item>
-                <Item
-                  :label="lang('collection.header')"
-                  name="header"
+                  :label="lang('collection.nameField')"
+                  name="name"
                   has-feedback
                   :rules="[{ required: true, type: 'string', max: 191 }]"
                 >
                   <Input
-                    v-model:value="form.header"
+                    v-model:value="form.name"
                     @keyup="onChangeName"
                   />
                 </Item>
@@ -88,14 +91,38 @@
                   <Input v-model:value="form.link" />
                 </Item>
                 <Item
-                  :label="lang('collection.anons')"
-                  name="anons"
+                  :label="lang('collection.amount')"
+                  name="amount"
                   has-feedback
-                  :rules="[{ type: 'string', max: 1000 }]"
+                  :rules="[{ required: true, type: 'number', min: 1, max: 99 }]"
                 >
-                  <TextArea
-                    v-model:value="form.anons"
-                    style="height: 200px"
+                  <InputNumber
+                    v-model:value="form.amount"
+                    class="width--wide"
+                  />
+                </Item>
+              </div>
+            </TabPane>
+            <TabPane
+              key="filters"
+              :tab="lang('collection.filters')"
+            >
+              <div class="width--wide max--width-600">
+                <Item
+                  :label="lang('collection.schools')"
+                  name="schools"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['school-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
                   />
                 </Item>
               </div>
@@ -133,11 +160,21 @@
             </TabPane>
             <TabPane
               key="article"
-              :tab="lang('collection.article')"
+              :tab="lang('collection.text')"
             >
               <Ckeditor
-                v-model:value="form.article"
+                v-model:value="form.text"
                 name="article"
+                class="mb-30"
+              />
+            </TabPane>
+            <TabPane
+              key="additional"
+              :tab="lang('collection.additional')"
+            >
+              <Ckeditor
+                v-model:value="form.additional"
+                name="additional"
                 class="mb-30"
               />
             </TabPane>
@@ -228,7 +265,7 @@
 <script lang="ts" setup>
 import {
   DeleteOutlined,
-  ExclamationCircleOutlined,
+  ExclamationCircleOutlined, MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
@@ -236,16 +273,24 @@ import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import Col from 'ant-design-vue/lib/col';
-import DatePicker from 'ant-design-vue/lib/date-picker';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
+import InputNumber from 'ant-design-vue/lib/input-number';
 import Modal from 'ant-design-vue/lib/modal';
+import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
+import Select from 'ant-design-vue/lib/select';
 import Space from 'ant-design-vue/lib/space';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import { createVNode, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import {
+  createVNode,
+  h,
+  onMounted,
+  ref,
+} from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
@@ -255,14 +300,21 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
+import ISorts from '@/interfaces/molecules/table/sorts';
+import category from '@/stores/category';
 import collection from '@/stores/collection';
+import direction from '@/stores/direction';
+import profession from '@/stores/profession';
+import school from '@/stores/school';
+import skill from '@/stores/skill';
+import teacher from '@/stores/teacher';
+import tool from '@/stores/tool';
 
 useMeta({
   title: lang('collection.createCollection'),
 });
 
 const { Item } = Form;
-const { TextArea } = Input;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
@@ -280,22 +332,29 @@ const alert = ref<IAlert>({
 });
 
 const form = ref<ICollectionForm>({
-  published_at: undefined,
-  header: undefined,
+  direction_id: undefined,
+  name: undefined,
+  amount: undefined,
   link: undefined,
-  anons: undefined,
-  article: undefined,
+  text: undefined,
+  additional: undefined,
+  sort_field: undefined,
+  sort_direction: undefined,
   image: undefined,
   title: undefined,
   description: undefined,
   keywords: undefined,
   status: true,
+  filters: {
+    'school-id': [],
+  },
 });
 
 const onClickReset = (): void => {
   formRef.value?.resetFields();
   form.value.image = undefined;
-  form.value.article = '';
+  form.value.text = undefined;
+  form.value.additional = undefined;
   image.value = '';
 };
 
@@ -309,7 +368,8 @@ const onSubmit = async (): Promise<void> => {
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
     form.value.image = undefined;
-    form.value.article = '';
+    form.value.text = undefined;
+    form.value.additional = undefined;
     image.value = '';
     onClickReset();
   } catch (error: Error | any) {
@@ -346,8 +406,68 @@ const onClickImageDestroy = async (): Promise<void> => {
 };
 
 const onChangeName = () => {
-  form.value.link = latin(form.value.header || '');
+  form.value.link = latin(form.value.name || '');
 };
+
+const filterOption = (input: string, option: any) => option
+  ?.label
+  ?.toLowerCase()
+  ?.indexOf(input.toLowerCase()) >= 0;
+
+const loadingSelects = ref(true);
+
+const readSchools = school().read;
+const schoolData = storeToRefs(school());
+const schoolItems = schoolData.items;
+
+const readDirections = direction().read;
+const directionData = storeToRefs(direction());
+const directionItems = directionData.items;
+
+const readProfessions = profession().read;
+const professionData = storeToRefs(profession());
+const professionItems = professionData.items;
+
+const readCategories = category().read;
+const categoryData = storeToRefs(category());
+const categoryItems = categoryData.items;
+
+const readSkills = skill().read;
+const skillData = storeToRefs(skill());
+const skillItems = skillData.items;
+
+const readTeachers = teacher().read;
+const teacherData = storeToRefs(teacher());
+const teacherItems = teacherData.items;
+
+const readTools = tool().read;
+const toolData = storeToRefs(tool());
+const toolItems = toolData.items;
+
+onMounted(async (): Promise<void> => {
+  loadingSelects.value = true;
+
+  try {
+    await readSchools(null, null, { name: 'ASC' } as ISorts);
+    await readDirections(null, null, { weight: 'ASC' } as ISorts);
+    await readProfessions(null, null, { name: 'ASC' } as ISorts);
+    await readCategories(null, null, { name: 'ASC' } as ISorts);
+    await readSkills(null, null, { name: 'ASC' } as ISorts);
+    await readTeachers(null, null, { name: 'ASC' } as ISorts);
+    await readTools(null, null, { name: 'ASC' } as ISorts);
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  loadingSelects.value = false;
+});
 </script>
 
 <style>

@@ -273,7 +273,7 @@ const columns = computed<ITableColumnType<ICollection>[]>(() => [
     width: 200,
   },
   {
-    title: lang('collection.header'),
+    title: lang('collection.nameField'),
     dataIndex: 'name',
     key: 'name',
     sorter: {
