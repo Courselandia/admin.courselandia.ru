@@ -1,0 +1,15 @@
+export default {
+  name: 'Collection',
+  addCollection: 'Add collection',
+  updateCollection: 'Edit collection',
+  header: 'Header',
+  publishedAt: 'Published At',
+  link: 'Link',
+  anons: 'Anons',
+  title: 'Title',
+  description: 'Description',
+  keywords: 'Keywords',
+  article: 'Article',
+  createCollection: 'Create collection',
+  direction: 'Direction',
+};

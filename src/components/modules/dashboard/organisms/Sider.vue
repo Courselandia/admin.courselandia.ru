@@ -23,6 +23,7 @@ import {
   BugOutlined,
   BuildOutlined,
   CodeOutlined,
+  CompassOutlined,
   ContactsOutlined,
   DatabaseOutlined,
   DollarCircleOutlined,
@@ -110,6 +111,14 @@ const items = computed<ItemType[]>((): ItemType[] => {
           title: lang('section.name') as string,
           visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
           path: '/dashboard/sections',
+        },
+        {
+          key: 'Collections',
+          icon: () => h(CompassOutlined),
+          label: lang('collection.name'),
+          title: lang('collection.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/collections',
         },
         {
           key: 'Directions',
