@@ -542,7 +542,7 @@ const alert = ref<IAlert>({
   type: undefined,
 });
 
-const form = ref<ICollectionForm>({
+const getDefaultForm = (): ICollectionForm => ({
   direction_id: undefined,
   name: undefined,
   amount: undefined,
@@ -576,11 +576,11 @@ const form = ref<ICollectionForm>({
   },
 });
 
+const form = ref<ICollectionForm>(getDefaultForm());
+
 const onClickReset = (): void => {
   formRef.value?.resetFields();
-  form.value.image = undefined;
-  form.value.text = undefined;
-  form.value.additional = undefined;
+  form.value = getDefaultForm();
   image.value = '';
 };
 

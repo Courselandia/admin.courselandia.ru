@@ -143,6 +143,11 @@ export default defineStore('collection', {
             name: key,
             value: JSON.stringify(item),
           };
+        } else if (key === 'credit' || key === 'free') {
+          filters[filters.length] = {
+            name: key,
+            value: '1',
+          };
         } else if (item) {
           filters[filters.length] = {
             name: key,
