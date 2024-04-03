@@ -101,6 +101,17 @@
                     class="width--wide"
                   />
                 </Item>
+                <Item
+                  :label="lang('collection.sort')"
+                  name="sort"
+                  has-feedback
+                  :rules="[{ required: true }]"
+                >
+                  <Select
+                    v-model:value="form.sort"
+                    :options="sorts"
+                  />
+                </Item>
               </div>
             </TabPane>
             <TabPane
@@ -490,6 +501,7 @@ import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ECourseSort from '@/enums/modules/collection/courseSort';
 import ELevel from '@/enums/modules/salary/level';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
@@ -497,6 +509,7 @@ import lang from '@/helpers/lang';
 import { money } from '@/helpers/number';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
+import IOption from '@/interfaces/molecules/select/option';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import category from '@/stores/category';
 import collection from '@/stores/collection';
@@ -536,13 +549,17 @@ const form = ref<ICollectionForm>({
   link: undefined,
   text: undefined,
   additional: undefined,
-  sort_field: undefined,
-  sort_direction: undefined,
   image: undefined,
   title: undefined,
   description: undefined,
   keywords: undefined,
   status: true,
+  sort: [
+    {
+      value: ECourseSort.ALPHABETIC,
+      label: 'По алфавиту',
+    },
+  ],
   filters: {
     'school-id': [],
     'categories-id': [],
@@ -680,19 +697,42 @@ onMounted(async (): Promise<void> => {
 
 const getLabelDuration = (val: number) => {
   if (val === 0) {
-    return 'месяцев';
+    return lang('collection.month0');
   }
 
   if (val === 1) {
-    return 'месяц';
+    return lang('collection.month1');
   }
 
   if (val >= 2 && val <= 4) {
-    return 'месяца';
+    return lang('collection.month2');
   }
 
-  return 'месяцев';
+  return lang('collection.month3');
 };
+
+const sorts: Array<IOption> = [
+  {
+    value: ECourseSort.ALPHABETIC,
+    label: lang('collection.sortAlphabetic'),
+  },
+  {
+    value: ECourseSort.DATE,
+    label: lang('collection.sortDate'),
+  },
+  {
+    value: ECourseSort.RATING,
+    label: lang('collection.sortRating'),
+  },
+  {
+    value: ECourseSort.PRICE_ASC,
+    label: lang('collection.sortPriceAsc'),
+  },
+  {
+    value: ECourseSort.PRICE_DESC,
+    label: lang('collection.sortPriceDesc'),
+  },
+];
 </script>
 
 <style>

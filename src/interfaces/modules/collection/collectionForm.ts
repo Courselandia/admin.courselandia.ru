@@ -10,12 +10,11 @@ export default interface ICollectionForm {
   amount: number | undefined;
   text: string | undefined;
   additional: string | undefined;
-  sort_field: string | undefined;
-  sort_direction: string | undefined;
   image: File | undefined;
   title: string | undefined;
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
   filters: IFilterForm,
+  sort: Array<IOption>,
 }

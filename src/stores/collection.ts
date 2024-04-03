@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 
+import ECourseSort from '@/enums/modules/collection/courseSort';
 import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
 import ICollection from '@/interfaces/modules/collection/collection';
@@ -66,13 +67,31 @@ export default defineStore('collection', {
       formData.append('link', data.link || '');
       formData.append('text', data.text || '');
       formData.append('additional', data.additional || '');
+      formData.append('amount', String(data.amount));
       formData.append('title', data.title || '');
       formData.append('description', data.description || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
-      formData.append('sort_field', data.sort_field || '');
-      formData.append('sort_direction', data.sort_direction || '');
+
+      if (data.sort[0]) {
+        if (data.sort[0].value === ECourseSort.ALPHABETIC) {
+          formData.append('sort_field', 'name');
+          formData.append('sort_direction', 'ASC');
+        } else if (data.sort[0].value === ECourseSort.DATE) {
+          formData.append('sort_field', 'id');
+          formData.append('sort_direction', 'DESC');
+        } else if (data.sort[0].value === ECourseSort.RATING) {
+          formData.append('sort_field', 'rating');
+          formData.append('sort_direction', 'DESC');
+        } else if (data.sort[0].value === ECourseSort.PRICE_ASC) {
+          formData.append('sort_field', 'price');
+          formData.append('sort_direction', 'ASC');
+        } else if (data.sort[0].value === ECourseSort.PRICE_DESC) {
+          formData.append('sort_field', 'price');
+          formData.append('sort_direction', 'desc');
+        }
+      }
 
       const filters: Array<{name: string, value: string}> = [];
 
@@ -94,26 +113,26 @@ export default defineStore('collection', {
             }
           });
 
-          if (key === 'online' || key === 'rating') {
+          if ((key === 'online' || key === 'rating') && value[0] !== undefined) {
             filters[filters.length] = {
               name: key,
               value: JSON.stringify(value[0]),
             };
-          } if (key === 'price') {
+          } else if (key === 'price') {
             if (value[0] !== 0 && value[1] !== 1000000) {
               filters[filters.length] = {
                 name: key,
                 value: JSON.stringify(value),
               };
             }
-          } if (key === 'duration') {
+          } else if (key === 'duration') {
             if (value[0] !== 0 && value[1] !== 50) {
               filters[filters.length] = {
                 name: key,
                 value: JSON.stringify(value),
               };
             }
-          } else {
+          } else if (value.length) {
             filters[filters.length] = {
               name: key,
               value: JSON.stringify(value),
@@ -131,6 +150,8 @@ export default defineStore('collection', {
           };
         }
       });
+
+      console.dir(filters);
 
       formData.append('filters', JSON.stringify(filters));
 
