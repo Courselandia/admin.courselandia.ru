@@ -79,6 +79,10 @@ export default defineStore('collection', {
       Object.keys(data.filters).forEach((key) => {
         const item = data.filters[key];
 
+        if ((key === 'credit' || key === 'free') && !item) {
+          return;
+        }
+
         if (Array.isArray(item)) {
           const value: Array<string | number> = [];
 
@@ -90,10 +94,31 @@ export default defineStore('collection', {
             }
           });
 
-          filters[filters.length] = {
-            name: key,
-            value: JSON.stringify(value),
-          };
+          if (key === 'online' || key === 'rating') {
+            filters[filters.length] = {
+              name: key,
+              value: JSON.stringify(value[0]),
+            };
+          } if (key === 'price') {
+            if (value[0] !== 0 && value[1] !== 1000000) {
+              filters[filters.length] = {
+                name: key,
+                value: JSON.stringify(value),
+              };
+            }
+          } if (key === 'duration') {
+            if (value[0] !== 0 && value[1] !== 50) {
+              filters[filters.length] = {
+                name: key,
+                value: JSON.stringify(value),
+              };
+            }
+          } else {
+            filters[filters.length] = {
+              name: key,
+              value: JSON.stringify(value),
+            };
+          }
         } else if (typeof item === 'string' || typeof item === 'number') {
           filters[filters.length] = {
             name: key,

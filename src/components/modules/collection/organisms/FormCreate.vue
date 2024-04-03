@@ -40,22 +40,6 @@
             >
               <div class="width--wide max--width-600">
                 <Item
-                  :label="lang('collection.direction')"
-                  name="direction_id"
-                  has-feedback
-                  :rules="[{ required: true }]"
-                >
-                  <Select
-                    v-model:value="form.direction_id"
-                    label-in-value
-                    class="width--wide"
-                    show-search
-                    :filter-option="filterOption"
-                    :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
-                    :loading="loadingSelects"
-                  />
-                </Item>
-                <Item
                   :label="lang('dashboard.status')"
                   name="status"
                   :rules="[{ required: true }]"
@@ -70,6 +54,22 @@
                       <Lang value="dashboard.deactivated" />
                     </RadioButton>
                   </RadioGroup>
+                </Item>
+                <Item
+                  :label="lang('collection.direction')"
+                  name="direction_id"
+                  has-feedback
+                  :rules="[{ required: true }]"
+                >
+                  <Select
+                    v-model:value="form.direction_id"
+                    label-in-value
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
                 </Item>
                 <Item
                   :label="lang('collection.nameField')"
@@ -109,6 +109,74 @@
             >
               <div class="width--wide max--width-600">
                 <Item
+                  :label="lang('collection.rating')"
+                  name="rating"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters.rating"
+                    allow-clear
+                  >
+                    <Option :value="4.5">
+                      <Lang value="collection.rating-4-5" />
+                    </Option>
+                    <Option :value="4">
+                      <Lang value="collection.rating-4" />
+                    </Option>
+                    <Option :value="3.5">
+                      <Lang value="collection.rating-3-5" />
+                    </Option>
+                    <Option :value="3">
+                      <Lang value="collection.rating-3" />
+                    </Option>
+                  </Select>
+                </Item>
+                <Item
+                  :label="lang('collection.price')"
+                  name="price"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Slider
+                    v-model:value="form.filters.price"
+                    range
+                    :tip-formatter="(val) => money(val || 0, 0, 'руб.')"
+                    :min="0"
+                    :max="1000000"
+                    :step="1000"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.duration')"
+                  name="duration"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Slider
+                    v-model:value="form.filters.duration"
+                    range
+                    :tip-formatter="(val) => val + ' ' + getLabelDuration(val || 0)"
+                    :min="0"
+                    :max="50"
+                    :step="1"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.credit')"
+                  name="credit"
+                  has-feedback
+                >
+                  <Switch v-model:checked="form.filters.credit" />
+                </Item>
+                <Item
+                  :label="lang('collection.free')"
+                  name="free"
+                  has-feedback
+                >
+                  <Switch v-model:checked="form.filters.free" />
+                </Item>
+                <Item
                   :label="lang('collection.schools')"
                   name="schools"
                   has-feedback
@@ -124,6 +192,130 @@
                     :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
                   />
+                </Item>
+                <Item
+                  :label="lang('collection.categories')"
+                  name="categories"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['categories-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="categoryItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.professions')"
+                  name="professions"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['professions-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="professionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.teachers')"
+                  name="teachers"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['teachers-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="teacherItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.skills')"
+                  name="skills"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['skills-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="skillItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.tools')"
+                  name="tools"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['tools-id']"
+                    label-in-value
+                    mode="multiple"
+                    class="width--wide"
+                    show-search
+                    :filter-option="filterOption"
+                    :options="toolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
+                    :loading="loadingSelects"
+                  />
+                </Item>
+                <Item
+                  :label="lang('collection.format')"
+                  name="online"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters.online"
+                    allow-clear
+                  >
+                    <Option :value="1">
+                      <Lang value="collection.online" />
+                    </Option>
+                    <Option :value="0">
+                      <Lang value="collection.offline" />
+                    </Option>
+                  </Select>
+                </Item>
+                <Item
+                  :label="lang('collection.levels')"
+                  name="levels"
+                  has-feedback
+                  :rules="[{ required: false }]"
+                >
+                  <Select
+                    v-model:value="form.filters['levels-level']"
+                    mode="multiple"
+                  >
+                    <Option :value="ELevel.JUNIOR">
+                      <Lang value="salary.junior" />
+                    </Option>
+                    <Option :value="ELevel.MIDDLE">
+                      <Lang value="salary.middle" />
+                    </Option>
+                    <Option :value="ELevel.SENIOR">
+                      <Lang value="salary.senior" />
+                    </Option>
+                  </Select>
                 </Item>
               </div>
             </TabPane>
@@ -265,7 +457,8 @@
 <script lang="ts" setup>
 import {
   DeleteOutlined,
-  ExclamationCircleOutlined, MehOutlined,
+  ExclamationCircleOutlined,
+  MehOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
@@ -281,7 +474,9 @@ import notification from 'ant-design-vue/lib/notification';
 import Radio from 'ant-design-vue/lib/radio';
 import Row from 'ant-design-vue/lib/row';
 import Select from 'ant-design-vue/lib/select';
+import Slider from 'ant-design-vue/lib/slider';
 import Space from 'ant-design-vue/lib/space';
+import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
 import { storeToRefs } from 'pinia';
@@ -295,9 +490,11 @@ import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
+import ELevel from '@/enums/modules/salary/level';
 import base64 from '@/helpers/base64';
 import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
+import { money } from '@/helpers/number';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import ISorts from '@/interfaces/molecules/table/sorts';
@@ -315,6 +512,7 @@ useMeta({
 });
 
 const { Item } = Form;
+const { Option } = Select;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
@@ -347,6 +545,17 @@ const form = ref<ICollectionForm>({
   status: true,
   filters: {
     'school-id': [],
+    'categories-id': [],
+    'professions-id': [],
+    'teachers-id': [],
+    'skills-id': [],
+    'levels-level': [],
+    online: [],
+    rating: [],
+    credit: undefined,
+    free: undefined,
+    price: [0, 1000000],
+    duration: [0, 50],
   },
 });
 
@@ -468,6 +677,22 @@ onMounted(async (): Promise<void> => {
 
   loadingSelects.value = false;
 });
+
+const getLabelDuration = (val: number) => {
+  if (val === 0) {
+    return 'месяцев';
+  }
+
+  if (val === 1) {
+    return 'месяц';
+  }
+
+  if (val >= 2 && val <= 4) {
+    return 'месяца';
+  }
+
+  return 'месяцев';
+};
 </script>
 
 <style>
