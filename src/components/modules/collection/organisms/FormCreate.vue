@@ -550,7 +550,7 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import { money } from '@/helpers/number';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
-import IFilterForm from '@/interfaces/modules/collection/filters';
+import IFiltersForm from '@/interfaces/modules/collection/filtersForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import IOption from '@/interfaces/molecules/select/option';
 import ISorts from '@/interfaces/molecules/table/sorts';
@@ -601,7 +601,7 @@ const getDefaultForm = (): ICollectionForm => ({
   status: true,
   sort: {
     value: ECourseSort.ALPHABETIC,
-    label: 'По алфавиту',
+    label: lang('collection.sortAlphabetic'),
   },
   filters: {
     'school-id': [],
@@ -609,6 +609,7 @@ const getDefaultForm = (): ICollectionForm => ({
     'professions-id': [],
     'teachers-id': [],
     'skills-id': [],
+    'tools-id': [],
     'levels-level': [],
     online: undefined,
     rating: undefined,
@@ -631,7 +632,7 @@ const setCountCourses = async (): Promise<void> => {
   countCoursesLoading.value = true;
 
   try {
-    const filters: IFilterForm = {
+    const filters: IFiltersForm = {
       ...form.value.filters,
       'directions-id': Number(form.value.direction_id?.value),
     };

@@ -1,4 +1,4 @@
-import IFilterForm from '@/interfaces/modules/collection/filters';
+import IFiltersForm from '@/interfaces/modules/collection/filtersForm';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -15,6 +15,6 @@ export default interface ICollectionForm {
   description: string | undefined;
   keywords: string | undefined;
   status: boolean;
-  filters: IFilterForm,
+  filters: IFiltersForm,
   sort: IOption,
 }

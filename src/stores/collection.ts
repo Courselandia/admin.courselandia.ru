@@ -6,7 +6,7 @@ import toQuery from '@/helpers/toQuery';
 import ICollection from '@/interfaces/modules/collection/collection';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
 import ICount from '@/interfaces/modules/collection/count';
-import IFilterForm from '@/interfaces/modules/collection/filters';
+import IFiltersForm from '@/interfaces/modules/collection/filtersForm';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
@@ -76,8 +76,6 @@ export default defineStore('collection', {
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
 
-      console.dir(data.sort);
-
       if (data.sort) {
         if (data.sort.value === ECourseSort.ALPHABETIC) {
           formData.append('sort_field', 'name');
@@ -93,7 +91,7 @@ export default defineStore('collection', {
           formData.append('sort_direction', 'ASC');
         } else if (data.sort.value === ECourseSort.PRICE_DESC) {
           formData.append('sort_field', 'price');
-          formData.append('sort_direction', 'desc');
+          formData.append('sort_direction', 'DESC');
         }
       }
 
@@ -163,7 +161,7 @@ export default defineStore('collection', {
 
       return response.data;
     },
-    async count(filters: IFilterForm): Promise<IResponseItem<ICount>> {
+    async count(filters: IFiltersForm): Promise<IResponseItem<ICount>> {
       const response = await axios.get<IResponseItem<ICount>>('/api/private/admin/collection/count', {
         params: {
           filters: this.getFilters(filters),
@@ -175,7 +173,7 @@ export default defineStore('collection', {
 
       return response.data;
     },
-    getFilters(filters: IFilterForm): Array<{name: string, value: string}> {
+    getFilters(filters: IFiltersForm): Array<{name: string, value: string}> {
       const result: Array<{name: string, value: string}> = [];
 
       Object.keys(filters).forEach((key) => {

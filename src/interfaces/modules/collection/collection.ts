@@ -1,3 +1,4 @@
+import IFilter from '@/interfaces/modules/collection/filter';
 import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import ICourse from '@/interfaces/modules/course/course';
 import IDirection from '@/interfaces/modules/direction/direction';
@@ -26,6 +27,7 @@ export default interface ICollection extends IColumn {
   deleted_at: string | null;
   metatag: IMetatag;
   direction: IDirection;
+  filters: Array<IFilter>,
   courses: Array<ICourse> | null;
   analyzers: Array<IAnalyzer> | null;
 }

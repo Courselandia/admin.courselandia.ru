@@ -10,12 +10,12 @@
         </Item>
         <Item
           href=""
-          @click="onClickBreadcrumbItem('Skills')"
+          @click="onClickBreadcrumbItem('Collections')"
         >
-          <Lang value="skill.name" />
+          <Lang value="collection.name" />
         </Item>
         <Item>
-          <Lang value="skill.updateSkill" />
+          <Lang value="collection.updateCollection" />
         </Item>
       </Breadcrumb>
       <FormUpdate />
@@ -32,7 +32,7 @@
           type="primary"
           @click="onClickBackHome"
         >
-          <Lang value="skill.name" />
+          <Lang value="collection.name" />
         </Button>
       </template>
     </Result>
@@ -48,19 +48,19 @@ import { useMeta } from 'vue-meta';
 import { useRouter } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
-import FormUpdate from '@/components/modules/skill/organisms/FormUpdate.vue';
+import FormUpdate from '@/components/modules/collection/organisms/FormUpdate.vue';
 import lang from '@/helpers/lang';
-import skill from '@/stores/skill';
+import collection from '@/stores/collection';
 
 const {
   Item,
 } = Breadcrumb;
-const { item } = storeToRefs(skill());
+const { item } = storeToRefs(collection());
 
 const router = useRouter();
 
 useMeta({
-  title: lang('skill.updateSkill'),
+  title: lang('collection.updateCollection'),
 });
 
 const onClickBreadcrumbItem = async (name: string) => {
@@ -71,7 +71,7 @@ const onClickBreadcrumbItem = async (name: string) => {
 
 const onClickBackHome = () => {
   router.push({
-    name: 'Skills',
+    name: 'Collections',
   });
 };
 </script>
