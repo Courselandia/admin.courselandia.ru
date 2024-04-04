@@ -823,8 +823,9 @@ const getFilterRange = (
 };
 
 const getDefaultFormValue = (): ICollectionForm => ({
+  id: id as TId,
   direction_id: item.value?.direction
-    ? { key: item.value?.direction.id, value: item.value?.direction.name } as IOption
+    ? { label: item.value?.direction.name, value: item.value?.direction.id } as IOption
     : undefined,
   name: item.value?.name || undefined,
   amount: item.value?.amount || undefined,

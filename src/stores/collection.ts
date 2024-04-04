@@ -7,6 +7,7 @@ import ICollection from '@/interfaces/modules/collection/collection';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
 import ICount from '@/interfaces/modules/collection/count';
 import IFiltersForm from '@/interfaces/modules/collection/filtersForm';
+import IOption from '@/interfaces/molecules/select/option';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
@@ -76,23 +77,21 @@ export default defineStore('collection', {
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
 
-      if (data.sort) {
-        if (data.sort.value === ECourseSort.ALPHABETIC) {
-          formData.append('sort_field', 'name');
-          formData.append('sort_direction', 'ASC');
-        } else if (data.sort.value === ECourseSort.DATE) {
-          formData.append('sort_field', 'id');
-          formData.append('sort_direction', 'DESC');
-        } else if (data.sort.value === ECourseSort.RATING) {
-          formData.append('sort_field', 'rating');
-          formData.append('sort_direction', 'DESC');
-        } else if (data.sort.value === ECourseSort.PRICE_ASC) {
-          formData.append('sort_field', 'price');
-          formData.append('sort_direction', 'ASC');
-        } else if (data.sort.value === ECourseSort.PRICE_DESC) {
-          formData.append('sort_field', 'price');
-          formData.append('sort_direction', 'DESC');
-        }
+      if (data.sort.value === ECourseSort.ALPHABETIC) {
+        formData.append('sort_field', 'name');
+        formData.append('sort_direction', 'ASC');
+      } else if (data.sort.value === ECourseSort.DATE) {
+        formData.append('sort_field', 'id');
+        formData.append('sort_direction', 'DESC');
+      } else if (data.sort.value === ECourseSort.RATING) {
+        formData.append('sort_field', 'rating');
+        formData.append('sort_direction', 'DESC');
+      } else if (data.sort.value === ECourseSort.PRICE_ASC) {
+        formData.append('sort_field', 'price');
+        formData.append('sort_direction', 'ASC');
+      } else if (data.sort.value === ECourseSort.PRICE_DESC) {
+        formData.append('sort_field', 'price');
+        formData.append('sort_direction', 'DESC');
       }
 
       const filters: Array<{name: string, value: string}> = this.getFilters(data.filters);
@@ -107,7 +106,47 @@ export default defineStore('collection', {
       return response.data;
     },
     async update(data: ICollectionForm): Promise<IResponseItem<ICollection>> {
-      const response = await axios.put<IResponseItem<ICollection>>(`/api/private/admin/collection/update/${data.id}`, data, {
+      const getSort = (sort: IOption): {sort_field: string, sort_direction: string} => {
+        if (sort.value === ECourseSort.DATE) {
+          return {
+            sort_field: 'id',
+            sort_direction: 'DESC',
+          };
+        }
+
+        if (sort.value === ECourseSort.RATING) {
+          return {
+            sort_field: 'rating',
+            sort_direction: 'DESC',
+          };
+        }
+
+        if (sort.value === ECourseSort.PRICE_ASC) {
+          return {
+            sort_field: 'price',
+            sort_direction: 'ASC',
+          };
+        }
+
+        if (sort.value === ECourseSort.PRICE_DESC) {
+          return {
+            sort_field: 'price',
+            sort_direction: 'DESC',
+          };
+        }
+
+        return {
+          sort_field: 'name',
+          sort_direction: 'ASC',
+        };
+      };
+
+      const response = await axios.put<IResponseItem<ICollection>>(`/api/private/admin/collection/update/${data.id}`, {
+        ...data,
+        ...getSort(data.sort),
+        direction_id: data.direction_id?.value,
+        filters: JSON.stringify(this.getFilters(data.filters)),
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },
