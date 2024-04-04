@@ -17,6 +17,19 @@
           </div>
         </template>
 
+        <template #extra>
+          <template
+            v-if="countCoursesLoading"
+          >
+            <Spin />
+          </template>
+          <template
+            v-else
+          >
+            Количество курсов: {{ countCourses }} шт.
+          </template>
+        </template>
+
         <Alert
           v-if="alert.message"
           :message="alert.type === 'success'
@@ -526,10 +539,10 @@ import Row from 'ant-design-vue/lib/row';
 import Select from 'ant-design-vue/lib/select';
 import Slider from 'ant-design-vue/lib/slider';
 import Space from 'ant-design-vue/lib/space';
+import Spin from 'ant-design-vue/lib/spin';
 import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
-import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import {
   createVNode,
