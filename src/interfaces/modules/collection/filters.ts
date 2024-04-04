@@ -1,6 +1,7 @@
 import IOption from '@/interfaces/molecules/select/option';
 
 export default interface IFilterForm {
+  'directions-id'?: number,
   'school-id': Array<IOption>,
   'categories-id': Array<IOption>,
   'professions-id': Array<IOption>,

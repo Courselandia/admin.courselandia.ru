@@ -219,7 +219,7 @@ export default defineStore('collection', {
               value: JSON.stringify(value),
             };
           }
-        } else if (typeof item === 'string' || typeof item === 'number') {
+        } else if ((typeof item === 'string' || typeof item === 'number') && item) {
           result[result.length] = {
             name: key,
             value: JSON.stringify(item),
@@ -229,7 +229,7 @@ export default defineStore('collection', {
             name: key,
             value: '1',
           };
-        } else if (item) {
+        } else if (item && item.value) {
           result[result.length] = {
             name: key,
             value: JSON.stringify(item.value),

@@ -82,6 +82,7 @@
                     :filter-option="filterOption"
                     :options="directionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -545,6 +546,7 @@ import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import { money } from '@/helpers/number';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
+import IFilterForm from '@/interfaces/modules/collection/filters';
 import IAlert from '@/interfaces/molecules/alert/alert';
 import IOption from '@/interfaces/molecules/select/option';
 import ISorts from '@/interfaces/molecules/table/sorts';
@@ -623,6 +625,30 @@ const onClickReset = (): void => {
   image.value = '';
 };
 
+const setCountCourses = async (): Promise<void> => {
+  countCoursesLoading.value = true;
+
+  try {
+    const filters: IFilterForm = {
+      ...form.value.filters,
+      'directions-id': Number(form.value.direction_id?.value),
+    };
+    const response = await count(filters);
+    countCourses.value = response.data.count;
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  countCoursesLoading.value = false;
+};
+
 const onSubmit = async (): Promise<void> => {
   alert.value.message = '';
   loading.value = true;
@@ -636,7 +662,9 @@ const onSubmit = async (): Promise<void> => {
     form.value.text = undefined;
     form.value.additional = undefined;
     image.value = '';
+
     onClickReset();
+    await setCountCourses();
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message
@@ -708,26 +736,6 @@ const teacherItems = teacherData.items;
 const readTools = tool().read;
 const toolData = storeToRefs(tool());
 const toolItems = toolData.items;
-
-const setCountCourses = async (): Promise<void> => {
-  countCoursesLoading.value = true;
-
-  try {
-    const response = await count(form.value.filters);
-    countCourses.value = response.data.count;
-  } catch (error: Error | any) {
-    notification.open({
-      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
-      message: lang('dashboard.error'),
-      description: error.message,
-      style: {
-        color: '#ff0000',
-      },
-    });
-  }
-
-  countCoursesLoading.value = false;
-};
 
 onMounted(async (): Promise<void> => {
   loadingSelects.value = true;
