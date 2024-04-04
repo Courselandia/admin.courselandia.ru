@@ -76,20 +76,22 @@ export default defineStore('collection', {
       formData.append('status', data.status ? '1' : '0');
       formData.append('image', data.image || '');
 
-      if (data.sort[0]) {
-        if (data.sort[0].value === ECourseSort.ALPHABETIC) {
+      console.dir(data.sort);
+
+      if (data.sort) {
+        if (data.sort.value === ECourseSort.ALPHABETIC) {
           formData.append('sort_field', 'name');
           formData.append('sort_direction', 'ASC');
-        } else if (data.sort[0].value === ECourseSort.DATE) {
+        } else if (data.sort.value === ECourseSort.DATE) {
           formData.append('sort_field', 'id');
           formData.append('sort_direction', 'DESC');
-        } else if (data.sort[0].value === ECourseSort.RATING) {
+        } else if (data.sort.value === ECourseSort.RATING) {
           formData.append('sort_field', 'rating');
           formData.append('sort_direction', 'DESC');
-        } else if (data.sort[0].value === ECourseSort.PRICE_ASC) {
+        } else if (data.sort.value === ECourseSort.PRICE_ASC) {
           formData.append('sort_field', 'price');
           formData.append('sort_direction', 'ASC');
-        } else if (data.sort[0].value === ECourseSort.PRICE_DESC) {
+        } else if (data.sort.value === ECourseSort.PRICE_DESC) {
           formData.append('sort_field', 'price');
           formData.append('sort_direction', 'desc');
         }

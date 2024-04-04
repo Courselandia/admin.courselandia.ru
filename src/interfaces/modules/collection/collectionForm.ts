@@ -16,5 +16,5 @@ export default interface ICollectionForm {
   keywords: string | undefined;
   status: boolean;
   filters: IFilterForm,
-  sort: Array<IOption>,
+  sort: IOption,
 }

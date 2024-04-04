@@ -124,6 +124,7 @@
                   <Select
                     v-model:value="form.sort"
                     :options="sorts"
+                    label-in-value
                   />
                 </Item>
               </div>
@@ -142,6 +143,7 @@
                   <Select
                     v-model:value="form.filters.rating"
                     allow-clear
+                    label-in-value
                     @change="setCountCourses"
                   >
                     <Option :value="4.5">
@@ -327,6 +329,7 @@
                   <Select
                     v-model:value="form.filters.online"
                     allow-clear
+                    label-in-value
                     @change="setCountCourses"
                   >
                     <Option :value="1">
@@ -346,6 +349,7 @@
                   <Select
                     v-model:value="form.filters['levels-level']"
                     mode="multiple"
+                    label-in-value
                     @change="setCountCourses"
                   >
                     <Option :value="ELevel.JUNIOR">
@@ -595,12 +599,10 @@ const getDefaultForm = (): ICollectionForm => ({
   description: undefined,
   keywords: undefined,
   status: true,
-  sort: [
-    {
-      value: ECourseSort.ALPHABETIC,
-      label: 'По алфавиту',
-    },
-  ],
+  sort: {
+    value: ECourseSort.ALPHABETIC,
+    label: 'По алфавиту',
+  },
   filters: {
     'school-id': [],
     'categories-id': [],
@@ -608,8 +610,8 @@ const getDefaultForm = (): ICollectionForm => ({
     'teachers-id': [],
     'skills-id': [],
     'levels-level': [],
-    online: [],
-    rating: [],
+    online: undefined,
+    rating: undefined,
     credit: undefined,
     free: undefined,
     price: [0, 1000000],
