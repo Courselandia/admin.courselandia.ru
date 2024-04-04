@@ -5,6 +5,8 @@ import axios from '@/helpers/axios';
 import toQuery from '@/helpers/toQuery';
 import ICollection from '@/interfaces/modules/collection/collection';
 import ICollectionForm from '@/interfaces/modules/collection/collectionForm';
+import ICount from '@/interfaces/modules/collection/count';
+import IFilterForm from '@/interfaces/modules/collection/filters';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
 import { IResponseItem, IResponseItems } from '@/interfaces/response';
@@ -93,71 +95,7 @@ export default defineStore('collection', {
         }
       }
 
-      const filters: Array<{name: string, value: string}> = [];
-
-      Object.keys(data.filters).forEach((key) => {
-        const item = data.filters[key];
-
-        if ((key === 'credit' || key === 'free') && !item) {
-          return;
-        }
-
-        if (Array.isArray(item)) {
-          const value: Array<string | number> = [];
-
-          Object.values(item || []).forEach((itmInside) => {
-            if (typeof itmInside === 'string' || typeof itmInside === 'number') {
-              value[value.length] = itmInside;
-            } else {
-              value[value.length] = itmInside.value;
-            }
-          });
-
-          if ((key === 'online' || key === 'rating') && value[0] !== undefined) {
-            filters[filters.length] = {
-              name: key,
-              value: JSON.stringify(value[0]),
-            };
-          } else if (key === 'price') {
-            if (value[0] !== 0 && value[1] !== 1000000) {
-              filters[filters.length] = {
-                name: key,
-                value: JSON.stringify(value),
-              };
-            }
-          } else if (key === 'duration') {
-            if (value[0] !== 0 && value[1] !== 50) {
-              filters[filters.length] = {
-                name: key,
-                value: JSON.stringify(value),
-              };
-            }
-          } else if (value.length) {
-            filters[filters.length] = {
-              name: key,
-              value: JSON.stringify(value),
-            };
-          }
-        } else if (typeof item === 'string' || typeof item === 'number') {
-          filters[filters.length] = {
-            name: key,
-            value: JSON.stringify(item),
-          };
-        } else if (key === 'credit' || key === 'free') {
-          filters[filters.length] = {
-            name: key,
-            value: '1',
-          };
-        } else if (item) {
-          filters[filters.length] = {
-            name: key,
-            value: JSON.stringify(item.value),
-          };
-        }
-      });
-
-      console.dir(filters);
-
+      const filters: Array<{name: string, value: string}> = this.getFilters(data.filters);
       formData.append('filters', JSON.stringify(filters));
 
       const response = await axios.post<IResponseItem<ICollection>>('/api/private/admin/collection/create', formData, {
@@ -222,6 +160,84 @@ export default defineStore('collection', {
       });
 
       return response.data;
+    },
+    async count(filters: IFilterForm): Promise<IResponseItem<ICount>> {
+      const response = await axios.get<IResponseItem<ICount>>('/api/private/admin/collection/count', {
+        params: {
+          filters: this.getFilters(filters),
+        },
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
+    },
+    getFilters(filters: IFilterForm): Array<{name: string, value: string}> {
+      const result: Array<{name: string, value: string}> = [];
+
+      Object.keys(filters).forEach((key) => {
+        const item = filters[key];
+
+        if ((key === 'credit' || key === 'free') && !item) {
+          return;
+        }
+
+        if (Array.isArray(item)) {
+          const value: Array<string | number> = [];
+
+          Object.values(item || []).forEach((itmInside) => {
+            if (typeof itmInside === 'string' || typeof itmInside === 'number') {
+              value[value.length] = itmInside;
+            } else {
+              value[value.length] = itmInside.value;
+            }
+          });
+
+          if ((key === 'online' || key === 'rating') && value[0] !== undefined) {
+            result[result.length] = {
+              name: key,
+              value: JSON.stringify(value[0]),
+            };
+          } else if (key === 'price') {
+            if (value[0] !== 0 || value[1] !== 1000000) {
+              result[result.length] = {
+                name: key,
+                value: JSON.stringify(value),
+              };
+            }
+          } else if (key === 'duration') {
+            if (value[0] !== 0 || value[1] !== 50) {
+              result[result.length] = {
+                name: key,
+                value: JSON.stringify(value),
+              };
+            }
+          } else if (value.length) {
+            result[result.length] = {
+              name: key,
+              value: JSON.stringify(value),
+            };
+          }
+        } else if (typeof item === 'string' || typeof item === 'number') {
+          result[result.length] = {
+            name: key,
+            value: JSON.stringify(item),
+          };
+        } else if (key === 'credit' || key === 'free') {
+          result[result.length] = {
+            name: key,
+            value: '1',
+          };
+        } else if (item) {
+          result[result.length] = {
+            name: key,
+            value: JSON.stringify(item.value),
+          };
+        }
+      });
+
+      return result;
     },
   },
 });

@@ -17,6 +17,19 @@
           </div>
         </template>
 
+        <template #extra>
+          <template
+            v-if="countCoursesLoading"
+          >
+            <Spin />
+          </template>
+          <template
+            v-else
+          >
+            Количество курсов: {{ countCourses }} шт.
+          </template>
+        </template>
+
         <Alert
           v-if="alert.message"
           :message="alert.type === 'success'
@@ -128,6 +141,7 @@
                   <Select
                     v-model:value="form.filters.rating"
                     allow-clear
+                    @change="setCountCourses"
                   >
                     <Option :value="4.5">
                       <Lang value="collection.rating-4-5" />
@@ -156,6 +170,7 @@
                     :min="0"
                     :max="1000000"
                     :step="1000"
+                    @after-change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -171,6 +186,7 @@
                     :min="0"
                     :max="50"
                     :step="1"
+                    @after-change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -178,14 +194,20 @@
                   name="credit"
                   has-feedback
                 >
-                  <Switch v-model:checked="form.filters.credit" />
+                  <Switch
+                    v-model:checked="form.filters.credit"
+                    @change="setCountCourses"
+                  />
                 </Item>
                 <Item
                   :label="lang('collection.free')"
                   name="free"
                   has-feedback
                 >
-                  <Switch v-model:checked="form.filters.free" />
+                  <Switch
+                    v-model:checked="form.filters.free"
+                    @change="setCountCourses"
+                  />
                 </Item>
                 <Item
                   :label="lang('collection.schools')"
@@ -202,6 +224,7 @@
                     :filter-option="filterOption"
                     :options="schoolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -219,6 +242,7 @@
                     :filter-option="filterOption"
                     :options="categoryItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -236,6 +260,7 @@
                     :filter-option="filterOption"
                     :options="professionItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -253,6 +278,7 @@
                     :filter-option="filterOption"
                     :options="teacherItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -270,6 +296,7 @@
                     :filter-option="filterOption"
                     :options="skillItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -287,6 +314,7 @@
                     :filter-option="filterOption"
                     :options="toolItems?.map((itm) => ({ value: itm.id, label: itm.name }))"
                     :loading="loadingSelects"
+                    @change="setCountCourses"
                   />
                 </Item>
                 <Item
@@ -298,6 +326,7 @@
                   <Select
                     v-model:value="form.filters.online"
                     allow-clear
+                    @change="setCountCourses"
                   >
                     <Option :value="1">
                       <Lang value="collection.online" />
@@ -316,6 +345,7 @@
                   <Select
                     v-model:value="form.filters['levels-level']"
                     mode="multiple"
+                    @change="setCountCourses"
                   >
                     <Option :value="ELevel.JUNIOR">
                       <Lang value="salary.junior" />
@@ -341,7 +371,9 @@
                   has-feedback
                   :rules="[{ type: 'string', max: 500 }]"
                 >
-                  <Input v-model:value="form.title" />
+                  <Input
+                    v-model:value="form.title"
+                  />
                 </Item>
                 <Item
                   :label="lang('collection.description')"
@@ -349,7 +381,9 @@
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
-                  <Input v-model:value="form.description" />
+                  <Input
+                    v-model:value="form.description"
+                  />
                 </Item>
                 <Item
                   :label="lang('collection.keywords')"
@@ -357,7 +391,9 @@
                   has-feedback
                   :rules="[{ type: 'string', max: 1000 }]"
                 >
-                  <Input v-model:value="form.keywords" />
+                  <Input
+                    v-model:value="form.keywords"
+                  />
                 </Item>
               </div>
             </TabPane>
@@ -487,6 +523,7 @@ import Row from 'ant-design-vue/lib/row';
 import Select from 'ant-design-vue/lib/select';
 import Slider from 'ant-design-vue/lib/slider';
 import Space from 'ant-design-vue/lib/space';
+import Spin from 'ant-design-vue/lib/spin';
 import Switch from 'ant-design-vue/lib/switch';
 import Tabs from 'ant-design-vue/lib/tabs';
 import Upload from 'ant-design-vue/lib/upload';
@@ -529,13 +566,15 @@ const { Option } = Select;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 const { TabPane } = Tabs;
-const { create } = collection();
+const { create, count } = collection();
 
 const formRef = ref<FormInstance>();
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
+const countCoursesLoading = ref(true);
 const image = ref<string>();
 const alphaDash = /^[A-Za-z0-9_-]*$/;
+const countCourses = ref(0);
 
 const alert = ref<IAlert>({
   message: null,
@@ -670,10 +709,31 @@ const readTools = tool().read;
 const toolData = storeToRefs(tool());
 const toolItems = toolData.items;
 
+const setCountCourses = async (): Promise<void> => {
+  countCoursesLoading.value = true;
+
+  try {
+    const response = await count(form.value.filters);
+    countCourses.value = response.data.count;
+  } catch (error: Error | any) {
+    notification.open({
+      icon: () => h(MehOutlined, { style: 'color: #ff0000' }),
+      message: lang('dashboard.error'),
+      description: error.message,
+      style: {
+        color: '#ff0000',
+      },
+    });
+  }
+
+  countCoursesLoading.value = false;
+};
+
 onMounted(async (): Promise<void> => {
   loadingSelects.value = true;
 
   try {
+    await setCountCourses();
     await readSchools(null, null, { name: 'ASC' } as ISorts);
     await readDirections(null, null, { weight: 'ASC' } as ISorts);
     await readProfessions(null, null, { name: 'ASC' } as ISorts);
