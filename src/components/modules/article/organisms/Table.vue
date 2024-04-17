@@ -360,6 +360,10 @@ const columns = computed<ITableColumnType<IArticle>[]>(() => [
         text: 'Учитель / Описание',
         value: 'teacher.text',
       },
+      {
+        text: 'Коллекция / Описание',
+        value: 'collection.text',
+      },
     ],
   },
   {

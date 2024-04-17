@@ -293,6 +293,10 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/teachers/${id}`;
   }
 
+  if (category === 'collection.text') {
+    return `/dashboard/collections/${id}`;
+  }
+
   return null;
 };
 
@@ -370,7 +374,11 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
         value: 'teacher.text',
       },
       {
-        text: 'Статьи / Написанный текст',
+        text: 'Статья / Написанный текст',
+        value: 'article.text',
+      },
+      {
+        text: 'Коллекция / Написанный текст',
         value: 'article.text',
       },
     ],

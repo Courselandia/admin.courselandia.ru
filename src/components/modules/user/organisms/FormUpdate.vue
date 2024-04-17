@@ -379,7 +379,9 @@ const userForm = ref<IUserForm>({
   second_name: item.value?.second_name || undefined,
   phone: item.value?.phone || undefined,
   two_factor: item.value?.two_factor !== undefined ? item.value?.two_factor : false,
-  verified: item.value?.verification.status !== undefined ? item.value?.verification.status : false,
+  verified: item.value?.verification?.status !== undefined
+    ? item.value?.verification?.status
+    : false,
   status: item.value?.status !== undefined ? item.value?.status : true,
   role: item.value?.role?.name || undefined,
   image: undefined,
@@ -417,8 +419,8 @@ const onUserSubmit = async (): Promise<void> => {
 const onClickUserReset = (): void => {
   userFormRef.value?.resetFields();
   userForm.value.two_factor = item.value?.two_factor !== undefined ? item.value?.two_factor : false;
-  userForm.value.verified = item.value?.verification.status !== undefined
-    ? item.value?.verification.status
+  userForm.value.verified = item.value?.verification?.status !== undefined
+    ? item.value?.verification?.status
     : false;
 };
 

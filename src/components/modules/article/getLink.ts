@@ -33,6 +33,10 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/teachers/${id}`;
   }
 
+  if (category === 'collection.text') {
+    return `/dashboard/collections/${id}`;
+  }
+
   return null;
 };
 
