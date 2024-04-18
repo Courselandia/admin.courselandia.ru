@@ -45,4 +45,5 @@ export default {
   month1: 'month',
   month2: 'months',
   month3: 'months',
+  copied: 'Copied',
 };

@@ -30,4 +30,5 @@ export default interface ICollection extends IColumn {
   filters: Array<IFilter>,
   courses: Array<ICourse> | null;
   analyzers: Array<IAnalyzer> | null;
+  copied: boolean;
 }

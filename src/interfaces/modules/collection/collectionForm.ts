@@ -1,4 +1,5 @@
 import IFiltersForm from '@/interfaces/modules/collection/filtersForm';
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -17,4 +18,6 @@ export default interface ICollectionForm {
   status: boolean;
   filters: IFiltersForm,
   sort: IOption,
+  analyzers?: Array<IAnalyzer> | undefined;
+  copied: boolean;
 }

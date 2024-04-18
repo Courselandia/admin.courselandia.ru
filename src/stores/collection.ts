@@ -75,6 +75,7 @@ export default defineStore('collection', {
       formData.append('description', data.description || '');
       formData.append('keywords', data.keywords || '');
       formData.append('status', data.status ? '1' : '0');
+      formData.append('copied', data.copied ? '1' : '0');
       formData.append('image', data.image || '');
 
       if (data.sort.value === ECourseSort.ALPHABETIC) {

@@ -411,6 +411,26 @@
                 name="text"
                 class="mb-30"
               />
+              <div
+                v-if="form.analyzers?.length"
+                class="mb-30"
+              >
+                <Info
+                  :analyzers="form.analyzers"
+                  category="collection.text"
+                />
+              </div>
+              <Item
+                :wrapper-col="{offset: 0, span: 19}"
+                name="remember"
+                class="buttons-flex"
+              >
+                <Checkbox
+                  v-model:checked="form.copied"
+                >
+                  <Lang value="collection.copied" />
+                </Checkbox>
+              </Item>
             </TabPane>
             <TabPane
               key="additional"
@@ -522,12 +542,13 @@ import {
   ExclamationCircleOutlined,
   LoadingOutlined,
   MehOutlined,
-  PlusOutlined,
+  PlusOutlined, SisternodeOutlined,
 } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Alert from 'ant-design-vue/lib/alert';
 import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
+import Checkbox from 'ant-design-vue/lib/checkbox';
 import Col from 'ant-design-vue/lib/col';
 import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
@@ -554,6 +575,7 @@ import { useMeta } from 'vue-meta';
 import { useRoute } from 'vue-router';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import ECourseSort from '@/enums/modules/collection/courseSort';
 import ELevel from '@/enums/modules/salary/level';
@@ -838,6 +860,7 @@ const getDefaultFormValue = (): ICollectionForm => ({
   keywords: item.value?.metatag?.keywords || undefined,
   status: item.value?.status || true,
   sort: getSort(item.value?.sort_field, item.value?.sort_direction),
+  copied: item.value?.copied !== undefined ? item.value?.copied : true,
   filters: {
     'school-id': getFilterOptions('school-id', item.value?.filters || []),
     'categories-id': getFilterOptions('categories-id', item.value?.filters || []),
@@ -894,6 +917,14 @@ const onSubmit = async (): Promise<void> => {
 
     alert.value.message = lang('dashboard.successUpdateText');
     alert.value.type = 'success';
+
+    if (!form.value.copied) {
+      notification.open({
+        icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+        message: lang('task.launchTitle'),
+        description: lang('task.launchText'),
+      });
+    }
   } catch (error: Error | any) {
     alert.value.message = error.response.data.message
       ? error.response.data.message

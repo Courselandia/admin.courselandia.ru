@@ -45,4 +45,5 @@ export default {
   month1: 'месяц',
   month2: 'месяца',
   month3: 'месяцев',
+  copied: 'Текст скопирован',
 };
