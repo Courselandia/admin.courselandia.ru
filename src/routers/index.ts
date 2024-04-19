@@ -28,6 +28,7 @@ import routerSections from '@/routers/sections';
 import routerSkills from '@/routers/skills';
 import routerTasks from '@/routers/tasks';
 import routerTeachers from '@/routers/teachers';
+import routerTerms from '@/routers/terms';
 import routerTools from '@/routers/tools';
 import routerUsers from '@/routers/users';
 
@@ -59,6 +60,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerAnalyzers,
   ...routerCrawls,
   ...routerTasks,
+  ...routerTerms,
   ...router404,
 ];
 
