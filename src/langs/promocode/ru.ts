@@ -1,8 +1,8 @@
 export default {
   name: 'Промокоды',
-  addFaq: 'Добавить промокод',
-  updateFaq: 'Редактировать промокод',
-  createFaq: 'Создать промокод',
+  addPromocode: 'Добавить промокод',
+  updatePromocode: 'Редактировать промокод',
+  createPromocode: 'Создать промокод',
   school: 'Школа',
   title: 'Название',
   description: 'Описание',
@@ -11,7 +11,7 @@ export default {
   discountType: 'Тип скидки',
   dateStart: 'Дата начала',
   dateEnd: 'Дата окончания',
-  type: 'Тип промоода',
+  type: 'Тип промокода',
   url: 'URL',
   status: 'Статус',
   code: 'Код',
@@ -19,4 +19,5 @@ export default {
   present: 'Подарок',
   rub: 'Рубли',
   applicable: 'Действует',
+  percent: 'Проценты',
 };

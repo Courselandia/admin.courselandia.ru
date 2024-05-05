@@ -20,6 +20,7 @@
 
 <script lang="ts" setup>
 import Card from 'ant-design-vue/lib/card';
+import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
@@ -55,8 +56,19 @@ const getDefaultFormValue = (): IPromocodeForm => ({
   school_id: item.value?.school_id
     ? { key: item.value?.school.id as string, value: item.value?.school.name }
     : undefined,
-  question: item.value?.question || undefined,
-  answer: item.value?.answer || undefined,
+  uuid: item.value?.uuid || undefined,
+  code: item.value?.code || undefined,
+  title: item.value?.title || undefined,
+  description: item.value?.description || undefined,
+  min_price: item.value?.min_price || undefined,
+  discount: item.value?.discount || undefined,
+  discount_type: item.value?.discount_type || undefined,
+  date_start: item.value?.date_start ? dayjs.utc(item.value?.date_start)
+    .tz(dayjs.tz.guess()) : undefined,
+  date_end: item.value?.date_end ? dayjs.utc(item.value?.date_end)
+    .tz(dayjs.tz.guess()) : undefined,
+  type: item.value?.type || undefined,
+  url: item.value?.url || undefined,
   status: item.value?.status !== undefined ? item.value?.status : true,
 });
 

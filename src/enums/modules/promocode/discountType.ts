@@ -1,6 +1,6 @@
 enum EDiscountType {
   PERCENT = 'percent',
-  RUB = 'RUB',
+  RUB = 'rub',
 }
 
 export default EDiscountType;

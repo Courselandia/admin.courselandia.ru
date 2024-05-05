@@ -1,8 +1,8 @@
 export default {
   name: 'Promocodes',
-  addFaq: 'Add promocode',
-  updateFaq: 'Edit promocode',
-  createFaq: 'Create promocode',
+  addPromocode: 'Add promocode',
+  updatePromocode: 'Edit promocode',
+  createPromocode: 'Create promocode',
   schools: 'School',
   title: 'Title',
   description: 'Description',
@@ -19,4 +19,5 @@ export default {
   present: 'Present',
   rub: 'RUB',
   applicable: 'Applicable',
+  percent: 'Percent',
 };

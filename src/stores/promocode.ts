@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { defineStore } from 'pinia';
 
 import axios from '@/helpers/axios';
@@ -60,9 +61,14 @@ export default defineStore('promocode', {
       }
     },
     async create(data: IPromocodeForm): Promise<IResponseItem<IPromocode>> {
+      const dateStart = data.date_start as dayjs.Dayjs;
+      const dateEnd = data.date_end as dayjs.Dayjs;
+
       const response = await axios.post<IResponseItem<IPromocode>>('/api/private/admin/promocode/create', {
         ...data,
         school_id: data.school_id?.key,
+        date_start: dateStart?.format('YYYY-MM-DD ZZ'),
+        date_end: dateEnd?.format('YYYY-MM-DD ZZ'),
       }, {
         headers: {
           Authorization: access().accessToken || '',
@@ -72,9 +78,14 @@ export default defineStore('promocode', {
       return response.data;
     },
     async update(data: IPromocodeForm): Promise<IResponseItem<IPromocode>> {
+      const dateStart = data.date_start as dayjs.Dayjs;
+      const dateEnd = data.date_end as dayjs.Dayjs;
+
       const response = await axios.put<IResponseItem<IPromocode>>(`/api/private/admin/promocode/update/${data.id}`, {
         ...data,
         school_id: data.school_id?.key,
+        date_start: dateStart?.format('YYYY-MM-DD ZZ'),
+        date_end: dateEnd?.format('YYYY-MM-DD ZZ'),
       }, {
         headers: {
           Authorization: access().accessToken || '',

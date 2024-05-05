@@ -69,6 +69,33 @@
         />
       </Item>
       <Item
+        :label="lang('promocode.type')"
+        name="type"
+        :rules="[{ required: true }]"
+      >
+        <Select
+          v-model:value="form.type"
+          allow-clear
+        >
+          <Option :value="EType.DISCOUNT">
+            <Lang value="promocode.discount" />
+          </Option>
+          <Option :value="EType.PRESENT">
+            <Lang value="promocode.present" />
+          </Option>
+        </Select>
+      </Item>
+      <Item
+        :label="lang('promocode.url')"
+        name="url"
+        has-feedback
+        :rules="[{ required: true, type: 'url', max: 191 }]"
+      >
+        <Input
+          v-model:value="form.url"
+        />
+      </Item>
+      <Item
         :label="lang('promocode.description')"
         name="description"
         has-feedback
@@ -79,7 +106,7 @@
         />
       </Item>
       <Item
-        :label="lang('promocode.min_price')"
+        :label="lang('promocode.minPrice')"
         name="min_price"
         has-feedback
         :rules="[{ required: false, type: 'number', min: 0, max: 9999999 }]"
@@ -126,7 +153,6 @@
         <DatePicker
           v-model:value="form.date_start"
           format="DD.MM.YYYY"
-          show-time
           style="width: 100%"
         />
       </Item>
@@ -139,35 +165,7 @@
         <DatePicker
           v-model:value="form.date_end"
           format="DD.MM.YYYY"
-          show-time
           style="width: 100%"
-        />
-      </Item>
-      <Item
-        :label="lang('promocode.type')"
-        name="type"
-        :rules="[{ required: false }]"
-      >
-        <Select
-          v-model:value="form.type"
-          allow-clear
-        >
-          <Option :value="EType.DISCOUNT">
-            <Lang value="promocode.discount" />
-          </Option>
-          <Option :value="EType.PRESENT">
-            <Lang value="promocode.present" />
-          </Option>
-        </Select>
-      </Item>
-      <Item
-        :label="lang('promocode.url')"
-        name="url"
-        has-feedback
-        :rules="[{ required: false, type: 'string', max: 191 }]"
-      >
-        <Input
-          v-model:value="form.url"
         />
       </Item>
       <Item
@@ -257,6 +255,7 @@ const {
   value,
 } = toRefs(props);
 const { Item } = Form;
+const { Option } = Select;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
 
