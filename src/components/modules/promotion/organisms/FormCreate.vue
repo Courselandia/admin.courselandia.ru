@@ -2,7 +2,7 @@
   <Card>
     <template #title>
       <div ref="titleRef">
-        <Lang value="promocode.addPromocode" />
+        <Lang value="promotion.addPromotion" />
       </div>
     </template>
 
@@ -24,17 +24,17 @@ import { ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
 import Lang from '@/components/atoms/Lang.vue';
-import Form from '@/components/modules/promocode/organisms/Form.vue';
+import Form from '@/components/modules/promotion/organisms/Form.vue';
 import lang from '@/helpers/lang';
-import IPromocodeForm from '@/interfaces/modules/promocode/promocodeForm';
+import IPromotionForm from '@/interfaces/modules/promotion/promotionForm';
 import IAlert from '@/interfaces/molecules/alert/alert';
-import promocode from '@/stores/promocode';
+import promotion from '@/stores/promotion';
 
 useMeta({
-  title: lang('promocode.createPromocode'),
+  title: lang('promotion.createPromotion'),
 });
 
-const { create } = promocode();
+const { create } = promotion();
 
 const titleRef = ref<HTMLElement|null>();
 const loading = ref(false);
@@ -44,18 +44,13 @@ const alert = ref<IAlert>({
   type: undefined,
 });
 
-const form = ref<IPromocodeForm>({
+const form = ref<IPromotionForm>({
   school_id: undefined,
   uuid: undefined,
-  code: undefined,
   title: undefined,
   description: undefined,
-  min_price: undefined,
-  discount: undefined,
-  discount_type: undefined,
   date_start: undefined,
   date_end: undefined,
-  type: undefined,
   url: undefined,
   status: true,
 });
@@ -65,7 +60,7 @@ const onReset = (formRef?: FormInstance) => {
   form.value.school_id = undefined;
 };
 
-const onSubmit = async (data: IPromocodeForm, formRef?: FormInstance): Promise<void> => {
+const onSubmit = async (data: IPromotionForm, formRef?: FormInstance): Promise<void> => {
   alert.value.message = '';
   loading.value = true;
 

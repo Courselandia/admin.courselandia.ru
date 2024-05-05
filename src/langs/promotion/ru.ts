@@ -1,0 +1,15 @@
+export default {
+  name: 'Промокоды',
+  addPromotion: 'Добавить промоакцию',
+  updatePromotion: 'Редактировать промоакцию',
+  createPromotion: 'Создать промоакцию',
+  school: 'Школа',
+  title: 'Название',
+  description: 'Описание',
+  dateStart: 'Дата начала',
+  dateEnd: 'Дата окончания',
+  url: 'URL',
+  status: 'Статус',
+  date: 'Дата',
+  applicable: 'Действует',
+};

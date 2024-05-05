@@ -21,6 +21,7 @@ import routerProcesses from '@/routers/processes';
 import routerProfessions from '@/routers/professions';
 import routerProfile from '@/routers/profile';
 import routerPromocodes from '@/routers/promocodes';
+import routerPromotions from '@/routers/promotions';
 import routerPublications from '@/routers/publications';
 import routerReviews from '@/routers/reviews';
 import routerSalaries from '@/routers/salaries';
@@ -63,6 +64,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerTasks,
   ...routerTerms,
   ...routerPromocodes,
+  ...routerPromotions,
   ...router404,
 ];
 

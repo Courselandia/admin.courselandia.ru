@@ -1,0 +1,15 @@
+export default {
+  name: 'Promotions',
+  addPromotion: 'Add promotion',
+  updatePromotion: 'Edit promotion',
+  createPromotion: 'Create promotion',
+  schools: 'School',
+  title: 'Title',
+  description: 'Description',
+  dateStart: 'Date start',
+  dateEnd: 'Date end',
+  url: 'URL',
+  status: 'Status',
+  date: 'Date',
+  applicable: 'Applicable',
+};
