@@ -44,6 +44,7 @@ import {
   ShopOutlined,
   SisternodeOutlined,
   SolutionOutlined,
+  TagsOutlined,
   TeamOutlined,
   ToolOutlined,
 } from '@ant-design/icons-vue';
@@ -200,6 +201,14 @@ const items = computed<ItemType[]>((): ItemType[] => {
           title: lang('salary.name') as string,
           visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
           path: '/dashboard/salaries',
+        },
+        {
+          key: 'Promocodes',
+          icon: () => h(TagsOutlined),
+          label: lang('promocode.name'),
+          title: lang('promocode.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/promocodes',
         },
       ],
     },
