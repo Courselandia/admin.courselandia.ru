@@ -104,6 +104,14 @@
                 >
                   <Input v-model:value="form.site" />
                 </Item>
+                <Item
+                  :label="lang('school.referral')"
+                  name="referral"
+                  has-feedback
+                  :rules="[{ required: false, type: 'url' }]"
+                >
+                  <Input v-model:value="form.referral" />
+                </Item>
               </div>
             </TabPane>
             <TabPane
@@ -366,6 +374,7 @@ const form = ref<ISchoolForm>({
   additional: undefined,
   rating: undefined,
   site: undefined,
+  referral: undefined,
   imageLogo: undefined,
   imageSite: undefined,
   title: undefined,

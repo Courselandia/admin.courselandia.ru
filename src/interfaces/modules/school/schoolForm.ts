@@ -11,6 +11,7 @@ export default interface ISchoolForm {
   additional: string | undefined;
   rating: number | string | undefined;
   site: string | undefined;
+  referral: string | undefined;
   imageLogo: File | undefined;
   imageSite: File | undefined;
   title: string | undefined;

@@ -8,6 +8,7 @@ export default {
   text: 'Text',
   additional: 'Additional',
   site: 'Site',
+  referral: 'Referral URL',
   rating: 'Rating',
   title: 'Title',
   description: 'Description',

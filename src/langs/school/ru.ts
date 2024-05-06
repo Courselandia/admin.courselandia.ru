@@ -9,6 +9,7 @@ export default {
   additional: 'Дополнительное описание',
   rating: 'Рейтинг',
   site: 'Сайт',
+  referral: 'Реферальная ссылка',
   title: 'Тайтл',
   description: 'Описание',
   keywords: 'Ключевые слова',
