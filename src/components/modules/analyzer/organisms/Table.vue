@@ -374,11 +374,11 @@ const columns = computed<ITableColumnType<IAnalyzer>[]>(() => [
         value: 'teacher.text',
       },
       {
-        text: 'Статья / Написанный текст',
-        value: 'article.text',
+        text: 'Коллекция / Написанный текст',
+        value: 'collection.text',
       },
       {
-        text: 'Коллекция / Написанный текст',
+        text: 'Статья / Написанный текст',
         value: 'article.text',
       },
     ],
