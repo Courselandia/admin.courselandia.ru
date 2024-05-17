@@ -1,5 +1,5 @@
 export default {
-  name: 'Промокоды',
+  name: 'Промоакции',
   addPromotion: 'Добавить промоакцию',
   updatePromotion: 'Редактировать промоакцию',
   createPromotion: 'Создать промоакцию',
