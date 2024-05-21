@@ -54,7 +54,7 @@
             :span="3"
             :label="lang('feedback.created_at')"
           >
-            {{ dayjs(item.created_at).format('D MMMM YYYY, HH:mm:ss') }}
+            {{ dayjs(item.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
           </Item>
         </Descriptions>
       </Card>

@@ -86,7 +86,7 @@
             :span="3"
             :label="lang('log.created_at')"
           >
-            {{ dayjs(item.created_at).format('D MMMM YYYY, HH:mm:ss') }}
+            {{ dayjs(item.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
           </Item>
           <Item
             v-if="item.message"

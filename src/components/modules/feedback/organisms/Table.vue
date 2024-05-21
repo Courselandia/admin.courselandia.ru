@@ -69,7 +69,7 @@
           </Space>
         </template>
         <template v-if="column.key === 'created_at'">
-          {{ dayjs(record.created_at).format('D MMMM YYYY, HH:mm:ss') }}
+          {{ dayjs(record.created_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss') }}
         </template>
       </template>
       <template
