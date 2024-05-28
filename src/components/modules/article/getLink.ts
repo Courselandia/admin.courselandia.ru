@@ -9,6 +9,10 @@ const getLink = (id: TId, category: string): string | null => {
     return `/dashboard/skills/${id}`;
   }
 
+  if (category === 'section.text') {
+    return `/dashboard/sections/${id}`;
+  }
+
   if (category === 'tool.text') {
     return `/dashboard/tools/${id}`;
   }

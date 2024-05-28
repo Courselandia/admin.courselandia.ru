@@ -1,4 +1,5 @@
 import ELevel from '@/enums/modules/salary/level';
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IMetatag from '@/interfaces/modules/metatag';
 import ISectionItem from '@/interfaces/modules/section/sectionItem';
 import IColumn from '@/interfaces/molecules/table/column';
@@ -20,4 +21,5 @@ export default interface ISection extends IColumn {
   url: string | null;
   deleted_at: string | null;
   items: Array<ISectionItem>;
+  analyzers?: Array<IAnalyzer> | undefined;
 }

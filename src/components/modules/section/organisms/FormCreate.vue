@@ -18,8 +18,10 @@
 </template>
 
 <script lang="ts" setup>
+import { SisternodeOutlined } from '@ant-design/icons-vue';
 import type { FormInstance } from 'ant-design-vue';
 import Card from 'ant-design-vue/lib/card';
+import notification from 'ant-design-vue/lib/notification';
 import { h, ref } from 'vue';
 import { useMeta } from 'vue-meta';
 
@@ -80,6 +82,12 @@ const onSubmit = async (data: ISectionForm, formRef?: FormInstance): Promise<voi
 
     alert.value.message = lang('dashboard.successCreateText');
     alert.value.type = 'success';
+
+    notification.open({
+      icon: () => h(SisternodeOutlined, { style: 'color: #108ee9' }),
+      message: lang('task.launchTitle'),
+      description: lang('task.launchText'),
+    });
 
     onReset(formRef);
   } catch (error: Error | any) {

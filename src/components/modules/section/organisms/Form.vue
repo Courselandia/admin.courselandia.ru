@@ -211,6 +211,16 @@
           name="text"
           class="mb-30"
         />
+
+        <div
+          v-if="form.analyzers?.length"
+          class="mb-30"
+        >
+          <Info
+            :analyzers="form.analyzers"
+            category="section.text"
+          />
+        </div>
       </TabPane>
       <TabPane
         key="additional"
@@ -273,6 +283,7 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import Info from '@/components/modules/analyzer/organisms/Info.vue';
 import Ckeditor from '@/components/molecules/Ckeditor.vue';
 import ELevel from '@/enums/modules/salary/level';
 import lang from '@/helpers/lang';
@@ -286,7 +297,6 @@ import skill from '@/stores/skill';
 import teacher from '@/stores/teacher';
 import tool from '@/stores/tool';
 import TAlert from '@/types/alert';
-import TId from '@/types/id';
 
 const ItemDescription = Descriptions.Item;
 const formRef = ref<FormInstance>();

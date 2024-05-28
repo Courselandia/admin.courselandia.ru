@@ -1,4 +1,5 @@
 import ELevel from '@/enums/modules/salary/level';
+import IAnalyzer from '@/interfaces/modules/course/analyzer';
 import IOption from '@/interfaces/molecules/select/option';
 import TId from '@/types/id';
 
@@ -19,4 +20,5 @@ export default interface ISectionForm {
   item_type_0?: string;
   item_id_1?: IOption | undefined;
   item_type_1?: string | undefined;
+  analyzers?: Array<IAnalyzer> | undefined;
 }
