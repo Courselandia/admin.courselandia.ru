@@ -42,6 +42,11 @@
           v-model:value="form.name"
         />
       </Item>
+
+      <component
+        :is="valueForms[form.index]"
+        v-model:form="form.values"
+      />
     </div>
     <Item
       :wrapper-col="{ offset: 0 }"
@@ -75,7 +80,6 @@ import Form from 'ant-design-vue/lib/form';
 import Input from 'ant-design-vue/lib/input';
 import Radio from 'ant-design-vue/lib/radio';
 import Space from 'ant-design-vue/lib/space';
-import Tabs from 'ant-design-vue/lib/tabs';
 import {
   PropType,
   ref,
@@ -84,9 +88,16 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
+import ValueFormCollectionsAlso from '@/components/modules/widget/values/CollectionsAlso.vue';
+import ValueFormPublicationsAlso from '@/components/modules/widget/values/PublicationsAlso.vue';
 import lang from '@/helpers/lang';
 import IWidgetForm from '@/interfaces/modules/widget/widgetForm';
 import TAlert from '@/types/alert';
+
+const valueForms = {
+  'collections-also': ValueFormCollectionsAlso,
+  'publications-also': ValueFormPublicationsAlso,
+};
 
 const formRef = ref<FormInstance>();
 
@@ -120,7 +131,6 @@ const {
 const { Item } = Form;
 const RadioGroup = Radio.Group;
 const RadioButton = Radio.Button;
-const { TabPane } = Tabs;
 
 const emit = defineEmits({
   'update:value': (_: IWidgetForm) => true,

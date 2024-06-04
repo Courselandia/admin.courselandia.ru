@@ -60,7 +60,13 @@ export default defineStore('widget', {
       }
     },
     async update(data: IWidgetForm): Promise<IResponseItem<IWidget>> {
-      const response = await axios.put<IResponseItem<IWidget>>(`/api/private/admin/widget/update/${data.id}`, data, {
+      const response = await axios.put<IResponseItem<IWidget>>(`/api/private/admin/widget/update/${data.id}`, {
+        ...data,
+        values: Object.keys(data.values).map((key) => ({
+          name: key,
+          value: data.values[key],
+        })),
+      }, {
         headers: {
           Authorization: access().accessToken || '',
         },

@@ -53,11 +53,9 @@ const alert = ref<IAlert>({
 const getDefaultFormValue = (): IWidgetForm => ({
   id: id as TId,
   name: item.value?.name || undefined,
+  index: item.value?.index || '',
   status: item.value?.status !== undefined ? item.value?.status : true,
-  values: item.value?.values ? item.value.values.map((itm) => ({
-    name: itm.name,
-    value: itm.value ? JSON.parse(itm.value) : undefined,
-  })) : [],
+  values: item.value?.values || {},
 });
 
 const form = ref<IWidgetForm>(getDefaultFormValue());

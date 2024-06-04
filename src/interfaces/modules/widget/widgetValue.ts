@@ -4,7 +4,7 @@ export default interface IWidgetValue {
   id: TId;
   widget_id: TId,
   name: string;
-  value: string | null;
+  value: Array<string | number> | string | number | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;

@@ -10,5 +10,5 @@ export default interface IWidget extends IColumn {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-  values: Array<IWidgetValue> | null;
+  values: Record<string, Array<string | number>| string | number> | null;
 }
