@@ -1,5 +1,3 @@
 <template>
-  <div>
-    Collections Also
-  </div>
+  <span />
 </template>
