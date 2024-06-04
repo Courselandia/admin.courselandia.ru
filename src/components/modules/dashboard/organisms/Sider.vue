@@ -35,6 +35,7 @@ import {
   MessageOutlined,
   NodeIndexOutlined,
   NotificationOutlined,
+  PicLeftOutlined,
   ProfileOutlined,
   ProjectOutlined,
   QuestionOutlined,
@@ -274,6 +275,14 @@ const items = computed<ItemType[]>((): ItemType[] => {
           title: lang('article.name') as string,
           visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
           path: '/dashboard/articles',
+        },
+        {
+          key: 'Widgets',
+          icon: () => h(PicLeftOutlined),
+          label: lang('widget.name'),
+          title: lang('widget.name') as string,
+          visible: hasRole([ERole.ADMIN, ERole.MANAGER]),
+          path: '/dashboard/widgets',
         },
         {
           key: 'Analyzers',

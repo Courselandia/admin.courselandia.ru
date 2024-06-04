@@ -33,6 +33,7 @@ import routerTeachers from '@/routers/teachers';
 import routerTerms from '@/routers/terms';
 import routerTools from '@/routers/tools';
 import routerUsers from '@/routers/users';
+import routerWidgets from '@/routers/widgets';
 
 const routes: Array<RouteRecordRaw> = [
   ...routerEntrance,
@@ -65,6 +66,7 @@ const routes: Array<RouteRecordRaw> = [
   ...routerTerms,
   ...routerPromocodes,
   ...routerPromotions,
+  ...routerWidgets,
   ...router404,
 ];
 
