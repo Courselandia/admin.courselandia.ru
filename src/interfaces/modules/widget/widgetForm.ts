@@ -4,7 +4,6 @@ import TId from '@/types/id';
 export default interface IWidgetForm {
   id?: TId;
   name: string | undefined;
-  index: string | undefined;
   status: boolean;
   values: Array<IWidgetValueForm>,
 }

@@ -40,16 +40,7 @@
       >
         <Input
           v-model:value="form.name"
-          @keyup="onChangeName"
         />
-      </Item>
-      <Item
-        :label="lang('widget.index')"
-        name="index"
-        has-feedback
-        :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
-      >
-        <Input v-model:value="form.index" />
       </Item>
     </div>
     <Item
@@ -93,7 +84,6 @@ import {
 } from 'vue';
 
 import Lang from '@/components/atoms/Lang.vue';
-import { latin } from '@/helpers/format';
 import lang from '@/helpers/lang';
 import IWidgetForm from '@/interfaces/modules/widget/widgetForm';
 import TAlert from '@/types/alert';
@@ -139,7 +129,6 @@ const emit = defineEmits({
 });
 
 const form = ref<IWidgetForm>(value.value);
-const alphaDash = /^[A-Za-z0-9_-]*$/;
 
 watch(form, () => {
   emit('update:value', form.value);
@@ -159,9 +148,5 @@ const onSubmit = () => {
 
 const onReset = () => {
   emit('reset', formRef.value);
-};
-
-const onChangeName = () => {
-  form.value.index = latin(form.value.name || '');
 };
 </script>
