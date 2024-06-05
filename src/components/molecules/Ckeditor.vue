@@ -44,7 +44,7 @@ const val = ref(value.value);
 const dateNow = new Date();
 const timeStamp = dateNow.getTime();
 let extraPlugins = '';
-extraPlugins += ',codemirror,selectHtml,xml,ajax,typograph';
+extraPlugins += ',codemirror,selectHtml,xml,ajax,typograph,component';
 
 const mainConfig = {
   bodyClass: 'main article',
