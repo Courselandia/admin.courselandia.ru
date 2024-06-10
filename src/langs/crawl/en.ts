@@ -8,4 +8,6 @@ export default {
   pushedAt: 'Pushed',
   crawledAt: 'Crawled',
   taskId: 'ID task',
+  plan: 'Plan',
+  askPlanMessage: 'Do you really want to plan a crawl?',
 };

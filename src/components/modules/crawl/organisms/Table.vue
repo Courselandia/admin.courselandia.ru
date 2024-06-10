@@ -4,6 +4,23 @@
       <Lang value="crawl.name" />
     </template>
 
+    <template #extra>
+      <Space>
+        <Button
+          type="primary"
+          :loading="loadingPlan"
+          @click="onClickPlan"
+        >
+          <template #icon>
+            <PlusOutlined />
+          </template>
+          <span>
+            <Lang value="crawl.plan" />
+          </span>
+        </Button>
+      </Space>
+    </template>
+
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
@@ -87,12 +104,17 @@
 
 <script lang="ts" setup>
 import {
+  ExclamationCircleOutlined,
   MehOutlined,
+  PlusOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
+import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
+import Modal from 'ant-design-vue/lib/modal';
 import notification from 'ant-design-vue/lib/notification';
+import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import {
   FilterValue,
@@ -103,6 +125,7 @@ import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import {
   computed,
+  createVNode,
   h,
   onMounted,
   ref,
@@ -132,6 +155,7 @@ import crawl from '@/stores/crawl';
 
 const {
   read,
+  plan,
 } = crawl();
 const {
   items,
@@ -241,6 +265,7 @@ const columns = computed<ITableColumnType<ICrawl>[]>(() => [
 ]);
 filteredInfo.value = stateFilters<ICrawl>(columns.value);
 const loading = ref(false);
+const loadingPlan = ref(false);
 const pageSizeDefault = stateLimit() || 20;
 const pageCurrentDefault = statePage() || 1;
 const pagination = ref({
@@ -349,6 +374,20 @@ const reloadToFirstPagination = async (): Promise<void> => {
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
+};
+
+const onClickPlan = (): void => {
+  Modal.confirm({
+    title: lang('dashboard.alert'),
+    icon: createVNode(ExclamationCircleOutlined),
+    content: lang('crawl.askPlanMessage'),
+    async onOk() {
+      loadingPlan.value = true;
+      await plan();
+      await reloadToFirstPagination();
+      loadingPlan.value = false;
+    },
+  });
 };
 </script>
 

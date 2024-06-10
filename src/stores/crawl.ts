@@ -5,7 +5,7 @@ import toQuery from '@/helpers/toQuery';
 import ICrawl from '@/interfaces/modules/crawl/crawl';
 import IFilters from '@/interfaces/molecules/table/filters';
 import ISorts from '@/interfaces/molecules/table/sorts';
-import { IResponseItems } from '@/interfaces/response';
+import { IResponseItem, IResponseItems } from '@/interfaces/response';
 import access from '@/stores/access';
 
 export default defineStore('crawl', {
@@ -39,6 +39,15 @@ export default defineStore('crawl', {
 
         throw error;
       }
+    },
+    async plan(): Promise<IResponseItem<null>> {
+      const response = await axios.post<IResponseItem<null>>('/api/private/admin/crawl/plan', {
+        headers: {
+          Authorization: access().accessToken || '',
+        },
+      });
+
+      return response.data;
     },
   },
 });
