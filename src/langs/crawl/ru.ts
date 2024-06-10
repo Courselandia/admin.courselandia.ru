@@ -6,8 +6,6 @@ export default {
   yandex: 'Yandex',
   google: 'Google',
   pushedAt: 'Дата отправки',
-  crawledAt: 'Дата индексации',
-  taskId: 'ID задачи',
   plan: 'Запланировать',
   askPlanMessage: 'Вы действительно хотите запланировать индексирование?',
 };

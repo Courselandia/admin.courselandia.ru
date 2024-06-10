@@ -41,7 +41,7 @@ export default defineStore('crawl', {
       }
     },
     async plan(): Promise<IResponseItem<null>> {
-      const response = await axios.post<IResponseItem<null>>('/api/private/admin/crawl/plan', {
+      const response = await axios.post<IResponseItem<null>>('/api/private/admin/crawl/plan', null, {
         headers: {
           Authorization: access().accessToken || '',
         },

@@ -6,9 +6,7 @@ import TId from '@/types/id';
 export default interface IDirection extends IColumn {
   id: TId;
   page_id: TId;
-  task_id: string;
   pushed_at: string;
-  crawled_at: string;
   engine: EEngine;
   created_at: string;
   updated_at: string;

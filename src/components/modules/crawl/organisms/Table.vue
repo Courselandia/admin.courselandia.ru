@@ -52,11 +52,6 @@
             ? dayjs.utc(record.pushed_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss')
             : '' }}
         </template>
-        <template v-if="column.key === 'crawled_at'">
-          {{ record.crawled_at
-            ? dayjs.utc(record.crawled_at).tz(dayjs.tz.guess()).format('D MMMM YYYY, HH:mm:ss')
-            : '' }}
-        </template>
         <template v-if="column.key === 'engine'">
           <template
             v-if="record.engine === EEngine.YANDEX"
@@ -202,7 +197,7 @@ const columns = computed<ITableColumnType<ICrawl>[]>(() => [
     customFilterDropdown: true,
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('page-lastmod', filteredInfo.value, 'dateRange'),
-    width: 200,
+    width: 280,
   },
   {
     title: lang('crawl.engine'),
@@ -224,6 +219,7 @@ const columns = computed<ITableColumnType<ICrawl>[]>(() => [
         value: EEngine.GOOGLE,
       },
     ],
+    width: 280,
   },
   {
     title: lang('crawl.pushedAt'),
@@ -236,31 +232,7 @@ const columns = computed<ITableColumnType<ICrawl>[]>(() => [
     customFilterDropdown: true,
     filterType: 'dateRange',
     filteredValue: stateColumnFilter('pushed_at', filteredInfo.value, 'dateRange'),
-    width: 200,
-  },
-  {
-    title: lang('crawl.crawledAt'),
-    dataIndex: 'crawled_at',
-    key: 'crawled_at',
-    sorter: {
-      multiple: 1,
-    },
-    sortOrder: stateColumnSort('crawled_at', sortedInfo.value),
-    customFilterDropdown: true,
-    filterType: 'dateRange',
-    filteredValue: stateColumnFilter('crawled_at', filteredInfo.value, 'dateRange'),
-    width: 200,
-  },
-  {
-    title: lang('crawl.taskId'),
-    dataIndex: 'task_id',
-    key: 'task_id',
-    sorter: {
-      multiple: 1,
-    },
-    customFilterDropdown: true,
-    sortOrder: stateColumnSort('task_id', sortedInfo.value),
-    filteredValue: stateColumnFilter('task_id', filteredInfo.value, 'string'),
+    width: 280,
   },
 ]);
 filteredInfo.value = stateFilters<ICrawl>(columns.value);
@@ -283,6 +255,10 @@ const defaultSorts: Array<SorterResult> = [
   {
     columnKey: 'pushed_at',
     order: 'descend',
+  },
+  {
+    columnKey: 'id',
+    order: 'ascend',
   },
 ];
 sortedInfo.value = stateSorts<ICrawl>(columns.value, defaultSorts);
