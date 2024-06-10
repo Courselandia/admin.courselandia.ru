@@ -253,11 +253,7 @@ const destroySelectedDisabled = ref(true);
 
 const defaultSorts: Array<SorterResult> = [
   {
-    columnKey: 'pushed_at',
-    order: 'descend',
-  },
-  {
-    columnKey: 'id',
+    columnKey: 'page-path',
     order: 'ascend',
   },
 ];
