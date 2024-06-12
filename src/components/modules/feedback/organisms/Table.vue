@@ -20,6 +20,16 @@
             <Lang value="dashboard.destroy" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -110,6 +120,7 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
   MehOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -409,6 +420,10 @@ const onClickDestroySelected = (): void => {
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 

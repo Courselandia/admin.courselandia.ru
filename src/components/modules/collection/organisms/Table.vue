@@ -31,6 +31,16 @@
             <Lang value="dashboard.destroy" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -169,6 +179,7 @@ import {
   FileImageOutlined,
   MehOutlined,
   PlusOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -592,6 +603,10 @@ const onClickDestroyImage = (id: TId) => {
       destroysImageLoading.value[id] = false;
     },
   });
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 

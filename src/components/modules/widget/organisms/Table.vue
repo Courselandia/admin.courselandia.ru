@@ -4,6 +4,21 @@
       <Lang value="widget.name" />
     </template>
 
+    <template #extra>
+      <Space>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
+      </Space>
+    </template>
+
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
@@ -96,6 +111,7 @@ import {
   EditOutlined,
   ExclamationCircleOutlined,
   MehOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -381,6 +397,10 @@ const onClickStatus = async (id: TId, active: boolean): Promise<void> => {
       loading.value = false;
     },
   });
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 

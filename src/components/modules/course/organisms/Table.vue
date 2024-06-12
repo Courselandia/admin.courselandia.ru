@@ -33,7 +33,7 @@
         </Button>
         <Button
           :title="lang('dashboard.reload') || ''"
-          :loading="loading"
+          :disabled="loading"
           shape="circle"
           @click="onClickReload"
         >

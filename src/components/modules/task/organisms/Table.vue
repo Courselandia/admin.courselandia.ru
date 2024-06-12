@@ -4,6 +4,21 @@
       <Lang value="task.name" />
     </template>
 
+    <template #extra>
+      <Space>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
+      </Space>
+    </template>
+
     <TableTagsFilter
       v-model:filters="filteredInfo"
       :columns="columns"
@@ -109,12 +124,15 @@
 <script lang="ts" setup>
 import {
   MehOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/lib/_util/type';
+import Button from 'ant-design-vue/lib/button';
 import Card from 'ant-design-vue/lib/card';
 import notification from 'ant-design-vue/lib/notification';
+import Space from 'ant-design-vue/lib/space';
 import Table from 'ant-design-vue/lib/table';
 import {
   ColumnFilterItem,
@@ -478,6 +496,10 @@ const reloadInterval = window.setInterval(async () => {
 onUnmounted(() => {
   window.clearInterval(reloadInterval);
 });
+
+const onClickReload = (): void => {
+  reload();
+};
 </script>
 
 <style lang="scss">

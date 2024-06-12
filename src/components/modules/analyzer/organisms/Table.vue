@@ -17,6 +17,16 @@
             <Lang value="analyzer.analyze" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -187,6 +197,7 @@
 import {
   ExclamationCircleOutlined,
   MehOutlined,
+  ReloadOutlined,
   RobotOutlined,
   SearchOutlined,
   SendOutlined,
@@ -642,15 +653,6 @@ const reload = async (): Promise<void> => {
   pagination.value.total = total.value || 0;
 };
 
-const onClickUpdate = (id: TId): void => {
-  router.push({
-    name: 'AnalyzerUpdate',
-    params: {
-      id,
-    },
-  });
-};
-
 const onClickAnalyze = (): void => {
   router.push({
     name: 'AnalyzerAnalyze',
@@ -693,6 +695,10 @@ const onClickReanalyze = (id: TId): void => {
 
 const onTagsChange = (): void => {
   reloadToFirstPagination();
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 

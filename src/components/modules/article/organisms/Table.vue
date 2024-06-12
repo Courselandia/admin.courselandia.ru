@@ -17,6 +17,16 @@
             <Lang value="article.write" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -220,6 +230,7 @@ import {
   ExclamationCircleOutlined,
   HighlightOutlined,
   MehOutlined,
+  ReloadOutlined,
   RobotOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
@@ -639,6 +650,10 @@ const onClickWrite = (): void => {
   router.push({
     name: 'ArticleWrite',
   });
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 

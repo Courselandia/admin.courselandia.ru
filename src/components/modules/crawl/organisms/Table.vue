@@ -18,6 +18,16 @@
             <Lang value="crawl.plan" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :disabled="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -102,6 +112,7 @@ import {
   ExclamationCircleOutlined,
   MehOutlined,
   PlusOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -360,6 +371,21 @@ const onClickPlan = (): void => {
       loadingPlan.value = false;
     },
   });
+};
+
+const reload = async (): Promise<void> => {
+  const pageSize = pagination.value.pageSize || pageSizeDefault;
+  const current = statePage() || pageCurrentDefault;
+  const offset = (current - 1) * pageSize;
+
+  stateSet(offset, pageSize, sortedInfo.value, filteredInfo.value);
+  await load(offset, pageSize, sortedInfo.value, filteredInfo.value);
+
+  pagination.value.total = total.value || 0;
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 
