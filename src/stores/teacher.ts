@@ -112,10 +112,11 @@ export default defineStore('teacher', {
       limit: number | null = null,
       sorts: ISorts | null = null,
       filters: IFilters | null = null,
+      showPhoto: boolean = true,
     ): Promise<IResponseItems<ITeacher>> {
       try {
         const query = toQuery(offset, limit, sorts, filters);
-        const response = await axios.get<IResponseItems<ITeacher>>(`/api/private/admin/teacher/read?${query}`, {
+        const response = await axios.get<IResponseItems<ITeacher>>(`/api/private/admin/teacher/read?${query}&showPhoto=${showPhoto ? 1 : 0}`, {
           headers: {
             Authorization: access().accessToken || '',
           },

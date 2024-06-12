@@ -567,7 +567,7 @@ const onChangeType = async (index: number, reset: boolean = true): Promise<void>
 
       typeIds.value[index] = [];
       loadingSelectItemId.value[index] = true;
-      const response = await readTeachers(null, null, { name: 'ASC' } as ISorts);
+      const response = await readTeachers(null, null, { name: 'ASC' } as ISorts, null, false);
       typeIds.value[index] = response.data.map((itm) => ({
         value: itm.id,
         label: itm.name,

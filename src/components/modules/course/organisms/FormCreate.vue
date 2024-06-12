@@ -1061,7 +1061,7 @@ onMounted(async (): Promise<void> => {
     await readProfessions(null, null, { name: 'ASC' } as ISorts);
     await readCategories(null, null, { name: 'ASC' } as ISorts);
     await readSkills(null, null, { name: 'ASC' } as ISorts);
-    await readTeachers(null, null, { name: 'ASC' } as ISorts);
+    await readTeachers(null, null, { name: 'ASC' } as ISorts, null, false);
     await readTools(null, null, { name: 'ASC' } as ISorts);
     await readEmployments(null, null, { name: 'ASC' } as ISorts);
     await readProcesses(null, null, { name: 'ASC' } as ISorts);
