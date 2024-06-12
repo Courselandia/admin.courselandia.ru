@@ -103,4 +103,5 @@ export default {
   catalog: 'Каталог',
   system: 'Система',
   services: 'Сервисы',
+  reload: 'Перезагрузить',
 };

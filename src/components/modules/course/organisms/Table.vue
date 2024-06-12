@@ -31,6 +31,16 @@
             <Lang value="dashboard.destroy" />
           </span>
         </Button>
+        <Button
+          :title="lang('dashboard.reload') || ''"
+          :loading="loading"
+          shape="circle"
+          @click="onClickReload"
+        >
+          <template #icon>
+            <ReloadOutlined />
+          </template>
+        </Button>
       </Space>
     </template>
 
@@ -169,6 +179,7 @@ import {
   ExclamationCircleOutlined,
   MehOutlined,
   PlusOutlined,
+  ReloadOutlined,
   SearchOutlined,
 } from '@ant-design/icons-vue';
 import type { TableProps } from 'ant-design-vue';
@@ -664,6 +675,10 @@ const getCurrencyLabel = (currency: ECurrency): string | null => {
   }
 
   return null;
+};
+
+const onClickReload = (): void => {
+  reload();
 };
 </script>
 
