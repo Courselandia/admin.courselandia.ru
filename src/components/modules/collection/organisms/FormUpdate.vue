@@ -876,6 +876,7 @@ const getDefaultFormValue = (): ICollectionForm => ({
     price: getFilterRange('price', item.value?.filters || [], [0, 1000000]),
     duration: getFilterRange('duration', item.value?.filters || [], [0, 50]),
   },
+  analyzers: item.value?.analyzers || [],
 });
 
 const form = ref<ICollectionForm>(getDefaultFormValue());
