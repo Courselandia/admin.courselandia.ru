@@ -62,7 +62,7 @@
                   :label="lang('course.nameCourse')"
                   name="name"
                   has-feedback
-                  :rules="[{ required: true, type: 'string', max: 191 }]"
+                  :rules="[{ required: true, type: 'string', max: 500 }]"
                 >
                   <Input
                     v-model:value="form.name"
@@ -73,7 +73,7 @@
                   :label="lang('course.header')"
                   name="header_template"
                   has-feedback
-                  :rules="[{ required: true, type: 'string', max: 191 }]"
+                  :rules="[{ required: true, type: 'string', max: 500 }]"
                   :extra="form.header"
                 >
                   <Input
@@ -84,7 +84,7 @@
                   :label="lang('course.link')"
                   name="link"
                   has-feedback
-                  :rules="[{ required: true, type: 'string', max: 191, pattern: alphaDash }]"
+                  :rules="[{ required: true, type: 'string', max: 500, pattern: alphaDash }]"
                 >
                   <Input v-model:value="form.link" />
                 </Item>
