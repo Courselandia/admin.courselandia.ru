@@ -2,7 +2,8 @@ import '@/plugins/dayjs';
 
 // @ts-ignore
 import CKEditor from '@mayasabha/ckeditor4-vue3';
-import { vMaska } from 'maska';
+// eslint-disable-next-line import/no-unresolved
+import { vMaska } from 'maska/vue';
 import {
   createPinia,
 } from 'pinia';
